@@ -98,8 +98,8 @@ Class userPageModel extends ModelCore {
             if(!empty($_SESSION['user'])) {
                 $this->data['user'] = $_SESSION['user'];
 
-                $myVideos = Video::getVideosByUserName($_SESSION['user']['name']);
-                $this->data['user']['videos'] = $myVideos;
+                $myFiles = File::getFilesByUserName($_SESSION['user']['name']);
+                $this->data['user']['files'] = $myFiles;
             }
             else {
                 goToUrl('/');

@@ -16,10 +16,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table 'videos'
+-- Table structure for table 'Files'
 --
 
-CREATE TABLE `videos` (
+CREATE TABLE `Files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` mediumtext NOT NULL,
   `source` varchar(255) NOT NULL DEFAULT '',
@@ -99,19 +99,19 @@ CREATE TABLE `tags` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table 'tag_video'
+-- Table structure for table 'tag_File'
 --
 
-CREATE TABLE `tag_video` (
+CREATE TABLE `tag_File` (
   `tid` int(11) unsigned NOT NULL,
   `term_name` varchar(255) NOT NULL DEFAULT '',
-  `video_id` int(11) unsigned DEFAULT NULL,
-  `video_md5_id` varchar(50) DEFAULT '',
+  `File_id` int(11) unsigned DEFAULT NULL,
+  `File_md5_id` varchar(50) DEFAULT '',
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   KEY `tid` (`tid`),
-  KEY `video_id` (`video_id`),
+  KEY `File_id` (`File_id`),
   KEY `term_name` (`term_name`),
-  KEY `video_md5_id` (`video_md5_id`)
+  KEY `File_md5_id` (`File_md5_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -121,10 +121,10 @@ CREATE TABLE `tag_video` (
 --
 
 CREATE TABLE `legacy_url_alias` (
-  `video_id` int(11) unsigned DEFAULT NULL,
-  `video_md5_id` varchar(50) DEFAULT '',
+  `File_id` int(11) unsigned DEFAULT NULL,
+  `File_md5_id` varchar(50) DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
   UNIQUE KEY `alias` (`alias`),
-  KEY `video_id` (`video_id`),
-  KEY `video_md5_id` (`video_md5_id`)
+  KEY `File_id` (`File_id`),
+  KEY `File_md5_id` (`File_md5_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

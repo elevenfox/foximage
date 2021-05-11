@@ -21,19 +21,19 @@ Class tagContentsView extends ViewCore {
         $this->setHeader(ucwords($this->data['tagName']), 'title');
 
         // Set meta description
-        $this->data['meta_desc'] = $this->data['tagName'] . ' videos - ' .  $this->data['meta_desc'];
+        $this->data['meta_desc'] = $this->data['tagName'] . ' files - ' .  $this->data['meta_desc'];
 
         // Set meta keyword
         $this->data['meta_keywords'] = $this->data['tagName'] . ',' . $this->data['meta_keywords'];
     }
 
 
-    if(!empty($this->data['videos'])) {
+    if(!empty($this->data['files'])) {
       $currentPage = empty($this->data['page']) ? 1 : $this->data['page'];
       import('Pager');
       $pager = new Pager(
               $this->listPerPage,
-              (int)$this->data['videos_total'],
+              (int)$this->data['files_total'],
               $currentPage,
               '/tags/'.str_replace(' ', '-', strtolower($this->data['tagName'])).'/'
       );

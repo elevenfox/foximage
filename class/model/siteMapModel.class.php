@@ -20,10 +20,10 @@ Class siteMapModel extends ModelCore {
     }
 
     public function genSiteMapIndex() {
-        $totalVideoCount = Video::getAllVideoscount();
+        $totalFileCount = File::getAllFilescount();
         //$totalTagCount = Tag::getAllTagsCount();
 
-        $totalSiteMapFiles = ceil($totalVideoCount / $this->urlsPerSiteMapFile) + 1;
+        $totalSiteMapFiles = ceil($totalFileCount / $this->urlsPerSiteMapFile) + 1;
 
         $domain = $this->getDomainUrl();
 
@@ -83,13 +83,13 @@ EOF;
         }
         else {
             $page = $fileId - 1;
-            $videos = Video::getVideos($page, $this->urlsPerSiteMapFile);
+            $files = File::getFiles($page, $this->urlsPerSiteMapFile);
 
-            foreach ($videos as $video) {
-                if(!empty($video['title'])) {
-                    $url = utf8_encode(cleanStringForUrl($video['title']) . '/' . $video['source_url_md5']);
+            foreach ($files as $file) {
+                if(!empty($file['title'])) {
+                    $url = utf8_encode(cleanStringForUrl($file['title']) . '/' . $file['source_url_md5']);
                     if(!empty($url)) {
-                        $xml .= '<url><loc>' . $domain . '/video/' . $url . '</loc><changefreq>weekly</changefreq></url>';
+                        $xml .= '<url><loc>' . $domain . '/file/' . $url . '</loc><changefreq>weekly</changefreq></url>';
                     }
                 }
             }

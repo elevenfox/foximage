@@ -1,0 +1,343 @@
+<?php
+
+/*
+ * Class to operate folder table
+ * @author: Elevenfox
+ */
+
+
+Class File {
+
+    protected static $table_files;
+    protected static $table_tag_file;
+
+    private static function setTables() {
+        self::$table_files = Config::get('db_table_prefix') . 'files';
+        self::$table_tag_file = Config::get('db_table_prefix') . 'tag_file';
+    }
+
+    public static function getMaxFileId() {
+        self::setTables();
+
+        $res = DB::$dbInstance->getRows('select max(id) as maxId from ' . self::$table_files);
+        return $res[0]['maxId'];
+    }
+
+    public static function getFileByID($id) {
+        self::setTables();
+
+        $id = (int)DB::sanitizeInput($id);
+        $where = "WHERE id = '$id'";
+
+        $query = "SELECT * FROM ".self::$table_files." $where";
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res)) {
+            return $res[0];
+        }
+        else {
+            error_log('Failed to get file by id: ' . $id);
+            return false;
+        }
+    }
+
+    public static function getFileBySourceUrl($url) {
+        self::setTables();
+
+        //$url = DB::sanitizeInput($url);
+        $url = str_replace("'", "\'", $url);
+        $query = "SELECT * FROM ".self::$table_files." WHERE source_url = '$url' ";
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res)) {
+            return $res[0];
+        }
+        else {
+            error_log('Failed to get File by source_url: ' . $url);
+            return false;
+        }
+    }
+
+    public static function getFiles($page=1, $limit=20, $sort='desc') {
+        self::setTables();
+
+        $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
+        if(APCU && !isAdmin()) {
+            $res = apcu_fetch($cacheKey);
+            if(!empty($res)) {
+                return $res;
+            }
+        }
+
+        $limit = ($page - 1) * $limit . ',' . $limit;
+        $query = 'select * from '.self::$table_files.' order by id ' . $sort . ' limit ' . $limit;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            if(APCU && !isAdmin()) {
+                apcu_store($cacheKey, $res, 600);
+            }
+
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static function getAllFilescount() {
+        self::setTables();
+
+        $query = 'select count(id) as total from ' . self::$table_files;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            return $res[0]['total'];
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    public static function getFilesByUserName($userName, $page=1, $limit=1000, $sort='desc') {
+        self::setTables();
+        $userName = DB::sanitizeInput($userName);
+
+        $limit = ($page - 1) * $limit . ',' . $limit;
+        $query = 'select * from '.self::$table_files.' where user_name = \''.$userName.'\' order by id ' . $sort . ' limit ' . $limit;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static function searchFile($term, $page=1, $limit=20) {
+        self::setTables();
+
+        $term = DB::sanitizeInput($term);
+        $limit = ($page - 1) * $limit . ',' . $limit;
+        $query = "select * from ".self::$table_files." where title like '%" . $term . "%' limit " . $limit;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static function searchFileCount($term) {
+        self::setTables();
+
+        $term = DB::sanitizeInput($term);
+        $query = "select count(*) from ".self::$table_files." where title like '%" . $term . "%'";
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    public static function getRelatedFilesById($fileId) {
+        self::setTables();
+
+        $cacheKey = THEME . '_related_files_' . $fileId;
+        if(APCU && !isAdmin()) {
+            $res = apcu_fetch($cacheKey);
+            if(!empty($res)) {
+                return $res;
+            }
+        }
+
+        $query = 'select count(id) as total from ' . self::$table_files;
+        $res = DB::$dbInstance->getRows($query);
+
+        $totalFile = $res[0]['total'];
+
+        $limit = random_int(1, $totalFile) .',' . 20;
+        $query = 'select * from '.self::$table_files.' order by id desc  limit ' . $limit;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            if(APCU && !isAdmin()) {
+                apcu_store($cacheKey, $res, 600);
+            }
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    /**
+     * Save file to files table
+     *
+     * @param $fileObj
+     * @return bool
+     */
+    public static function save($fileObj, $user_name=null) {
+        self::setTables();
+
+        if(!self::validation($fileObj)) {
+            return false;
+        }
+
+        if(is_array($fileObj->tags)) {
+            $tag_array = $fileObj->tags;
+        }
+        else {
+            $tag_array = empty(trim($fileObj->tags)) ? [] : explode(',', $fileObj->tags);
+        }
+        $fileObj->tags = implode(',', self::handle_tag_array($tag_array));
+
+        $file = empty($fileObj->id) ? self::getFileBySourceUrl($fileObj->source_url) : self::getFileByID($fileObj->id);
+        if(empty($file)) {
+            // insert
+            try {
+                $user_name = empty($user_name) ? User::getRandomUserName() : $user_name;
+
+                $res = DB::$dbInstance->query("insert into ".self::$table_files." set 
+                        `title` = '" . DB::sanitizeInput($fileObj->title) . "',
+                        `source` = '". $fileObj->source . "',
+                        `source_url` = '". str_replace("'", "\'", $fileObj->source_url) . "',
+                        `source_url_md5` = '". md5($fileObj->source_url) . "',
+                        `duration` = ".  (int)$fileObj->duration . ",
+                        `saved_locally` = 0,
+                        `quality_1080p` = '". str_replace("'", "\'", $fileObj->quality_1080p) . "',
+                        `quality_720p` = '". str_replace("'", "\'", $fileObj->quality_720p) . "',
+                        `quality_480p` = '". str_replace("'", "\'", $fileObj->quality_480p) . "',
+                        `quality_360p` = '". str_replace("'", "\'", $fileObj->quality_360p) . "',
+                        `quality_240p` = '". str_replace("'", "\'", $fileObj->quality_240p) . "',
+                        `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
+                        `gif_preview` = '". str_replace("'", "\'", $fileObj->gif_preview) . "',
+                        `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',
+                        `created` = '".  date('Y-m-d H:i:s', time()) . "',
+                        `user_name` = '" . $user_name . "',
+                        `view_count` = 0
+                      ");
+
+                if($res) {
+                    self::saveFileTags($fileObj);
+                }
+                
+                return true;
+            }
+            catch(Exception $e) {
+                return false;
+            }
+        }
+        else {
+            try {
+                $sql = "update ".self::$table_files." set 
+                        `title` = '" . DB::sanitizeInput($fileObj->title) . "',
+                        `duration` = ".  (int)$fileObj->duration . ",
+                        `quality_1080p` = '". str_replace("'", "\'", $fileObj->quality_1080p) . "',
+                        `quality_720p` = '". str_replace("'", "\'", $fileObj->quality_720p) . "',
+                        `quality_480p` = '". str_replace("'", "\'", $fileObj->quality_480p) . "',
+                        `quality_360p` = '". str_replace("'", "\'", $fileObj->quality_360p) . "',
+                        `quality_240p` = '". str_replace("'", "\'", $fileObj->quality_240p) . "',
+                        `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
+                        `gif_preview` = '". str_replace("'", "\'", $fileObj->gif_preview) . "',
+                        `tags` = '". str_replace("'", "\'", $fileObj->tags) . "'
+                        where id = " . $file['id'] . "
+                      ";
+                //echo '-------'.$sql.'--------';
+                $res = DB::$dbInstance->query($sql);
+
+                if($res) {
+                    self::saveFileTags($fileObj);
+                }
+
+                return true;
+            }
+            catch(Exception $e) {
+                return false;
+            }
+        }
+    }
+
+
+    public static function updateViewCount($file_md5_id) {
+        self::setTables();
+
+        $sql = 'update ' . self::$table_files . ' set view_count = view_count + 10, modified=modified where source_url_md5 = \'' . $file_md5_id . '\'';
+        return DB::$dbInstance->query($sql);
+    }
+
+    public static function markForDeleting($source_url) {
+        self::setTables();
+
+        $sql = 'update ' . self::$table_files . ' set saved_locally = -9 where source_url = \'' . $source_url . '\'';
+        return DB::$dbInstance->query($sql);
+    }
+
+    private static function validation($fileObj) {
+        if(empty($fileObj->title) || strstr($fileObj->title, 'gay') !== false ) {
+            error_log('File title cannot be empty and not a gay file');
+            return false;
+        }
+        if(empty($fileObj->source)) {
+            error_log('File source cannot be empty');
+            return false;
+        }
+        if(empty($fileObj->source_url)) {
+            error_log('File source_url cannot be empty');
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Before save file to file table or node, handle the tags
+     *
+     * @param $tag_array
+     * @return array
+     */
+    public static function handle_tag_array($tag_array) {
+        $default_terms = ['blow job', 'big tits', 'babe', 'fuck'];
+        $default_jp_terms = ['日本成人', '美女性感', '肉棒', '鸡吧', '鸡巴', '大肉棒', '大鸡吧', '大鸡巴', '大鸡吧操逼', '大鸡巴操逼', '日小穴', '操屁眼儿', '日逼', '大鸡吧操', '大鸡巴操', '大奶子', '大胸', '美女', '美穴'];
+
+        $tag_array = empty($tag_array) || count($tag_array) == 0 ? [$default_terms[array_rand($default_terms)]] : $tag_array;
+
+        $new_tags = [];
+        $jp_term = '';
+        $jp_term_exist = false;
+        foreach($tag_array as $tag) {
+            $tag = cleanStringForUrl($tag, ' ');
+            if(!empty($tag)) {
+                $new_tags[] = $tag;
+
+                if (strpos($tag, 'japan') !== false || strpos($tag, 'china') !== false || strpos($tag, 'chinese') !== false) {
+                    $jp_term = $default_jp_terms[array_rand($default_jp_terms)];
+                }
+                if (in_array($tag, $default_jp_terms)) {
+                    $jp_term_exist = true;
+                }
+            }
+        }
+        if(!empty($jp_term) && !$jp_term_exist) {
+            $new_tags[] = $jp_term;
+        }
+
+        return $new_tags;
+    }
+
+
+    private static function saveFileTags($fileObj) {
+        $file = self::getFileBySourceUrl($fileObj->source_url);
+        if($file) {
+            $tags = empty(trim($fileObj->tags)) ? [] : explode(',', $fileObj->tags);
+            $tags = self::handle_tag_array($tags);
+
+            foreach ($tags as $tag) {
+                $tagObj = Tag::upsertTag($tag);
+                Tag::upsertFileTag($tagObj['tid'], $tagObj['name'], $file['id'], $file['source_url_md5']);
+            }
+        }
+    }
+
+}

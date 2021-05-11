@@ -1,4 +1,4 @@
-# Foxim
+# Foximage
 
 This is a customized pictures/images/photos browsing website framework. Has to be run under Apache, PHP and MySQL. 
 
@@ -37,7 +37,7 @@ echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random
    - site name
    - site logo
    - menu
-   - api_server: (xparser server) is used in video detail page to make ajax call to parse video
+   - api_server: (xparser server) is used in File detail page to make ajax call to parse File
    
    
 ## Theme
@@ -71,10 +71,10 @@ echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random
    
    Note: if copy from a files table, run query like below:
 ```angular2html
-INSERT INTO `yfx_videos` 
+INSERT INTO `yfx_Files` 
 (`title`,`source`,`source_url`,`duration`,`saved_locally`,`quality_1080p`,`quality_720p`,`quality_480p`,`quality_360p`,`quality_240p`,`thumbnail`,`gif_preview`,`tags`,`source_url_md5`,`save_flag`,`file_size`,`user_name`,`view_count`) 
     SELECT `title`,`source`,`source_url`,`duration`,`saved_locally`,`quality_1080p`,`quality_720p`,`quality_480p`,`quality_360p`,`quality_240p`,`thumbnail`,`gif_preview`,`tags`,`source_url_md5`,`save_flag`,`file_size`,`user_name`,`view_count` 
-    FROM `pabcd_videos` 
+    FROM `pabcd_Files` 
     ORDER BY RAND();
 ```   
 
@@ -92,6 +92,6 @@ INSERT INTO `yfx_videos`
  
  - run script `misc/02_generate_users_and_assign_to_files.php` to generate users and assign to files
  
- - set cron of crawling-video on dev and sync prod
+ - set cron of crawling-File on dev and sync prod
  
    

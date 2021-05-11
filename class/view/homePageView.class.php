@@ -15,12 +15,12 @@ Class homePageView extends ViewCore {
     $this->setHeader($title, 'title');
     
 
-    if(!empty($this->data['videos'])) {
+    if(!empty($this->data['files'])) {
       $currentPage = empty($this->data['page']) ? 1 : $this->data['page'];
       import('Pager');
       $pager = new Pager(
               $this->listPerPage,
-              (int)$this->data['videos_total'],
+              (int)$this->data['files_total'],
               $currentPage,
               '/newest/');
       $pagerHtml = $pager->generatePages();

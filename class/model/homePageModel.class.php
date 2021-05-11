@@ -5,7 +5,7 @@
  * @author: Eric
  */
 
-import('dao.Video');
+import('dao.File');
 
 Class homePageModel extends ModelCore {
   
@@ -21,11 +21,11 @@ Class homePageModel extends ModelCore {
     $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
     $this->data['page'] = $page;
 
-    $res = Video::getVideos($page);
-    $this->data['videos'] = $res;
+    $res = File::getFiles($page);
+    $this->data['files'] = $res;
 
-    $count = Video::getAllVideoscount();
-    $this->data['videos_total'] = $count;
+    $count = File::getAllFilescount();
+    $this->data['files_total'] = $count;
 
     $this->data['pageTitle'] = 'Newest';
   }
@@ -47,12 +47,12 @@ Class homePageModel extends ModelCore {
           $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
           $this->data['page'] = $page;
 
-          $res = Video::searchVideo($term, $page);
+          $res = File::searchFile($term, $page);
 
-          $this->data['videos'] = $res;
+          $this->data['files'] = $res;
 
-          $count = Video::searchVideoCount($term);
-          $this->data['videos_total'] = $count;
+          $count = File::searchFileCount($term);
+          $this->data['files_total'] = $count;
       }
   }
 }

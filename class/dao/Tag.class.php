@@ -7,22 +7,22 @@
 
 Class Tag {
 
-    protected static $table_tag_video;
+    protected static $table_tag_file;
     protected static $table_tags;
-    protected static $table_videos;
+    protected static $table_files;
 
     private static function setTables() {
-        self::$table_tag_video = Config::get('db_table_prefix') . 'tag_video';
+        self::$table_tag_file = Config::get('db_table_prefix') . 'tag_file';
         self::$table_tags = Config::get('db_table_prefix') . 'tags';
-        self::$table_videos = Config::get('db_table_prefix') . 'videos';
+        self::$table_files = Config::get('db_table_prefix') . 'files';
     }
 
-    public static function getVideosByTag($tagName, $page=1, $limit=20) {
+    public static function getFilesByTag($tagName, $page=1, $limit=20) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
 
-        $cacheKey = THEME . '_videos_of_' . $tagName . '_' . $page . '_' . $limit;
+        $cacheKey = THEME . '_files_of_' . $tagName . '_' . $page . '_' . $limit;
         if(APCU && !isAdmin()) {
             $res = apcu_fetch($cacheKey);
             if(!empty($res)) {
@@ -34,7 +34,7 @@ Class Tag {
 
         $where = "WHERE term_name = '$tagName'";
 
-        $query = "SELECT v.* FROM ".self::$table_tag_video." tv join ".self::$table_videos." v on tv.video_id=v.id $where order by video_id desc limit " . $limit;
+        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on tv.file_id=v.id $where order by file_id desc limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             if(APCU && !isAdmin()) {
@@ -44,19 +44,19 @@ Class Tag {
             return $res;
         }
         else {
-            error_log('Failed to get videos by tag: ' . $tagName);
+            error_log('Failed to get files by tag: ' . $tagName);
             return false;
         }
     }
 
-    public static function getVideosByTagCount($tagName) {
+    public static function getFilesByTagCount($tagName) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
 
         $where = "WHERE term_name = '$tagName'";
 
-        $query = "SELECT count(*) as total FROM ".self::$table_tag_video." $where";
+        $query = "SELECT count(*) as total FROM ".self::$table_tag_file." $where";
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             return $res[0]['total'];
@@ -131,39 +131,39 @@ Class Tag {
         }
     }
 
-    public static function upsertVideoTag($tid, $tagName, $video_id, $video_md5_id) {
+    public static function upsertFileTag($tid, $tagName, $file_id, $file_md5_id) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
-        $res = DB::$dbInstance->getRows("select * from ".self::$table_tag_video." where term_name='". $tagName ."' and video_md5_id='" . $video_md5_id . "' ");
+        $res = DB::$dbInstance->getRows("select * from ".self::$table_tag_file." where term_name='". $tagName ."' and file_md5_id='" . $file_md5_id . "' ");
         if($res && count($res) > 0) {
             return $res[0];
         }
         else {
-            $res = DB::$dbInstance->query("insert into ".self::$table_tag_video." set 
+            $res = DB::$dbInstance->query("insert into ".self::$table_tag_file." set 
                     `tid`=" . $tid . ", 
                     `term_name`= '" . $tagName . "',
-                    video_id = ". $video_id . ",
-                    video_md5_id = '" . $video_md5_id . "'
+                    file_id = ". $file_id . ",
+                    file_md5_id = '" . $file_md5_id . "'
             ");
 
             return $res;
         }
     }
 
-    public static function deleteVideoTagsByVideoMd5Id($videoMd5Id) {
+    public static function deleteFileTagsByFileMd5Id($fileMd5Id) {
         self::setTables();
 
-        $videoMd5Id = DB::sanitizeInput($videoMd5Id);
-        $sql = "delete from " . self::$table_tag_video . " where video_md5_id='" . $videoMd5Id . "'";
+        $fileMd5Id = DB::sanitizeInput($fileMd5Id);
+        $sql = "delete from " . self::$table_tag_file . " where file_md5_id='" . $fileMd5Id . "'";
         return DB::$dbInstance->query($sql);
     }
 
-    public static function getTagsFromTagVideoByVideoMd5($videoMd5Id) {
+    public static function getTagsFromTagFileByFileMd5($fileMd5Id) {
         self::setTables();
 
         $tags = [];
-        $query = "select tid, term_name from " . self::$table_tag_video . " where video_md5_id ='" . $videoMd5Id . "'";
+        $query = "select tid, term_name from " . self::$table_tag_file . " where file_md5_id ='" . $fileMd5Id . "'";
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             $tags = $res;

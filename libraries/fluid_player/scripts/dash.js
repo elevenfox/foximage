@@ -5211,7 +5211,7 @@ ISOBox.prototype._boxProcessors['vlab'] = function() {
   this._procField('source_label', 'utf8');
 };
 
-// ISO/IEC 14496-12:2012 - 8.4.5.2 Video Media Header Box
+// ISO/IEC 14496-12:2012 - 8.4.5.2 File Media Header Box
 ISOBox.prototype._boxProcessors['vmhd'] = function() {
   this._procFullBox();
   this._procField('graphicsmode', 'uint', 16);
@@ -15912,8 +15912,8 @@ var FactoryMaker = (function () {
 
     /**
      * Use this method from your extended object.  this.factory is injected into your object.
-     * this.factory.getSingletonInstance(this.context, 'VideoModel')
-     * will return the video model for use in the extended object.
+     * this.factory.getSingletonInstance(this.context, 'FileModel')
+     * will return the File model for use in the extended object.
      *
      * @param {Object} context - injected into extended object as this.context
      * @param {string} className - string name found in all dash.js objects
@@ -16219,7 +16219,7 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  *          liveCatchUpPlaybackRate: 0.5,
  *          lastBitrateCachingInfo: { enabled: true, ttl: 360000 },
  *          lastMediaSettingsCachingInfo: { enabled: true, ttl: 360000 },
- *          cacheLoadThresholds: { video: 50, audio: 5 },
+ *          cacheLoadThresholds: { File: 50, audio: 5 },
  *          retryIntervals: {
  *              MPD: 500,
  *              XLinkExpansion: 500,
@@ -16247,12 +16247,12 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  *              useDeadTimeLatency: true,
  *              limitBitrateByPortal: false,
  *              usePixelRatioInLimitBitrateByPortal: false,
- *              maxBitrate: { audio: -1, video: -1 },
- *              minBitrate: { audio: -1, video: -1 },
- *              maxRepresentationRatio: { audio: 1, video: 1 },
- *              initialBitrate: { audio: -1, video: -1 },
- *              initialRepresentationRatio: { audio: -1, video: -1 },
- *              autoSwitchBitrate: { audio: true, video: true }
+ *              maxBitrate: { audio: -1, File: -1 },
+ *              minBitrate: { audio: -1, File: -1 },
+ *              maxRepresentationRatio: { audio: 1, File: 1 },
+ *              initialBitrate: { audio: -1, File: -1 },
+ *              initialRepresentationRatio: { audio: -1, File: -1 },
+ *              autoSwitchBitrate: { audio: true, File: true }
  *          }
  *      }
  * }
@@ -16309,13 +16309,13 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  * If true, only the download portion will be considered part of the download bitrate
  * and latency will be regarded as static. If false, the reciprocal of the whole
  * transfer time will be used.
- * @property {boolean} [limitBitrateByPortal=false] If true, the size of the video portal will limit the max chosen video resolution.
+ * @property {boolean} [limitBitrateByPortal=false] If true, the size of the File portal will limit the max chosen File resolution.
  * @property {boolean} [usePixelRatioInLimitBitrateByPortal=false]
  * Sets whether to take into account the device's pixel ratio when defining the portal dimensions.
  * Useful on, for example, retina displays.
- * @property {module:Settings~AudioVideoSettings} [maxBitrate={audio: -1, video: -1}] The maximum bitrate that the ABR algorithms will choose. Use NaN for no limit.
- * @property {module:Settings~AudioVideoSettings} [minBitrate={audio: -1, video: -1}] The minimum bitrate that the ABR algorithms will choose. Use NaN for no limit.
- * @property {module:Settings~AudioVideoSettings} [maxRepresentationRatio={audio: 1, video: 1}]
+ * @property {module:Settings~AudioFileSettings} [maxBitrate={audio: -1, File: -1}] The maximum bitrate that the ABR algorithms will choose. Use NaN for no limit.
+ * @property {module:Settings~AudioFileSettings} [minBitrate={audio: -1, File: -1}] The minimum bitrate that the ABR algorithms will choose. Use NaN for no limit.
+ * @property {module:Settings~AudioFileSettings} [maxRepresentationRatio={audio: 1, File: 1}]
  * When switching multi-bitrate content (auto or manual mode) this property specifies the maximum representation allowed,
  * as a proportion of the size of the representation set.
  *
@@ -16325,9 +16325,9 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  * i.e. the lowest value from executing these rules is used.
  *
  * This feature is typically used to reserve higher representations for playback only when connected over a fast connection.
- * @property {module:Settings~AudioVideoSettings} [initialBitrate={audio: -1, video: -1}] Explicitly set the starting bitrate for audio or video
- * @property {module:Settings~AudioVideoSettings} [initialRepresentationRatio={audio: -1, video: -1}] Explicitly set the initial representation ratio. If initalBitrate is specified, this is ignored.
- * @property {module:Settings~AudioVideoSettings} [autoSwitchBitrate={audio: true, video: true}] Indicates whether the player should enable ABR algorithms to switch the bitrate.
+ * @property {module:Settings~AudioFileSettings} [initialBitrate={audio: -1, File: -1}] Explicitly set the starting bitrate for audio or File
+ * @property {module:Settings~AudioFileSettings} [initialRepresentationRatio={audio: -1, File: -1}] Explicitly set the initial representation ratio. If initalBitrate is specified, this is ignored.
+ * @property {module:Settings~AudioFileSettings} [autoSwitchBitrate={audio: true, File: true}] Indicates whether the player should enable ABR algorithms to switch the bitrate.
 */
 
 /**
@@ -16347,7 +16347,7 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  * <p>If set, this parameter will take precedence over setLiveDelayFragmentCount and manifest info</p>
  * @property {boolean} [scheduleWhilePaused=true]
  * Set to true if you would like dash.js to keep downloading fragments in the background
- * when the video element is paused.
+ * when the File element is paused.
  * @property {boolean} [fastSwitchEnabled=false]
  * When enabled, after an ABR up-switch in quality, instead of requesting and appending the next fragment
  * at the end of the current buffer range it is requested and appended closer to the current time
@@ -16439,12 +16439,12 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  * The default expiration is one hour, defined in milliseconds. If expired, the default initial bit rate (closest to 1000 kbps) will be used
  * for that session and a new bit rate will be stored during that session.
  * @property {module:Settings~CachingInfoSettings} [lastMediaSettingsCachingInfo={enabled: true, ttl: 360000}]
- * Set to false if you would like to disable the last known lang for audio (or camera angle for video) from being stored during playback and used
+ * Set to false if you would like to disable the last known lang for audio (or camera angle for File) from being stored during playback and used
  * to set the initial settings for subsequent playback within the expiration window.
  *
  * The default expiration is one hour, defined in milliseconds. If expired, the default settings will be used
  * for that session and a new settings will be stored during that session.
- * @property {module:Settings~AudioVideoSettings} [cacheLoadThresholds={video: 50, audio: 5}]
+ * @property {module:Settings~AudioFileSettings} [cacheLoadThresholds={File: 50, audio: 5}]
  * For a given media type, the threshold which defines if the response to a fragment
  * request is coming from browser cache or not.
  * @property {module:Settings~RequestTypeSettings} [retryIntervals] Time in milliseconds of which to reload a failed file load attempt.
@@ -16459,9 +16459,9 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  */
 
 /**
-* @typedef {Object} module:Settings~AudioVideoSettings
+* @typedef {Object} module:Settings~AudioFileSettings
 * @property {number|boolean} [audio] Configuration for audio media type of tracks.
-* @property {number|boolean} [video] Configuration for video media type of tracks.
+* @property {number|boolean} [File] Configuration for File media type of tracks.
 */
 
 /**
@@ -16470,7 +16470,7 @@ var _streamingVoMetricsHTTPRequest = _dereq_(239);
  * @property {number} [XLinkExpansion] XLink expansion type of requests
  * @property {number} [InitializationSegment] Request to retrieve an initialization segment
  * @property {number} [IndexSegment] Request to retrieve an index segment (SegmentBase)
- * @property {number} [MediaSegment] Request to retrieve a media segment (video/audio/image/text chunk)
+ * @property {number} [MediaSegment] Request to retrieve a media segment (File/audio/image/text chunk)
  * @property {number} [BitstreamSwitchingSegment] Bitrate stream switching type of request
  * @property {number} [other] Other type of request
  *
@@ -16520,7 +16520,7 @@ function Settings() {
             liveCatchUpPlaybackRate: 0.5,
             lastBitrateCachingInfo: { enabled: true, ttl: 360000 },
             lastMediaSettingsCachingInfo: { enabled: true, ttl: 360000 },
-            cacheLoadThresholds: { video: 50, audio: 5 },
+            cacheLoadThresholds: { File: 50, audio: 5 },
             retryIntervals: (_retryIntervals = {}, _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.MPD_TYPE, 500), _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.XLINK_EXPANSION_TYPE, 500), _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.MEDIA_SEGMENT_TYPE, 1000), _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.INIT_SEGMENT_TYPE, 1000), _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.BITSTREAM_SWITCHING_SEGMENT_TYPE, 1000), _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.INDEX_SEGMENT_TYPE, 1000), _defineProperty(_retryIntervals, _streamingVoMetricsHTTPRequest.HTTPRequest.OTHER_TYPE, 1000), _retryIntervals),
             retryAttempts: (_retryAttempts = {}, _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.MPD_TYPE, 3), _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.XLINK_EXPANSION_TYPE, 1), _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.MEDIA_SEGMENT_TYPE, 3), _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.INIT_SEGMENT_TYPE, 3), _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.BITSTREAM_SWITCHING_SEGMENT_TYPE, 3), _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.INDEX_SEGMENT_TYPE, 3), _defineProperty(_retryAttempts, _streamingVoMetricsHTTPRequest.HTTPRequest.OTHER_TYPE, 3), _retryAttempts),
             abr: {
@@ -16532,12 +16532,12 @@ function Settings() {
                 useDeadTimeLatency: true,
                 limitBitrateByPortal: false,
                 usePixelRatioInLimitBitrateByPortal: false,
-                maxBitrate: { audio: -1, video: -1 },
-                minBitrate: { audio: -1, video: -1 },
-                maxRepresentationRatio: { audio: 1, video: 1 },
-                initialBitrate: { audio: -1, video: -1 },
-                initialRepresentationRatio: { audio: -1, video: -1 },
-                autoSwitchBitrate: { audio: true, video: true }
+                maxBitrate: { audio: -1, File: -1 },
+                minBitrate: { audio: -1, File: -1 },
+                maxRepresentationRatio: { audio: 1, File: 1 },
+                initialBitrate: { audio: -1, File: -1 },
+                initialRepresentationRatio: { audio: -1, File: -1 },
+                autoSwitchBitrate: { audio: true, File: true }
             }
         }
     };
@@ -17042,7 +17042,7 @@ var CoreEvents = (function (_EventsBase) {
         this.TIMED_TEXT_REQUESTED = 'timedTextRequested';
         this.TIME_SYNCHRONIZATION_COMPLETED = 'timeSynchronizationComplete';
         this.URL_RESOLUTION_FAILED = 'urlResolutionFailed';
-        this.VIDEO_CHUNK_RECEIVED = 'videoChunkReceived';
+        this.File_CHUNK_RECEIVED = 'FileChunkReceived';
         this.WALLCLOCK_TIME_UPDATED = 'wallclockTimeUpdated';
         this.XLINK_ELEMENT_LOADED = 'xlinkElementLoaded';
         this.XLINK_READY = 'xlinkReady';
@@ -17408,7 +17408,7 @@ function DashAdapter() {
         if (selectedVoPeriod) {
             periodId = selectedVoPeriod.id;
         }
-        var adaptationsForType = dashManifestModel.getAdaptationsForType(manifest, streamInfo.index, type !== constants.EMBEDDED_TEXT ? type : constants.VIDEO);
+        var adaptationsForType = dashManifestModel.getAdaptationsForType(manifest, streamInfo.index, type !== constants.EMBEDDED_TEXT ? type : constants.File);
 
         if (!adaptationsForType || adaptationsForType.length === 0) return mediaArr;
 
@@ -17434,7 +17434,7 @@ function DashAdapter() {
                                 if (!media) {
                                     media = convertAdaptationToMediaInfo.call(this, voAdaptations[periodId][idx]);
                                 }
-                                convertVideoInfoToEmbeddedTextInfo(media, parts[j].substring(0, 3), parts[j].substring(4));
+                                convertFileInfoToEmbeddedTextInfo(media, parts[j].substring(0, 3), parts[j].substring(4));
                                 mediaArr.push(media);
                                 media = null;
                             }
@@ -17444,20 +17444,20 @@ function DashAdapter() {
                                 if (!media) {
                                     media = convertAdaptationToMediaInfo.call(this, voAdaptations[periodId][idx]);
                                 }
-                                convertVideoInfoToEmbeddedTextInfo(media, 'CC' + (j + 1), parts[j]);
+                                convertFileInfoToEmbeddedTextInfo(media, 'CC' + (j + 1), parts[j]);
                                 mediaArr.push(media);
                                 media = null;
                             }
                         }
                     } else if (accessibility.indexOf('cea-608') === 0) {
                         // Nothing known. We interpret it as CC1=eng
-                        convertVideoInfoToEmbeddedTextInfo(media, constants.CC1, 'eng');
+                        convertFileInfoToEmbeddedTextInfo(media, constants.CC1, 'eng');
                         mediaArr.push(media);
                         media = null;
                     }
                 }
             } else if (type === constants.IMAGE) {
-                convertVideoInfoToThumbnailInfo(media);
+                convertFileInfoToThumbnailInfo(media);
                 mediaArr.push(media);
                 media = null;
             } else if (media) {
@@ -17676,7 +17676,7 @@ function DashAdapter() {
     /**
      * This method returns the current max index based on what is defined in the MPD.
      *
-     * @param {string} bufferType - String 'audio' or 'video',
+     * @param {string} bufferType - String 'audio' or 'File',
      * @param {number} periodIdx - Make sure this is the period index not id
      * @return {number}
      * @memberof module:DashAdapter
@@ -17760,7 +17760,7 @@ function DashAdapter() {
         return mediaInfo;
     }
 
-    function convertVideoInfoToEmbeddedTextInfo(mediaInfo, channel, lang) {
+    function convertFileInfoToEmbeddedTextInfo(mediaInfo, channel, lang) {
         mediaInfo.id = channel; // CC1, CC2, CC3, or CC4
         mediaInfo.index = 100 + parseInt(channel.substring(2, 3));
         mediaInfo.type = constants.EMBEDDED_TEXT;
@@ -17771,7 +17771,7 @@ function DashAdapter() {
         mediaInfo.roles = ['caption'];
     }
 
-    function convertVideoInfoToThumbnailInfo(mediaInfo) {
+    function convertFileInfoToThumbnailInfo(mediaInfo) {
         mediaInfo.type = constants.IMAGE;
     }
 
@@ -18661,7 +18661,7 @@ function DashMetrics(config) {
      * @instance
      */
     function getCurrentDroppedFrames() {
-        var metrics = metricsModel.getMetricsFor(_streamingConstantsConstants2['default'].VIDEO, true);
+        var metrics = metricsModel.getMetricsFor(_streamingConstantsConstants2['default'].File, true);
         return getCurrent(metrics, _streamingConstantsMetricsConstants2['default'].DROPPED_FRAMES);
     }
 
@@ -18671,7 +18671,7 @@ function DashMetrics(config) {
      * @instance
      */
     function addDroppedFrames(quality) {
-        metricsModel.addDroppedFrames(_streamingConstantsConstants2['default'].VIDEO, quality);
+        metricsModel.addDroppedFrames(_streamingConstantsConstants2['default'].File, quality);
     }
 
     /**
@@ -18769,7 +18769,7 @@ function DashMetrics(config) {
      * @instance
      */
     function getCurrentDVRInfo(mediaType) {
-        var metrics = mediaType ? metricsModel.getMetricsFor(mediaType, true) : metricsModel.getMetricsFor(_streamingConstantsConstants2['default'].VIDEO, true) || metricsModel.getMetricsFor(_streamingConstantsConstants2['default'].AUDIO, true);
+        var metrics = mediaType ? metricsModel.getMetricsFor(mediaType, true) : metricsModel.getMetricsFor(_streamingConstantsConstants2['default'].File, true) || metricsModel.getMetricsFor(_streamingConstantsConstants2['default'].AUDIO, true);
         return getCurrent(metrics, _streamingConstantsMetricsConstants2['default'].DVR_INFO);
     }
 
@@ -20152,7 +20152,7 @@ function RepresentationController() {
         currentVoRepresentation = getRepresentationForQuality(quality);
         realAdaptation = newRealAdaptation;
 
-        if (type !== _streamingConstantsConstants2['default'].VIDEO && type !== _streamingConstantsConstants2['default'].AUDIO && type !== _streamingConstantsConstants2['default'].FRAGMENTED_TEXT) {
+        if (type !== _streamingConstantsConstants2['default'].File && type !== _streamingConstantsConstants2['default'].AUDIO && type !== _streamingConstantsConstants2['default'].FRAGMENTED_TEXT) {
             updating = false;
             eventBus.trigger(_coreEventsEvents2['default'].DATA_UPDATE_COMPLETED, { sender: this, data: realAdaptation, currentRepresentation: currentVoRepresentation });
             return;
@@ -20167,9 +20167,9 @@ function RepresentationController() {
         checkConfig();
         var now = new Date();
         var currentRepresentation = getCurrentRepresentation();
-        var currentVideoTimeMs = playbackController.getTime() * 1000;
+        var currentFileTimeMs = playbackController.getTime() * 1000;
         if (currentRepresentation) {
-            dashMetrics.addRepresentationSwitch(currentRepresentation.adaptation.type, now, currentVideoTimeMs, currentRepresentation.id);
+            dashMetrics.addRepresentationSwitch(currentRepresentation.adaptation.type, now, currentFileTimeMs, currentRepresentation.id);
         }
     }
 
@@ -20719,8 +20719,8 @@ function DashManifestModel() {
         return getIsTypeOf(adaptation, _streamingConstantsConstants2['default'].AUDIO);
     }
 
-    function getIsVideo(adaptation) {
-        return getIsTypeOf(adaptation, _streamingConstantsConstants2['default'].VIDEO);
+    function getIsFile(adaptation) {
+        return getIsTypeOf(adaptation, _streamingConstantsConstants2['default'].File);
     }
 
     function getIsFragmentedText(adaptation) {
@@ -21170,8 +21170,8 @@ function DashManifestModel() {
                     voAdaptationSet.type = _streamingConstantsConstants2['default'].MUXED;
                 } else if (getIsAudio(realAdaptationSet)) {
                     voAdaptationSet.type = _streamingConstantsConstants2['default'].AUDIO;
-                } else if (getIsVideo(realAdaptationSet)) {
-                    voAdaptationSet.type = _streamingConstantsConstants2['default'].VIDEO;
+                } else if (getIsFile(realAdaptationSet)) {
+                    voAdaptationSet.type = _streamingConstantsConstants2['default'].File;
                 } else if (getIsFragmentedText(realAdaptationSet)) {
                     voAdaptationSet.type = _streamingConstantsConstants2['default'].FRAGMENTED_TEXT;
                 } else if (getIsImage(realAdaptationSet)) {
@@ -24636,7 +24636,7 @@ var Segment = function Segment() {
   // This is supposed to match the time encoded in the media Segment
   this.mediaStartTime = NaN;
   // When the source buffer timeOffset is set to MSETimeOffset this is the
-  // time that will match the seekTarget and video.currentTime
+  // time that will match the seekTarget and File.currentTime
   this.presentationStartTime = NaN;
   // Do not schedule this segment until
   this.availabilityStartTime = NaN;
@@ -24644,7 +24644,7 @@ var Segment = function Segment() {
   this.availabilityEndTime = NaN;
   // The index of the segment inside the availability window
   this.availabilityIdx = NaN;
-  // For dynamic mpd's, this is the wall clock time that the video
+  // For dynamic mpd's, this is the wall clock time that the File
   // element currentTime should be presentationStartTime
   this.wallStartTime = NaN;
   this.representation = null;
@@ -25568,9 +25568,9 @@ var _controllersAbrController = _dereq_(112);
 
 var _controllersAbrController2 = _interopRequireDefault(_controllersAbrController);
 
-var _modelsVideoModel = _dereq_(154);
+var _modelsFileModel = _dereq_(154);
 
-var _modelsVideoModel2 = _interopRequireDefault(_modelsVideoModel);
+var _modelsFileModel2 = _interopRequireDefault(_modelsFileModel);
 
 var _utilsDOMStorage = _dereq_(208);
 
@@ -25654,10 +25654,10 @@ function MediaPlayer() {
     */
     var PLAYBACK_NOT_INITIALIZED_ERROR = 'You must first call initialize() and set a valid source and view before calling this method';
     /**
-    * @constant {string} ELEMENT_NOT_ATTACHED_ERROR error string thrown when a function is called before the dash.js has received a reference of an HTML5 video element
+    * @constant {string} ELEMENT_NOT_ATTACHED_ERROR error string thrown when a function is called before the dash.js has received a reference of an HTML5 File element
     * @inner
     */
-    var ELEMENT_NOT_ATTACHED_ERROR = 'You must first call attachView() to set the video element before calling this method';
+    var ELEMENT_NOT_ATTACHED_ERROR = 'You must first call attachView() to set the File element before calling this method';
     /**
     * @constant {string} SOURCE_NOT_ATTACHED_ERROR error string thrown when a function is called before the dash.js has received a valid source stream.
     * @inner
@@ -25696,7 +25696,7 @@ function MediaPlayer() {
         playbackController = undefined,
         dashMetrics = undefined,
         manifestModel = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         textController = undefined,
         uriFragmentModel = undefined,
         domStorage = undefined;
@@ -25717,7 +25717,7 @@ function MediaPlayer() {
         adapter = null;
         _coreEventsEvents2['default'].extend(_MediaPlayerEvents2['default']);
         mediaPlayerModel = (0, _modelsMediaPlayerModel2['default'])(context).getInstance();
-        videoModel = (0, _modelsVideoModel2['default'])(context).getInstance();
+        FileModel = (0, _modelsFileModel2['default'])(context).getInstance();
         uriFragmentModel = (0, _modelsURIFragmentModel2['default'])(context).getInstance();
     }
 
@@ -25763,7 +25763,7 @@ function MediaPlayer() {
      * ALL arguments are optional and there are individual methods to set each argument later on.
      * The args in this method are just for convenience and should only be used for a simple player setup.
      *
-     * @param {HTML5MediaElement=} view - Optional arg to set the video element. {@link module:MediaPlayer#attachView attachView()}
+     * @param {HTML5MediaElement=} view - Optional arg to set the File element. {@link module:MediaPlayer#attachView attachView()}
      * @param {string=} source - Optional arg to set the media source. {@link module:MediaPlayer#attachSource attachSource()}
      * @param {boolean=} AutoPlay - Optional arg to set auto play. {@link module:MediaPlayer#setAutoPlay setAutoPlay()}
      * @see {@link module:MediaPlayer#attachView attachView()}
@@ -25834,7 +25834,7 @@ function MediaPlayer() {
     }
 
     /**
-     * Sets the MPD source and the video element to null. You can also reset the MediaPlayer by
+     * Sets the MPD source and the File element to null. You can also reset the MediaPlayer by
      * calling attachSource with a new source file.
      *
      * Calling this method is all that is necessary to destroy a MediaPlayer instance.
@@ -25859,7 +25859,7 @@ function MediaPlayer() {
     }
 
     /**
-     * The ready state of the MediaPlayer based on both the video element and MPD source being defined.
+     * The ready state of the MediaPlayer based on both the File element and MPD source being defined.
      *
      * @returns {boolean} The current ready state of the MediaPlayer
      * @see {@link module:MediaPlayer#attachView attachView()}
@@ -25868,7 +25868,7 @@ function MediaPlayer() {
      * @instance
      */
     function isReady() {
-        return !!source && !!videoModel.getElement();
+        return !!source && !!FileModel.getElement();
     }
 
     /**
@@ -25936,7 +25936,7 @@ function MediaPlayer() {
      * @instance
      */
     function preload() {
-        if (videoModel.getElement() || streamingInitialized) {
+        if (FileModel.getElement() || streamingInitialized) {
             return false;
         }
         if (source) {
@@ -25948,7 +25948,7 @@ function MediaPlayer() {
 
     /**
      * The play method initiates playback of the media defined by the {@link module:MediaPlayer#attachSource attachSource()} method.
-     * This method will call play on the native Video Element.
+     * This method will call play on the native File Element.
      *
      * @see {@link module:MediaPlayer#attachSource attachSource()}
      * @throws {@link module:MediaPlayer~PLAYBACK_NOT_INITIALIZED_ERROR PLAYBACK_NOT_INITIALIZED_ERROR} if called before initializePlayback function
@@ -25965,7 +25965,7 @@ function MediaPlayer() {
     }
 
     /**
-     * This method will call pause on the native Video Element.
+     * This method will call pause on the native File Element.
      *
      * @throws {@link module:MediaPlayer~PLAYBACK_NOT_INITIALIZED_ERROR PLAYBACK_NOT_INITIALIZED_ERROR} if called before initializePlayback function
      * @memberof module:MediaPlayer
@@ -25979,7 +25979,7 @@ function MediaPlayer() {
     }
 
     /**
-     * Returns a Boolean that indicates whether the Video Element is paused.
+     * Returns a Boolean that indicates whether the File Element is paused.
      * @return {boolean}
      * @throws {@link module:MediaPlayer~PLAYBACK_NOT_INITIALIZED_ERROR PLAYBACK_NOT_INITIALIZED_ERROR} if called before initializePlayback function
      * @memberof module:MediaPlayer
@@ -25993,7 +25993,7 @@ function MediaPlayer() {
     }
 
     /**
-     * Sets the currentTime property of the attached video element.  If it is a live stream with a
+     * Sets the currentTime property of the attached File element.  If it is a live stream with a
      * timeShiftBufferLength, then the DVR window offset will be automatically calculated.
      *
      * @param {number} value - A relative time, in seconds, based on the return value of the {@link module:MediaPlayer#duration duration()} method is expected
@@ -26047,13 +26047,13 @@ function MediaPlayer() {
     }
 
     /**
-     * Use this method to set the native Video Element's playback rate.
+     * Use this method to set the native File Element's playback rate.
      * @param {number} value
      * @memberof module:MediaPlayer
      * @instance
      */
     function setPlaybackRate(value) {
-        getVideoElement().playbackRate = value;
+        getFileElement().playbackRate = value;
     }
 
     /**
@@ -26063,11 +26063,11 @@ function MediaPlayer() {
      * @instance
      */
     function getPlaybackRate() {
-        return getVideoElement().playbackRate;
+        return getFileElement().playbackRate;
     }
 
     /**
-     * Use this method to set the native Video Element's muted state. Takes a Boolean that determines whether audio is muted. true if the audio is muted and false otherwise.
+     * Use this method to set the native File Element's muted state. Takes a Boolean that determines whether audio is muted. true if the audio is muted and false otherwise.
      * @param {boolean} value
      * @memberof module:MediaPlayer
      * @throws {@link Constants#BAD_ARGUMENT_ERROR BAD_ARGUMENT_ERROR} if called with an invalid argument, not boolean type.
@@ -26075,7 +26075,7 @@ function MediaPlayer() {
      */
     function setMute(value) {
         (0, _utilsSupervisorTools.checkParameterType)(value, 'boolean');
-        getVideoElement().muted = value;
+        getFileElement().muted = value;
     }
 
     /**
@@ -26085,7 +26085,7 @@ function MediaPlayer() {
      * @instance
      */
     function isMuted() {
-        return getVideoElement().muted;
+        return getFileElement().muted;
     }
 
     /**
@@ -26099,7 +26099,7 @@ function MediaPlayer() {
         if (typeof value !== 'number' || isNaN(value) || value < 0.0 || value > 1.0) {
             throw _constantsConstants2['default'].BAD_ARGUMENT_ERROR;
         }
-        getVideoElement().volume = value;
+        getFileElement().volume = value;
     }
 
     /**
@@ -26109,13 +26109,13 @@ function MediaPlayer() {
      * @instance
      */
     function getVolume() {
-        return getVideoElement().volume;
+        return getFileElement().volume;
     }
 
     /**
      * The length of the buffer for a given media type, in seconds. Valid media
-     * types are "video", "audio" and "fragmentedText". If no type is passed
-     * in, then the minimum of video, audio and fragmentedText buffer length is
+     * types are "File", "audio" and "fragmentedText". If no type is passed
+     * in, then the minimum of File, audio and fragmentedText buffer length is
      * returned. NaN is returned if an invalid type is requested, the
      * presentation does not contain that type, or if no arguments are passed
      * and the presentation does not include any adaption sets of valid media
@@ -26128,7 +26128,7 @@ function MediaPlayer() {
      * @instance
      */
     function getBufferLength(type) {
-        var types = [_constantsConstants2['default'].VIDEO, _constantsConstants2['default'].AUDIO, _constantsConstants2['default'].FRAGMENTED_TEXT];
+        var types = [_constantsConstants2['default'].File, _constantsConstants2['default'].AUDIO, _constantsConstants2['default'].FRAGMENTED_TEXT];
         if (!type) {
             var buffer = types.map(function (t) {
                 return getTracksFor(t).length > 0 ? getDashMetrics().getCurrentBufferLevel(t) : Number.MAX_VALUE;
@@ -26165,7 +26165,7 @@ function MediaPlayer() {
     /**
      * This method should only be used with a live stream that has a valid timeShiftBufferLength (DVR Window).
      * NOTE - If you do not need the raw offset value (i.e. media analytics, tracking, etc) consider using the {@link module:MediaPlayer#seek seek()} method
-     * which will calculate this value for you and set the video element's currentTime property all in one simple call.
+     * which will calculate this value for you and set the File element's currentTime property all in one simple call.
      *
      * @param {number} value - A relative time, in seconds, based on the return value of the {@link module:MediaPlayer#duration duration()} method is expected.
      * @returns {number} A value that is relative the available range within the timeShiftBufferLength (DVR Window).
@@ -26206,7 +26206,7 @@ function MediaPlayer() {
         if (!playbackInitialized) {
             throw PLAYBACK_NOT_INITIALIZED_ERROR;
         }
-        var t = getVideoElement().currentTime;
+        var t = getFileElement().currentTime;
 
         if (streamId !== undefined) {
             t = streamController.getTimeRelativeToStreamId(t, streamId);
@@ -26230,7 +26230,7 @@ function MediaPlayer() {
         if (!playbackInitialized) {
             throw PLAYBACK_NOT_INITIALIZED_ERROR;
         }
-        var d = getVideoElement().duration;
+        var d = getFileElement().duration;
 
         if (playbackController.getIsDynamic()) {
 
@@ -26292,7 +26292,7 @@ function MediaPlayer() {
      *
      * It calls getTopQualityIndexFor internally
      *
-     * @param {string} type - 'video' or 'audio' are the type options.
+     * @param {string} type - 'File' or 'audio' are the type options.
      * @memberof module:MediaPlayer
      * @returns {BitrateInfo | null}
      * @throws {@link module:MediaPlayer~STREAMING_NOT_INITIALIZED_ERROR STREAMING_NOT_INITIALIZED_ERROR} if called before initializePlayback function
@@ -26306,11 +26306,11 @@ function MediaPlayer() {
     }
 
     /**
-     * Gets the current download quality for media type video, audio or images. For video and audio types the ABR
+     * Gets the current download quality for media type File, audio or images. For File and audio types the ABR
      * rules update this value before every new download unless setAutoSwitchQualityFor(type, false) is called. For 'image'
      * type, thumbnails, there is no ABR algorithm and quality is set manually.
      *
-     * @param {string} type - 'video', 'audio' or 'image' (thumbnails)
+     * @param {string} type - 'File', 'audio' or 'image' (thumbnails)
      * @returns {number} the quality index, 0 corresponding to the lowest bitrate
      * @memberof module:MediaPlayer
      * @see {@link module:MediaPlayer#setAutoSwitchQualityFor setAutoSwitchQualityFor()}
@@ -26338,7 +26338,7 @@ function MediaPlayer() {
      * Sets the current quality for media type instead of letting the ABR Heuristics automatically selecting it.
      * This value will be overwritten by the ABR rules unless setAutoSwitchQualityFor(type, false) is called.
      *
-     * @param {string} type - 'video', 'audio' or 'image'
+     * @param {string} type - 'File', 'audio' or 'image'
      * @param {number} value - the quality index, 0 corresponding to the lowest bitrate
      * @memberof module:MediaPlayer
      * @see {@link module:MediaPlayer#setAutoSwitchQualityFor setAutoSwitchQualityFor()}
@@ -26364,7 +26364,7 @@ function MediaPlayer() {
     }
 
     /**
-     * Update the video element size variables
+     * Update the File element size variables
      * Should be called on window resize (or any other time player is resized). Fullscreen does trigger a window resize event.
      *
      * Once windowResizeEventCalled = true, abrController.checkPortalSize() will use element size variables rather than querying clientWidth every time.
@@ -26713,7 +26713,7 @@ function MediaPlayer() {
 
     /**
      * Use this method to change the current text track for both external time text files and fragmented text tracks. There is no need to
-     * set the track mode on the video object to switch a track when using this method.
+     * set the track mode on the File object to switch a track when using this method.
      * @param {number} idx - Index of track based on the order of the order the tracks are added Use -1 to disable all tracks. (turn captions off).  Use module:MediaPlayer#dashjs.MediaPlayer.events.TEXT_TRACK_ADDED.
      * @see {@link MediaPlayerEvents#event:TEXT_TRACK_ADDED dashjs.MediaPlayer.events.TEXT_TRACK_ADDED}
      * @throws {@link module:MediaPlayer~PLAYBACK_NOT_INITIALIZED_ERROR PLAYBACK_NOT_INITIALIZED_ERROR} if called before initializePlayback function
@@ -26750,7 +26750,7 @@ function MediaPlayer() {
     function displayCaptionsOnTop(value) {
         var textTracks = (0, _textTextTracks2['default'])(context).getInstance();
         textTracks.setConfig({
-            videoModel: videoModel
+            FileModel: FileModel
         });
         textTracks.initialize();
         textTracks.setDisplayCConTop(value);
@@ -26758,26 +26758,26 @@ function MediaPlayer() {
 
     /*
     ---------------------------------------------------------------------------
-         VIDEO ELEMENT MANAGEMENT
+         File ELEMENT MANAGEMENT
      ---------------------------------------------------------------------------
     */
 
     /**
-     * Returns instance of Video Element that was attached by calling attachView()
+     * Returns instance of File Element that was attached by calling attachView()
      * @returns {Object}
      * @memberof module:MediaPlayer
      * @throws {@link module:MediaPlayer~ELEMENT_NOT_ATTACHED_ERROR ELEMENT_NOT_ATTACHED_ERROR} if called before attachView function
      * @instance
      */
-    function getVideoElement() {
-        if (!videoModel.getElement()) {
+    function getFileElement() {
+        if (!FileModel.getElement()) {
             throw ELEMENT_NOT_ATTACHED_ERROR;
         }
-        return videoModel.getElement();
+        return FileModel.getElement();
     }
 
     /**
-     * Use this method to attach an HTML5 VideoElement for dash.js to operate upon.
+     * Use this method to attach an HTML5 FileElement for dash.js to operate upon.
      *
      * @param {Object} element - An HTMLMediaElement that has already been defined in the DOM (or equivalent stub).
      * @memberof module:MediaPlayer
@@ -26789,7 +26789,7 @@ function MediaPlayer() {
             throw MEDIA_PLAYER_NOT_INITIALIZED_ERROR;
         }
 
-        videoModel.setElement(element);
+        FileModel.setElement(element);
 
         if (element) {
             detectProtection();
@@ -26797,7 +26797,7 @@ function MediaPlayer() {
             detectMss();
 
             if (streamController) {
-                streamController.switchToVideoElement();
+                streamController.switchToFileElement();
             }
         }
 
@@ -26816,22 +26816,22 @@ function MediaPlayer() {
      * @instance
      */
     function getTTMLRenderingDiv() {
-        return videoModel ? videoModel.getTTMLRenderingDiv() : null;
+        return FileModel ? FileModel.getTTMLRenderingDiv() : null;
     }
 
     /**
      * Use this method to attach an HTML5 div for dash.js to render rich TTML subtitles.
      *
-     * @param {HTMLDivElement} div - An unstyled div placed after the video element. It will be styled to match the video size and overlay z-order.
+     * @param {HTMLDivElement} div - An unstyled div placed after the File element. It will be styled to match the File size and overlay z-order.
      * @memberof module:MediaPlayer
      * @throws {@link module:MediaPlayer~ELEMENT_NOT_ATTACHED_ERROR ELEMENT_NOT_ATTACHED_ERROR} if called before attachView function
      * @instance
      */
     function attachTTMLRenderingDiv(div) {
-        if (!videoModel.getElement()) {
+        if (!FileModel.getElement()) {
             throw ELEMENT_NOT_ATTACHED_ERROR;
         }
-        videoModel.setTTMLRenderingDiv(div);
+        FileModel.setTTMLRenderingDiv(div);
     }
 
     /*
@@ -26999,7 +26999,7 @@ function MediaPlayer() {
      *
      * MediaController.TRACK_SWITCH_MODE_NEVER_REPLACE
      * (used to forbid clearing the buffered data (prior to current playback position) after track switch.
-     * Defers to fastSwitchEnabled for placement of new data. Default for video)
+     * Defers to fastSwitchEnabled for placement of new data. Default for File)
      *
      * MediaController.TRACK_SWITCH_MODE_ALWAYS_REPLACE
      * (used to clear the buffered data (prior to current playback position) after track switch. Default for audio)
@@ -27237,7 +27237,7 @@ function MediaPlayer() {
      *      streaming: {
      *          liveDelayFragmentCount: 8
      *          abr: {
-     *              maxBitrate: { audio: 100, video: 1000 }
+     *              maxBitrate: { audio: 100, File: 1000 }
      *          }
      *      }
      *  });
@@ -27388,7 +27388,7 @@ function MediaPlayer() {
             dashMetrics: dashMetrics,
             errHandler: errHandler,
             timelineConverter: timelineConverter,
-            videoModel: videoModel,
+            FileModel: FileModel,
             playbackController: playbackController,
             abrController: abrController,
             mediaController: mediaController,
@@ -27401,7 +27401,7 @@ function MediaPlayer() {
             dashMetrics: dashMetrics,
             mediaPlayerModel: mediaPlayerModel,
             adapter: adapter,
-            videoModel: videoModel,
+            FileModel: FileModel,
             timelineConverter: timelineConverter,
             uriFragmentModel: uriFragmentModel,
             settings: settings
@@ -27413,7 +27413,7 @@ function MediaPlayer() {
             mediaPlayerModel: mediaPlayerModel,
             dashMetrics: dashMetrics,
             adapter: adapter,
-            videoModel: videoModel,
+            FileModel: FileModel,
             settings: settings
         });
         abrController.createAbrRulesCollection();
@@ -27424,7 +27424,7 @@ function MediaPlayer() {
             adapter: adapter,
             mediaController: mediaController,
             streamController: streamController,
-            videoModel: videoModel
+            FileModel: FileModel
         });
 
         // initialises controller
@@ -27462,7 +27462,7 @@ function MediaPlayer() {
             protectionController = protection.createProtectionSystem({
                 debug: debug,
                 errHandler: errHandler,
-                videoModel: videoModel,
+                FileModel: FileModel,
                 capabilities: capabilities,
                 eventBus: eventBus,
                 events: _coreEventsEvents2['default'],
@@ -27488,7 +27488,7 @@ function MediaPlayer() {
             metricsReportingController = metricsReporting.createMetricsReporting({
                 debug: debug,
                 eventBus: eventBus,
-                mediaElement: getVideoElement(),
+                mediaElement: getFileElement(),
                 adapter: adapter,
                 dashMetrics: dashMetrics,
                 events: _coreEventsEvents2['default'],
@@ -27605,7 +27605,7 @@ function MediaPlayer() {
         getDebug: getDebug,
         getBufferLength: getBufferLength,
         getTTMLRenderingDiv: getTTMLRenderingDiv,
-        getVideoElement: getVideoElement,
+        getFileElement: getFileElement,
         getSource: getSource,
         getCurrentLiveLatency: getCurrentLiveLatency,
         getTopBitrateInfoFor: getTopBitrateInfoFor,
@@ -27748,21 +27748,21 @@ var MediaPlayerEvents = (function (_EventsBase) {
     this.AST_IN_FUTURE = 'astInFuture';
 
     /**
-     * Triggered when the video element's buffer state changes to stalled.
-     * Check mediaType in payload to determine type (Video, Audio, FragmentedText).
+     * Triggered when the File element's buffer state changes to stalled.
+     * Check mediaType in payload to determine type (File, Audio, FragmentedText).
      * @event MediaPlayerEvents#BUFFER_EMPTY
      */
     this.BUFFER_EMPTY = 'bufferStalled';
 
     /**
-     * Triggered when the video element's buffer state changes to loaded.
-     * Check mediaType in payload to determine type (Video, Audio, FragmentedText).
+     * Triggered when the File element's buffer state changes to loaded.
+     * Check mediaType in payload to determine type (File, Audio, FragmentedText).
      * @event MediaPlayerEvents#BUFFER_LOADED
      */
     this.BUFFER_LOADED = 'bufferLoaded';
 
     /**
-     * Triggered when the video element's buffer state changes, either stalled or loaded. Check payload for state.
+     * Triggered when the File element's buffer state changes, either stalled or loaded. Check payload for state.
      * @event MediaPlayerEvents#BUFFER_LEVEL_STATE_CHANGED
      */
     this.BUFFER_LEVEL_STATE_CHANGED = 'bufferStateChanged';
@@ -27882,13 +27882,13 @@ var MediaPlayerEvents = (function (_EventsBase) {
     this.STREAM_TEARDOWN_COMPLETE = 'streamTeardownComplete';
 
     /**
-     * Triggered once all text tracks detected in the MPD are added to the video element.
+     * Triggered once all text tracks detected in the MPD are added to the File element.
      * @event MediaPlayerEvents#TEXT_TRACKS_ADDED
      */
     this.TEXT_TRACKS_ADDED = 'allTextTracksAdded';
 
     /**
-     * Triggered when a text track is added to the video element's TextTrackList
+     * Triggered when a text track is added to the File element's TextTrackList
      * @event MediaPlayerEvents#TEXT_TRACK_ADDED
      */
     this.TEXT_TRACK_ADDED = 'textTrackAdded';
@@ -27998,7 +27998,7 @@ var MediaPlayerEvents = (function (_EventsBase) {
     this.PLAYBACK_SEEK_ASKED = 'playbackSeekAsked';
 
     /**
-     * Sent when the video element reports stalled
+     * Sent when the File element reports stalled
      * @event MediaPlayerEvents#PLAYBACK_STALLED
      */
     this.PLAYBACK_STALLED = 'playbackStalled';
@@ -28061,45 +28061,45 @@ function MediaPlayerFactory() {
     var logger = undefined;
 
     /**
-     *  A new MediaPlayer is instantiated for the supplied videoElement and optional source and context.  If no context is provided,
-     *  a default DashContext is used. If no source is provided, the videoElement is interrogated to extract the first source whose
+     *  A new MediaPlayer is instantiated for the supplied FileElement and optional source and context.  If no context is provided,
+     *  a default DashContext is used. If no source is provided, the FileElement is interrogated to extract the first source whose
      *  type is application/dash+xml.
-     * The autoplay property of the videoElement is preserved. Any preload attribute is ignored. This method should be called after the page onLoad event is dispatched.
-     * @param {HTMLMediaElement} video
+     * The autoplay property of the FileElement is preserved. Any preload attribute is ignored. This method should be called after the page onLoad event is dispatched.
+     * @param {HTMLMediaElement} File
      * @param {HTMLSourceElement} source
      * @param {Object} context
      * @returns {MediaPlayer|null}
      */
-    function create(video, source, context) {
-        if (!video || !/^VIDEO$/i.test(video.nodeName)) return null;
+    function create(File, source, context) {
+        if (!File || !/^File$/i.test(File.nodeName)) return null;
 
-        if (video._dashjs_player) return video._dashjs_player;
+        if (File._dashjs_player) return File._dashjs_player;
 
         var player = undefined;
-        var videoID = video.id || video.name || 'video element';
+        var FileID = File.id || File.name || 'File element';
 
-        source = source || [].slice.call(video.querySelectorAll('source')).filter(function (s) {
+        source = source || [].slice.call(File.querySelectorAll('source')).filter(function (s) {
             return s.type == SUPPORTED_MIME_TYPE;
         })[0];
-        if (!source && video.src) {
+        if (!source && File.src) {
             source = document.createElement('source');
-            source.src = video.src;
-        } else if (!source && !video.src) {
+            source.src = File.src;
+        } else if (!source && !File.src) {
             return null;
         }
 
         context = context || {};
         player = (0, _MediaPlayer2['default'])(context).create();
-        player.initialize(video, source.src, video.autoplay);
+        player.initialize(File, source.src, File.autoplay);
 
         if (!logger) {
             logger = player.getDebug().getLogger();
         }
-        logger.debug('Converted ' + videoID + ' to dash.js player and added content: ' + source.src);
+        logger.debug('Converted ' + FileID + ' to dash.js player and added content: ' + source.src);
 
-        // Store a reference to the player on the video element so it can be gotten at for debugging and so we know its
+        // Store a reference to the player on the File element so it can be gotten at for debugging and so we know its
         // already been setup.
-        video._dashjs_player = player;
+        File._dashjs_player = player;
 
         return player;
     }
@@ -28107,9 +28107,9 @@ function MediaPlayerFactory() {
     /**
      * Searches the provided scope for all instances of the indicated selector. If no scope is provided, document is used. If no selector is
      * specified, [data-dashjs-player] is used. The declarative setup also looks for source elements with the type attribute set to 'application/dash+xml'.
-     * It then looks for those video elements which have a source element defined with a type matching 'application/dash+xml'.
-     * A new MediaPlayer is instantiated for each matching video element and the appropriate source is assigned.
-     * The autoplay property of the video element is preserved. Any preload attribute is ignored. This method should be called after the page onLoad event is dispatched.
+     * It then looks for those File elements which have a source element defined with a type matching 'application/dash+xml'.
+     * A new MediaPlayer is instantiated for each matching File element and the appropriate source is assigned.
+     * The autoplay property of the File element is preserved. Any preload attribute is ignored. This method should be called after the page onLoad event is dispatched.
      * Returns an array holding all the MediaPlayer instances that were added by this method.
      * @param {string} selector - CSS selector
      * @param {Object} scope
@@ -28119,30 +28119,30 @@ function MediaPlayerFactory() {
         var aPlayers = [];
         selector = selector || '[data-dashjs-player]';
         scope = scope || document;
-        var videos = scope.querySelectorAll(selector);
-        for (var i = 0; i < videos.length; i++) {
-            var player = create(videos[i], null);
+        var Files = scope.querySelectorAll(selector);
+        for (var i = 0; i < Files.length; i++) {
+            var player = create(Files[i], null);
             aPlayers.push(player);
         }
 
         var sources = scope.querySelectorAll('source[type="' + SUPPORTED_MIME_TYPE + '"]');
         for (var i = 0; i < sources.length; i++) {
-            var video = findVideo(sources[i]);
-            var player = create(video, null);
+            var File = findFile(sources[i]);
+            var player = create(File, null);
             aPlayers.push(player);
         }
 
         return aPlayers;
     }
 
-    function findVideo(_x) {
+    function findFile(_x) {
         var _again = true;
 
         _function: while (_again) {
             var el = _x;
             _again = false;
 
-            if (/^VIDEO$/i.test(el.nodeName)) {
+            if (/^File$/i.test(el.nodeName)) {
                 return el;
             } else {
                 _x = el.parentNode;
@@ -28239,7 +28239,7 @@ var _coreFactoryMaker = _dereq_(49);
 var _coreFactoryMaker2 = _interopRequireDefault(_coreFactoryMaker);
 
 /**
- * This is a sink that is used to temporarily hold onto media chunks before a video element is added.
+ * This is a sink that is used to temporarily hold onto media chunks before a File element is added.
  * The discharge() function is used to get the chunks out of the PreBuffer for adding to a real SourceBuffer.
  *
  * @class PreBufferSink
@@ -28887,7 +28887,7 @@ function Stream(config) {
     var playbackController = config.playbackController;
     var mediaController = config.mediaController;
     var textController = config.textController;
-    var videoModel = config.videoModel;
+    var FileModel = config.FileModel;
     var settings = config.settings;
 
     var instance = undefined,
@@ -29318,17 +29318,17 @@ function Stream(config) {
 
     function initializeMedia(mediaSource, previousBuffers) {
         checkConfig();
-        var element = videoModel.getElement();
+        var element = FileModel.getElement();
 
         initializeEventController();
 
         isUpdating = true;
 
-        filterCodecs(_constantsConstants2['default'].VIDEO);
+        filterCodecs(_constantsConstants2['default'].File);
         filterCodecs(_constantsConstants2['default'].AUDIO);
 
-        if (!element || element && /^VIDEO$/i.test(element.nodeName)) {
-            initializeMediaForType(_constantsConstants2['default'].VIDEO, mediaSource);
+        if (!element || element && /^File$/i.test(element.nodeName)) {
+            initializeMediaForType(_constantsConstants2['default'].File, mediaSource);
         }
         initializeMediaForType(_constantsConstants2['default'].AUDIO, mediaSource);
         initializeMediaForType(_constantsConstants2['default'].TEXT, mediaSource);
@@ -29357,7 +29357,7 @@ function Stream(config) {
     function initializeAfterPreload() {
         isUpdating = true;
         checkConfig();
-        filterCodecs(_constantsConstants2['default'].VIDEO);
+        filterCodecs(_constantsConstants2['default'].File);
         filterCodecs(_constantsConstants2['default'].AUDIO);
 
         isMediaInitialized = true;
@@ -29392,7 +29392,7 @@ function Stream(config) {
 
     function checkIfInitializationCompleted() {
         var ln = streamProcessors.length;
-        var hasError = !!updateError.audio || !!updateError.video;
+        var hasError = !!updateError.audio || !!updateError.File;
         var error = hasError ? new _voDashJSError2['default'](_coreErrorsErrors2['default'].DATA_UPDATE_FAILED_ERROR_CODE, _coreErrorsErrors2['default'].DATA_UPDATE_FAILED_ERROR_MESSAGE) : null;
 
         for (var i = 0; i < ln; i++) {
@@ -29409,7 +29409,7 @@ function Stream(config) {
             // Need to check if streamProcessors exists because streamProcessors
             // could be cleared in case an error is detected while initializing DRM keysystem
             for (var i = 0; i < ln && streamProcessors[i]; i++) {
-                if (streamProcessors[i].getType() === _constantsConstants2['default'].AUDIO || streamProcessors[i].getType() === _constantsConstants2['default'].VIDEO || streamProcessors[i].getType() === _constantsConstants2['default'].FRAGMENTED_TEXT) {
+                if (streamProcessors[i].getType() === _constantsConstants2['default'].AUDIO || streamProcessors[i].getType() === _constantsConstants2['default'].File || streamProcessors[i].getType() === _constantsConstants2['default'].FRAGMENTED_TEXT) {
                     protectionController.initializeForMedia(streamProcessors[i].getMediaInfo());
                 }
             }
@@ -29465,8 +29465,8 @@ function Stream(config) {
 
         // if there is at least one buffer controller that has not completed buffering yet do nothing
         for (var i = 0; i < ln; i++) {
-            //if audio or video buffer is not buffering completed state, do not send STREAM_BUFFERING_COMPLETED
-            if (!processors[i].isBufferingCompleted() && (processors[i].getType() === _constantsConstants2['default'].AUDIO || processors[i].getType() === _constantsConstants2['default'].VIDEO)) {
+            //if audio or File buffer is not buffering completed state, do not send STREAM_BUFFERING_COMPLETED
+            if (!processors[i].isBufferingCompleted() && (processors[i].getType() === _constantsConstants2['default'].AUDIO || processors[i].getType() === _constantsConstants2['default'].File)) {
                 logger.warn('onBufferingCompleted - One streamProcessor has finished but', processors[i].getType(), 'one is not buffering completed');
                 return;
             }
@@ -29512,7 +29512,7 @@ function Stream(config) {
             streamProcessor = streamProcessors[i];
             type = streamProcessor.getType();
 
-            if (type === _constantsConstants2['default'].AUDIO || type === _constantsConstants2['default'].VIDEO || type === _constantsConstants2['default'].FRAGMENTED_TEXT || type === _constantsConstants2['default'].TEXT) {
+            if (type === _constantsConstants2['default'].AUDIO || type === _constantsConstants2['default'].File || type === _constantsConstants2['default'].FRAGMENTED_TEXT || type === _constantsConstants2['default'].TEXT) {
                 arr.push(streamProcessor);
             }
         }
@@ -29531,7 +29531,7 @@ function Stream(config) {
             addInlineEvents();
         }
 
-        filterCodecs(_constantsConstants2['default'].VIDEO);
+        filterCodecs(_constantsConstants2['default'].File);
         filterCodecs(_constantsConstants2['default'].AUDIO);
 
         for (var i = 0, ln = streamProcessors.length; i < ln; i++) {
@@ -29556,11 +29556,11 @@ function Stream(config) {
     }
 
     function isMediaCodecCompatible(newStream) {
-        return compareCodecs(newStream, _constantsConstants2['default'].VIDEO) && compareCodecs(newStream, _constantsConstants2['default'].AUDIO);
+        return compareCodecs(newStream, _constantsConstants2['default'].File) && compareCodecs(newStream, _constantsConstants2['default'].AUDIO);
     }
 
     function isProtectionCompatible(stream) {
-        return compareProtectionConfig(stream, _constantsConstants2['default'].VIDEO) && compareProtectionConfig(stream, _constantsConstants2['default'].AUDIO);
+        return compareProtectionConfig(stream, _constantsConstants2['default'].File) && compareProtectionConfig(stream, _constantsConstants2['default'].AUDIO);
     }
 
     function compareProtectionConfig(stream, type) {
@@ -29660,7 +29660,7 @@ function Stream(config) {
     function preload(mediaSource, previousBuffers) {
         initializeEventController();
 
-        initializeMediaForType(_constantsConstants2['default'].VIDEO, mediaSource);
+        initializeMediaForType(_constantsConstants2['default'].File, mediaSource);
         initializeMediaForType(_constantsConstants2['default'].AUDIO, mediaSource);
         initializeMediaForType(_constantsConstants2['default'].TEXT, mediaSource);
         initializeMediaForType(_constantsConstants2['default'].FRAGMENTED_TEXT, mediaSource);
@@ -30076,7 +30076,7 @@ function StreamProcessor(config) {
     function createBufferControllerForType(type) {
         var controller = null;
 
-        if (type === _constantsConstants2['default'].VIDEO || type === _constantsConstants2['default'].AUDIO) {
+        if (type === _constantsConstants2['default'].File || type === _constantsConstants2['default'].AUDIO) {
             controller = (0, _controllersBufferController2['default'])(context).create({
                 type: type,
                 dashMetrics: dashMetrics,
@@ -30398,11 +30398,11 @@ var Constants = (function () {
       this.STREAM = 'stream';
 
       /**
-       *  @constant {string} VIDEO Video media type
+       *  @constant {string} File File media type
        *  @memberof Constants#
        *  @static
        */
-      this.VIDEO = 'video';
+      this.File = 'File';
 
       /**
        *  @constant {string} AUDIO Audio media type
@@ -30433,7 +30433,7 @@ var Constants = (function () {
       this.EMBEDDED_TEXT = 'embeddedText';
 
       /**
-       *  @constant {string} MUXED Muxed (video/audio in the same chunk) media type
+       *  @constant {string} MUXED Muxed (File/audio in the same chunk) media type
        *  @memberof Constants#
        *  @static
        */
@@ -30801,7 +30801,7 @@ var _utilsSupervisorTools = _dereq_(216);
 
 var ABANDON_LOAD = 'abandonload';
 var ALLOW_LOAD = 'allowload';
-var DEFAULT_VIDEO_BITRATE = 1000;
+var DEFAULT_File_BITRATE = 1000;
 var DEFAULT_AUDIO_BITRATE = 100;
 var QUALITY_DEFAULT = 0;
 
@@ -30824,7 +30824,7 @@ function AbrController() {
         elementWidth = undefined,
         elementHeight = undefined,
         adapter = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         mediaPlayerModel = undefined,
         domStorage = undefined,
         playbackIndex = undefined,
@@ -30847,7 +30847,7 @@ function AbrController() {
         abandonmentStateDict[type].state = ALLOW_LOAD;
         isUsingBufferOccupancyABRDict[type] = false;
         eventBus.on(_coreEventsEvents2['default'].LOADING_PROGRESS, onFragmentLoadProgress, this);
-        if (type == _constantsConstants2['default'].VIDEO) {
+        if (type == _constantsConstants2['default'].File) {
             eventBus.on(_coreEventsEvents2['default'].QUALITY_CHANGE_RENDERED, onQualityChangeRendered, this);
             droppedFramesHistory = droppedFramesHistory || (0, _rulesDroppedFramesHistory2['default'])(context).create();
             setElementSize();
@@ -30923,8 +30923,8 @@ function AbrController() {
         if (config.adapter) {
             adapter = config.adapter;
         }
-        if (config.videoModel) {
-            videoModel = config.videoModel;
+        if (config.FileModel) {
+            FileModel = config.FileModel;
         }
         if (config.settings) {
             settings = config.settings;
@@ -30938,18 +30938,18 @@ function AbrController() {
     }
 
     function onQualityChangeRendered(e) {
-        if (e.mediaType === _constantsConstants2['default'].VIDEO) {
+        if (e.mediaType === _constantsConstants2['default'].File) {
             playbackIndex = e.oldQuality;
-            droppedFramesHistory.push(playbackIndex, videoModel.getPlaybackQuality());
+            droppedFramesHistory.push(playbackIndex, FileModel.getPlaybackQuality());
         }
     }
 
     function onMetricAdded(e) {
-        if (e.metric === _constantsMetricsConstants2['default'].HTTP_REQUEST && e.value && e.value.type === _voMetricsHTTPRequest.HTTPRequest.MEDIA_SEGMENT_TYPE && (e.mediaType === _constantsConstants2['default'].AUDIO || e.mediaType === _constantsConstants2['default'].VIDEO)) {
+        if (e.metric === _constantsMetricsConstants2['default'].HTTP_REQUEST && e.value && e.value.type === _voMetricsHTTPRequest.HTTPRequest.MEDIA_SEGMENT_TYPE && (e.mediaType === _constantsConstants2['default'].AUDIO || e.mediaType === _constantsConstants2['default'].File)) {
             throughputHistory.push(e.mediaType, e.value, settings.get().streaming.abr.useDeadTimeLatency);
         }
 
-        if (e.metric === _constantsMetricsConstants2['default'].BUFFER_LEVEL && (e.mediaType === _constantsConstants2['default'].AUDIO || e.mediaType === _constantsConstants2['default'].VIDEO)) {
+        if (e.metric === _constantsMetricsConstants2['default'].BUFFER_LEVEL && (e.mediaType === _constantsConstants2['default'].AUDIO || e.mediaType === _constantsConstants2['default'].File)) {
             updateIsUsingBufferOccupancyABR(e.mediaType, 0.001 * e.value.level);
         }
     }
@@ -30970,7 +30970,7 @@ function AbrController() {
 
     /**
      * Gets top BitrateInfo for the player
-     * @param {string} type - 'video' or 'audio' are the type options.
+     * @param {string} type - 'File' or 'audio' are the type options.
      * @returns {BitrateInfo | null}
      */
     function getTopBitrateInfoFor(type) {
@@ -31011,7 +31011,7 @@ function AbrController() {
             } else if (!isNaN(savedBitrate)) {
                 configBitrate = savedBitrate;
             } else {
-                configBitrate = type === _constantsConstants2['default'].VIDEO ? DEFAULT_VIDEO_BITRATE : DEFAULT_AUDIO_BITRATE;
+                configBitrate = type === _constantsConstants2['default'].File ? DEFAULT_File_BITRATE : DEFAULT_AUDIO_BITRATE;
             }
         }
 
@@ -31075,7 +31075,7 @@ function AbrController() {
             });
 
             if (droppedFramesHistory) {
-                var playbackQuality = videoModel.getPlaybackQuality();
+                var playbackQuality = FileModel.getPlaybackQuality();
                 if (playbackQuality) {
                     droppedFramesHistory.push(playbackIndex, playbackQuality);
                 }
@@ -31253,9 +31253,9 @@ function AbrController() {
     function isPlayingAtTopQuality(streamInfo) {
         var streamId = streamInfo ? streamInfo.id : null;
         var audioQuality = getQualityFor(_constantsConstants2['default'].AUDIO);
-        var videoQuality = getQualityFor(_constantsConstants2['default'].VIDEO);
+        var FileQuality = getQualityFor(_constantsConstants2['default'].File);
 
-        var isAtTop = audioQuality === getTopQualityIndexFor(_constantsConstants2['default'].AUDIO, streamId) && videoQuality === getTopQualityIndexFor(_constantsConstants2['default'].VIDEO, streamId);
+        var isAtTop = audioQuality === getTopQualityIndexFor(_constantsConstants2['default'].AUDIO, streamId) && FileQuality === getTopQualityIndexFor(_constantsConstants2['default'].File, streamId);
 
         return isAtTop;
     }
@@ -31323,16 +31323,16 @@ function AbrController() {
     }
 
     function setElementSize() {
-        if (videoModel) {
+        if (FileModel) {
             var hasPixelRatio = settings.get().streaming.abr.usePixelRatioInLimitBitrateByPortal && window.hasOwnProperty('devicePixelRatio');
             var pixelRatio = hasPixelRatio ? window.devicePixelRatio : 1;
-            elementWidth = videoModel.getClientWidth() * pixelRatio;
-            elementHeight = videoModel.getClientHeight() * pixelRatio;
+            elementWidth = FileModel.getClientWidth() * pixelRatio;
+            elementHeight = FileModel.getClientHeight() * pixelRatio;
         }
     }
 
     function checkPortalSize(idx, type) {
-        if (type !== _constantsConstants2['default'].VIDEO || !settings.get().streaming.abr.limitBitrateByPortal || !streamProcessorDict[type]) {
+        if (type !== _constantsConstants2['default'].File || !settings.get().streaming.abr.limitBitrateByPortal || !streamProcessorDict[type]) {
             return idx;
         }
 
@@ -32000,8 +32000,8 @@ function BufferController(config) {
     function appendToBuffer(chunk) {
         buffer.append(chunk);
 
-        if (chunk.mediaInfo.type === _constantsConstants2['default'].VIDEO) {
-            eventBus.trigger(_coreEventsEvents2['default'].VIDEO_CHUNK_RECEIVED, { chunk: chunk });
+        if (chunk.mediaInfo.type === _constantsConstants2['default'].File) {
+            eventBus.trigger(_coreEventsEvents2['default'].File_CHUNK_RECEIVED, { chunk: chunk });
         }
     }
 
@@ -32291,8 +32291,8 @@ function BufferController(config) {
     }
 
     function checkIfSufficientBuffer() {
-        // No need to check buffer if type is not audio or video (for example if several errors occur during text parsing, so that the buffer cannot be filled, no error must occur on video playback)
-        if (type !== 'audio' && type !== 'video') return;
+        // No need to check buffer if type is not audio or File (for example if several errors occur during text parsing, so that the buffer cannot be filled, no error must occur on File playback)
+        if (type !== 'audio' && type !== 'File') return;
 
         if (seekClearedBufferingCompleted && !isBufferingCompleted && playbackController && playbackController.getTimeToStreamEnd() - bufferLevel < STALL_THRESHOLD) {
             seekClearedBufferingCompleted = false;
@@ -32880,14 +32880,14 @@ function EventController() {
      */
     function removeEvents() {
         if (activeEvents) {
-            var currentVideoTime = playbackController.getTime();
+            var currentFileTime = playbackController.getTime();
             var eventIds = Object.keys(activeEvents);
 
             for (var i = 0; i < eventIds.length; i++) {
                 var eventId = eventIds[i];
                 var curr = activeEvents[eventId];
-                if (curr !== null && (curr.duration + curr.presentationTime) / curr.eventStream.timescale < currentVideoTime) {
-                    logger.debug('Remove Event ' + eventId + ' at time ' + currentVideoTime);
+                if (curr !== null && (curr.duration + curr.presentationTime) / curr.eventStream.timescale < currentFileTime) {
+                    logger.debug('Remove Event ' + eventId + ' at time ' + currentFileTime);
                     curr = null;
                     delete activeEvents[eventId];
                 }
@@ -32899,12 +32899,12 @@ function EventController() {
      * Iterate through the eventList and trigger/remove the events
      */
     function onEventTimer() {
-        var currentVideoTime = playbackController.getTime();
-        var presentationTimeThreshold = currentVideoTime - lastEventTimerCall;
-        lastEventTimerCall = currentVideoTime;
+        var currentFileTime = playbackController.getTime();
+        var presentationTimeThreshold = currentFileTime - lastEventTimerCall;
+        lastEventTimerCall = currentFileTime;
 
-        triggerEvents(inbandEvents, presentationTimeThreshold, currentVideoTime);
-        triggerEvents(inlineEvents, presentationTimeThreshold, currentVideoTime);
+        triggerEvents(inbandEvents, presentationTimeThreshold, currentFileTime);
+        triggerEvents(inlineEvents, presentationTimeThreshold, currentFileTime);
         removeEvents();
     }
 
@@ -32923,7 +32923,7 @@ function EventController() {
             } });
     }
 
-    function triggerEvents(events, presentationTimeThreshold, currentVideoTime) {
+    function triggerEvents(events, presentationTimeThreshold, currentFileTime) {
         var presentationTime;
 
         /* == Trigger events that are ready == */
@@ -32935,8 +32935,8 @@ function EventController() {
 
                 if (curr !== undefined) {
                     presentationTime = curr.presentationTime / curr.eventStream.timescale;
-                    if (presentationTime === 0 || presentationTime <= currentVideoTime && presentationTime + presentationTimeThreshold > currentVideoTime) {
-                        logger.debug('Start Event ' + eventId + ' at ' + currentVideoTime);
+                    if (presentationTime === 0 || presentationTime <= currentFileTime && presentationTime + presentationTimeThreshold > currentFileTime) {
+                        logger.debug('Start Event ' + eventId + ' at ' + currentFileTime);
                         if (curr.duration > 0) {
                             activeEvents[eventId] = curr;
                         }
@@ -33156,8 +33156,8 @@ function FragmentController(config) {
         var streamInfo = request.mediaInfo.streamInfo;
 
         if (e.error) {
-            if (e.request.mediaType === _constantsConstants2['default'].AUDIO || e.request.mediaType === _constantsConstants2['default'].VIDEO || e.request.mediaType === _constantsConstants2['default'].FRAGMENTED_TEXT) {
-                // add service location to blacklist controller - only for audio or video. text should not set errors
+            if (e.request.mediaType === _constantsConstants2['default'].AUDIO || e.request.mediaType === _constantsConstants2['default'].File || e.request.mediaType === _constantsConstants2['default'].FRAGMENTED_TEXT) {
+                // add service location to blacklist controller - only for audio or File. text should not set errors
                 eventBus.trigger(_coreEventsEvents2['default'].SERVICE_LOCATION_BLACKLIST_ADD, { entry: e.request.serviceLocation });
             }
         }
@@ -33505,7 +33505,7 @@ function MediaController() {
      * @memberof MediaController#
      */
     function isMultiTrackSupportedByType(type) {
-        return type === _constantsConstants2['default'].AUDIO || type === _constantsConstants2['default'].VIDEO || type === _constantsConstants2['default'].TEXT || type === _constantsConstants2['default'].FRAGMENTED_TEXT || type === _constantsConstants2['default'].IMAGE;
+        return type === _constantsConstants2['default'].AUDIO || type === _constantsConstants2['default'].File || type === _constantsConstants2['default'].TEXT || type === _constantsConstants2['default'].FRAGMENTED_TEXT || type === _constantsConstants2['default'].IMAGE;
     }
 
     /**
@@ -33582,14 +33582,14 @@ function MediaController() {
     function resetSwitchMode() {
         switchMode = {
             audio: TRACK_SWITCH_MODE_ALWAYS_REPLACE,
-            video: TRACK_SWITCH_MODE_NEVER_REPLACE
+            File: TRACK_SWITCH_MODE_NEVER_REPLACE
         };
     }
 
     function resetInitialSettings() {
         initialSettings = {
             audio: null,
-            video: null
+            File: null
         };
     }
 
@@ -33665,7 +33665,7 @@ function MediaController() {
                 storeLastSettings: true,
                 current: null
             },
-            video: {
+            File: {
                 list: [],
                 storeLastSettings: true,
                 current: null
@@ -33795,17 +33795,17 @@ function MediaSourceController() {
         return null;
     }
 
-    function attachMediaSource(source, videoModel) {
+    function attachMediaSource(source, FileModel) {
 
         var objectURL = window.URL.createObjectURL(source);
 
-        videoModel.setSource(objectURL);
+        FileModel.setSource(objectURL);
 
         return objectURL;
     }
 
-    function detachMediaSource(videoModel) {
-        videoModel.setSource(null);
+    function detachMediaSource(FileModel) {
+        FileModel.setSource(null);
     }
 
     function setDuration(source, value) {
@@ -33936,7 +33936,7 @@ function PlaybackController() {
         streamController = undefined,
         dashMetrics = undefined,
         adapter = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         timelineConverter = undefined,
         liveStartTime = undefined,
         wallclockTimeIntervalId = undefined,
@@ -34010,41 +34010,41 @@ function PlaybackController() {
     }
 
     function play() {
-        if (streamInfo && videoModel && videoModel.getElement()) {
-            videoModel.play();
+        if (streamInfo && FileModel && FileModel.getElement()) {
+            FileModel.play();
         } else {
             playOnceInitialized = true;
         }
     }
 
     function isPaused() {
-        return streamInfo && videoModel ? videoModel.isPaused() : null;
+        return streamInfo && FileModel ? FileModel.isPaused() : null;
     }
 
     function pause() {
-        if (streamInfo && videoModel) {
-            videoModel.pause();
+        if (streamInfo && FileModel) {
+            FileModel.pause();
         }
     }
 
     function isSeeking() {
-        return streamInfo && videoModel ? videoModel.isSeeking() : null;
+        return streamInfo && FileModel ? FileModel.isSeeking() : null;
     }
 
     function seek(time, stickToBuffered, internalSeek) {
-        if (streamInfo && videoModel) {
+        if (streamInfo && FileModel) {
             if (internalSeek === true) {
-                if (time !== videoModel.getTime()) {
-                    // Internal seek = seek video model only (disable 'seeking' listener),
+                if (time !== FileModel.getTime()) {
+                    // Internal seek = seek File model only (disable 'seeking' listener),
                     // buffer(s) are already appended at given time (see onBytesAppended())
-                    videoModel.removeEventListener('seeking', onPlaybackSeeking);
+                    FileModel.removeEventListener('seeking', onPlaybackSeeking);
                     logger.info('Requesting seek to time: ' + time);
-                    videoModel.setCurrentTime(time, stickToBuffered);
+                    FileModel.setCurrentTime(time, stickToBuffered);
                 }
             } else {
                 eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_SEEK_ASKED);
                 logger.info('Requesting seek to time: ' + time);
-                videoModel.setCurrentTime(time, stickToBuffered);
+                FileModel.setCurrentTime(time, stickToBuffered);
             }
         }
     }
@@ -34057,7 +34057,7 @@ function PlaybackController() {
     }
 
     function getTime() {
-        return streamInfo && videoModel ? videoModel.getTime() : null;
+        return streamInfo && FileModel ? FileModel.getTime() : null;
     }
 
     function getNormalizedTime() {
@@ -34075,15 +34075,15 @@ function PlaybackController() {
     }
 
     function getPlaybackRate() {
-        return streamInfo && videoModel ? videoModel.getPlaybackRate() : null;
+        return streamInfo && FileModel ? FileModel.getPlaybackRate() : null;
     }
 
     function getPlayedRanges() {
-        return streamInfo && videoModel ? videoModel.getPlayedRanges() : null;
+        return streamInfo && FileModel ? FileModel.getPlayedRanges() : null;
     }
 
     function getEnded() {
-        return streamInfo && videoModel ? videoModel.getEnded() : null;
+        return streamInfo && FileModel ? FileModel.getEnded() : null;
     }
 
     function getIsDynamic() {
@@ -34172,7 +34172,7 @@ function PlaybackController() {
         liveDelay = 0;
         availabilityStartTime = 0;
         bufferedRange = {};
-        if (videoModel) {
+        if (FileModel) {
             eventBus.off(_coreEventsEvents2['default'].DATA_UPDATE_COMPLETED, onDataUpdateCompleted, this);
             eventBus.off(_coreEventsEvents2['default'].BUFFER_LEVEL_STATE_CHANGED, onBufferLevelStateChanged, this);
             eventBus.off(_coreEventsEvents2['default'].BYTES_APPENDED_END_FRAGMENT, onBytesAppended, this);
@@ -34185,7 +34185,7 @@ function PlaybackController() {
             removeAllListeners();
         }
         wallclockTimeIntervalId = null;
-        videoModel = null;
+        FileModel = null;
         streamInfo = null;
         isDynamic = null;
     }
@@ -34205,8 +34205,8 @@ function PlaybackController() {
         if (config.adapter) {
             adapter = config.adapter;
         }
-        if (config.videoModel) {
-            videoModel = config.videoModel;
+        if (config.FileModel) {
+            FileModel = config.FileModel;
         }
         if (config.timelineConverter) {
             timelineConverter = config.timelineConverter;
@@ -34270,7 +34270,7 @@ function PlaybackController() {
                     presentationStartTime = startTimeOffset;
                 } else {
                     var earliestTime = commonEarliestTime[streamInfo.id]; //set by ready bufferStart after first onBytesAppended
-                    presentationStartTime = earliestTime !== undefined ? Math.max(earliestTime.audio !== undefined ? earliestTime.audio : 0, earliestTime.video !== undefined ? earliestTime.video : 0, streamInfo.start) : streamInfo.start;
+                    presentationStartTime = earliestTime !== undefined ? Math.max(earliestTime.audio !== undefined ? earliestTime.audio : 0, earliestTime.File !== undefined ? earliestTime.File : 0, streamInfo.start) : streamInfo.start;
                 }
             }
         }
@@ -34316,7 +34316,7 @@ function PlaybackController() {
     }
 
     function updateCurrentTime() {
-        if (isPaused() || !isDynamic || videoModel.getReadyState() === 0) return;
+        if (isPaused() || !isDynamic || FileModel.getReadyState() === 0) return;
         var currentTime = getNormalizedTime();
         var actualTime = getActualPresentationTime(currentTime);
 
@@ -34343,7 +34343,7 @@ function PlaybackController() {
     }
 
     function onPlaybackStart() {
-        logger.info('Native video element event: play');
+        logger.info('Native File element event: play');
         updateCurrentTime();
         startUpdatingWallclockTime();
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_STARTED, {
@@ -34352,21 +34352,21 @@ function PlaybackController() {
     }
 
     function onPlaybackWaiting() {
-        logger.info('Native video element event: waiting');
+        logger.info('Native File element event: waiting');
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_WAITING, {
             playingTime: getTime()
         });
     }
 
     function onPlaybackPlaying() {
-        logger.info('Native video element event: playing');
+        logger.info('Native File element event: playing');
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_PLAYING, {
             playingTime: getTime()
         });
     }
 
     function onPlaybackPaused() {
-        logger.info('Native video element event: pause');
+        logger.info('Native File element event: pause');
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_PAUSED, {
             ended: getEnded()
         });
@@ -34382,10 +34382,10 @@ function PlaybackController() {
     }
 
     function onPlaybackSeeked() {
-        logger.info('Native video element event: seeked');
+        logger.info('Native File element event: seeked');
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_SEEKED);
         // Reactivate 'seeking' event listener (see seek())
-        videoModel.addEventListener('seeking', onPlaybackSeeking);
+        FileModel.addEventListener('seeking', onPlaybackSeeking);
     }
 
     function onPlaybackTimeUpdated() {
@@ -34411,21 +34411,21 @@ function PlaybackController() {
 
     function onPlaybackRateChanged() {
         var rate = getPlaybackRate();
-        logger.info('Native video element event: ratechange: ', rate);
+        logger.info('Native File element event: ratechange: ', rate);
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_RATE_CHANGED, {
             playbackRate: rate
         });
     }
 
     function onPlaybackMetaDataLoaded() {
-        logger.info('Native video element event: loadedmetadata');
+        logger.info('Native File element event: loadedmetadata');
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_METADATA_LOADED);
         startUpdatingWallclockTime();
     }
 
-    // Event to handle the native video element ended event
+    // Event to handle the native File element ended event
     function onNativePlaybackEnded() {
-        logger.info('Native video element event: ended');
+        logger.info('Native File element event: ended');
         pause();
         stopUpdatingWallclockTime();
         eventBus.trigger(_coreEventsEvents2['default'].PLAYBACK_ENDED, { 'isLast': streamController.getActiveStreamInfo().isLast });
@@ -34435,8 +34435,8 @@ function PlaybackController() {
     function onPlaybackEnded(e) {
         if (wallclockTimeIntervalId && e.isLast) {
             // PLAYBACK_ENDED was triggered elsewhere, react.
-            logger.info('onPlaybackEnded -- PLAYBACK_ENDED but native video element didn\'t fire ended');
-            videoModel.setCurrentTime(getStreamEndTime());
+            logger.info('onPlaybackEnded -- PLAYBACK_ENDED but native File element didn\'t fire ended');
+            FileModel.setCurrentTime(getStreamEndTime());
             pause();
             stopUpdatingWallclockTime();
         }
@@ -34456,7 +34456,7 @@ function PlaybackController() {
         });
 
         // Updates playback time for paused dynamic streams
-        // (video element doesn't call timeupdate when the playback is paused)
+        // (File element doesn't call timeupdate when the playback is paused)
         if (getIsDynamic() && isPaused()) {
             updateLivePlaybackTime();
         }
@@ -34502,7 +34502,7 @@ function PlaybackController() {
     }
 
     function startPlaybackCatchUp() {
-        if (videoModel) {
+        if (FileModel) {
             var cpr = settings.get().streaming.liveCatchUpPlaybackRate;
             var _liveDelay = mediaPlayerModel.getLiveDelay();
             var deltaLatency = getCurrentLiveLatency() - _liveDelay;
@@ -34524,8 +34524,8 @@ function PlaybackController() {
             }
 
             // don't change playbackrate for small variations (don't overload element with playbackrate changes)
-            if (Math.abs(videoModel.getPlaybackRate() - newRate) > minPlaybackRateChange) {
-                videoModel.setPlaybackRate(newRate);
+            if (Math.abs(FileModel.getPlaybackRate() - newRate) > minPlaybackRateChange) {
+                FileModel.setPlaybackRate(newRate);
             }
 
             if (settings.get().streaming.liveCatchUpMaxDrift > 0 && !isLowLatencySeekingInProgress && deltaLatency > settings.get().streaming.liveCatchUpMaxDrift) {
@@ -34539,8 +34539,8 @@ function PlaybackController() {
     }
 
     function stopPlaybackCatchUp() {
-        if (videoModel) {
-            videoModel.setPlaybackRate(1.0);
+        if (FileModel) {
+            FileModel.setPlaybackRate(1.0);
         }
     }
 
@@ -34571,24 +34571,24 @@ function PlaybackController() {
             commonEarliestTime[streamInfo.id][type] = Math.max(ranges.start(0), streamInfo.start);
         }
 
-        var hasVideoTrack = streamController.isTrackTypePresent(_constantsConstants2['default'].VIDEO);
+        var hasFileTrack = streamController.isTrackTypePresent(_constantsConstants2['default'].File);
         var hasAudioTrack = streamController.isTrackTypePresent(_constantsConstants2['default'].AUDIO);
 
         initialStartTime = getStreamStartTime(false);
-        if (hasAudioTrack && hasVideoTrack) {
-            //current stream has audio and video contents
-            if (!isNaN(commonEarliestTime[streamInfo.id].audio) && !isNaN(commonEarliestTime[streamInfo.id].video)) {
+        if (hasAudioTrack && hasFileTrack) {
+            //current stream has audio and File contents
+            if (!isNaN(commonEarliestTime[streamInfo.id].audio) && !isNaN(commonEarliestTime[streamInfo.id].File)) {
 
-                if (commonEarliestTime[streamInfo.id].audio < commonEarliestTime[streamInfo.id].video) {
-                    // common earliest is video time
-                    // check buffered audio range has video time, if ok, we seek, otherwise, we wait some other data
-                    earliestTime = commonEarliestTime[streamInfo.id].video > initialStartTime ? commonEarliestTime[streamInfo.id].video : initialStartTime;
+                if (commonEarliestTime[streamInfo.id].audio < commonEarliestTime[streamInfo.id].File) {
+                    // common earliest is File time
+                    // check buffered audio range has File time, if ok, we seek, otherwise, we wait some other data
+                    earliestTime = commonEarliestTime[streamInfo.id].File > initialStartTime ? commonEarliestTime[streamInfo.id].File : initialStartTime;
                     ranges = bufferedRange[streamInfo.id].audio;
                 } else {
                     // common earliest is audio time
-                    // check buffered video range has audio time, if ok, we seek, otherwise, we wait some other data
+                    // check buffered File range has audio time, if ok, we seek, otherwise, we wait some other data
                     earliestTime = commonEarliestTime[streamInfo.id].audio > initialStartTime ? commonEarliestTime[streamInfo.id].audio : initialStartTime;
-                    ranges = bufferedRange[streamInfo.id].video;
+                    ranges = bufferedRange[streamInfo.id].File;
                 }
                 if (checkTimeInRanges(earliestTime, ranges)) {
                     if (!isSeeking() && !compatibleWithPreviousStream && earliestTime !== 0) {
@@ -34598,7 +34598,7 @@ function PlaybackController() {
                 }
             }
         } else {
-            //current stream has only audio or only video content
+            //current stream has only audio or only File content
             if (commonEarliestTime[streamInfo.id][type]) {
                 earliestTime = commonEarliestTime[streamInfo.id][type] > initialStartTime ? commonEarliestTime[streamInfo.id][type] : initialStartTime;
                 if (!isSeeking() && !compatibleWithPreviousStream) {
@@ -34633,7 +34633,7 @@ function PlaybackController() {
                 }
             }
         } else {
-            videoModel.setStallState(e.mediaType, e.state === _BufferController2['default'].BUFFER_EMPTY);
+            FileModel.setStallState(e.mediaType, e.state === _BufferController2['default'].BUFFER_EMPTY);
         }
     }
 
@@ -34644,37 +34644,37 @@ function PlaybackController() {
     }
 
     function addAllListeners() {
-        videoModel.addEventListener('canplay', onCanPlay);
-        videoModel.addEventListener('play', onPlaybackStart);
-        videoModel.addEventListener('waiting', onPlaybackWaiting);
-        videoModel.addEventListener('playing', onPlaybackPlaying);
-        videoModel.addEventListener('pause', onPlaybackPaused);
-        videoModel.addEventListener('error', onPlaybackError);
-        videoModel.addEventListener('seeking', onPlaybackSeeking);
-        videoModel.addEventListener('seeked', onPlaybackSeeked);
-        videoModel.addEventListener('timeupdate', onPlaybackTimeUpdated);
-        videoModel.addEventListener('progress', onPlaybackProgress);
-        videoModel.addEventListener('ratechange', onPlaybackRateChanged);
-        videoModel.addEventListener('loadedmetadata', onPlaybackMetaDataLoaded);
-        videoModel.addEventListener('stalled', onPlaybackStalled);
-        videoModel.addEventListener('ended', onNativePlaybackEnded);
+        FileModel.addEventListener('canplay', onCanPlay);
+        FileModel.addEventListener('play', onPlaybackStart);
+        FileModel.addEventListener('waiting', onPlaybackWaiting);
+        FileModel.addEventListener('playing', onPlaybackPlaying);
+        FileModel.addEventListener('pause', onPlaybackPaused);
+        FileModel.addEventListener('error', onPlaybackError);
+        FileModel.addEventListener('seeking', onPlaybackSeeking);
+        FileModel.addEventListener('seeked', onPlaybackSeeked);
+        FileModel.addEventListener('timeupdate', onPlaybackTimeUpdated);
+        FileModel.addEventListener('progress', onPlaybackProgress);
+        FileModel.addEventListener('ratechange', onPlaybackRateChanged);
+        FileModel.addEventListener('loadedmetadata', onPlaybackMetaDataLoaded);
+        FileModel.addEventListener('stalled', onPlaybackStalled);
+        FileModel.addEventListener('ended', onNativePlaybackEnded);
     }
 
     function removeAllListeners() {
-        videoModel.removeEventListener('canplay', onCanPlay);
-        videoModel.removeEventListener('play', onPlaybackStart);
-        videoModel.removeEventListener('waiting', onPlaybackWaiting);
-        videoModel.removeEventListener('playing', onPlaybackPlaying);
-        videoModel.removeEventListener('pause', onPlaybackPaused);
-        videoModel.removeEventListener('error', onPlaybackError);
-        videoModel.removeEventListener('seeking', onPlaybackSeeking);
-        videoModel.removeEventListener('seeked', onPlaybackSeeked);
-        videoModel.removeEventListener('timeupdate', onPlaybackTimeUpdated);
-        videoModel.removeEventListener('progress', onPlaybackProgress);
-        videoModel.removeEventListener('ratechange', onPlaybackRateChanged);
-        videoModel.removeEventListener('loadedmetadata', onPlaybackMetaDataLoaded);
-        videoModel.removeEventListener('stalled', onPlaybackStalled);
-        videoModel.removeEventListener('ended', onNativePlaybackEnded);
+        FileModel.removeEventListener('canplay', onCanPlay);
+        FileModel.removeEventListener('play', onPlaybackStart);
+        FileModel.removeEventListener('waiting', onPlaybackWaiting);
+        FileModel.removeEventListener('playing', onPlaybackPlaying);
+        FileModel.removeEventListener('pause', onPlaybackPaused);
+        FileModel.removeEventListener('error', onPlaybackError);
+        FileModel.removeEventListener('seeking', onPlaybackSeeking);
+        FileModel.removeEventListener('seeked', onPlaybackSeeked);
+        FileModel.removeEventListener('timeupdate', onPlaybackTimeUpdated);
+        FileModel.removeEventListener('progress', onPlaybackProgress);
+        FileModel.removeEventListener('ratechange', onPlaybackRateChanged);
+        FileModel.removeEventListener('loadedmetadata', onPlaybackMetaDataLoaded);
+        FileModel.removeEventListener('stalled', onPlaybackStalled);
+        FileModel.removeEventListener('ended', onNativePlaybackEnded);
     }
 
     instance = {
@@ -34938,7 +34938,7 @@ function ScheduleController(config) {
 
         var isReplacement = replaceRequestArray.length > 0;
         var streamInfo = streamProcessor.getStreamInfo();
-        if (bufferResetInProgress || isNaN(lastInitQuality) || switchTrack || isReplacement || hasTopQualityChanged(currentRepresentationInfo.mediaInfo.type, streamInfo.id) || bufferLevelRule.execute(streamProcessor, streamController.isTrackTypePresent(_constantsConstants2['default'].VIDEO))) {
+        if (bufferResetInProgress || isNaN(lastInitQuality) || switchTrack || isReplacement || hasTopQualityChanged(currentRepresentationInfo.mediaInfo.type, streamInfo.id) || bufferLevelRule.execute(streamProcessor, streamController.isTrackTypePresent(_constantsConstants2['default'].File))) {
 
             var getNextFragment = function getNextFragment() {
                 var fragmentController = streamProcessor.getFragmentController();
@@ -35362,7 +35362,7 @@ function ScheduleController(config) {
     }
 
     function getBufferTarget() {
-        return bufferLevelRule.getBufferTarget(streamProcessor, streamController.isTrackTypePresent(_constantsConstants2['default'].VIDEO));
+        return bufferLevelRule.getBufferTarget(streamProcessor, streamController.isTrackTypePresent(_constantsConstants2['default'].File));
     }
 
     function getType() {
@@ -35596,12 +35596,12 @@ function StreamController() {
         hasMediaError = undefined,
         hasInitialisationError = undefined,
         mediaSource = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         playbackController = undefined,
         mediaPlayerModel = undefined,
         isPaused = undefined,
         initialPlayback = undefined,
-        videoTrackDetected = undefined,
+        FileTrackDetected = undefined,
         audioTrackDetected = undefined,
         isPeriodSwitchInProgress = undefined,
         playbackEndedTimerId = undefined,
@@ -35687,8 +35687,8 @@ function StreamController() {
      * Used to determine the time current stream is finished and we should switch to the next stream.
      */
     function onPlaybackTimeUpdated() /*e*/{
-        if (isTrackTypePresent(_constantsConstants2['default'].VIDEO)) {
-            var playbackQuality = videoModel.getPlaybackQuality();
+        if (isTrackTypePresent(_constantsConstants2['default'].File)) {
+            var playbackQuality = FileModel.getPlaybackQuality();
             if (playbackQuality) {
                 dashMetrics.addDroppedFrames(playbackQuality);
             }
@@ -35845,12 +35845,12 @@ function StreamController() {
     }
 
     function onTrackBufferingCompleted(e) {
-        // In multiperiod situations, as soon as one of the tracks (AUDIO, VIDEO) is finished we should
+        // In multiperiod situations, as soon as one of the tracks (AUDIO, File) is finished we should
         // start doing prefetching of the next period
         if (!e.sender) {
             return;
         }
-        if (e.sender.getType() !== _constantsConstants2['default'].AUDIO && e.sender.getType() !== _constantsConstants2['default'].VIDEO) {
+        if (e.sender.getType() !== _constantsConstants2['default'].AUDIO && e.sender.getType() !== _constantsConstants2['default'].File) {
             return;
         }
 
@@ -35966,7 +35966,7 @@ function StreamController() {
         var nextStream = getNextStream();
         if (nextStream) {
             audioTrackDetected = undefined;
-            videoTrackDetected = undefined;
+            FileTrackDetected = undefined;
             switchStream(activeStream, nextStream, NaN);
         } else {
             logger.debug('StreamController no next stream found');
@@ -36012,7 +36012,7 @@ function StreamController() {
         activeStream = newStream;
         preloading = false;
         playbackController.initialize(getActiveStreamInfo(), useSmoothPeriodTransition);
-        if (videoModel.getElement()) {
+        if (FileModel.getElement()) {
             //TODO detect if we should close jump to activateStream.
             openMediaSource(seekTime, oldStream, false, useSmoothPeriodTransition);
         } else {
@@ -36024,7 +36024,7 @@ function StreamController() {
         activateStream(seekTime, useSmoothPeriodTransition);
     }
 
-    function switchToVideoElement(seekTime) {
+    function switchToFileElement(seekTime) {
         if (activeStream) {
             playbackController.initialize(getActiveStreamInfo());
             openMediaSource(seekTime, null, true, false);
@@ -36059,7 +36059,7 @@ function StreamController() {
             mediaSource = mediaSourceController.createMediaSource();
             mediaSource.addEventListener('sourceopen', onMediaSourceOpen, false);
             mediaSource.addEventListener('webkitsourceopen', onMediaSourceOpen, false);
-            sourceUrl = mediaSourceController.attachMediaSource(mediaSource, videoModel);
+            sourceUrl = mediaSourceController.attachMediaSource(mediaSource, FileModel);
             logger.debug('MediaSource attached to element.  Waiting on open...');
         } else {
             if (keepBuffers) {
@@ -36068,10 +36068,10 @@ function StreamController() {
                     eventBus.trigger(_coreEventsEvents2['default'].SOURCE_INITIALIZED);
                 }
             } else {
-                mediaSourceController.detachMediaSource(videoModel);
+                mediaSourceController.detachMediaSource(FileModel);
                 mediaSource.addEventListener('sourceopen', onMediaSourceOpen, false);
                 mediaSource.addEventListener('webkitsourceopen', onMediaSourceOpen, false);
-                sourceUrl = mediaSourceController.attachMediaSource(mediaSource, videoModel);
+                sourceUrl = mediaSourceController.attachMediaSource(mediaSource, FileModel);
                 logger.debug('MediaSource attached to element.  Waiting on open...');
             }
         }
@@ -36080,7 +36080,7 @@ function StreamController() {
     function activateStream(seekTime, keepBuffers) {
         buffers = activeStream.activate(mediaSource, keepBuffers ? buffers : undefined);
         audioTrackDetected = checkTrackPresence(_constantsConstants2['default'].AUDIO);
-        videoTrackDetected = checkTrackPresence(_constantsConstants2['default'].VIDEO);
+        FileTrackDetected = checkTrackPresence(_constantsConstants2['default'].File);
 
         // check if change type is supported by the browser
         if (buffers) {
@@ -36141,7 +36141,7 @@ function StreamController() {
 
             dashMetrics.updateManifestUpdateInfo({
                 currentTime: playbackController.getTime(),
-                buffered: videoModel.getBufferRange(),
+                buffered: FileModel.getBufferRange(),
                 presentationStartTime: streamsInfo[0].start,
                 clientTimeOffset: timelineConverter.getClientTimeOffset()
             });
@@ -36167,7 +36167,7 @@ function StreamController() {
                         playbackController: playbackController,
                         mediaController: mediaController,
                         textController: textController,
-                        videoModel: videoModel,
+                        FileModel: FileModel,
                         streamController: instance,
                         settings: settings
                     });
@@ -36207,7 +36207,7 @@ function StreamController() {
                 controller: protectionController,
                 manifest: manifest
             });
-            protectionController.setMediaElement(videoModel.getElement());
+            protectionController.setMediaElement(FileModel.getElement());
             if (protectionData) {
                 protectionController.setProtectionData(protectionData);
             }
@@ -36224,7 +36224,7 @@ function StreamController() {
                 var manifest = e.manifest;
                 adapter.updatePeriods(manifest);
                 var streamInfo = adapter.getStreamsInfo(undefined, 1)[0];
-                var mediaInfo = adapter.getMediaInfoForType(streamInfo, _constantsConstants2['default'].VIDEO) || adapter.getMediaInfoForType(streamInfo, _constantsConstants2['default'].AUDIO);
+                var mediaInfo = adapter.getMediaInfoForType(streamInfo, _constantsConstants2['default'].File) || adapter.getMediaInfoForType(streamInfo, _constantsConstants2['default'].AUDIO);
 
                 var useCalculatedLiveEdgeTime = undefined;
                 if (mediaInfo) {
@@ -36270,8 +36270,8 @@ function StreamController() {
         }
 
         switch (trackType) {
-            case _constantsConstants2['default'].VIDEO:
-                isTrackTypeDetected = videoTrackDetected;
+            case _constantsConstants2['default'].File:
+                isTrackTypeDetected = FileTrackDetected;
                 break;
             case _constantsConstants2['default'].AUDIO:
                 isTrackTypeDetected = audioTrackDetected;
@@ -36342,7 +36342,7 @@ function StreamController() {
             msg += ' (0x' + (e.error.msExtendedCode >>> 0).toString(16).toUpperCase() + ')';
         }
 
-        logger.fatal('Video Element Error: ' + msg);
+        logger.fatal('File Element Error: ' + msg);
         if (e.error) {
             logger.fatal(e.error);
         }
@@ -36418,8 +36418,8 @@ function StreamController() {
         if (config.timelineConverter) {
             timelineConverter = config.timelineConverter;
         }
-        if (config.videoModel) {
-            videoModel = config.videoModel;
+        if (config.FileModel) {
+            FileModel = config.FileModel;
         }
         if (config.playbackController) {
             playbackController = config.playbackController;
@@ -36449,7 +36449,7 @@ function StreamController() {
         activeStream = null;
         hasMediaError = false;
         hasInitialisationError = false;
-        videoTrackDetected = undefined;
+        FileTrackDetected = undefined;
         audioTrackDetected = undefined;
         initialPlayback = true;
         isPaused = false;
@@ -36482,10 +36482,10 @@ function StreamController() {
         initCache.reset();
 
         if (mediaSource) {
-            mediaSourceController.detachMediaSource(videoModel);
+            mediaSourceController.detachMediaSource(FileModel);
             mediaSource = null;
         }
-        videoModel = null;
+        FileModel = null;
         if (protectionController) {
             protectionController.setMediaElement(null);
             protectionController = null;
@@ -36515,7 +36515,7 @@ function StreamController() {
         initialize: initialize,
         getActiveStreamInfo: getActiveStreamInfo,
         isTrackTypePresent: isTrackTypePresent,
-        switchToVideoElement: switchToVideoElement,
+        switchToFileElement: switchToFileElement,
         getStreamById: getStreamById,
         getStreamForTime: getStreamForTime,
         getTimeRelativeToStreamId: getTimeRelativeToStreamId,
@@ -40954,7 +40954,7 @@ function MetricsModel(config) {
         var list = getMetricsFor(mediaType).DroppedFrames;
 
         vo.time = quality.creationTime;
-        vo.droppedFrames = quality.droppedVideoFrames;
+        vo.droppedFrames = quality.droppedFileFrames;
 
         if (list.length > 0 && list[list.length - 1] == vo) {
             return;
@@ -41256,7 +41256,7 @@ var _coreDebug = _dereq_(47);
 
 var _coreDebug2 = _interopRequireDefault(_coreDebug);
 
-function VideoModel() {
+function FileModel() {
 
     var instance = undefined,
         logger = undefined,
@@ -41264,7 +41264,7 @@ function VideoModel() {
         TTMLRenderingDiv = undefined,
         previousPlaybackRate = undefined;
 
-    var VIDEO_MODEL_WRONG_ELEMENT_TYPE = 'element is not video or audio DOM type!';
+    var File_MODEL_WRONG_ELEMENT_TYPE = 'element is not File or audio DOM type!';
 
     var context = this.context;
     var eventBus = (0, _coreEventBus2['default'])(context).getInstance();
@@ -41308,8 +41308,8 @@ function VideoModel() {
             // providing playbackRate property equals to zero.
             if (element.currentTime == currentTime) return;
 
-            // TODO Despite the fact that MediaSource 'open' event has been fired IE11 cannot set videoElement.currentTime
-            // immediately (it throws InvalidStateError). It seems that this is related to videoElement.readyState property
+            // TODO Despite the fact that MediaSource 'open' event has been fired IE11 cannot set FileElement.currentTime
+            // immediately (it throws InvalidStateError). It seems that this is related to FileElement.readyState property
             // Initially it is 0, but soon after 'open' event it goes to 1 and setting currentTime is allowed. Chrome allows to
             // set currentTime even if readyState = 0.
             // setTimeout is used to workaround InvalidStateError in IE11
@@ -41361,14 +41361,14 @@ function VideoModel() {
 
     function setElement(value) {
         //add check of value type
-        if (value === null || value === undefined || value && /^(VIDEO|AUDIO)$/i.test(value.nodeName)) {
+        if (value === null || value === undefined || value && /^(File|AUDIO)$/i.test(value.nodeName)) {
             element = value;
             // Workaround to force Firefox to fire the canplay event.
             if (element) {
                 element.preload = 'auto';
             }
         } else {
-            throw VIDEO_MODEL_WRONG_ELEMENT_TYPE;
+            throw File_MODEL_WRONG_ELEMENT_TYPE;
         }
     }
 
@@ -41393,7 +41393,7 @@ function VideoModel() {
 
     function setTTMLRenderingDiv(div) {
         TTMLRenderingDiv = div;
-        // The styling will allow the captions to match the video window size and position.
+        // The styling will allow the captions to match the File window size and position.
         TTMLRenderingDiv.style.position = 'absolute';
         TTMLRenderingDiv.style.display = 'flex';
         TTMLRenderingDiv.style.overflow = 'hidden';
@@ -41471,15 +41471,15 @@ function VideoModel() {
             return null;
         }
         var hasWebKit = 'webkitDroppedFrameCount' in element && 'webkitDecodedFrameCount' in element;
-        var hasQuality = ('getVideoPlaybackQuality' in element);
+        var hasQuality = ('getFilePlaybackQuality' in element);
         var result = null;
 
         if (hasQuality) {
-            result = element.getVideoPlaybackQuality();
+            result = element.getFilePlaybackQuality();
         } else if (hasWebKit) {
             result = {
-                droppedVideoFrames: element.webkitDroppedFrameCount,
-                totalVideoFrames: element.webkitDroppedFrameCount + element.webkitDecodedFrameCount,
+                droppedFileFrames: element.webkitDroppedFrameCount,
+                totalFileFrames: element.webkitDroppedFrameCount + element.webkitDecodedFrameCount,
                 creationTime: new Date()
             };
         }
@@ -41561,19 +41561,19 @@ function VideoModel() {
         return element ? element.clientHeight : NaN;
     }
 
-    function getVideoWidth() {
-        return element ? element.videoWidth : NaN;
+    function getFileWidth() {
+        return element ? element.FileWidth : NaN;
     }
 
-    function getVideoHeight() {
-        return element ? element.videoHeight : NaN;
+    function getFileHeight() {
+        return element ? element.FileHeight : NaN;
     }
 
-    function getVideoRelativeOffsetTop() {
+    function getFileRelativeOffsetTop() {
         return element && element.parentNode ? element.getBoundingClientRect().top - element.parentNode.getBoundingClientRect().top : NaN;
     }
 
-    function getVideoRelativeOffsetLeft() {
+    function getFileRelativeOffsetLeft() {
         return element && element.parentNode ? element.getBoundingClientRect().left - element.parentNode.getBoundingClientRect().left : NaN;
     }
 
@@ -41650,10 +41650,10 @@ function VideoModel() {
         addTextTrack: addTextTrack,
         appendChild: appendChild,
         removeChild: removeChild,
-        getVideoWidth: getVideoWidth,
-        getVideoHeight: getVideoHeight,
-        getVideoRelativeOffsetTop: getVideoRelativeOffsetTop,
-        getVideoRelativeOffsetLeft: getVideoRelativeOffsetLeft,
+        getFileWidth: getFileWidth,
+        getFileHeight: getFileHeight,
+        getFileRelativeOffsetTop: getFileRelativeOffsetTop,
+        getFileRelativeOffsetLeft: getFileRelativeOffsetLeft,
         reset: reset
     };
 
@@ -41662,8 +41662,8 @@ function VideoModel() {
     return instance;
 }
 
-VideoModel.__dashjs_factory_name = 'VideoModel';
-exports['default'] = _coreFactoryMaker2['default'].getSingletonFactory(VideoModel);
+FileModel.__dashjs_factory_name = 'FileModel';
+exports['default'] = _coreFactoryMaker2['default'].getSingletonFactory(FileModel);
 module.exports = exports['default'];
 
 },{"47":47,"48":48,"49":49,"56":56}],155:[function(_dereq_,module,exports){
@@ -42753,7 +42753,7 @@ var _modelsProtectionModel_01b2 = _interopRequireDefault(_modelsProtectionModel_
 var APIS_ProtectionModel_01b = [
 // Un-prefixed as per spec
 {
-    // Video Element
+    // File Element
     generateKeyRequest: 'generateKeyRequest',
     addKey: 'addKey',
     cancelKeyRequest: 'cancelKeyRequest',
@@ -42766,7 +42766,7 @@ var APIS_ProtectionModel_01b = [
 },
 // Webkit-prefixed (early Chrome versions and Chrome with EME disabled in chrome://flags)
 {
-    // Video Element
+    // File Element
     generateKeyRequest: 'webkitGenerateKeyRequest',
     addKey: 'webkitAddKey',
     cancelKeyRequest: 'webkitCancelKeyRequest',
@@ -42782,7 +42782,7 @@ var APIS_ProtectionModel_3Feb2014 = [
 // Un-prefixed as per spec
 // Chrome 38-39 (and some earlier versions) with chrome://flags -- Enable Encrypted Media Extensions
 {
-    // Video Element
+    // File Element
     setMediaKeys: 'setMediaKeys',
     // MediaKeys
     MediaKeys: 'MediaKeys',
@@ -42798,7 +42798,7 @@ var APIS_ProtectionModel_3Feb2014 = [
 },
 // MS-prefixed (IE11, Windows 8.1)
 {
-    // Video Element
+    // File Element
     setMediaKeys: 'msSetMediaKeys',
     // MediaKeys
     MediaKeys: 'MSMediaKeys',
@@ -42854,29 +42854,29 @@ function Protection() {
         var logger = debug.getLogger(instance);
         var eventBus = config.eventBus;
         var errHandler = config.errHandler;
-        var videoElement = config.videoModel ? config.videoModel.getElement() : null;
+        var FileElement = config.FileModel ? config.FileModel.getElement() : null;
 
-        if ((!videoElement || videoElement.onencrypted !== undefined) && (!videoElement || videoElement.mediaKeys !== undefined)) {
+        if ((!FileElement || FileElement.onencrypted !== undefined) && (!FileElement || FileElement.mediaKeys !== undefined)) {
             logger.info('EME detected on this user agent! (ProtectionModel_21Jan2015)');
             return (0, _modelsProtectionModel_21Jan20152['default'])(context).create({ debug: debug, eventBus: eventBus, events: config.events });
-        } else if (getAPI(videoElement, APIS_ProtectionModel_3Feb2014)) {
+        } else if (getAPI(FileElement, APIS_ProtectionModel_3Feb2014)) {
             logger.info('EME detected on this user agent! (ProtectionModel_3Feb2014)');
-            return (0, _modelsProtectionModel_3Feb20142['default'])(context).create({ debug: debug, eventBus: eventBus, events: config.events, api: getAPI(videoElement, APIS_ProtectionModel_3Feb2014) });
-        } else if (getAPI(videoElement, APIS_ProtectionModel_01b)) {
+            return (0, _modelsProtectionModel_3Feb20142['default'])(context).create({ debug: debug, eventBus: eventBus, events: config.events, api: getAPI(FileElement, APIS_ProtectionModel_3Feb2014) });
+        } else if (getAPI(FileElement, APIS_ProtectionModel_01b)) {
             logger.info('EME detected on this user agent! (ProtectionModel_01b)');
-            return (0, _modelsProtectionModel_01b2['default'])(context).create({ debug: debug, eventBus: eventBus, errHandler: errHandler, events: config.events, api: getAPI(videoElement, APIS_ProtectionModel_01b) });
+            return (0, _modelsProtectionModel_01b2['default'])(context).create({ debug: debug, eventBus: eventBus, errHandler: errHandler, events: config.events, api: getAPI(FileElement, APIS_ProtectionModel_01b) });
         } else {
             logger.warn('No supported version of EME detected on this user agent! - Attempts to play encrypted content will fail!');
             return null;
         }
     }
 
-    function getAPI(videoElement, apis) {
+    function getAPI(FileElement, apis) {
         for (var i = 0; i < apis.length; i++) {
             var api = apis[i];
             // detect if api is supported by browser
             // check only first function in api -> should be fine
-            if (typeof videoElement[api[Object.keys(api)[0]]] !== 'function') {
+            if (typeof FileElement[api[Object.keys(api)[0]]] !== 'function') {
                 continue;
             }
 
@@ -43099,7 +43099,7 @@ var ProtectionEvents = (function (_EventsBase) {
      * associated with the protection set
      * @ignore
      */
-    this.VIDEO_ELEMENT_SELECTED = 'videoElementSelected';
+    this.File_ELEMENT_SELECTED = 'FileElementSelected';
   }
 
   return ProtectionEvents;
@@ -43227,7 +43227,7 @@ function ProtectionController(config) {
 
     /**
      * Initialize this protection system with a given audio
-     * or video stream information.
+     * or File stream information.
      *
      * @param {StreamInfo} [mediaInfo] Media information
      * @memberof module:ProtectionController
@@ -43254,7 +43254,7 @@ function ProtectionController(config) {
         mediaInfoArr.push(mediaInfo);
 
         // ContentProtection elements are specified at the AdaptationSet level, so the CP for audio
-        // and video will be the same.  Just use one valid MediaInfo object
+        // and File will be the same.  Just use one valid MediaInfo object
         var supportedKS = protectionKeyController.getSupportedKeySystemsFromContentProtection(mediaInfo.contentProtection);
         if (supportedKS && supportedKS.length > 0) {
             selectKeySystem(supportedKS, true);
@@ -43421,7 +43421,7 @@ function ProtectionController(config) {
     }
 
     /**
-     * Sets the robustness level for video and audio capabilities. Optional to remove Chrome warnings.
+     * Sets the robustness level for File and audio capabilities. Optional to remove Chrome warnings.
      * Possible values are SW_SECURE_CRYPTO, SW_SECURE_DECODE, HW_SECURE_CRYPTO, HW_SECURE_CRYPTO, HW_SECURE_DECODE, HW_SECURE_ALL.
      *
      * @param {string} level the robustness level
@@ -43511,9 +43511,9 @@ function ProtectionController(config) {
     function getKeySystemConfiguration(keySystem) {
         var protData = getProtData(keySystem);
         var audioCapabilities = [];
-        var videoCapabilities = [];
+        var FileCapabilities = [];
         var audioRobustness = protData && protData.audioRobustness && protData.audioRobustness.length > 0 ? protData.audioRobustness : robustnessLevel;
-        var videoRobustness = protData && protData.videoRobustness && protData.videoRobustness.length > 0 ? protData.videoRobustness : robustnessLevel;
+        var FileRobustness = protData && protData.FileRobustness && protData.FileRobustness.length > 0 ? protData.FileRobustness : robustnessLevel;
         var ksSessionType = getSessionType(keySystem);
         var distinctiveIdentifier = protData && protData.distinctiveIdentifier ? protData.distinctiveIdentifier : 'optional';
         var persistentState = protData && protData.persistentState ? protData.persistentState : ksSessionType === 'temporary' ? 'optional' : 'required';
@@ -43521,12 +43521,12 @@ function ProtectionController(config) {
         mediaInfoArr.forEach(function (media) {
             if (media.type === constants.AUDIO) {
                 audioCapabilities.push(new _voMediaCapability2['default'](media.codec, audioRobustness));
-            } else if (media.type === constants.VIDEO) {
-                videoCapabilities.push(new _voMediaCapability2['default'](media.codec, videoRobustness));
+            } else if (media.type === constants.File) {
+                FileCapabilities.push(new _voMediaCapability2['default'](media.codec, FileRobustness));
             }
         });
 
-        return new _voKeySystemConfiguration2['default'](audioCapabilities, videoCapabilities, distinctiveIdentifier, persistentState, [ksSessionType]);
+        return new _voKeySystemConfiguration2['default'](audioCapabilities, FileCapabilities, distinctiveIdentifier, persistentState, [ksSessionType]);
     }
 
     function getSessionType(keySystem) {
@@ -45307,7 +45307,7 @@ function ProtectionModel_01b(config) {
 
     var instance = undefined,
         logger = undefined,
-        videoElement = undefined,
+        FileElement = undefined,
         keySystem = undefined,
         protectionKeyController = undefined,
 
@@ -45336,7 +45336,7 @@ function ProtectionModel_01b(config) {
 
     function setup() {
         logger = debug.getLogger(instance);
-        videoElement = null;
+        FileElement = null;
         keySystem = null;
         pendingSessions = [];
         sessions = [];
@@ -45345,7 +45345,7 @@ function ProtectionModel_01b(config) {
     }
 
     function reset() {
-        if (videoElement) {
+        if (FileElement) {
             removeEventListeners();
         }
         for (var i = 0; i < sessions.length; i++) {
@@ -45370,10 +45370,10 @@ function ProtectionModel_01b(config) {
     }
 
     function requestKeySystemAccess(ksConfigurations) {
-        var ve = videoElement;
+        var ve = FileElement;
         if (!ve) {
-            // Must have a video element to do this capability tests
-            ve = document.createElement('video');
+            // Must have a File element to do this capability tests
+            ve = document.createElement('File');
         }
 
         // Try key systems in order, first one with supported key system configuration
@@ -45383,39 +45383,39 @@ function ProtectionModel_01b(config) {
             var systemString = ksConfigurations[ksIdx].ks.systemString;
             var configs = ksConfigurations[ksIdx].configs;
             var supportedAudio = null;
-            var supportedVideo = null;
+            var supportedFile = null;
 
-            // Try key system configs in order, first one with supported audio/video
+            // Try key system configs in order, first one with supported audio/File
             // is used
             for (var configIdx = 0; configIdx < configs.length; configIdx++) {
                 //let audios = configs[configIdx].audioCapabilities;
-                var videos = configs[configIdx].videoCapabilities;
-                // Look for supported video container/codecs
-                if (videos && videos.length !== 0) {
-                    supportedVideo = []; // Indicates that we have a requested video config
-                    for (var videoIdx = 0; videoIdx < videos.length; videoIdx++) {
-                        if (ve.canPlayType(videos[videoIdx].contentType, systemString) !== '') {
-                            supportedVideo.push(videos[videoIdx]);
+                var Files = configs[configIdx].FileCapabilities;
+                // Look for supported File container/codecs
+                if (Files && Files.length !== 0) {
+                    supportedFile = []; // Indicates that we have a requested File config
+                    for (var FileIdx = 0; FileIdx < Files.length; FileIdx++) {
+                        if (ve.canPlayType(Files[FileIdx].contentType, systemString) !== '') {
+                            supportedFile.push(Files[FileIdx]);
                         }
                     }
                 }
 
-                // No supported audio or video in this configuration OR we have
-                // requested audio or video configuration that is not supported
-                if (!supportedAudio && !supportedVideo || supportedAudio && supportedAudio.length === 0 || supportedVideo && supportedVideo.length === 0) {
+                // No supported audio or File in this configuration OR we have
+                // requested audio or File configuration that is not supported
+                if (!supportedAudio && !supportedFile || supportedAudio && supportedAudio.length === 0 || supportedFile && supportedFile.length === 0) {
                     continue;
                 }
 
                 // This configuration is supported
                 found = true;
-                var ksConfig = new _voKeySystemConfiguration2['default'](supportedAudio, supportedVideo);
+                var ksConfig = new _voKeySystemConfiguration2['default'](supportedAudio, supportedFile);
                 var ks = protectionKeyController.getKeySystemBySystemString(systemString);
                 eventBus.trigger(events.KEY_SYSTEM_ACCESS_COMPLETE, { data: new _voKeySystemAccess2['default'](ks, ksConfig) });
                 break;
             }
         }
         if (!found) {
-            eventBus.trigger(events.KEY_SYSTEM_ACCESS_COMPLETE, { error: 'Key system access denied! -- No valid audio/video content configurations detected!' });
+            eventBus.trigger(events.KEY_SYSTEM_ACCESS_COMPLETE, { error: 'Key system access denied! -- No valid audio/File content configurations detected!' });
         }
     }
 
@@ -45425,12 +45425,12 @@ function ProtectionModel_01b(config) {
     }
 
     function setMediaElement(mediaElement) {
-        if (videoElement === mediaElement) {
+        if (FileElement === mediaElement) {
             return;
         }
 
         // Replacing the previous element
-        if (videoElement) {
+        if (FileElement) {
             removeEventListeners();
 
             // Close any open sessions - avoids memory leak on LG webOS 2016/2017 TVs
@@ -45440,15 +45440,15 @@ function ProtectionModel_01b(config) {
             sessions = [];
         }
 
-        videoElement = mediaElement;
+        FileElement = mediaElement;
 
         // Only if we are not detaching from the existing element
-        if (videoElement) {
-            videoElement.addEventListener(api.keyerror, eventHandler);
-            videoElement.addEventListener(api.needkey, eventHandler);
-            videoElement.addEventListener(api.keymessage, eventHandler);
-            videoElement.addEventListener(api.keyadded, eventHandler);
-            eventBus.trigger(events.VIDEO_ELEMENT_SELECTED);
+        if (FileElement) {
+            FileElement.addEventListener(api.keyerror, eventHandler);
+            FileElement.addEventListener(api.needkey, eventHandler);
+            FileElement.addEventListener(api.keymessage, eventHandler);
+            FileElement.addEventListener(api.keyadded, eventHandler);
+            eventBus.trigger(events.File_ELEMENT_SELECTED);
         }
     }
 
@@ -45477,7 +45477,7 @@ function ProtectionModel_01b(config) {
             pendingSessions.push(newSession);
 
             // Send our request to the CDM
-            videoElement[api.generateKeyRequest](keySystem.systemString, new Uint8Array(initData));
+            FileElement[api.generateKeyRequest](keySystem.systemString, new Uint8Array(initData));
 
             return newSession;
         } else {
@@ -45489,11 +45489,11 @@ function ProtectionModel_01b(config) {
         var sessionID = sessionToken.sessionID;
         if (!protectionKeyController.isClearKey(keySystem)) {
             // Send our request to the CDM
-            videoElement[api.addKey](keySystem.systemString, new Uint8Array(message), new Uint8Array(sessionToken.initData), sessionID);
+            FileElement[api.addKey](keySystem.systemString, new Uint8Array(message), new Uint8Array(sessionToken.initData), sessionID);
         } else {
             // For clearkey, message is a ClearKeyKeySet
             for (var i = 0; i < message.keyPairs.length; i++) {
-                videoElement[api.addKey](keySystem.systemString, message.keyPairs[i].key, message.keyPairs[i].keyID, sessionID);
+                FileElement[api.addKey](keySystem.systemString, message.keyPairs[i].key, message.keyPairs[i].keyID, sessionID);
             }
         }
     }
@@ -45501,7 +45501,7 @@ function ProtectionModel_01b(config) {
     function closeKeySession(sessionToken) {
         // Send our request to the CDM
         try {
-            videoElement[api.cancelKeyRequest](keySystem.systemString, sessionToken.sessionID);
+            FileElement[api.cancelKeyRequest](keySystem.systemString, sessionToken.sessionID);
         } catch (error) {
             eventBus.trigger(events.KEY_SESSION_CLOSED, { data: null, error: 'Error closing session (' + sessionToken.sessionID + ') ' + error.message });
         }
@@ -45647,10 +45647,10 @@ function ProtectionModel_01b(config) {
     }
 
     function removeEventListeners() {
-        videoElement.removeEventListener(api.keyerror, eventHandler);
-        videoElement.removeEventListener(api.needkey, eventHandler);
-        videoElement.removeEventListener(api.keymessage, eventHandler);
-        videoElement.removeEventListener(api.keyadded, eventHandler);
+        FileElement.removeEventListener(api.keyerror, eventHandler);
+        FileElement.removeEventListener(api.needkey, eventHandler);
+        FileElement.removeEventListener(api.keymessage, eventHandler);
+        FileElement.removeEventListener(api.keyadded, eventHandler);
     }
 
     instance = {
@@ -45766,7 +45766,7 @@ function ProtectionModel_21Jan2015(config) {
     var instance = undefined,
         logger = undefined,
         keySystem = undefined,
-        videoElement = undefined,
+        FileElement = undefined,
         mediaKeys = undefined,
         sessions = undefined,
         eventHandler = undefined,
@@ -45775,7 +45775,7 @@ function ProtectionModel_21Jan2015(config) {
     function setup() {
         logger = debug.getLogger(instance);
         keySystem = null;
-        videoElement = null;
+        FileElement = null;
         mediaKeys = null;
         sessions = [];
         protectionKeyController = (0, _controllersProtectionKeyController2['default'])(context).getInstance();
@@ -45792,9 +45792,9 @@ function ProtectionModel_21Jan2015(config) {
                 var done = function done(session) {
                     removeSession(session);
                     if (sessions.length === 0) {
-                        if (videoElement) {
-                            videoElement.removeEventListener('encrypted', eventHandler);
-                            videoElement.setMediaKeys(null).then(function () {
+                        if (FileElement) {
+                            FileElement.removeEventListener('encrypted', eventHandler);
+                            FileElement.setMediaKeys(null).then(function () {
                                 eventBus.trigger(events.TEARDOWN_COMPLETE);
                             });
                         } else {
@@ -45857,8 +45857,8 @@ function ProtectionModel_21Jan2015(config) {
         keySystemAccess.mksa.createMediaKeys().then(function (mkeys) {
             keySystem = keySystemAccess.keySystem;
             mediaKeys = mkeys;
-            if (videoElement) {
-                videoElement.setMediaKeys(mediaKeys).then(function () {
+            if (FileElement) {
+                FileElement.setMediaKeys(mediaKeys).then(function () {
                     eventBus.trigger(events.INTERNAL_KEY_SYSTEM_SELECTED);
                 });
             } else {
@@ -45870,23 +45870,23 @@ function ProtectionModel_21Jan2015(config) {
     }
 
     function setMediaElement(mediaElement) {
-        if (videoElement === mediaElement) return;
+        if (FileElement === mediaElement) return;
 
         // Replacing the previous element
-        if (videoElement) {
-            videoElement.removeEventListener('encrypted', eventHandler);
-            if (videoElement.setMediaKeys) {
-                videoElement.setMediaKeys(null);
+        if (FileElement) {
+            FileElement.removeEventListener('encrypted', eventHandler);
+            if (FileElement.setMediaKeys) {
+                FileElement.setMediaKeys(null);
             }
         }
 
-        videoElement = mediaElement;
+        FileElement = mediaElement;
 
         // Only if we are not detaching from the existing element
-        if (videoElement) {
-            videoElement.addEventListener('encrypted', eventHandler);
-            if (videoElement.setMediaKeys && mediaKeys) {
-                videoElement.setMediaKeys(mediaKeys);
+        if (FileElement) {
+            FileElement.addEventListener('encrypted', eventHandler);
+            if (FileElement.setMediaKeys && mediaKeys) {
+                FileElement.setMediaKeys(mediaKeys);
             }
         }
     }
@@ -46280,7 +46280,7 @@ function ProtectionModel_3Feb2014(config) {
 
     var instance = undefined,
         logger = undefined,
-        videoElement = undefined,
+        FileElement = undefined,
         keySystem = undefined,
         mediaKeys = undefined,
         keySystemAccess = undefined,
@@ -46290,7 +46290,7 @@ function ProtectionModel_3Feb2014(config) {
 
     function setup() {
         logger = debug.getLogger(instance);
-        videoElement = null;
+        FileElement = null;
         keySystem = null;
         mediaKeys = null;
         keySystemAccess = null;
@@ -46304,8 +46304,8 @@ function ProtectionModel_3Feb2014(config) {
             for (var i = 0; i < sessions.length; i++) {
                 closeKeySession(sessions[i]);
             }
-            if (videoElement) {
-                videoElement.removeEventListener(api.needkey, eventHandler);
+            if (FileElement) {
+                FileElement.removeEventListener(api.needkey, eventHandler);
             }
             eventBus.trigger(events.TEARDOWN_COMPLETE);
         } catch (error) {
@@ -46334,13 +46334,13 @@ function ProtectionModel_3Feb2014(config) {
             var systemString = ksConfigurations[ksIdx].ks.systemString;
             var configs = ksConfigurations[ksIdx].configs;
             var supportedAudio = null;
-            var supportedVideo = null;
+            var supportedFile = null;
 
-            // Try key system configs in order, first one with supported audio/video
+            // Try key system configs in order, first one with supported audio/File
             // is used
             for (var configIdx = 0; configIdx < configs.length; configIdx++) {
                 var audios = configs[configIdx].audioCapabilities;
-                var videos = configs[configIdx].videoCapabilities;
+                var Files = configs[configIdx].FileCapabilities;
 
                 // Look for supported audio container/codecs
                 if (audios && audios.length !== 0) {
@@ -46352,32 +46352,32 @@ function ProtectionModel_3Feb2014(config) {
                     }
                 }
 
-                // Look for supported video container/codecs
-                if (videos && videos.length !== 0) {
-                    supportedVideo = []; // Indicates that we have a requested video config
-                    for (var videoIdx = 0; videoIdx < videos.length; videoIdx++) {
-                        if (window[api.MediaKeys].isTypeSupported(systemString, videos[videoIdx].contentType)) {
-                            supportedVideo.push(videos[videoIdx]);
+                // Look for supported File container/codecs
+                if (Files && Files.length !== 0) {
+                    supportedFile = []; // Indicates that we have a requested File config
+                    for (var FileIdx = 0; FileIdx < Files.length; FileIdx++) {
+                        if (window[api.MediaKeys].isTypeSupported(systemString, Files[FileIdx].contentType)) {
+                            supportedFile.push(Files[FileIdx]);
                         }
                     }
                 }
 
-                // No supported audio or video in this configuration OR we have
-                // requested audio or video configuration that is not supported
-                if (!supportedAudio && !supportedVideo || supportedAudio && supportedAudio.length === 0 || supportedVideo && supportedVideo.length === 0) {
+                // No supported audio or File in this configuration OR we have
+                // requested audio or File configuration that is not supported
+                if (!supportedAudio && !supportedFile || supportedAudio && supportedAudio.length === 0 || supportedFile && supportedFile.length === 0) {
                     continue;
                 }
 
                 // This configuration is supported
                 found = true;
-                var ksConfig = new _voKeySystemConfiguration2['default'](supportedAudio, supportedVideo);
+                var ksConfig = new _voKeySystemConfiguration2['default'](supportedAudio, supportedFile);
                 var ks = protectionKeyController.getKeySystemBySystemString(systemString);
                 eventBus.trigger(events.KEY_SYSTEM_ACCESS_COMPLETE, { data: new _voKeySystemAccess2['default'](ks, ksConfig) });
                 break;
             }
         }
         if (!found) {
-            eventBus.trigger(events.KEY_SYSTEM_ACCESS_COMPLETE, { error: 'Key system access denied! -- No valid audio/video content configurations detected!' });
+            eventBus.trigger(events.KEY_SYSTEM_ACCESS_COMPLETE, { error: 'Key system access denied! -- No valid audio/File content configurations detected!' });
         }
     }
 
@@ -46386,7 +46386,7 @@ function ProtectionModel_3Feb2014(config) {
             mediaKeys = ksAccess.mediaKeys = new window[api.MediaKeys](ksAccess.keySystem.systemString);
             keySystem = ksAccess.keySystem;
             keySystemAccess = ksAccess;
-            if (videoElement) {
+            if (FileElement) {
                 setMediaKeys();
             }
             eventBus.trigger(events.INTERNAL_KEY_SYSTEM_SELECTED);
@@ -46396,18 +46396,18 @@ function ProtectionModel_3Feb2014(config) {
     }
 
     function setMediaElement(mediaElement) {
-        if (videoElement === mediaElement) return;
+        if (FileElement === mediaElement) return;
 
         // Replacing the previous element
-        if (videoElement) {
-            videoElement.removeEventListener(api.needkey, eventHandler);
+        if (FileElement) {
+            FileElement.removeEventListener(api.needkey, eventHandler);
         }
 
-        videoElement = mediaElement;
+        FileElement = mediaElement;
 
         // Only if we are not detaching from the existing element
-        if (videoElement) {
-            videoElement.addEventListener(api.needkey, eventHandler);
+        if (FileElement) {
+            FileElement.addEventListener(api.needkey, eventHandler);
             if (mediaKeys) {
                 setMediaKeys();
             }
@@ -46419,14 +46419,14 @@ function ProtectionModel_3Feb2014(config) {
             throw new Error('Can not create sessions until you have selected a key system');
         }
 
-        // Use the first video capability for the contentType.
+        // Use the first File capability for the contentType.
         // TODO:  Not sure if there is a way to concatenate all capability data into a RFC6386-compatible format
 
         // If player is trying to playback Audio only stream - don't error out.
         var capabilities = null;
 
-        if (keySystemAccess.ksConfiguration.videoCapabilities && keySystemAccess.ksConfiguration.videoCapabilities.length > 0) {
-            capabilities = keySystemAccess.ksConfiguration.videoCapabilities[0];
+        if (keySystemAccess.ksConfiguration.FileCapabilities && keySystemAccess.ksConfiguration.FileCapabilities.length > 0) {
+            capabilities = keySystemAccess.ksConfiguration.FileCapabilities[0];
         }
 
         if (capabilities === null && keySystemAccess.ksConfiguration.audioCapabilities && keySystemAccess.ksConfiguration.audioCapabilities.length > 0) {
@@ -46518,15 +46518,15 @@ function ProtectionModel_3Feb2014(config) {
     function setMediaKeys() {
         var boundDoSetKeys = null;
         var doSetKeys = function doSetKeys() {
-            videoElement.removeEventListener('loadedmetadata', boundDoSetKeys);
-            videoElement[api.setMediaKeys](mediaKeys);
-            eventBus.trigger(events.VIDEO_ELEMENT_SELECTED);
+            FileElement.removeEventListener('loadedmetadata', boundDoSetKeys);
+            FileElement[api.setMediaKeys](mediaKeys);
+            eventBus.trigger(events.File_ELEMENT_SELECTED);
         };
-        if (videoElement.readyState >= 1) {
+        if (FileElement.readyState >= 1) {
             doSetKeys();
         } else {
             boundDoSetKeys = doSetKeys.bind(this);
-            videoElement.addEventListener('loadedmetadata', boundDoSetKeys);
+            FileElement.addEventListener('loadedmetadata', boundDoSetKeys);
         }
     }
 
@@ -47420,8 +47420,8 @@ var KeySystemConfiguration =
  * @param {Array.<MediaCapability>} audioCapabilities array of
  * desired audio capabilities.  Higher preference capabilities should be placed earlier
  * in the array.
- * @param {Array.<MediaCapability>} videoCapabilities array of
- * desired video capabilities.  Higher preference capabilities should be placed earlier
+ * @param {Array.<MediaCapability>} FileCapabilities array of
+ * desired File capabilities.  Higher preference capabilities should be placed earlier
  * in the array.
  * @param {string} distinctiveIdentifier desired use of distinctive identifiers.
  * One of "required", "optional", or "not-allowed"
@@ -47431,15 +47431,15 @@ var KeySystemConfiguration =
  * be supported by the key system
  * @class
  */
-function KeySystemConfiguration(audioCapabilities, videoCapabilities, distinctiveIdentifier, persistentState, sessionTypes) {
+function KeySystemConfiguration(audioCapabilities, FileCapabilities, distinctiveIdentifier, persistentState, sessionTypes) {
     _classCallCheck(this, KeySystemConfiguration);
 
     this.initDataTypes = ['cenc'];
     if (audioCapabilities && audioCapabilities.length) {
         this.audioCapabilities = audioCapabilities;
     }
-    if (videoCapabilities && videoCapabilities.length) {
-        this.videoCapabilities = videoCapabilities;
+    if (FileCapabilities && FileCapabilities.length) {
+        this.FileCapabilities = FileCapabilities;
     }
     this.distinctiveIdentifier = distinctiveIdentifier;
     this.persistentState = persistentState;
@@ -47588,21 +47588,21 @@ function DroppedFramesHistory() {
     var lastTotalFrames = 0;
 
     function push(index, playbackQuality) {
-        var droppedVideoFrames = playbackQuality && playbackQuality.droppedVideoFrames ? playbackQuality.droppedVideoFrames : 0;
-        var totalVideoFrames = playbackQuality && playbackQuality.totalVideoFrames ? playbackQuality.totalVideoFrames : 0;
+        var droppedFileFrames = playbackQuality && playbackQuality.droppedFileFrames ? playbackQuality.droppedFileFrames : 0;
+        var totalFileFrames = playbackQuality && playbackQuality.totalFileFrames ? playbackQuality.totalFileFrames : 0;
 
-        var intervalDroppedFrames = droppedVideoFrames - lastDroppedFrames;
-        lastDroppedFrames = droppedVideoFrames;
+        var intervalDroppedFrames = droppedFileFrames - lastDroppedFrames;
+        lastDroppedFrames = droppedFileFrames;
 
-        var intervalTotalFrames = totalVideoFrames - lastTotalFrames;
-        lastTotalFrames = totalVideoFrames;
+        var intervalTotalFrames = totalFileFrames - lastTotalFrames;
+        lastTotalFrames = totalFileFrames;
 
         if (!isNaN(index)) {
             if (!values[index]) {
-                values[index] = { droppedVideoFrames: intervalDroppedFrames, totalVideoFrames: intervalTotalFrames };
+                values[index] = { droppedFileFrames: intervalDroppedFrames, totalFileFrames: intervalTotalFrames };
             } else {
-                values[index].droppedVideoFrames += intervalDroppedFrames;
-                values[index].totalVideoFrames += intervalTotalFrames;
+                values[index].droppedFileFrames += intervalDroppedFrames;
+                values[index].totalFileFrames += intervalTotalFrames;
             }
         }
     }
@@ -47613,8 +47613,8 @@ function DroppedFramesHistory() {
 
     function reset(playbackQuality) {
         values = [];
-        lastDroppedFrames = playbackQuality.droppedVideoFrames;
-        lastTotalFrames = playbackQuality.totalVideoFrames;
+        lastDroppedFrames = playbackQuality.droppedFileFrames;
+        lastTotalFrames = playbackQuality.totalFileFrames;
     }
 
     return {
@@ -48031,8 +48031,8 @@ function ThroughputHistory(config) {
     }
 
     function isCachedResponse(mediaType, latencyMs, downloadTimeMs) {
-        if (mediaType === _constantsConstants2['default'].VIDEO) {
-            return downloadTimeMs < settings.get().streaming.cacheLoadThresholds[_constantsConstants2['default'].VIDEO];
+        if (mediaType === _constantsConstants2['default'].File) {
+            return downloadTimeMs < settings.get().streaming.cacheLoadThresholds[_constantsConstants2['default'].File];
         } else if (mediaType === _constantsConstants2['default'].AUDIO) {
             return downloadTimeMs < settings.get().streaming.cacheLoadThresholds[_constantsConstants2['default'].AUDIO];
         }
@@ -49259,8 +49259,8 @@ function DroppedFramesRule() {
             for (var i = 1; i < dfh.length; i++) {
                 //No point in measuring dropped frames for the zeroeth index.
                 if (dfh[i]) {
-                    droppedFrames = dfh[i].droppedVideoFrames;
-                    totalFrames = dfh[i].totalVideoFrames;
+                    droppedFrames = dfh[i].droppedFileFrames;
+                    totalFrames = dfh[i].totalFileFrames;
 
                     if (totalFrames > GOOD_SAMPLE_SIZE && droppedFrames / totalFrames > DROPPED_PERCENTAGE_FORBID) {
                         maxIndex = i - 1;
@@ -49751,15 +49751,15 @@ function BufferLevelRule(config) {
 
     function setup() {}
 
-    function execute(streamProcessor, videoTrackPresent) {
+    function execute(streamProcessor, FileTrackPresent) {
         if (!streamProcessor) {
             return true;
         }
         var bufferLevel = dashMetrics.getCurrentBufferLevel(streamProcessor.getType(), true);
-        return bufferLevel < getBufferTarget(streamProcessor, videoTrackPresent);
+        return bufferLevel < getBufferTarget(streamProcessor, FileTrackPresent);
     }
 
-    function getBufferTarget(streamProcessor, videoTrackPresent) {
+    function getBufferTarget(streamProcessor, FileTrackPresent) {
         var bufferTarget = NaN;
 
         if (!streamProcessor) {
@@ -49769,12 +49769,12 @@ function BufferLevelRule(config) {
         var representationInfo = streamProcessor.getRepresentationInfo();
         if (type === _constantsConstants2['default'].FRAGMENTED_TEXT) {
             bufferTarget = textController.isTextEnabled() ? representationInfo.fragmentDuration : 0;
-        } else if (type === _constantsConstants2['default'].AUDIO && videoTrackPresent) {
-            var videoBufferLevel = dashMetrics.getCurrentBufferLevel(_constantsConstants2['default'].VIDEO, true);
+        } else if (type === _constantsConstants2['default'].AUDIO && FileTrackPresent) {
+            var FileBufferLevel = dashMetrics.getCurrentBufferLevel(_constantsConstants2['default'].File, true);
             if (isNaN(representationInfo.fragmentDuration)) {
-                bufferTarget = videoBufferLevel;
+                bufferTarget = FileBufferLevel;
             } else {
-                bufferTarget = Math.max(videoBufferLevel, representationInfo.fragmentDuration);
+                bufferTarget = Math.max(FileBufferLevel, representationInfo.fragmentDuration);
             }
         } else {
             var streamInfo = representationInfo.mediaInfo.streamInfo;
@@ -50026,8 +50026,8 @@ function EmbeddedTextHtmlRender() {
         return color;
     }
 
-    function getStyle(videoElement, style) {
-        var fontSize = videoElement.videoHeight / 15.0;
+    function getStyle(FileElement, style) {
+        var fontSize = FileElement.FileHeight / 15.0;
         if (style) {
             return 'font-size: ' + fontSize + 'px; font-family: Menlo, Consolas, \'Cutive Mono\', monospace; color: ' + (style.foreground ? createRGB(style.foreground) : 'rgb(255, 255, 255)') + '; font-style: ' + (style.italics ? 'italic' : 'normal') + '; text-decoration: ' + (style.underline ? 'underline' : 'none') + '; white-space: pre; background-color: ' + (style.background ? createRGB(style.background) : 'transparent') + ';';
         } else {
@@ -50043,7 +50043,7 @@ function EmbeddedTextHtmlRender() {
         return s.replace(/\s+$/g, '');
     }
 
-    function createHTMLCaptionsFromScreen(videoElement, startTime, endTime, captionScreen) {
+    function createHTMLCaptionsFromScreen(FileElement, startTime, endTime, captionScreen) {
         var currRegion = null;
         var existingRegion = null;
         var lastRowHasText = false;
@@ -50176,7 +50176,7 @@ function EmbeddedTextHtmlRender() {
 
             var bodyDiv = document.createElement('div');
             bodyDiv.className = 'paragraph bodyStyle';
-            bodyDiv.style.cssText = getStyle(videoElement);
+            bodyDiv.style.cssText = getStyle(FileElement);
 
             var cueUniWrapper = document.createElement('div');
             cueUniWrapper.className = 'cueUniWrapper';
@@ -50201,7 +50201,7 @@ function EmbeddedTextHtmlRender() {
                         var spanStyle = styleStates[span.name];
                         var spanElement = document.createElement('span');
                         spanElement.className = 'spanPadding ' + span.name + ' customSpanColor';
-                        spanElement.style.cssText = getStyle(videoElement, spanStyle);
+                        spanElement.style.cssText = getStyle(FileElement, spanStyle);
                         /* If this is not the first span, and it's on the same
                          * row as the last one */
                         if (s !== 0 && sameRow) {
@@ -50828,7 +50828,7 @@ function TextController() {
         adapter = undefined,
         manifestModel = undefined,
         mediaController = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         streamController = undefined,
         textTracks = undefined,
         vttParser = undefined,
@@ -50908,8 +50908,8 @@ function TextController() {
         if (config.mediaController) {
             mediaController = config.mediaController;
         }
-        if (config.videoModel) {
-            videoModel = config.videoModel;
+        if (config.FileModel) {
+            FileModel = config.FileModel;
         }
         if (config.streamController) {
             streamController = config.streamController;
@@ -50930,7 +50930,7 @@ function TextController() {
             adapter: adapter,
             manifestModel: manifestModel,
             mediaController: mediaController,
-            videoModel: videoModel,
+            FileModel: FileModel,
             streamController: streamController,
             textTracks: textTracks,
             vttParser: vttParser,
@@ -51038,7 +51038,7 @@ function TextController() {
         var config = textSourceBuffer.getConfig();
         var fragmentModel = config.fragmentModel;
         var fragmentedTracks = config.fragmentedTracks;
-        var videoModel = config.videoModel;
+        var FileModel = config.FileModel;
         var mediaInfosArr = undefined,
             streamProcessor = undefined;
 
@@ -51075,7 +51075,7 @@ function TextController() {
                                     break;
                                 }
                             }
-                            streamProcessor.setIndexHandlerTime(videoModel.getTime());
+                            streamProcessor.setIndexHandlerTime(FileModel.getTime());
                             streamProcessor.getScheduleController().start();
                         }
                     }
@@ -51259,7 +51259,7 @@ function TextSourceBuffer() {
         initializationSegmentReceived = undefined,
         timescale = undefined,
         fragmentedTracks = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         streamController = undefined,
         firstFragmentedSubtitleStart = undefined,
         currFragmentedTrackIdx = undefined,
@@ -51298,7 +51298,7 @@ function TextSourceBuffer() {
         }
 
         textTracks.setConfig({
-            videoModel: videoModel
+            FileModel: FileModel
         });
         textTracks.initialize();
 
@@ -51344,11 +51344,11 @@ function TextSourceBuffer() {
         resetInitialSettings();
 
         streamController = null;
-        videoModel = null;
+        FileModel = null;
         textTracks = null;
     }
 
-    function onVideoChunkReceived(e) {
+    function onFileChunkReceived(e) {
         var chunk = e.chunk;
 
         if (chunk.mediaInfo.embeddedCaptions) {
@@ -51360,7 +51360,7 @@ function TextSourceBuffer() {
         embeddedTracks = [];
         textTracks = (0, _TextTracks2['default'])(context).getInstance();
         textTracks.setConfig({
-            videoModel: videoModel
+            FileModel: FileModel
         });
         textTracks.initialize();
         boxParser = (0, _utilsBoxParser2['default'])(context).getInstance();
@@ -51374,17 +51374,17 @@ function TextSourceBuffer() {
 
         var streamProcessors = streamController.getActiveStreamProcessors();
         for (var i in streamProcessors) {
-            if (streamProcessors[i].getType() === 'video') {
+            if (streamProcessors[i].getType() === 'File') {
                 mseTimeOffset = streamProcessors[i].getRepresentationInfo().MSETimeOffset;
                 break;
             }
         }
 
-        eventBus.on(_coreEventsEvents2['default'].VIDEO_CHUNK_RECEIVED, onVideoChunkReceived, this);
+        eventBus.on(_coreEventsEvents2['default'].File_CHUNK_RECEIVED, onFileChunkReceived, this);
     }
 
     function resetEmbedded() {
-        eventBus.off(_coreEventsEvents2['default'].VIDEO_CHUNK_RECEIVED, onVideoChunkReceived, this);
+        eventBus.off(_coreEventsEvents2['default'].File_CHUNK_RECEIVED, onFileChunkReceived, this);
         if (textTracks) {
             textTracks.deleteAllTextTracks();
         }
@@ -51429,8 +51429,8 @@ function TextSourceBuffer() {
         if (config.mediaController) {
             mediaController = config.mediaController;
         }
-        if (config.videoModel) {
-            videoModel = config.videoModel;
+        if (config.FileModel) {
+            FileModel = config.FileModel;
         }
         if (config.streamController) {
             streamController = config.streamController;
@@ -51450,7 +51450,7 @@ function TextSourceBuffer() {
         var config = {
             fragmentModel: fragmentedFragmentModel,
             fragmentedTracks: fragmentedTracks,
-            videoModel: videoModel
+            FileModel: FileModel
         };
 
         return config;
@@ -51609,7 +51609,7 @@ function TextSourceBuffer() {
             } catch (e) {
                 errHandler.error(new _voDashJSError2['default'](_coreErrorsErrors2['default'].TIMED_TEXT_ERROR_ID_PARSE_CODE, _coreErrorsErrors2['default'].TIMED_TEXT_ERROR_MESSAGE_PARSE + e.message, ccContent));
             }
-        } else if (mediaType === _constantsConstants2['default'].VIDEO) {
+        } else if (mediaType === _constantsConstants2['default'].File) {
             //embedded text
             if (chunk.segmentType === _voMetricsHTTPRequest.HTTPRequest.INIT_SEGMENT_TYPE) {
                 if (embeddedTimescale === 0) {
@@ -51627,8 +51627,8 @@ function TextSourceBuffer() {
                 var makeCueAdderForIndex = function makeCueAdderForIndex(self, trackIndex) {
                     function newCue(startTime, endTime, captionScreen) {
                         var captionsArray = null;
-                        if (videoModel.getTTMLRenderingDiv()) {
-                            captionsArray = embeddedTextHtmlRender.createHTMLCaptionsFromScreen(videoModel.getElement(), startTime, endTime, captionScreen);
+                        if (FileModel.getTTMLRenderingDiv()) {
+                            captionsArray = embeddedTextHtmlRender.createHTMLCaptionsFromScreen(FileModel.getElement(), startTime, endTime, captionScreen);
                         } else {
                             var text = captionScreen.getDisplayText();
                             captionsArray = [{
@@ -51881,16 +51881,16 @@ function TextTracks() {
     var instance = undefined,
         logger = undefined,
         Cue = undefined,
-        videoModel = undefined,
+        FileModel = undefined,
         textTrackQueue = undefined,
         trackElementArr = undefined,
         currentTrackIdx = undefined,
-        actualVideoLeft = undefined,
-        actualVideoTop = undefined,
-        actualVideoWidth = undefined,
-        actualVideoHeight = undefined,
+        actualFileLeft = undefined,
+        actualFileTop = undefined,
+        actualFileWidth = undefined,
+        actualFileHeight = undefined,
         captionContainer = undefined,
-        videoSizeCheckInterval = undefined,
+        FileSizeCheckInterval = undefined,
         fullscreenAttribute = undefined,
         displayCCOnTop = undefined,
         previousISDState = undefined,
@@ -51909,12 +51909,12 @@ function TextTracks() {
         textTrackQueue = [];
         trackElementArr = [];
         currentTrackIdx = -1;
-        actualVideoLeft = 0;
-        actualVideoTop = 0;
-        actualVideoWidth = 0;
-        actualVideoHeight = 0;
+        actualFileLeft = 0;
+        actualFileTop = 0;
+        actualFileWidth = 0;
+        actualFileHeight = 0;
         captionContainer = null;
-        videoSizeCheckInterval = null;
+        FileSizeCheckInterval = null;
         displayCCOnTop = false;
         topZIndex = 2147483647;
         previousISDState = null;
@@ -51938,7 +51938,7 @@ function TextTracks() {
         var lang = textTrackQueue[i].lang;
         var isTTML = textTrackQueue[i].isTTML;
         var isEmbedded = textTrackQueue[i].isEmbedded;
-        var track = videoModel.addTextTrack(kind, label, lang);
+        var track = FileModel.addTextTrack(kind, label, lang);
 
         track.isEmbedded = isEmbedded;
         track.isTTML = isTTML;
@@ -51968,11 +51968,11 @@ function TextTracks() {
                 //Sort in same order as in manifest
                 return a.index - b.index;
             });
-            captionContainer = videoModel.getTTMLRenderingDiv();
+            captionContainer = FileModel.getTTMLRenderingDiv();
             var defaultIndex = -1;
             for (var i = 0; i < textTrackQueue.length; i++) {
                 var track = createTrackForUserAgent.call(this, i);
-                trackElementArr.push(track); //used to remove tracks from video element when added manually
+                trackElementArr.push(track); //used to remove tracks from File element when added manually
 
                 if (textTrackQueue[i].defaultTrack) {
                     // track.default is an object property identifier that is a reserved word
@@ -52002,9 +52002,9 @@ function TextTracks() {
 
             if (defaultIndex >= 0) {
                 for (var idx = 0; idx < textTrackQueue.length; idx++) {
-                    var videoTextTrack = getTrackByIdx(idx);
-                    if (videoTextTrack) {
-                        videoTextTrack.mode = idx === defaultIndex ? _constantsConstants2['default'].TEXT_SHOWING : _constantsConstants2['default'].TEXT_HIDDEN;
+                    var FileTextTrack = getTrackByIdx(idx);
+                    if (FileTextTrack) {
+                        FileTextTrack.mode = idx === defaultIndex ? _constantsConstants2['default'].TEXT_SHOWING : _constantsConstants2['default'].TEXT_HIDDEN;
                     }
                 }
             }
@@ -52016,62 +52016,62 @@ function TextTracks() {
         }
     }
 
-    function getVideoVisibleVideoSize(viewWidth, viewHeight, videoWidth, videoHeight, aspectRatio, use80Percent) {
+    function getFileVisibleFileSize(viewWidth, viewHeight, FileWidth, FileHeight, aspectRatio, use80Percent) {
         var viewAspectRatio = viewWidth / viewHeight;
-        var videoAspectRatio = videoWidth / videoHeight;
+        var FileAspectRatio = FileWidth / FileHeight;
 
-        var videoPictureWidth = 0;
-        var videoPictureHeight = 0;
+        var FilePictureWidth = 0;
+        var FilePictureHeight = 0;
 
-        if (viewAspectRatio > videoAspectRatio) {
-            videoPictureHeight = viewHeight;
-            videoPictureWidth = videoPictureHeight / videoHeight * videoWidth;
+        if (viewAspectRatio > FileAspectRatio) {
+            FilePictureHeight = viewHeight;
+            FilePictureWidth = FilePictureHeight / FileHeight * FileWidth;
         } else {
-            videoPictureWidth = viewWidth;
-            videoPictureHeight = videoPictureWidth / videoWidth * videoHeight;
+            FilePictureWidth = viewWidth;
+            FilePictureHeight = FilePictureWidth / FileWidth * FileHeight;
         }
 
-        var videoPictureXAspect = 0;
-        var videoPictureYAspect = 0;
-        var videoPictureWidthAspect = 0;
-        var videoPictureHeightAspect = 0;
-        var videoPictureAspect = videoPictureWidth / videoPictureHeight;
+        var FilePictureXAspect = 0;
+        var FilePictureYAspect = 0;
+        var FilePictureWidthAspect = 0;
+        var FilePictureHeightAspect = 0;
+        var FilePictureAspect = FilePictureWidth / FilePictureHeight;
 
-        if (videoPictureAspect > aspectRatio) {
-            videoPictureHeightAspect = videoPictureHeight;
-            videoPictureWidthAspect = videoPictureHeight * aspectRatio;
+        if (FilePictureAspect > aspectRatio) {
+            FilePictureHeightAspect = FilePictureHeight;
+            FilePictureWidthAspect = FilePictureHeight * aspectRatio;
         } else {
-            videoPictureWidthAspect = videoPictureWidth;
-            videoPictureHeightAspect = videoPictureWidth / aspectRatio;
+            FilePictureWidthAspect = FilePictureWidth;
+            FilePictureHeightAspect = FilePictureWidth / aspectRatio;
         }
-        videoPictureXAspect = (viewWidth - videoPictureWidthAspect) / 2;
-        videoPictureYAspect = (viewHeight - videoPictureHeightAspect) / 2;
+        FilePictureXAspect = (viewWidth - FilePictureWidthAspect) / 2;
+        FilePictureYAspect = (viewHeight - FilePictureHeightAspect) / 2;
 
         if (use80Percent) {
             return {
-                x: videoPictureXAspect + videoPictureWidthAspect * 0.1,
-                y: videoPictureYAspect + videoPictureHeightAspect * 0.1,
-                w: videoPictureWidthAspect * 0.8,
-                h: videoPictureHeightAspect * 0.8
-            }; /* Maximal picture size in videos aspect ratio */
+                x: FilePictureXAspect + FilePictureWidthAspect * 0.1,
+                y: FilePictureYAspect + FilePictureHeightAspect * 0.1,
+                w: FilePictureWidthAspect * 0.8,
+                h: FilePictureHeightAspect * 0.8
+            }; /* Maximal picture size in Files aspect ratio */
         } else {
                 return {
-                    x: videoPictureXAspect,
-                    y: videoPictureYAspect,
-                    w: videoPictureWidthAspect,
-                    h: videoPictureHeightAspect
-                }; /* Maximal picture size in videos aspect ratio */
+                    x: FilePictureXAspect,
+                    y: FilePictureYAspect,
+                    w: FilePictureWidthAspect,
+                    h: FilePictureHeightAspect
+                }; /* Maximal picture size in Files aspect ratio */
             }
     }
 
-    function checkVideoSize(track, forceDrawing) {
-        var clientWidth = videoModel.getClientWidth();
-        var clientHeight = videoModel.getClientHeight();
-        var videoWidth = videoModel.getVideoWidth();
-        var videoHeight = videoModel.getVideoHeight();
-        var videoOffsetTop = videoModel.getVideoRelativeOffsetTop();
-        var videoOffsetLeft = videoModel.getVideoRelativeOffsetLeft();
-        var aspectRatio = videoWidth / videoHeight;
+    function checkFileSize(track, forceDrawing) {
+        var clientWidth = FileModel.getClientWidth();
+        var clientHeight = FileModel.getClientHeight();
+        var FileWidth = FileModel.getFileWidth();
+        var FileHeight = FileModel.getFileHeight();
+        var FileOffsetTop = FileModel.getFileRelativeOffsetTop();
+        var FileOffsetLeft = FileModel.getFileRelativeOffsetLeft();
+        var aspectRatio = FileWidth / FileHeight;
         var use80Percent = false;
         if (track.isFromCEA608) {
             // If this is CEA608 then use predefined aspect ratio
@@ -52079,32 +52079,32 @@ function TextTracks() {
             use80Percent = true;
         }
 
-        var realVideoSize = getVideoVisibleVideoSize.call(this, clientWidth, clientHeight, videoWidth, videoHeight, aspectRatio, use80Percent);
+        var realFileSize = getFileVisibleFileSize.call(this, clientWidth, clientHeight, FileWidth, FileHeight, aspectRatio, use80Percent);
 
-        var newVideoWidth = realVideoSize.w;
-        var newVideoHeight = realVideoSize.h;
-        var newVideoLeft = realVideoSize.x;
-        var newVideoTop = realVideoSize.y;
+        var newFileWidth = realFileSize.w;
+        var newFileHeight = realFileSize.h;
+        var newFileLeft = realFileSize.x;
+        var newFileTop = realFileSize.y;
 
-        if (newVideoWidth != actualVideoWidth || newVideoHeight != actualVideoHeight || newVideoLeft != actualVideoLeft || newVideoTop != actualVideoTop || forceDrawing) {
-            actualVideoLeft = newVideoLeft + videoOffsetLeft;
-            actualVideoTop = newVideoTop + videoOffsetTop;
-            actualVideoWidth = newVideoWidth;
-            actualVideoHeight = newVideoHeight;
+        if (newFileWidth != actualFileWidth || newFileHeight != actualFileHeight || newFileLeft != actualFileLeft || newFileTop != actualFileTop || forceDrawing) {
+            actualFileLeft = newFileLeft + FileOffsetLeft;
+            actualFileTop = newFileTop + FileOffsetTop;
+            actualFileWidth = newFileWidth;
+            actualFileHeight = newFileHeight;
 
             if (captionContainer) {
                 var containerStyle = captionContainer.style;
                 if (containerStyle) {
-                    containerStyle.left = actualVideoLeft + 'px';
-                    containerStyle.top = actualVideoTop + 'px';
-                    containerStyle.width = actualVideoWidth + 'px';
-                    containerStyle.height = actualVideoHeight + 'px';
+                    containerStyle.left = actualFileLeft + 'px';
+                    containerStyle.top = actualFileTop + 'px';
+                    containerStyle.width = actualFileWidth + 'px';
+                    containerStyle.height = actualFileHeight + 'px';
                     containerStyle.zIndex = fullscreenAttribute && document[fullscreenAttribute] || displayCCOnTop ? topZIndex : null;
                     eventBus.trigger(_coreEventsEvents2['default'].CAPTION_CONTAINER_RESIZE, {});
                 }
             }
 
-            // Video view has changed size, so resize any active cues
+            // File view has changed size, so resize any active cues
             var activeCues = track.activeCues;
             if (activeCues) {
                 var len = activeCues.length;
@@ -52117,8 +52117,8 @@ function TextTracks() {
     }
 
     function scaleCue(activeCue) {
-        var videoWidth = actualVideoWidth;
-        var videoHeight = actualVideoHeight;
+        var FileWidth = actualFileWidth;
+        var FileHeight = actualFileHeight;
         var key = undefined,
             replaceValue = undefined,
             valueFontSize = undefined,
@@ -52126,7 +52126,7 @@ function TextTracks() {
             elements = undefined;
 
         if (activeCue.cellResolution) {
-            var cellUnit = [videoWidth / activeCue.cellResolution[0], videoHeight / activeCue.cellResolution[1]];
+            var cellUnit = [FileWidth / activeCue.cellResolution[0], FileHeight / activeCue.cellResolution[1]];
             if (activeCue.linePadding) {
                 for (key in activeCue.linePadding) {
                     if (activeCue.linePadding.hasOwnProperty(key)) {
@@ -52260,10 +52260,10 @@ function TextTracks() {
                 cue.linePadding = currentItem.linePadding;
                 cue.fontSize = currentItem.fontSize;
 
-                captionContainer.style.left = actualVideoLeft + 'px';
-                captionContainer.style.top = actualVideoTop + 'px';
-                captionContainer.style.width = actualVideoWidth + 'px';
-                captionContainer.style.height = actualVideoHeight + 'px';
+                captionContainer.style.left = actualFileLeft + 'px';
+                captionContainer.style.top = actualFileTop + 'px';
+                captionContainer.style.width = actualFileWidth + 'px';
+                captionContainer.style.height = actualFileHeight + 'px';
 
                 cue.onenter = function () {
                     if (track.mode === _constantsConstants2['default'].TEXT_SHOWING) {
@@ -52331,7 +52331,7 @@ function TextTracks() {
     }
 
     function getTrackByIdx(idx) {
-        return idx >= 0 && textTrackQueue[idx] ? videoModel.getTextTrack(textTrackQueue[idx].kind, textTrackQueue[idx].id, textTrackQueue[idx].lang, textTrackQueue[idx].isTTML, textTrackQueue[idx].isEmbedded) : null;
+        return idx >= 0 && textTrackQueue[idx] ? FileModel.getTextTrack(textTrackQueue[idx].kind, textTrackQueue[idx].id, textTrackQueue[idx].lang, textTrackQueue[idx].isTTML, textTrackQueue[idx].isEmbedded) : null;
     }
 
     function getCurrentTrackIdx() {
@@ -52358,14 +52358,14 @@ function TextTracks() {
         var track = getTrackByIdx(currentTrackIdx);
         setCueStyleOnTrack.call(this, track);
 
-        if (videoSizeCheckInterval) {
-            clearInterval(videoSizeCheckInterval);
-            videoSizeCheckInterval = null;
+        if (FileSizeCheckInterval) {
+            clearInterval(FileSizeCheckInterval);
+            FileSizeCheckInterval = null;
         }
 
         if (track && track.renderingType === 'html') {
-            checkVideoSize.call(this, track, true);
-            videoSizeCheckInterval = setInterval(checkVideoSize.bind(this, track), 500);
+            checkFileSize.call(this, track, true);
+            FileSizeCheckInterval = setInterval(checkFileSize.bind(this, track), 500);
         }
     }
 
@@ -52411,16 +52411,16 @@ function TextTracks() {
         }
         trackElementArr = [];
         textTrackQueue = [];
-        if (videoSizeCheckInterval) {
-            clearInterval(videoSizeCheckInterval);
-            videoSizeCheckInterval = null;
+        if (FileSizeCheckInterval) {
+            clearInterval(FileSizeCheckInterval);
+            FileSizeCheckInterval = null;
         }
         currentTrackIdx = -1;
         clearCaptionContainer.call(this);
     }
 
     function deleteTextTrack(idx) {
-        videoModel.removeChild(trackElementArr[idx]);
+        FileModel.removeChild(trackElementArr[idx]);
         trackElementArr.splice(idx, 1);
     }
 
@@ -52435,15 +52435,15 @@ function TextTracks() {
         styleElement.id = 'native-cue-style';
         document.head.appendChild(styleElement);
         var stylesheet = styleElement.sheet;
-        var video = videoModel.getElement();
+        var File = FileModel.getElement();
         try {
-            if (video) {
-                if (video.id) {
-                    stylesheet.insertRule('#' + video.id + '::cue {background: transparent}', 0);
-                } else if (video.classList.length !== 0) {
-                    stylesheet.insertRule('.' + video.className + '::cue {background: transparent}', 0);
+            if (File) {
+                if (File.id) {
+                    stylesheet.insertRule('#' + File.id + '::cue {background: transparent}', 0);
+                } else if (File.classList.length !== 0) {
+                    stylesheet.insertRule('.' + File.className + '::cue {background: transparent}', 0);
                 } else {
-                    stylesheet.insertRule('video::cue {background: transparent}', 0);
+                    stylesheet.insertRule('File::cue {background: transparent}', 0);
                 }
             }
         } catch (e) {
@@ -52471,8 +52471,8 @@ function TextTracks() {
         if (!config) {
             return;
         }
-        if (config.videoModel) {
-            videoModel = config.videoModel;
+        if (config.FileModel) {
+            FileModel = config.FileModel;
         }
     }
 
@@ -53762,7 +53762,7 @@ var _constantsConstants = _dereq_(109);
 
 var _constantsConstants2 = _interopRequireDefault(_constantsConstants);
 
-var legacyKeysAndReplacements = [{ oldKey: 'dashjs_vbitrate', newKey: 'dashjs_video_bitrate' }, { oldKey: 'dashjs_abitrate', newKey: 'dashjs_audio_bitrate' }, { oldKey: 'dashjs_vsettings', newKey: 'dashjs_video_settings' }, { oldKey: 'dashjs_asettings', newKey: 'dashjs_audio_settings' }];
+var legacyKeysAndReplacements = [{ oldKey: 'dashjs_vbitrate', newKey: 'dashjs_File_bitrate' }, { oldKey: 'dashjs_abitrate', newKey: 'dashjs_audio_bitrate' }, { oldKey: 'dashjs_vsettings', newKey: 'dashjs_File_settings' }, { oldKey: 'dashjs_asettings', newKey: 'dashjs_audio_settings' }];
 
 var LOCAL_STORAGE_BITRATE_KEY_TEMPLATE = 'dashjs_?_bitrate';
 var LOCAL_STORAGE_SETTINGS_KEY_TEMPLATE = 'dashjs_?_settings';
@@ -54812,7 +54812,7 @@ Object.defineProperty(exports, '__esModule', {
 exports.checkParameterType = checkParameterType;
 exports.checkInteger = checkInteger;
 exports.checkRange = checkRange;
-exports.checkIsVideoOrAudioType = checkIsVideoOrAudioType;
+exports.checkIsFileOrAudioType = checkIsFileOrAudioType;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -54840,8 +54840,8 @@ function checkRange(parameter, min, max) {
     }
 }
 
-function checkIsVideoOrAudioType(type) {
-    if (typeof type !== 'string' || type !== _constantsConstants2['default'].AUDIO && type !== _constantsConstants2['default'].VIDEO) {
+function checkIsFileOrAudioType(type) {
+    if (typeof type !== 'string' || type !== _constantsConstants2['default'].AUDIO && type !== _constantsConstants2['default'].File) {
         throw _constantsConstants2['default'].BAD_ARGUMENT_ERROR;
     }
 }
@@ -56671,7 +56671,7 @@ exports["default"] = URIFragmentData;
     temporal (t)     - This dimension denotes a specific time range in the original media, such as "starting at second 10, continuing until second 20";
     spatial  (xywh)  - this dimension denotes a specific range of pixels in the original media, such as "a rectangle with size (100,100) with its top-left at coordinate (10,10)";
                        Media fragments support also addressing the media along two additional dimensions (in the advanced version defined in Media Fragments 1.0 URI (advanced)):
-    track    (track) - this dimension denotes one or more tracks in the original media, such as "the english audio and the video track";
+    track    (track) - this dimension denotes one or more tracks in the original media, such as "the english audio and the File track";
     id       (id)    - this dimension denotes a named temporal fragment within the original media, such as "chapter 2", and can be seen as a convenient way of specifying a temporal fragment.
 
 
@@ -56802,7 +56802,7 @@ var _controllersBufferController2 = _interopRequireDefault(_controllersBufferCon
 
 var BufferState =
 /**
- * @description This Object holds reference to the current buffer state of the video element.
+ * @description This Object holds reference to the current buffer state of the File element.
  */
 function BufferState() {
   _classCallCheck(this, BufferState);
@@ -56874,7 +56874,7 @@ function DVRInfo() {
   _classCallCheck(this, DVRInfo);
 
   /**
-   * The current time of the video element when this was created.
+   * The current time of the File element when this was created.
    * @public
    */
   this.time = null;
@@ -57071,7 +57071,7 @@ function HTTPRequest() {
   this.trace = [];
 
   /**
-   * Type of stream ("audio" | "video" etc..)
+   * Type of stream ("audio" | "File" etc..)
    * @public
    */
   this._stream = null;
@@ -57191,7 +57191,7 @@ function ManifestUpdate() {
   _classCallCheck(this, ManifestUpdate);
 
   /**
-   * Media Type Video | Audio | FragmentedText
+   * Media Type File | Audio | FragmentedText
    * @public
    */
   this.mediaType = null;
@@ -57311,7 +57311,7 @@ function ManifestUpdateRepresentationInfo() {
    */
   this.index = null;
   /**
-   * Media Type Video | Audio | FragmentedText
+   * Media Type File | Audio | FragmentedText
    * @public
    */
   this.mediaType = null;
@@ -57701,7 +57701,7 @@ function SchedulingInfo() {
   _classCallCheck(this, SchedulingInfo);
 
   /**
-   * Type of stream Audio | Video | FragmentedText
+   * Type of stream Audio | File | FragmentedText
    * @public
    */
   this.mediaType = null;

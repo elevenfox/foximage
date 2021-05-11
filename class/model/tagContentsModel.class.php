@@ -15,22 +15,22 @@ Class tagContentsModel extends ModelCore {
         parent::make();
     }
 
-    public function getVideosByTag() {
+    public function getFilesByTag() {
         $page = empty($this->request->arg[2]) ? 1 : (int)$this->request->arg[2];
         $this->data['page'] = $page;
 
         $tagName = str_replace('-', ' ', $this->request->arg[1]);
         $this->data['tagName'] = ucfirst($tagName);
 
-        $res = Tag::getVideosByTag($tagName, $page);
-        $this->data['videos'] = $res;
+        $res = Tag::getFilesByTag($tagName, $page);
+        $this->data['files'] = $res;
 
-        $count = Tag::getVideosByTagCount($tagName);
-        $this->data['videos_total'] = $count;
+        $count = Tag::getFilesByTagCount($tagName);
+        $this->data['files_total'] = $count;
 
-        if(empty($this->data['videos'])) {
-            $videos = Video::getRelatedVideosById(1);
-            $this->data['otherVideos'] = $videos;
+        if(empty($this->data['files'])) {
+            $files = File::getRelatedFilesById(1);
+            $this->data['otherFiles'] = $files;
         }
     }
 

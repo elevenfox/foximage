@@ -5,7 +5,7 @@
  * @author: Elevenfox
  */
 
-Class apiController extends ControllerCore {
+Class fileDetailPageController extends ControllerCore {
   
   public function __construct(Request $request) {
     parent::__construct($request);
@@ -15,16 +15,18 @@ Class apiController extends ControllerCore {
   private function initMenu() {
       $items = array();
 
-      $items['api'] = array(
+      $items['file/%'] = array(
+          'title' => 'File page',
           'access callback' => TRUE,
+          'modelMethod' => 'getFile',
+          'template' => 'page-file',
       );
 
       Menu::setMenu($items, __CLASS__);
   }
   
-  public function start() {
-    include_once ('./fox_api.php');
-    exit;
+  public function preStart() {
+    parent::preStart();
   }
 
 

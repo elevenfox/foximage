@@ -1,6 +1,6 @@
 /* 
   Branch Master: Tag v0.12.4 
-  GitHub URL : https://github.com/video-dev/hls.js
+  GitHub URL : https://github.com/File-dev/hls.js
 */
 
 /*
@@ -19,7 +19,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 src/remux/mp4-generator.js and src/demux/exp-golomb.js implementation in this project
-are derived from the HLS library for video.js (https://github.com/videojs/videojs-contrib-hls)
+are derived from the HLS library for File.js (https://github.com/Filejs/Filejs-contrib-hls)
 
 That work is also covered by the Apache 2 License, following copyright:
 Copyright (c) 2013-2015 Brightcove
@@ -1262,7 +1262,7 @@ exports.hlsDefaultConfig = {
     bufferController: buffer_controller_1.default,
     capLevelController: cap_level_controller_1.default,
     fpsController: fps_controller_1.default,
-    stretchShortVideoTrack: false,
+    stretchShortFileTrack: false,
     maxAudioFramesDrift: 1,
     forceKeyFrameOnDiscontinuity: true,
     abrEwmaFastLive: 3,
@@ -1386,7 +1386,7 @@ var AbrController = /** @class */ (function (_super) {
           we compare it to expected time of buffer starvation
         */
         var hls = this.hls;
-        var video = hls.media;
+        var File = hls.media;
         var frag = this.fragCurrent;
         if (!frag) {
             return;
@@ -1403,14 +1403,14 @@ var AbrController = /** @class */ (function (_super) {
         }
         var stats = loader.stats;
         /* only monitor frag retrieval time if
-        (video not paused OR first fragment being loaded(ready state === HAVE_NOTHING = 0)) AND autoswitching enabled AND not lowest level (=> means that we have several levels) */
-        if (video && stats && ((!video.paused && (video.playbackRate !== 0)) || !video.readyState) && frag.autoLevel && frag.level) {
-            var requestDelay = performance.now() - stats.trequest, playbackRate = Math.abs(video.playbackRate);
+        (File not paused OR first fragment being loaded(ready state === HAVE_NOTHING = 0)) AND autoswitching enabled AND not lowest level (=> means that we have several levels) */
+        if (File && stats && ((!File.paused && (File.playbackRate !== 0)) || !File.readyState) && frag.autoLevel && frag.level) {
+            var requestDelay = performance.now() - stats.trequest, playbackRate = Math.abs(File.playbackRate);
             // monitor fragment load progress after half of expected fragment duration,to stabilize bitrate
             if (requestDelay > (500 * frag.duration / playbackRate)) {
                 var levels = hls.levels, loadRate = Math.max(1, stats.bw ? stats.bw / 8 : stats.loaded * 1000 / requestDelay), // byte/s; at least 1 byte/s to avoid division by zero
                 // compute expected fragment length using frag duration and level bitrate. also ensure that expected len is gte than already loaded size
-                level = levels[frag.level], levelBitrate = level.realBitrate ? Math.max(level.realBitrate, level.bitrate) : level.bitrate, expectedLen = stats.total ? stats.total : Math.max(stats.loaded, Math.round(frag.duration * levelBitrate / 8)), pos = video.currentTime, fragLoadedDelay = (expectedLen - stats.loaded) / loadRate, bufferStarvationDelay = (buffer_helper_1.BufferHelper.bufferInfo(video, pos, hls.config.maxBufferHole).end - pos) / playbackRate;
+                level = levels[frag.level], levelBitrate = level.realBitrate ? Math.max(level.realBitrate, level.bitrate) : level.bitrate, expectedLen = stats.total ? stats.total : Math.max(stats.loaded, Math.round(frag.duration * levelBitrate / 8)), pos = File.currentTime, fragLoadedDelay = (expectedLen - stats.loaded) / loadRate, bufferStarvationDelay = (buffer_helper_1.BufferHelper.bufferInfo(File, pos, hls.config.maxBufferHole).end - pos) / playbackRate;
                 // consider emergency switch down only if we have less than 2 frag buffered AND
                 // time to finish loading current fragment is bigger than buffer starvation delay
                 // ie if we risk buffer starvation if bw does not increase quickly
@@ -1537,12 +1537,12 @@ var AbrController = /** @class */ (function (_super) {
     Object.defineProperty(AbrController.prototype, "_nextABRAutoLevel", {
         get: function () {
             var hls = this.hls, maxAutoLevel = hls.maxAutoLevel, levels = hls.levels, config = hls.config, minAutoLevel = hls.minAutoLevel;
-            var video = hls.media, currentLevel = this.lastLoadedFragLevel, currentFragDuration = this.fragCurrent ? this.fragCurrent.duration : 0, pos = (video ? video.currentTime : 0), 
-            // playbackRate is the absolute value of the playback rate; if video.playbackRate is 0, we use 1 to load as
+            var File = hls.media, currentLevel = this.lastLoadedFragLevel, currentFragDuration = this.fragCurrent ? this.fragCurrent.duration : 0, pos = (File ? File.currentTime : 0), 
+            // playbackRate is the absolute value of the playback rate; if File.playbackRate is 0, we use 1 to load as
             // if we're playing back at the normal rate.
-            playbackRate = ((video && (video.playbackRate !== 0)) ? Math.abs(video.playbackRate) : 1.0), avgbw = this._bwEstimator ? this._bwEstimator.getEstimate() : config.abrEwmaDefaultEstimate, 
+            playbackRate = ((File && (File.playbackRate !== 0)) ? Math.abs(File.playbackRate) : 1.0), avgbw = this._bwEstimator ? this._bwEstimator.getEstimate() : config.abrEwmaDefaultEstimate, 
             // bufferStarvationDelay is the wall-clock time left until the playback buffer is exhausted.
-            bufferStarvationDelay = (buffer_helper_1.BufferHelper.bufferInfo(video, pos, config.maxBufferHole).end - pos) / playbackRate;
+            bufferStarvationDelay = (buffer_helper_1.BufferHelper.bufferInfo(File, pos, config.maxBufferHole).end - pos) / playbackRate;
             // First, look to see if we can find a level matching with our avg bandwidth AND that could also guarantee no rebuffering at all
             var bestLevel = this._findBestLevel(currentLevel, currentFragDuration, avgbw, minAutoLevel, maxAutoLevel, bufferStarvationDelay, config.abrBandWidthFactor, config.abrBandWidthUpFactor, levels);
             if (bestLevel >= 0) {
@@ -1558,8 +1558,8 @@ var AbrController = /** @class */ (function (_super) {
                     var bitrateTestDelay = this.bitrateTestDelay;
                     if (bitrateTestDelay) {
                         // if it is the case, then we need to adjust our max starvation delay using maxLoadingDelay config value
-                        // max video loading delay used in  automatic start level selection :
-                        // in that mode ABR controller will ensure that video loading time (ie the time to fetch the first fragment at lowest quality level +
+                        // max File loading delay used in  automatic start level selection :
+                        // in that mode ABR controller will ensure that File loading time (ie the time to fetch the first fragment at lowest quality level +
                         // the time to fetch the fragment at the appropriate quality level is less than ```maxLoadingDelay``` )
                         // cap maxLoadingDelay and ensure it is not bigger 'than bitrate test' frag duration
                         var maxLoadingDelay = currentFragDuration ? Math.min(currentFragDuration, config.maxLoadingDelay) : config.maxLoadingDelay;
@@ -1666,18 +1666,18 @@ var AudioStreamController = /** @class */ (function (_super) {
         _this._state = base_stream_controller_1.State.STOPPED;
         _this.initPTS = [];
         _this.waitingFragment = null;
-        _this.videoTrackCC = null;
+        _this.FileTrackCC = null;
         return _this;
     }
-    // Signal that video PTS was found
+    // Signal that File PTS was found
     AudioStreamController.prototype.onInitPtsFound = function (data) {
         var demuxerId = data.id, cc = data.frag.cc, initPTS = data.initPTS;
         if (demuxerId === 'main') {
             // Always update the new INIT PTS
             // Can change due level switch
             this.initPTS[cc] = initPTS;
-            this.videoTrackCC = cc;
-            logger_1.logger.log("InitPTS for cc: " + cc + " found from video track: " + initPTS);
+            this.FileTrackCC = cc;
+            logger_1.logger.log("InitPTS for cc: " + cc + " found from File track: " + initPTS);
             // If we are waiting we need to demux/remux the waiting frag
             // With the new initPTS
             if (this.state === base_stream_controller_1.State.WAITING_INIT_PTS) {
@@ -1741,7 +1741,7 @@ var AudioStreamController = /** @class */ (function (_super) {
                 if (!tracks) {
                     break;
                 }
-                // if video not attached AND
+                // if File not attached AND
                 // start fragment already requested OR start frag prefetch disable
                 // exit loop
                 // => if media not attached but start frag prefetch is enabled and start frag not requested yet, we will not exit loop
@@ -1761,10 +1761,10 @@ var AudioStreamController = /** @class */ (function (_super) {
                         break;
                     }
                 }
-                var media = this.mediaBuffer ? this.mediaBuffer : this.media, videoBuffer = this.videoBuffer ? this.videoBuffer : this.media, bufferInfo = buffer_helper_1.BufferHelper.bufferInfo(media, pos, config.maxBufferHole), mainBufferInfo = buffer_helper_1.BufferHelper.bufferInfo(videoBuffer, pos, config.maxBufferHole), bufferLen = bufferInfo.len, bufferEnd_1 = bufferInfo.end, fragPrevious = this.fragPrevious, 
+                var media = this.mediaBuffer ? this.mediaBuffer : this.media, FileBuffer = this.FileBuffer ? this.FileBuffer : this.media, bufferInfo = buffer_helper_1.BufferHelper.bufferInfo(media, pos, config.maxBufferHole), mainBufferInfo = buffer_helper_1.BufferHelper.bufferInfo(FileBuffer, pos, config.maxBufferHole), bufferLen = bufferInfo.len, bufferEnd_1 = bufferInfo.end, fragPrevious = this.fragPrevious, 
                 // ensure we buffer at least config.maxBufferLength (default 30s) or config.maxMaxBufferLength (default: 600s)
                 // whichever is smaller.
-                // once we reach that threshold, don't buffer more than video (mainBufferInfo.len)
+                // once we reach that threshold, don't buffer more than File (mainBufferInfo.len)
                 maxConfigBuffer = Math.min(config.maxBufferLength, config.maxMaxBufferLength), maxBufLen = Math.max(maxConfigBuffer, mainBufferInfo.len), audioSwitch = this.audioSwitch, trackId = this.trackId;
                 // if buffer length is less than maxBufLen try to load a new fragment
                 if ((bufferLen < maxBufLen || audioSwitch) && trackId < tracks.length) {
@@ -1808,9 +1808,9 @@ var AudioStreamController = /** @class */ (function (_super) {
                     // if bufferEnd before start of playlist, load first fragment
                     else if (bufferEnd_1 <= start) {
                         frag = fragments[0];
-                        if (this.videoTrackCC !== null && frag.cc !== this.videoTrackCC) {
-                            // Ensure we find a fragment which matches the continuity of the video track
-                            frag = discontinuities_1.findFragWithCC(fragments, this.videoTrackCC);
+                        if (this.FileTrackCC !== null && frag.cc !== this.FileTrackCC) {
+                            // Ensure we find a fragment which matches the continuity of the File track
+                            frag = discontinuities_1.findFragWithCC(fragments, this.FileTrackCC);
                         }
                         if (trackDetails.live && frag.loadIdx && frag.loadIdx === this.fragLoadIdx) {
                             // we just loaded this first fragment, and we are still lagging behind the start of the live playlist
@@ -1924,18 +1924,18 @@ var AudioStreamController = /** @class */ (function (_super) {
                 }
                 break;
             case base_stream_controller_1.State.WAITING_INIT_PTS:
-                var videoTrackCC = this.videoTrackCC;
-                if (this.initPTS[videoTrackCC] === undefined) {
+                var FileTrackCC = this.FileTrackCC;
+                if (this.initPTS[FileTrackCC] === undefined) {
                     break;
                 }
                 // Ensure we don't get stuck in the WAITING_INIT_PTS state if the waiting frag CC doesn't match any initPTS
                 var waitingFrag = this.waitingFragment;
                 if (waitingFrag) {
                     var waitingFragCC = waitingFrag.frag.cc;
-                    if (videoTrackCC !== waitingFragCC) {
+                    if (FileTrackCC !== waitingFragCC) {
                         track = this.tracks[this.trackId];
                         if (track.details && track.details.live) {
-                            logger_1.logger.warn("Waiting fragment CC (" + waitingFragCC + ") does not match video track CC (" + videoTrackCC + ")");
+                            logger_1.logger.warn("Waiting fragment CC (" + waitingFragCC + ") does not match File track CC (" + FileTrackCC + ")");
                             this.waitingFragment = null;
                             this.state = base_stream_controller_1.State.IDLE;
                         }
@@ -1974,16 +1974,16 @@ var AudioStreamController = /** @class */ (function (_super) {
     AudioStreamController.prototype.onMediaDetaching = function () {
         var media = this.media;
         if (media && media.ended) {
-            logger_1.logger.log('MSE detaching and video ended, reset startPosition');
+            logger_1.logger.log('MSE detaching and File ended, reset startPosition');
             this.startPosition = this.lastCurrentTime = 0;
         }
-        // remove video listeners
+        // remove File listeners
         if (media) {
             media.removeEventListener('seeking', this.onvseeking);
             media.removeEventListener('ended', this.onvended);
             this.onvseeking = this.onvseeked = this.onvended = null;
         }
-        this.media = this.mediaBuffer = this.videoBuffer = null;
+        this.media = this.mediaBuffer = this.FileBuffer = null;
         this.loadedmetadata = false;
         this.stopLoad();
     };
@@ -2095,7 +2095,7 @@ var AudioStreamController = /** @class */ (function (_super) {
                 if (!this.demuxer) {
                     this.demuxer = new demuxer_1.default(this.hls, 'audio');
                 }
-                // Check if we have video initPTS
+                // Check if we have File initPTS
                 // If not we need to wait for it
                 var initPTS = this.initPTS[cc];
                 var initSegmentData = details.initSegment ? details.initSegment.data : [];
@@ -2107,7 +2107,7 @@ var AudioStreamController = /** @class */ (function (_super) {
                     this.demuxer.push(data.payload, initSegmentData, audioCodec, null, fragCurrent, duration, accurateTimeOffset, initPTS);
                 }
                 else {
-                    logger_1.logger.log("unknown video PTS for continuity counter " + cc + ", waiting for video PTS before demuxing audio frag " + sn + " of [" + details.startSN + " ," + details.endSN + "],track " + trackId);
+                    logger_1.logger.log("unknown File PTS for continuity counter " + cc + ", waiting for File PTS before demuxing audio frag " + sn + " of [" + details.startSN + " ," + details.endSN + "],track " + trackId);
                     this.waitingFragment = data;
                     this.state = base_stream_controller_1.State.WAITING_INIT_PTS;
                 }
@@ -2124,11 +2124,11 @@ var AudioStreamController = /** @class */ (function (_super) {
             fragNew.level === fragCurrent.level &&
             this.state === base_stream_controller_1.State.PARSING) {
             var tracks = data.tracks, track = void 0;
-            // delete any video track found on audio demuxer
-            if (tracks.video) {
-                delete tracks.video;
+            // delete any File track found on audio demuxer
+            if (tracks.File) {
+                delete tracks.File;
             }
-            // include levelCodec in audio and video tracks
+            // include levelCodec in audio and File tracks
             track = tracks.audio;
             if (track) {
                 track.levelCodec = track.codec;
@@ -2238,7 +2238,7 @@ var AudioStreamController = /** @class */ (function (_super) {
     };
     AudioStreamController.prototype.onBufferReset = function () {
         // reset reference to sourcebuffers
-        this.mediaBuffer = this.videoBuffer = null;
+        this.mediaBuffer = this.FileBuffer = null;
         this.loadedmetadata = false;
     };
     AudioStreamController.prototype.onBufferCreated = function (data) {
@@ -2247,8 +2247,8 @@ var AudioStreamController = /** @class */ (function (_super) {
             this.mediaBuffer = audioTrack.buffer;
             this.loadedmetadata = true;
         }
-        if (data.tracks.video) {
-            this.videoBuffer = data.tracks.video.buffer;
+        if (data.tracks.File) {
+            this.FileBuffer = data.tracks.File.buffer;
         }
     };
     AudioStreamController.prototype.onBufferAppended = function (data) {
@@ -2347,7 +2347,7 @@ var AudioStreamController = /** @class */ (function (_super) {
                     }
                     else {
                         // current position is not buffered, but browser is still complaining about buffer full error
-                        // this happens on IE/Edge, refer to https://github.com/video-dev/hls.js/pull/708
+                        // this happens on IE/Edge, refer to https://github.com/File-dev/hls.js/pull/708
                         // in that case flush the whole audio buffer to recover
                         logger_1.logger.warn('AudioStreamController: buffer full error also media.currentTime is not buffered, flush audio buffer');
                         this.fragCurrent = null;
@@ -2426,7 +2426,7 @@ var errors_1 = __webpack_require__(/*! ../errors */ "./src/errors.js");
  * Handles errors on loading audio-track playlists. Manages fallback mechanism
  * with redundants tracks (group-IDs).
  *
- * Handles level-loading and group-ID switches for video (fallback on video levels),
+ * Handles level-loading and group-ID switches for File (fallback on File levels),
  * and eventually adapts the audio-track group-ID to match.
  *
  * @fires AUDIO_TRACK_LOADING
@@ -2960,7 +2960,7 @@ var BufferController = /** @class */ (function (_super) {
         _this._levelTargetDuration = 10;
         // current stream state: true - for live broadcast, false - for VoD content
         _this._live = null;
-        // cache the self generated object url to detect hijack of video tag
+        // cache the self generated object url to detect hijack of File tag
         _this._objectUrl = null;
         // The number of BUFFER_CODEC events received before any sourceBuffers are created
         _this.bufferCodecEventsExpected = 0;
@@ -2979,10 +2979,10 @@ var BufferController = /** @class */ (function (_super) {
         var audioTrack = this.tracks.audio;
         // Adjusting `SourceBuffer.timestampOffset` (desired point in the timeline where the next frames should be appended)
         // in Chrome browser when we detect MPEG audio container and time delta between level PTS and `SourceBuffer.timestampOffset`
-        // is greater than 100ms (this is enough to handle seek for VOD or level change for LIVE videos). At the time of change we issue
+        // is greater than 100ms (this is enough to handle seek for VOD or level change for LIVE Files). At the time of change we issue
         // `SourceBuffer.abort()` and adjusting `SourceBuffer.timestampOffset` if `SourceBuffer.updating` is false or awaiting `updateend`
         // event if SB is in updating state.
-        // More info here: https://github.com/video-dev/hls.js/issues/332#issuecomment-257986486
+        // More info here: https://github.com/File-dev/hls.js/issues/332#issuecomment-257986486
         if (type === 'audio' && audioTrack && audioTrack.container === 'audio/mpeg') { // Chrome audio mp3 track
             var audioBuffer = this.sourceBuffer.audio;
             var delta = Math.abs(audioBuffer.timestampOffset - data.start);
@@ -3025,7 +3025,7 @@ var BufferController = /** @class */ (function (_super) {
             ms.addEventListener('sourceopen', this.onmso);
             ms.addEventListener('sourceended', this.onmse);
             ms.addEventListener('sourceclose', this.onmsc);
-            // link video and media Source
+            // link File and media Source
             media.src = window.URL.createObjectURL(ms);
             // cache the locally generated object url
             this._objectUrl = media.src;
@@ -3054,8 +3054,8 @@ var BufferController = /** @class */ (function (_super) {
             // suggested in https://github.com/w3c/media-source/issues/53.
             if (this.media) {
                 window.URL.revokeObjectURL(this._objectUrl);
-                // clean up video tag src only if it's our own url. some external libraries might
-                // hijack the video tag and change its 'src' without destroying the Hls instance first
+                // clean up File tag src only if it's our own url. some external libraries might
+                // hijack the File tag and change its 'src' without destroying the Hls instance first
                 if (this.media.src === this._objectUrl) {
                     this.media.removeAttribute('src');
                     this.media.load();
@@ -3092,7 +3092,7 @@ var BufferController = /** @class */ (function (_super) {
         // Check if we've received all of the expected bufferCodec events. When none remain, create all the sourceBuffers at once.
         // This is important because the MSE spec allows implementations to throw QuotaExceededErrors if creating new sourceBuffers after
         // data has been appended to existing ones.
-        // 2 tracks is the max (one for audio, one for video). If we've reach this max go ahead and create the buffers.
+        // 2 tracks is the max (one for audio, one for File). If we've reach this max go ahead and create the buffers.
         var pendingTracksCount = Object.keys(pendingTracks).length;
         if ((pendingTracksCount && !bufferCodecEventsExpected) || pendingTracksCount === 2) {
             // ok, let's create them now !
@@ -3292,7 +3292,7 @@ var BufferController = /** @class */ (function (_super) {
             if (buffered.length > 0 && targetBackBufferPosition > buffered.start(0)) {
                 // remove buffer up until current time minus minimum back buffer length (removing buffer too close to current
                 // time will lead to playback freezing)
-                // credits for level target duration - https://github.com/videojs/http-streaming/blob/3132933b6aa99ddefab29c10447624efd6fd6e52/src/segment-loader.js#L91
+                // credits for level target duration - https://github.com/Filejs/http-streaming/blob/3132933b6aa99ddefab29c10447624efd6fd6e52/src/segment-loader.js#L91
                 this.removeBufferRange(bufferType, sourceBuffer[bufferType], 0, targetBackBufferPosition);
             }
         }
@@ -3309,7 +3309,7 @@ var BufferController = /** @class */ (function (_super) {
     /**
      * Update Media Source duration to current level duration or override to Infinity if configuration parameter
      * 'liveDurationInfinity` is set to `true`
-     * More details: https://github.com/video-dev/hls.js/issues/355
+     * More details: https://github.com/File-dev/hls.js/issues/355
      */
     BufferController.prototype.updateMediaElementDuration = function () {
         var config = this.hls.config;
@@ -3351,7 +3351,7 @@ var BufferController = /** @class */ (function (_super) {
         // loop through all buffer ranges to flush
         while (this.flushRange.length) {
             var range = this.flushRange[0];
-            // flushBuffer will abort any buffer append in progress and flush Audio/Video Buffer
+            // flushBuffer will abort any buffer append in progress and flush Audio/File Buffer
             if (this.flushBuffer(range.start, range.end, range.type)) {
                 // range flushed, remove from flush array
                 this.flushRange.shift();
@@ -3594,24 +3594,24 @@ var CapLevelController = /** @class */ (function (_super) {
         }
     };
     CapLevelController.prototype.onMediaAttaching = function (data) {
-        this.media = data.media instanceof window.HTMLVideoElement ? data.media : null;
+        this.media = data.media instanceof window.HTMLFileElement ? data.media : null;
     };
     CapLevelController.prototype.onManifestParsed = function (data) {
         var hls = this.hls;
         this.restrictedLevels = [];
         this.levels = data.levels;
         this.firstLevel = data.firstLevel;
-        if (hls.config.capLevelToPlayerSize && data.video) {
-            // Start capping immediately if the manifest has signaled video codecs
+        if (hls.config.capLevelToPlayerSize && data.File) {
+            // Start capping immediately if the manifest has signaled File codecs
             this._startCapping();
         }
     };
-    // Only activate capping when playing a video stream; otherwise, multi-bitrate audio-only streams will be restricted
+    // Only activate capping when playing a File stream; otherwise, multi-bitrate audio-only streams will be restricted
     // to the first level
     CapLevelController.prototype.onBufferCodecs = function (data) {
         var hls = this.hls;
-        if (hls.config.capLevelToPlayerSize && data.video) {
-            // If the manifest did not signal a video codec capping has been deferred until we're certain video is present
+        if (hls.config.capLevelToPlayerSize && data.File) {
+            // If the manifest did not signal a File codec capping has been deferred until we're certain File is present
             this._startCapping();
         }
     };
@@ -3637,7 +3637,7 @@ var CapLevelController = /** @class */ (function (_super) {
         }
     };
     /*
-    * returns level should be the one with the dimensions equal or greater than the media (player) dimensions (so the video will be downscaled)
+    * returns level should be the one with the dimensions equal or greater than the media (player) dimensions (so the File will be downscaled)
     */
     CapLevelController.prototype.getMaxLevel = function (capLevelIndex) {
         var _this = this;
@@ -3651,7 +3651,7 @@ var CapLevelController = /** @class */ (function (_super) {
     };
     CapLevelController.prototype._startCapping = function () {
         if (this.timer) {
-            // Don't reset capping if started twice; this can happen if the manifest signals a video codec
+            // Don't reset capping if started twice; this can happen if the manifest signals a File codec
             return;
         }
         this.autoLevelCapping = Number.POSITIVE_INFINITY;
@@ -3785,24 +3785,24 @@ var KeySystems = {
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/API/MediaKeySystemConfiguration
  * @param {Array<string>} audioCodecs List of required audio codecs to support
- * @param {Array<string>} videoCodecs List of required video codecs to support
+ * @param {Array<string>} FileCodecs List of required File codecs to support
  * @param {object} drmSystemOptions Optional parameters/requirements for the key-system
  * @returns {Array<MediaSystemConfiguration>} An array of supported configurations
  */
-var createWidevineMediaKeySystemConfigurations = function (audioCodecs, videoCodecs, drmSystemOptions) {
+var createWidevineMediaKeySystemConfigurations = function (audioCodecs, FileCodecs, drmSystemOptions) {
     var baseConfig = {
         // initDataTypes: ['keyids', 'mp4'],
         // label: "",
         // persistentState: "not-allowed", // or "required" ?
         // distinctiveIdentifier: "not-allowed", // or "required" ?
         // sessionTypes: ['temporary'],
-        videoCapabilities: [
-        // { contentType: 'video/mp4; codecs="avc1.42E01E"' }
+        FileCapabilities: [
+        // { contentType: 'File/mp4; codecs="avc1.42E01E"' }
         ]
     };
-    videoCodecs.forEach(function (codec) {
-        baseConfig.videoCapabilities.push({
-            contentType: "video/mp4; codecs=\"" + codec + "\""
+    FileCodecs.forEach(function (codec) {
+        baseConfig.FileCapabilities.push({
+            contentType: "File/mp4; codecs=\"" + codec + "\""
         });
     });
     return [
@@ -3817,13 +3817,13 @@ var createWidevineMediaKeySystemConfigurations = function (audioCodecs, videoCod
  *
  * @param {string} keySystem Identifier for the key-system, see `KeySystems` enum
  * @param {Array<string>} audioCodecs List of required audio codecs to support
- * @param {Array<string>} videoCodecs List of required video codecs to support
+ * @param {Array<string>} FileCodecs List of required File codecs to support
  * @returns {Array<MediaSystemConfiguration> | null} A non-empty Array of MediaKeySystemConfiguration objects or `null`
  */
-var getSupportedMediaKeySystemConfigurations = function (keySystem, audioCodecs, videoCodecs) {
+var getSupportedMediaKeySystemConfigurations = function (keySystem, audioCodecs, FileCodecs) {
     switch (keySystem) {
         case KeySystems.WIDEVINE:
-            return createWidevineMediaKeySystemConfigurations(audioCodecs, videoCodecs);
+            return createWidevineMediaKeySystemConfigurations(audioCodecs, FileCodecs);
         default:
             throw Error('Unknown key-system: ' + keySystem);
     }
@@ -3884,12 +3884,12 @@ var EMEController = /** @class */ (function (_super) {
        * @private
        * @param {string} keySystem System ID (see `KeySystems`)
        * @param {Array<string>} audioCodecs List of required audio codecs to support
-       * @param {Array<string>} videoCodecs List of required video codecs to support
+       * @param {Array<string>} FileCodecs List of required File codecs to support
        */
-    EMEController.prototype._attemptKeySystemAccess = function (keySystem, audioCodecs, videoCodecs) {
+    EMEController.prototype._attemptKeySystemAccess = function (keySystem, audioCodecs, FileCodecs) {
         // TODO: add other DRM "options"
         var _this = this;
-        var mediaKeySystemConfigs = getSupportedMediaKeySystemConfigurations(keySystem, audioCodecs, videoCodecs);
+        var mediaKeySystemConfigs = getSupportedMediaKeySystemConfigurations(keySystem, audioCodecs, FileCodecs);
         if (!mediaKeySystemConfigs) {
             logger_1.logger.warn('Can not create config for key-system (maybe because platform is not supported):', keySystem);
             return;
@@ -4189,8 +4189,8 @@ var EMEController = /** @class */ (function (_super) {
             return;
         }
         var audioCodecs = data.levels.map(function (level) { return level.audioCodec; });
-        var videoCodecs = data.levels.map(function (level) { return level.videoCodec; });
-        this._attemptKeySystemAccess(KeySystems.WIDEVINE, audioCodecs, videoCodecs);
+        var FileCodecs = data.levels.map(function (level) { return level.FileCodec; });
+        this._attemptKeySystemAccess(KeySystems.WIDEVINE, audioCodecs, FileCodecs);
     };
     return EMEController;
 }(event_handler_1.default));
@@ -4236,20 +4236,20 @@ var FPSController = /** @class */ (function (_super) {
         if (this.timer) {
             clearInterval(this.timer);
         }
-        this.isVideoPlaybackQualityAvailable = false;
+        this.isFilePlaybackQualityAvailable = false;
     };
     FPSController.prototype.onMediaAttaching = function (data) {
         var config = this.hls.config;
         if (config.capLevelOnFPSDrop) {
-            var video_1 = this.video = data.media instanceof window.HTMLVideoElement ? data.media : null;
-            if (typeof video_1.getVideoPlaybackQuality === 'function') {
-                this.isVideoPlaybackQualityAvailable = true;
+            var File_1 = this.File = data.media instanceof window.HTMLFileElement ? data.media : null;
+            if (typeof File_1.getFilePlaybackQuality === 'function') {
+                this.isFilePlaybackQualityAvailable = true;
             }
             clearInterval(this.timer);
             this.timer = setInterval(this.checkFPSInterval.bind(this), config.fpsDroppedMonitoringPeriod);
         }
     };
-    FPSController.prototype.checkFPS = function (video, decodedFrames, droppedFrames) {
+    FPSController.prototype.checkFPS = function (File, decodedFrames, droppedFrames) {
         var currentTime = performance.now();
         if (decodedFrames) {
             if (this.lastTime) {
@@ -4275,14 +4275,14 @@ var FPSController = /** @class */ (function (_super) {
         }
     };
     FPSController.prototype.checkFPSInterval = function () {
-        var video = this.video;
-        if (video) {
-            if (this.isVideoPlaybackQualityAvailable) {
-                var videoPlaybackQuality = video.getVideoPlaybackQuality();
-                this.checkFPS(video, videoPlaybackQuality.totalVideoFrames, videoPlaybackQuality.droppedVideoFrames);
+        var File = this.File;
+        if (File) {
+            if (this.isFilePlaybackQualityAvailable) {
+                var FilePlaybackQuality = File.getFilePlaybackQuality();
+                this.checkFPS(File, FilePlaybackQuality.totalFileFrames, FilePlaybackQuality.droppedFileFrames);
             }
             else {
-                this.checkFPS(video, video.webkitDecodedFrameCount, video.webkitDroppedFrameCount);
+                this.checkFPS(File, File.webkitDecodedFrameCount, File.webkitDroppedFrameCount);
             }
         }
     };
@@ -4477,7 +4477,7 @@ var FragmentTracker = /** @class */ (function (_super) {
             return null;
         }
         else {
-            // https://github.com/video-dev/hls.js/pull/1545#discussion_r166229566
+            // https://github.com/File-dev/hls.js/pull/1545#discussion_r166229566
             var bufferedFragKey = bufferedFrags.pop();
             return fragments[bufferedFragKey].body;
         }
@@ -4486,7 +4486,7 @@ var FragmentTracker = /** @class */ (function (_super) {
      * Partial fragments effected by coded frame eviction will be removed
      * The browser will unload parts of the buffer to free up memory for new buffer data
      * Fragments will need to be reloaded when the buffer is freed up, removing partial fragments will allow them to reload(since there might be parts that are still playable)
-     * @param {String} elementaryStream The elementaryStream of media this is (eg. video/audio)
+     * @param {String} elementaryStream The elementaryStream of media this is (eg. File/audio)
      * @param {TimeRanges} timeRange TimeRange object from a sourceBuffer
      */
     FragmentTracker.prototype.detectEvictedFragments = function (elementaryStream, timeRange) {
@@ -4620,7 +4620,7 @@ var FragmentTracker = /** @class */ (function (_super) {
     };
     FragmentTracker.prototype.isPartial = function (fragmentEntity) {
         return fragmentEntity.buffered === true &&
-            ((fragmentEntity.range.video !== undefined && fragmentEntity.range.video.partial === true) ||
+            ((fragmentEntity.range.File !== undefined && fragmentEntity.range.File.partial === true) ||
                 (fragmentEntity.range.audio !== undefined && fragmentEntity.range.audio.partial === true));
     };
     FragmentTracker.prototype.isTimeBuffered = function (startPTS, endPTS, timeRange) {
@@ -5057,14 +5057,14 @@ var LevelController = /** @class */ (function (_super) {
         var bitrateStart;
         var levelSet = {};
         var levelFromSet = null;
-        var videoCodecFound = false;
+        var FileCodecFound = false;
         var audioCodecFound = false;
         // regroup redundant levels together
         data.levels.forEach(function (level) {
             var attributes = level.attrs;
             level.loadError = 0;
             level.fragmentError = false;
-            videoCodecFound = videoCodecFound || !!level.videoCodec;
+            FileCodecFound = FileCodecFound || !!level.FileCodec;
             audioCodecFound = audioCodecFound || !!level.audioCodec;
             // erase audio codec info if browser does not support mp4a.40.34.
             // demuxer will autodetect codec and fallback to mpeg/audio
@@ -5091,17 +5091,17 @@ var LevelController = /** @class */ (function (_super) {
                 }
             }
         });
-        // remove audio-only level if we also have levels with audio+video codecs signalled
-        if (videoCodecFound && audioCodecFound) {
+        // remove audio-only level if we also have levels with audio+File codecs signalled
+        if (FileCodecFound && audioCodecFound) {
             levels = levels.filter(function (_a) {
-                var videoCodec = _a.videoCodec;
-                return !!videoCodec;
+                var FileCodec = _a.FileCodec;
+                return !!FileCodec;
             });
         }
-        // only keep levels with supported audio/video codecs
+        // only keep levels with supported audio/File codecs
         levels = levels.filter(function (_a) {
-            var audioCodec = _a.audioCodec, videoCodec = _a.videoCodec;
-            return (!audioCodec || codecs_1.isCodecSupportedInMp4(audioCodec, 'audio')) && (!videoCodec || codecs_1.isCodecSupportedInMp4(videoCodec, 'video'));
+            var audioCodec = _a.audioCodec, FileCodec = _a.FileCodec;
+            return (!audioCodec || codecs_1.isCodecSupportedInMp4(audioCodec, 'audio')) && (!FileCodec || codecs_1.isCodecSupportedInMp4(FileCodec, 'File'));
         });
         if (data.audioTracks) {
             audioTracks = data.audioTracks.filter(function (track) { return !track.audioCodec || codecs_1.isCodecSupportedInMp4(track.audioCodec, 'audio'); });
@@ -5131,7 +5131,7 @@ var LevelController = /** @class */ (function (_super) {
                 firstLevel: this._firstLevel,
                 stats: data.stats,
                 audio: audioCodecFound,
-                video: videoCodecFound,
+                File: FileCodecFound,
                 altAudio: audioTracks.some(function (t) { return !!t.url; })
             });
         }
@@ -5331,7 +5331,7 @@ var LevelController = /** @class */ (function (_super) {
                 level.details = undefined;
                 logger_1.logger.warn("level controller, " + errorDetails + " for level " + levelIndex + ": switching to redundant URL-id " + level.urlId);
                 // console.log('Current audio track group ID:', this.hls.audioTracks[this.hls.audioTrack].groupId);
-                // console.log('New video quality level audio group id:', level.attrs.AUDIO);
+                // console.log('New File quality level audio group id:', level.attrs.AUDIO);
             }
             else {
                 // Search for available level
@@ -5416,7 +5416,7 @@ var LevelController = /** @class */ (function (_super) {
                 var url = levelObject.url[id];
                 logger_1.logger.log("Attempt loading level index " + level + " with URL-id " + id);
                 // console.log('Current audio track group ID:', this.hls.audioTracks[this.hls.audioTrack].groupId);
-                // console.log('New video quality level audio group id:', levelObject.attrs.AUDIO, level);
+                // console.log('New File quality level audio group id:', levelObject.attrs.AUDIO, level);
                 this.hls.trigger(events_1.default.LEVEL_LOADING, { url: url, level: level, id: id });
             }
         }
@@ -5517,7 +5517,7 @@ function updateFragPTSDTS(details, frag, startPTS, endPTS, startDTS, endDTS) {
     // update frag PTS/DTS
     var maxStartPTS = startPTS;
     if (Number.isFinite(frag.startPTS)) {
-        // delta PTS between audio and video
+        // delta PTS between audio and File
         var deltaPTS = Math.abs(frag.startPTS - startPTS);
         if (!Number.isFinite(frag.deltaPTS)) {
             frag.deltaPTS = deltaPTS;
@@ -5816,7 +5816,7 @@ var StreamController = /** @class */ (function (_super) {
     StreamController.prototype._doTickIdle = function () {
         var hls = this.hls, config = hls.config, media = this.media;
         // if start level not parsed yet OR
-        // if video not attached AND start fragment already requested OR start frag prefetch disable
+        // if File not attached AND start fragment already requested OR start frag prefetch disable
         // exit loop, as we either need more info (level not parsed) or we need media to be attached to load new fragment
         if (this.levelLastLoaded === undefined || (!media && (this.startFragRequested || !config.startFragPrefetch))) {
             return;
@@ -5865,7 +5865,7 @@ var StreamController = /** @class */ (function (_super) {
         if (this._streamEnded(bufferInfo, levelDetails)) {
             var data = {};
             if (this.altAudio) {
-                data.type = 'video';
+                data.type = 'File';
             }
             this.hls.trigger(events_1.default.BUFFER_EOS, data);
             this.state = base_stream_controller_1.State.ENDED;
@@ -6014,13 +6014,13 @@ var StreamController = /** @class */ (function (_super) {
                 if (sameLevel && !frag.backtracked) {
                     if (frag.sn < levelDetails.endSN) {
                         var deltaPTS = fragPrevious.deltaPTS;
-                        // if there is a significant delta between audio and video, larger than max allowed hole,
+                        // if there is a significant delta between audio and File, larger than max allowed hole,
                         // and if previous remuxed fragment did not start with a keyframe. (fragPrevious.dropped)
                         // let's try to load previous fragment again to get last keyframe
                         // then we will reload again current fragment (that way we should be able to fill the buffer hole ...)
                         if (deltaPTS && deltaPTS > config.maxBufferHole && fragPrevious.dropped && curSNIdx) {
                             frag = prevFrag;
-                            logger_1.logger.warn('SN just loaded, with large PTS gap between audio and video, maybe frag is not starting with a keyframe ? load previous one to try to overcome this');
+                            logger_1.logger.warn('SN just loaded, with large PTS gap between audio and File, maybe frag is not starting with a keyframe ? load previous one to try to overcome this');
                         }
                         else {
                             frag = nextFrag;
@@ -6154,10 +6154,10 @@ var StreamController = /** @class */ (function (_super) {
         configurable: true
     });
     StreamController.prototype._checkFragmentChanged = function () {
-        var fragPlayingCurrent, currentTime, video = this.media;
-        if (video && video.readyState && video.seeking === false) {
-            currentTime = video.currentTime;
-            /* if video element is in seeked state, currentTime can only increase.
+        var fragPlayingCurrent, currentTime, File = this.media;
+        if (File && File.readyState && File.seeking === false) {
+            currentTime = File.currentTime;
+            /* if File element is in seeked state, currentTime can only increase.
               (assuming that playback rate is positive ...)
               As sometimes currentTime jumps back to zero after a
               media decode error, check this, to avoid seeking back to
@@ -6166,12 +6166,12 @@ var StreamController = /** @class */ (function (_super) {
             if (currentTime > this.lastCurrentTime) {
                 this.lastCurrentTime = currentTime;
             }
-            if (buffer_helper_1.BufferHelper.isBuffered(video, currentTime)) {
+            if (buffer_helper_1.BufferHelper.isBuffered(File, currentTime)) {
                 fragPlayingCurrent = this.getBufferedFrag(currentTime);
             }
-            else if (buffer_helper_1.BufferHelper.isBuffered(video, currentTime + 0.1)) {
+            else if (buffer_helper_1.BufferHelper.isBuffered(File, currentTime + 0.1)) {
                 /* ensure that FRAG_CHANGED event is triggered at startup,
-                  when first video frame is displayed and playback is paused.
+                  when first File frame is displayed and playback is paused.
                   add a tolerance of 100ms, in case current position is not buffered,
                   check if current pos+100ms is buffered and use that buffer range
                   for FRAG_CHANGED event reporting */
@@ -6221,7 +6221,7 @@ var StreamController = /** @class */ (function (_super) {
     };
     /**
      * on immediate level switch end, after new fragment has been buffered:
-     * - nudge video decoder by slightly adjusting video currentTime (if currentTime buffered)
+     * - nudge File decoder by slightly adjusting File currentTime (if currentTime buffered)
      * - resume the playback if needed
      */
     StreamController.prototype.immediateLevelSwitchEnd = function () {
@@ -6238,7 +6238,7 @@ var StreamController = /** @class */ (function (_super) {
         }
     };
     /**
-     * try to switch ASAP without breaking video playback:
+     * try to switch ASAP without breaking File playback:
      * in order to ensure smooth but quick level switching,
      * we need to find the next flushable buffer range
      * we should take into account new segment fetch time
@@ -6251,7 +6251,7 @@ var StreamController = /** @class */ (function (_super) {
             fragPlayingCurrent = this.getBufferedFrag(media.currentTime);
             if (fragPlayingCurrent && fragPlayingCurrent.startPTS > 1) {
                 // flush buffer preceding current fragment (flush until current fragment start offset)
-                // minus 1s to avoid video freezing, that could happen if we flush keyframe of current video ...
+                // minus 1s to avoid File freezing, that could happen if we flush keyframe of current File ...
                 this.flushMainBuffer(0, fragPlayingCurrent.startPTS - 1);
             }
             if (!media.paused) {
@@ -6281,8 +6281,8 @@ var StreamController = /** @class */ (function (_super) {
                     }
                     this.fragCurrent = null;
                     // start flush position is the start PTS of next buffered frag.
-                    // we use frag.naxStartPTS which is max(audio startPTS, video startPTS).
-                    // in case there is a small PTS Delta between audio and video, using maxStartPTS avoids flushing last samples from current fragment
+                    // we use frag.naxStartPTS which is max(audio startPTS, File startPTS).
+                    // in case there is a small PTS Delta between audio and File, using maxStartPTS avoids flushing last samples from current fragment
                     this.flushMainBuffer(nextBufferedFrag.maxStartPTS, Number.POSITIVE_INFINITY);
                 }
             }
@@ -6291,9 +6291,9 @@ var StreamController = /** @class */ (function (_super) {
     StreamController.prototype.flushMainBuffer = function (startOffset, endOffset) {
         this.state = base_stream_controller_1.State.BUFFER_FLUSHING;
         var flushScope = { startOffset: startOffset, endOffset: endOffset };
-        // if alternate audio tracks are used, only flush video, otherwise flush everything
+        // if alternate audio tracks are used, only flush File, otherwise flush everything
         if (this.altAudio) {
-            flushScope.type = 'video';
+            flushScope.type = 'File';
         }
         this.hls.trigger(events_1.default.BUFFER_FLUSHING, flushScope);
     };
@@ -6314,7 +6314,7 @@ var StreamController = /** @class */ (function (_super) {
     StreamController.prototype.onMediaDetaching = function () {
         var media = this.media;
         if (media && media.ended) {
-            logger_1.logger.log('MSE detaching and video ended, reset startPosition');
+            logger_1.logger.log('MSE detaching and File ended, reset startPosition');
             this.startPosition = this.lastCurrentTime = 0;
         }
         // reset fragment backtracked flag
@@ -6328,7 +6328,7 @@ var StreamController = /** @class */ (function (_super) {
                 }
             });
         }
-        // remove video listeners
+        // remove File listeners
         if (media) {
             media.removeEventListener('seeking', this.onvseeking);
             media.removeEventListener('seeked', this.onvseeked);
@@ -6507,7 +6507,7 @@ var StreamController = /** @class */ (function (_super) {
                 var audioCodec = this._getAudioCodec(currentLevel);
                 // transmux the MPEG-TS data to ISO-BMFF segments
                 var demuxer = this.demuxer = this.demuxer || new demuxer_1.default(this.hls, 'main');
-                demuxer.push(data.payload, initSegmentData, audioCodec, currentLevel.videoCodec, fragCurrent, details.totalduration, accurateTimeOffset);
+                demuxer.push(data.payload, initSegmentData, audioCodec, currentLevel.FileCodec, fragCurrent, details.totalduration, accurateTimeOffset);
             }
         }
         this.fragLoadError = 0;
@@ -6525,7 +6525,7 @@ var StreamController = /** @class */ (function (_super) {
             if (tracks.audio && this.altAudio) {
                 delete tracks.audio;
             }
-            // include levelCodec in audio and video tracks
+            // include levelCodec in audio and File tracks
             track = tracks.audio;
             if (track) {
                 var audioCodec = this.levels[this.level].audioCodec, ua = navigator.userAgent.toLowerCase();
@@ -6558,9 +6558,9 @@ var StreamController = /** @class */ (function (_super) {
                 track.levelCodec = audioCodec;
                 track.id = data.id;
             }
-            track = tracks.video;
+            track = tracks.File;
             if (track) {
-                track.levelCodec = this.levels[this.level].videoCodec;
+                track.levelCodec = this.levels[this.level].FileCodec;
                 track.id = data.id;
             }
             this.hls.trigger(events_1.default.BUFFER_CODECS, tracks);
@@ -6598,24 +6598,24 @@ var StreamController = /** @class */ (function (_super) {
             if (data.hasAudio === true) {
                 frag.addElementaryStream(fragment_1.default.ElementaryStreamTypes.AUDIO);
             }
-            if (data.hasVideo === true) {
-                frag.addElementaryStream(fragment_1.default.ElementaryStreamTypes.VIDEO);
+            if (data.hasFile === true) {
+                frag.addElementaryStream(fragment_1.default.ElementaryStreamTypes.File);
             }
             logger_1.logger.log("Parsed " + data.type + ",PTS:[" + data.startPTS.toFixed(3) + "," + data.endPTS.toFixed(3) + "],DTS:[" + data.startDTS.toFixed(3) + "/" + data.endDTS.toFixed(3) + "],nb:" + data.nb + ",dropped:" + (data.dropped || 0));
             // Detect gaps in a fragment  and try to fix it by finding a keyframe in the previous fragment (see _findFragments)
-            if (data.type === 'video') {
+            if (data.type === 'File') {
                 frag.dropped = data.dropped;
                 if (frag.dropped) {
                     if (!frag.backtracked) {
                         var levelDetails = level.details;
                         if (levelDetails && frag.sn === levelDetails.startSN) {
-                            logger_1.logger.warn('missing video frame(s) on first frag, appending with gap', frag.sn);
+                            logger_1.logger.warn('missing File frame(s) on first frag, appending with gap', frag.sn);
                         }
                         else {
-                            logger_1.logger.warn('missing video frame(s), backtracking fragment', frag.sn);
+                            logger_1.logger.warn('missing File frame(s), backtracking fragment', frag.sn);
                             // Return back to the IDLE state without appending to buffer
                             // Causes findFragments to backtrack a segment and find the keyframe
-                            // Audio fragments arriving before video sets the nextLoadPosition, causing _findFragments to skip the backtracked fragment
+                            // Audio fragments arriving before File sets the nextLoadPosition, causing _findFragments to skip the backtracked fragment
                             this.fragmentTracker.removeFragment(frag);
                             frag.backtracked = true;
                             this.nextLoadPosition = data.startPTS;
@@ -6636,7 +6636,7 @@ var StreamController = /** @class */ (function (_super) {
             }
             var drift = LevelHelper.updateFragPTSDTS(level.details, frag, data.startPTS, data.endPTS, data.startDTS, data.endDTS), hls_2 = this.hls;
             hls_2.trigger(events_1.default.LEVEL_PTS_UPDATED, { details: level.details, level: this.level, drift: drift, type: data.type, start: data.startPTS, end: data.endPTS });
-            // has remuxer dropped video frames located before first keyframe ?
+            // has remuxer dropped File frames located before first keyframe ?
             [data.data1, data.data2].forEach(function (buffer) {
                 // only append in PARSING state (rationale is that an appending error could happen synchronously on first segment appending)
                 // in that case it is useless to append following segments
@@ -6700,11 +6700,11 @@ var StreamController = /** @class */ (function (_super) {
     StreamController.prototype.onAudioTrackSwitched = function (data) {
         var trackId = data.id, altAudio = !!this.hls.audioTracks[trackId].url;
         if (altAudio) {
-            var videoBuffer = this.videoBuffer;
-            // if we switched on alternate audio, ensure that main fragment scheduling is synced with video sourcebuffer buffered
-            if (videoBuffer && this.mediaBuffer !== videoBuffer) {
-                logger_1.logger.log('switching on alternate audio, use video.buffered to schedule main fragment loading');
-                this.mediaBuffer = videoBuffer;
+            var FileBuffer = this.FileBuffer;
+            // if we switched on alternate audio, ensure that main fragment scheduling is synced with File sourcebuffer buffered
+            if (FileBuffer && this.mediaBuffer !== FileBuffer) {
+                logger_1.logger.log('switching on alternate audio, use File.buffered to schedule main fragment loading');
+                this.mediaBuffer = FileBuffer;
             }
         }
         this.altAudio = altAudio;
@@ -6717,9 +6717,9 @@ var StreamController = /** @class */ (function (_super) {
             if (track.id === 'main') {
                 name = type;
                 mediaTrack = track;
-                // keep video source buffer reference
-                if (type === 'video') {
-                    this.videoBuffer = tracks[type].buffer;
+                // keep File source buffer reference
+                if (type === 'File') {
+                    this.FileBuffer = tracks[type].buffer;
                 }
             }
             else {
@@ -6826,7 +6826,7 @@ var StreamController = /** @class */ (function (_super) {
                     }
                     else {
                         // current position is not buffered, but browser is still complaining about buffer full error
-                        // this happens on IE/Edge, refer to https://github.com/video-dev/hls.js/pull/708
+                        // this happens on IE/Edge, refer to https://github.com/File-dev/hls.js/pull/708
                         // in that case flush the whole buffer to recover
                         logger_1.logger.warn('buffer full error also media.currentTime is not buffered, flush everything');
                         this.fragCurrent = null;
@@ -6884,12 +6884,12 @@ var StreamController = /** @class */ (function (_super) {
     };
     StreamController.prototype.onBufferFlushed = function () {
         /* after successful buffer flushing, filter flushed fragments from bufferedFrags
-          use mediaBuffered instead of media (so that we will check against video.buffered ranges in case of alt audio track)
+          use mediaBuffered instead of media (so that we will check against File.buffered ranges in case of alt audio track)
         */
         var media = this.mediaBuffer ? this.mediaBuffer : this.media;
         if (media) {
             // filter fragments potentially evicted from buffer. this is to avoid memleak on live streams
-            this.fragmentTracker.detectEvictedFragments(fragment_1.default.ElementaryStreamTypes.VIDEO, media.buffered);
+            this.fragmentTracker.detectEvictedFragments(fragment_1.default.ElementaryStreamTypes.File, media.buffered);
         }
         // move to IDLE once flush complete. this should trigger new fragment loading
         this.state = base_stream_controller_1.State.IDLE;
@@ -8226,7 +8226,7 @@ var AACDemuxer = /** @class */ (function () {
         this.config = config;
         this.remuxer = remuxer;
     }
-    AACDemuxer.prototype.resetInitSegment = function (initSegment, audioCodec, videoCodec, duration) {
+    AACDemuxer.prototype.resetInitSegment = function (initSegment, audioCodec, FileCodec, duration) {
         this._audioTrack = { container: 'audio/adts', type: 'audio', id: 0, sequenceNumber: 0, isAAC: true, samples: [], len: 0, manifestCodec: audioCodec, duration: duration, inputTimeScale: 90000 };
     };
     AACDemuxer.prototype.resetTimeStamp = function () {
@@ -8590,7 +8590,7 @@ var DemuxerInline = /** @class */ (function () {
             demuxer.destroy();
         }
     };
-    DemuxerInline.prototype.push = function (data, decryptdata, initSegment, audioCodec, videoCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS) {
+    DemuxerInline.prototype.push = function (data, decryptdata, initSegment, audioCodec, FileCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS) {
         var _this = this;
         if ((data.byteLength > 0) && (decryptdata != null) && (decryptdata.key != null) && (decryptdata.method === 'AES-128')) {
             var decrypter = this.decrypter;
@@ -8601,14 +8601,14 @@ var DemuxerInline = /** @class */ (function () {
             decrypter.decrypt(data, decryptdata.key.buffer, decryptdata.iv.buffer, function (decryptedData) {
                 var endTime = now();
                 _this.observer.trigger(events_1.default.FRAG_DECRYPTED, { stats: { tstart: startTime_1, tdecrypt: endTime } });
-                _this.pushDecrypted(new Uint8Array(decryptedData), decryptdata, new Uint8Array(initSegment), audioCodec, videoCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS);
+                _this.pushDecrypted(new Uint8Array(decryptedData), decryptdata, new Uint8Array(initSegment), audioCodec, FileCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS);
             });
         }
         else {
-            this.pushDecrypted(new Uint8Array(data), decryptdata, new Uint8Array(initSegment), audioCodec, videoCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS);
+            this.pushDecrypted(new Uint8Array(data), decryptdata, new Uint8Array(initSegment), audioCodec, FileCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS);
         }
     };
-    DemuxerInline.prototype.pushDecrypted = function (data, decryptdata, initSegment, audioCodec, videoCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS) {
+    DemuxerInline.prototype.pushDecrypted = function (data, decryptdata, initSegment, audioCodec, FileCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS) {
         var demuxer = this.demuxer;
         if (!demuxer ||
             // in case of continuity change, or track switch
@@ -8644,7 +8644,7 @@ var DemuxerInline = /** @class */ (function () {
         }
         var remuxer = this.remuxer;
         if (discontinuity || trackSwitch) {
-            demuxer.resetInitSegment(initSegment, audioCodec, videoCodec, duration);
+            demuxer.resetInitSegment(initSegment, audioCodec, FileCodec, duration);
             remuxer.resetInitSegment();
         }
         if (discontinuity) {
@@ -8714,7 +8714,7 @@ var DemuxerWorker = function (self) {
                 forwardMessage('init', null);
                 break;
             case 'demux':
-                self.demuxer.push(data.data, data.decryptdata, data.initSegment, data.audioCodec, data.videoCodec, data.timeOffset, data.discontinuity, data.trackSwitch, data.contiguous, data.duration, data.accurateTimeOffset, data.defaultInitPTS);
+                self.demuxer.push(data.data, data.decryptdata, data.initSegment, data.audioCodec, data.FileCodec, data.timeOffset, data.discontinuity, data.trackSwitch, data.contiguous, data.duration, data.accurateTimeOffset, data.defaultInitPTS);
                 break;
             default:
                 break;
@@ -8795,7 +8795,7 @@ var Demuxer = /** @class */ (function () {
         observer.on(events_1.default.FRAG_PARSING_USERDATA, forwardMessage);
         observer.on(events_1.default.INIT_PTS_FOUND, forwardMessage);
         var typeSupported = {
-            mp4: MediaSource.isTypeSupported('video/mp4'),
+            mp4: MediaSource.isTypeSupported('File/mp4'),
             mpeg: MediaSource.isTypeSupported('audio/mpeg'),
             mp3: MediaSource.isTypeSupported('audio/mp4; codecs="mp3"')
         };
@@ -8849,7 +8849,7 @@ var Demuxer = /** @class */ (function () {
             this.observer = null;
         }
     };
-    Demuxer.prototype.push = function (data, initSegment, audioCodec, videoCodec, frag, duration, accurateTimeOffset, defaultInitPTS) {
+    Demuxer.prototype.push = function (data, initSegment, audioCodec, FileCodec, frag, duration, accurateTimeOffset, defaultInitPTS) {
         var w = this.w;
         var timeOffset = Number.isFinite(frag.startPTS) ? frag.startPTS : frag.start;
         var decryptdata = frag.decryptdata;
@@ -8867,12 +8867,12 @@ var Demuxer = /** @class */ (function () {
         this.frag = frag;
         if (w) {
             // post fragment payload as transferable objects for ArrayBuffer (no copy)
-            w.postMessage({ cmd: 'demux', data: data, decryptdata: decryptdata, initSegment: initSegment, audioCodec: audioCodec, videoCodec: videoCodec, timeOffset: timeOffset, discontinuity: discontinuity, trackSwitch: trackSwitch, contiguous: contiguous, duration: duration, accurateTimeOffset: accurateTimeOffset, defaultInitPTS: defaultInitPTS }, data instanceof ArrayBuffer ? [data] : []);
+            w.postMessage({ cmd: 'demux', data: data, decryptdata: decryptdata, initSegment: initSegment, audioCodec: audioCodec, FileCodec: FileCodec, timeOffset: timeOffset, discontinuity: discontinuity, trackSwitch: trackSwitch, contiguous: contiguous, duration: duration, accurateTimeOffset: accurateTimeOffset, defaultInitPTS: defaultInitPTS }, data instanceof ArrayBuffer ? [data] : []);
         }
         else {
             var demuxer = this.demuxer;
             if (demuxer) {
-                demuxer.push(data, decryptdata, initSegment, audioCodec, videoCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS);
+                demuxer.push(data, decryptdata, initSegment, audioCodec, FileCodec, timeOffset, discontinuity, trackSwitch, contiguous, duration, accurateTimeOffset, defaultInitPTS);
             }
         }
     };
@@ -9056,13 +9056,13 @@ var ExpGolomb = /** @class */ (function () {
         }
     };
     /**
-     * Read a sequence parameter set and return some interesting video
+     * Read a sequence parameter set and return some interesting File
      * properties. A sequence parameter set is the H264 metadata that
-     * describes the properties of upcoming video frames.
+     * describes the properties of upcoming File frames.
      * @param data {Uint8Array} the bytes of a sequence parameter set
      * @return {object} an object with configuration parsed from the
      * sequence parameter set, including the dimensions of the
-     * associated video frames.
+     * associated File frames.
      */
     ExpGolomb.prototype.readSPS = function () {
         var frameCropLeftOffset = 0, frameCropRightOffset = 0, frameCropTopOffset = 0, frameCropBottomOffset = 0, profileIdc, profileCompat, levelIdc, numRefFramesInPicOrderCntCycle, picWidthInMbsMinus1, picHeightInMapUnitsMinus1, frameMbsOnlyFlag, scalingListCount, i, readUByte = this.readUByte.bind(this), readBits = this.readBits.bind(this), readUEG = this.readUEG.bind(this), readBoolean = this.readBoolean.bind(this), skipBits = this.skipBits.bind(this), skipEG = this.skipEG.bind(this), skipUEG = this.skipUEG.bind(this), skipScalingList = this.skipScalingList.bind(this);
@@ -9567,7 +9567,7 @@ var MP3Demuxer = /** @class */ (function () {
         this.config = config;
         this.remuxer = remuxer;
     }
-    MP3Demuxer.prototype.resetInitSegment = function (initSegment, audioCodec, videoCodec, duration) {
+    MP3Demuxer.prototype.resetInitSegment = function (initSegment, audioCodec, FileCodec, duration) {
         this._audioTrack = { container: 'audio/mpeg', type: 'audio', id: -1, sequenceNumber: 0, isAAC: false, samples: [], len: 0, manifestCodec: audioCodec, duration: duration, inputTimeScale: 90000 };
     };
     MP3Demuxer.prototype.resetTimeStamp = function () {
@@ -9658,7 +9658,7 @@ var MP4Demuxer = /** @class */ (function () {
     MP4Demuxer.prototype.resetTimeStamp = function (initPTS) {
         this.initPTS = initPTS;
     };
-    MP4Demuxer.prototype.resetInitSegment = function (initSegment, audioCodec, videoCodec, duration) {
+    MP4Demuxer.prototype.resetInitSegment = function (initSegment, audioCodec, FileCodec, duration) {
         // jshint unused:false
         if (initSegment && initSegment.byteLength) {
             var initData = this.initData = MP4Demuxer.parseInitSegment(initSegment);
@@ -9667,19 +9667,19 @@ var MP4Demuxer = /** @class */ (function () {
             if (audioCodec == null) {
                 audioCodec = 'mp4a.40.5';
             }
-            if (videoCodec == null) {
-                videoCodec = 'avc1.42e01e';
+            if (FileCodec == null) {
+                FileCodec = 'avc1.42e01e';
             }
             var tracks = {};
-            if (initData.audio && initData.video) {
-                tracks.audiovideo = { container: 'video/mp4', codec: audioCodec + ',' + videoCodec, initSegment: duration ? initSegment : null };
+            if (initData.audio && initData.File) {
+                tracks.audioFile = { container: 'File/mp4', codec: audioCodec + ',' + FileCodec, initSegment: duration ? initSegment : null };
             }
             else {
                 if (initData.audio) {
                     tracks.audio = { container: 'audio/mp4', codec: audioCodec, initSegment: duration ? initSegment : null };
                 }
-                if (initData.video) {
-                    tracks.video = { container: 'video/mp4', codec: videoCodec, initSegment: duration ? initSegment : null };
+                if (initData.File) {
+                    tracks.File = { container: 'File/mp4', codec: FileCodec, initSegment: duration ? initSegment : null };
                 }
             }
             this.observer.trigger(events_1.default.FRAG_PARSING_INIT_SEGMENT, { tracks: tracks });
@@ -9688,8 +9688,8 @@ var MP4Demuxer = /** @class */ (function () {
             if (audioCodec) {
                 this.audioCodec = audioCodec;
             }
-            if (videoCodec) {
-                this.videoCodec = videoCodec;
+            if (FileCodec) {
+                this.FileCodec = FileCodec;
             }
         }
     };
@@ -9873,7 +9873,7 @@ var MP4Demuxer = /** @class */ (function () {
                     var hdlr = MP4Demuxer.findBox(trak, ['mdia', 'hdlr'])[0];
                     if (hdlr) {
                         var hdlrType = MP4Demuxer.bin2str(hdlr.data.subarray(hdlr.start + 8, hdlr.start + 12));
-                        var type = { 'soun': 'audio', 'vide': 'video' }[hdlrType];
+                        var type = { 'soun': 'audio', 'vide': 'File' }[hdlrType];
                         if (type) {
                             // extract codec info. TODO : parse codec details to be able to build MIME type
                             var codecBox = MP4Demuxer.findBox(trak, ['mdia', 'minf', 'stbl', 'stsd']);
@@ -9970,7 +9970,7 @@ var MP4Demuxer = /** @class */ (function () {
     MP4Demuxer.prototype.append = function (data, timeOffset, contiguous, accurateTimeOffset) {
         var initData = this.initData;
         if (!initData) {
-            this.resetInitSegment(data, this.audioCodec, this.videoCodec, false);
+            this.resetInitSegment(data, this.audioCodec, this.FileCodec, false);
             initData = this.initData;
         }
         var startDTS, initPTS = this.initPTS;
@@ -9981,7 +9981,7 @@ var MP4Demuxer = /** @class */ (function () {
         }
         MP4Demuxer.offsetStartDTS(initData, data, initPTS);
         startDTS = MP4Demuxer.getStartDTS(initData, data);
-        this.remuxer.remux(initData.audio, initData.video, null, null, startDTS, contiguous, accurateTimeOffset, data);
+        this.remuxer.remux(initData.audio, initData.File, null, null, startDTS, contiguous, accurateTimeOffset, data);
     };
     MP4Demuxer.prototype.destroy = function () { };
     return MP4Demuxer;
@@ -10252,7 +10252,7 @@ exports.default = SampleAesDecrypter;
 /**
  * highly optimized TS demuxer:
  * parse PAT, PMT
- * extract PES packet from audio and video PIDs
+ * extract PES packet from audio and File PIDs
  * extract AVC/H264 NAL units and AAC/ADTS samples from PES packet
  * trigger the remuxer upon parsing completion
  * it also tries to workaround as best as it can audio codec switch (HE-AAC to AAC and vice versa), without having to restart the MediaSource.
@@ -10272,12 +10272,12 @@ var errors_1 = __webpack_require__(/*! ../errors */ "./src/errors.js");
 // instead of following the TS PIDs.
 // There is no reason not to do this and some browsers/SourceBuffer-demuxers
 // may not like if there are TrackID "switches"
-// See https://github.com/video-dev/hls.js/issues/1331
+// See https://github.com/File-dev/hls.js/issues/1331
 // Here we are mapping our internal track types to constant MP4 track IDs
 // With MSE currently one can only have one track of each, and we are muxing
-// whatever video/audio rendition in them.
+// whatever File/audio rendition in them.
 var RemuxerTrackIdConfig = {
-    video: 1,
+    File: 1,
     audio: 2,
     id3: 3,
     text: 4
@@ -10328,13 +10328,13 @@ var TSDemuxer = /** @class */ (function () {
     /**
      * Creates a track model internal to demuxer used to drive remuxing input
      *
-     * @param {string} type 'audio' | 'video' | 'id3' | 'text'
+     * @param {string} type 'audio' | 'File' | 'id3' | 'text'
      * @param {number} duration
      * @return {object} TSDemuxer's internal track model
      */
     TSDemuxer.createTrack = function (type, duration) {
         return {
-            container: type === 'video' || type === 'audio' ? 'video/mp2t' : undefined,
+            container: type === 'File' || type === 'audio' ? 'File/mp2t' : undefined,
             type: type,
             id: RemuxerTrackIdConfig[type],
             pid: -1,
@@ -10342,7 +10342,7 @@ var TSDemuxer = /** @class */ (function () {
             sequenceNumber: 0,
             samples: [],
             len: 0,
-            dropped: type === 'video' ? 0 : undefined,
+            dropped: type === 'File' ? 0 : undefined,
             isAAC: type === 'audio' ? true : undefined,
             duration: type === 'audio' ? duration : undefined
         };
@@ -10354,13 +10354,13 @@ var TSDemuxer = /** @class */ (function () {
      * @override Implements generic demuxing/remuxing interface (see DemuxerInline)
      * @param {object} initSegment
      * @param {string} audioCodec
-     * @param {string} videoCodec
+     * @param {string} FileCodec
      * @param {number} duration (in TS timescale = 90kHz)
      */
-    TSDemuxer.prototype.resetInitSegment = function (initSegment, audioCodec, videoCodec, duration) {
+    TSDemuxer.prototype.resetInitSegment = function (initSegment, audioCodec, FileCodec, duration) {
         this.pmtParsed = false;
         this._pmtId = -1;
-        this._avcTrack = TSDemuxer.createTrack('video', duration);
+        this._avcTrack = TSDemuxer.createTrack('File', duration);
         this._audioTrack = TSDemuxer.createTrack('audio', duration);
         this._id3Track = TSDemuxer.createTrack('id3', duration);
         this._txtTrack = TSDemuxer.createTrack('text', duration);
@@ -10369,7 +10369,7 @@ var TSDemuxer = /** @class */ (function () {
         this.aacLastPTS = null;
         this.avcSample = null;
         this.audioCodec = audioCodec;
-        this.videoCodec = videoCodec;
+        this.FileCodec = FileCodec;
         this._duration = duration;
     };
     /**
@@ -10535,26 +10535,26 @@ var TSDemuxer = /** @class */ (function () {
             this.decryptAndRemux(audioTrack, avcTrack, id3Track, this._txtTrack, timeOffset, contiguous, accurateTimeOffset);
         }
     };
-    TSDemuxer.prototype.decryptAndRemux = function (audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset) {
+    TSDemuxer.prototype.decryptAndRemux = function (audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset) {
         if (audioTrack.samples && audioTrack.isAAC) {
             var localthis_1 = this;
             this.sampleAes.decryptAacSamples(audioTrack.samples, 0, function () {
-                localthis_1.decryptAndRemuxAvc(audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
+                localthis_1.decryptAndRemuxAvc(audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
             });
         }
         else {
-            this.decryptAndRemuxAvc(audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
+            this.decryptAndRemuxAvc(audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
         }
     };
-    TSDemuxer.prototype.decryptAndRemuxAvc = function (audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset) {
-        if (videoTrack.samples) {
+    TSDemuxer.prototype.decryptAndRemuxAvc = function (audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset) {
+        if (FileTrack.samples) {
             var localthis_2 = this;
-            this.sampleAes.decryptAvcSamples(videoTrack.samples, 0, 0, function () {
-                localthis_2.remuxer.remux(audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
+            this.sampleAes.decryptAvcSamples(FileTrack.samples, 0, 0, function () {
+                localthis_2.remuxer.remux(audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
             });
         }
         else {
-            this.remuxer.remux(audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
+            this.remuxer.remux(audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset);
         }
     };
     TSDemuxer.prototype.destroy = function () {
@@ -10604,7 +10604,7 @@ var TSDemuxer = /** @class */ (function () {
                         break;
                     }
                 /* falls through */
-                // ITU-T Rec. H.264 and ISO/IEC 14496-10 (lower bit-rate video)
+                // ITU-T Rec. H.264 and ISO/IEC 14496-10 (lower bit-rate File)
                 case 0x1b:
                     // logger.log('AVC PID:'  + pid);
                     if (result.avc === -1) {
@@ -11226,7 +11226,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ErrorTypes = {
     // Identifier for a network error (loading error / timeout ...)
     NETWORK_ERROR: 'networkError',
-    // Identifier for a media Error (video/parsing/mediasource error)
+    // Identifier for a media Error (File/parsing/mediasource error)
     MEDIA_ERROR: 'mediaError',
     // EME (encrypted media extensions) errors
     KEY_SYSTEM_ERROR: 'keySystemError',
@@ -11867,7 +11867,7 @@ var Hls = /** @class */ (function (_super) {
         },
         /**
          * Set quality level index for next loaded data.
-         * This will switch the video quality asap, without interrupting playback.
+         * This will switch the File quality asap, without interrupting playback.
          * May abort current loading of data, and flush parts of buffer (outside currently played fragment region).
          * @type {number} -1 for automatic level selection
          */
@@ -12196,7 +12196,7 @@ function isSupported() {
     var sourceBuffer = window.SourceBuffer || window.WebKitSourceBuffer;
     var isTypeSupported = mediaSource &&
         typeof mediaSource.isTypeSupported === 'function' &&
-        mediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"');
+        mediaSource.isTypeSupported('File/mp4; codecs="avc1.42E01E,mp4a.40.2"');
     // if SourceBuffer is exposed ensure its API is valid
     // safari and old version of Chrome doe not expose SourceBuffer globally so checking SourceBuffer.prototype is impossible
     var sourceBufferValidAPI = !sourceBuffer ||
@@ -12356,7 +12356,7 @@ var Fragment = /** @class */ (function () {
         // Holds the types of data this fragment supports
         this._elementaryStreams = (_a = {},
             _a[Fragment.ElementaryStreamTypes.AUDIO] = false,
-            _a[Fragment.ElementaryStreamTypes.VIDEO] = false,
+            _a[Fragment.ElementaryStreamTypes.File] = false,
             _a);
     }
     Object.defineProperty(Fragment, "ElementaryStreamTypes", {
@@ -12368,7 +12368,7 @@ var Fragment = /** @class */ (function () {
         get: function () {
             return {
                 AUDIO: 'audio',
-                VIDEO: 'video'
+                File: 'File'
             };
         },
         enumerable: true,
@@ -12760,7 +12760,7 @@ var M3U8Parser = /** @class */ (function () {
         var levels = [], result;
         MASTER_PLAYLIST_REGEX.lastIndex = 0;
         function setCodecs(codecs, level) {
-            ['video', 'audio'].forEach(function (type) {
+            ['File', 'audio'].forEach(function (type) {
                 var filtered = codecs.filter(function (codec) { return codecs_1.isCodecType(codec, type); });
                 if (filtered.length) {
                     var preferred = filtered.filter(function (codec) {
@@ -12785,8 +12785,8 @@ var M3U8Parser = /** @class */ (function () {
             level.bitrate = attrs.decimalInteger('AVERAGE-BANDWIDTH') || attrs.decimalInteger('BANDWIDTH');
             level.name = attrs.NAME;
             setCodecs([].concat((attrs.CODECS || '').split(/[ ,]+/)), level);
-            if (level.videoCodec && level.videoCodec.indexOf('avc1') !== -1) {
-                level.videoCodec = M3U8Parser.convertAVC1ToAVCOTI(level.videoCodec);
+            if (level.FileCodec && level.FileCodec.indexOf('avc1') !== -1) {
+                level.FileCodec = M3U8Parser.convertAVC1ToAVCOTI(level.FileCodec);
             }
             levels.push(level);
         }
@@ -12841,7 +12841,7 @@ var M3U8Parser = /** @class */ (function () {
             var duration = result[1];
             if (duration) { // INF
                 frag.duration = parseFloat(duration);
-                // avoid sliced strings    https://github.com/video-dev/hls.js/issues/939
+                // avoid sliced strings    https://github.com/File-dev/hls.js/issues/939
                 var title = (' ' + result[2]).slice(1);
                 frag.title = title || null;
                 frag.tagList.push(title ? ['INF', duration, title] : ['INF', duration]);
@@ -12857,7 +12857,7 @@ var M3U8Parser = /** @class */ (function () {
                     frag.cc = cc;
                     frag.urlId = levelUrlId;
                     frag.baseurl = baseurl;
-                    // avoid sliced strings    https://github.com/video-dev/hls.js/issues/939
+                    // avoid sliced strings    https://github.com/File-dev/hls.js/issues/939
                     frag.relurl = (' ' + result[3]).slice(1);
                     assignProgramDateTime(frag, prevFrag);
                     level.fragments.push(frag);
@@ -12876,7 +12876,7 @@ var M3U8Parser = /** @class */ (function () {
                 }
             }
             else if (result[5]) { // PROGRAM-DATE-TIME
-                // avoid sliced strings    https://github.com/video-dev/hls.js/issues/939
+                // avoid sliced strings    https://github.com/File-dev/hls.js/issues/939
                 frag.rawProgramDateTime = (' ' + result[5]).slice(1);
                 frag.tagList.push(['PROGRAM-DATE-TIME', frag.rawProgramDateTime]);
                 if (firstPdtIndex === null) {
@@ -12890,7 +12890,7 @@ var M3U8Parser = /** @class */ (function () {
                         break;
                     }
                 }
-                // avoid sliced strings    https://github.com/video-dev/hls.js/issues/939
+                // avoid sliced strings    https://github.com/File-dev/hls.js/issues/939
                 var value1 = (' ' + result[i + 1]).slice(1);
                 var value2 = (' ' + result[i + 2]).slice(1);
                 switch (result[i]) {
@@ -13322,7 +13322,7 @@ var PlaylistLoader = /** @class */ (function (_super) {
             // if no embedded audio track defined, but audio codec signaled in quality level,
             // we need to signal this main audio track this could happen with playlists with
             // alt audio rendition in which quality levels (main)
-            // contains both audio+video. but with mixed audio track not signaled
+            // contains both audio+File. but with mixed audio track not signaled
             if (embeddedAudioFound_1 === false && levels[0].audioCodec && !levels[0].attrs.AUDIO) {
                 logger_1.logger.log('audio codec signaled in quality level, but no embedded audio track signaled, create one');
                 audioTracks.unshift({
@@ -13715,7 +13715,7 @@ var MP4 = /** @class */ (function () {
                 ];
             }
         }
-        var videoHdlr = new Uint8Array([
+        var FileHdlr = new Uint8Array([
             0x00,
             0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00,
@@ -13725,7 +13725,7 @@ var MP4 = /** @class */ (function () {
             0x00, 0x00, 0x00, 0x00,
             0x56, 0x69, 0x64, 0x65,
             0x6f, 0x48, 0x61, 0x6e,
-            0x64, 0x6c, 0x65, 0x72, 0x00 // name: 'VideoHandler'
+            0x64, 0x6c, 0x65, 0x72, 0x00 // name: 'FileHandler'
         ]);
         var audioHdlr = new Uint8Array([
             0x00,
@@ -13740,7 +13740,7 @@ var MP4 = /** @class */ (function () {
             0x64, 0x6c, 0x65, 0x72, 0x00 // name: 'SoundHandler'
         ]);
         MP4.HDLR_TYPES = {
-            'video': videoHdlr,
+            'File': FileHdlr,
             'audio': audioHdlr
         };
         var dref = new Uint8Array([
@@ -14274,55 +14274,55 @@ var MP4Remuxer = /** @class */ (function () {
     MP4Remuxer.prototype.resetInitSegment = function () {
         this.ISGenerated = false;
     };
-    MP4Remuxer.prototype.remux = function (audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset) {
+    MP4Remuxer.prototype.remux = function (audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset) {
         // generate Init Segment if needed
         if (!this.ISGenerated) {
-            this.generateIS(audioTrack, videoTrack, timeOffset);
+            this.generateIS(audioTrack, FileTrack, timeOffset);
         }
         if (this.ISGenerated) {
             var nbAudioSamples = audioTrack.samples.length;
-            var nbVideoSamples = videoTrack.samples.length;
+            var nbFileSamples = FileTrack.samples.length;
             var audioTimeOffset = timeOffset;
-            var videoTimeOffset = timeOffset;
-            if (nbAudioSamples && nbVideoSamples) {
+            var FileTimeOffset = timeOffset;
+            if (nbAudioSamples && nbFileSamples) {
                 // timeOffset is expected to be the offset of the first timestamp of this fragment (first DTS)
-                // if first audio DTS is not aligned with first video DTS then we need to take that into account
-                // when providing timeOffset to remuxAudio / remuxVideo. if we don't do that, there might be a permanent / small
-                // drift between audio and video streams
-                var audiovideoDeltaDts = (audioTrack.samples[0].pts - videoTrack.samples[0].pts) / videoTrack.inputTimeScale;
-                audioTimeOffset += Math.max(0, audiovideoDeltaDts);
-                videoTimeOffset += Math.max(0, -audiovideoDeltaDts);
+                // if first audio DTS is not aligned with first File DTS then we need to take that into account
+                // when providing timeOffset to remuxAudio / remuxFile. if we don't do that, there might be a permanent / small
+                // drift between audio and File streams
+                var audioFileDeltaDts = (audioTrack.samples[0].pts - FileTrack.samples[0].pts) / FileTrack.inputTimeScale;
+                audioTimeOffset += Math.max(0, audioFileDeltaDts);
+                FileTimeOffset += Math.max(0, -audioFileDeltaDts);
             }
-            // Purposefully remuxing audio before video, so that remuxVideo can use nextAudioPts, which is
+            // Purposefully remuxing audio before File, so that remuxFile can use nextAudioPts, which is
             // calculated in remuxAudio.
             // logger.log('nb AAC samples:' + audioTrack.samples.length);
             if (nbAudioSamples) {
-                // if initSegment was generated without video samples, regenerate it again
+                // if initSegment was generated without File samples, regenerate it again
                 if (!audioTrack.timescale) {
                     logger_1.logger.warn('regenerate InitSegment as audio detected');
-                    this.generateIS(audioTrack, videoTrack, timeOffset);
+                    this.generateIS(audioTrack, FileTrack, timeOffset);
                 }
                 var audioData = this.remuxAudio(audioTrack, audioTimeOffset, contiguous, accurateTimeOffset);
-                // logger.log('nb AVC samples:' + videoTrack.samples.length);
-                if (nbVideoSamples) {
+                // logger.log('nb AVC samples:' + FileTrack.samples.length);
+                if (nbFileSamples) {
                     var audioTrackLength = void 0;
                     if (audioData) {
                         audioTrackLength = audioData.endPTS - audioData.startPTS;
                     }
-                    // if initSegment was generated without video samples, regenerate it again
-                    if (!videoTrack.timescale) {
-                        logger_1.logger.warn('regenerate InitSegment as video detected');
-                        this.generateIS(audioTrack, videoTrack, timeOffset);
+                    // if initSegment was generated without File samples, regenerate it again
+                    if (!FileTrack.timescale) {
+                        logger_1.logger.warn('regenerate InitSegment as File detected');
+                        this.generateIS(audioTrack, FileTrack, timeOffset);
                     }
-                    this.remuxVideo(videoTrack, videoTimeOffset, contiguous, audioTrackLength, accurateTimeOffset);
+                    this.remuxFile(FileTrack, FileTimeOffset, contiguous, audioTrackLength, accurateTimeOffset);
                 }
             }
             else {
-                // logger.log('nb AVC samples:' + videoTrack.samples.length);
-                if (nbVideoSamples) {
-                    var videoData = this.remuxVideo(videoTrack, videoTimeOffset, contiguous, 0, accurateTimeOffset);
-                    if (videoData && audioTrack.codec) {
-                        this.remuxEmptyAudio(audioTrack, audioTimeOffset, contiguous, videoData);
+                // logger.log('nb AVC samples:' + FileTrack.samples.length);
+                if (nbFileSamples) {
+                    var FileData = this.remuxFile(FileTrack, FileTimeOffset, contiguous, 0, accurateTimeOffset);
+                    if (FileData && audioTrack.codec) {
+                        this.remuxEmptyAudio(audioTrack, audioTimeOffset, contiguous, FileData);
                     }
                 }
             }
@@ -14338,8 +14338,8 @@ var MP4Remuxer = /** @class */ (function () {
         // notify end of parsing
         this.observer.trigger(events_1.default.FRAG_PARSED);
     };
-    MP4Remuxer.prototype.generateIS = function (audioTrack, videoTrack, timeOffset) {
-        var observer = this.observer, audioSamples = audioTrack.samples, videoSamples = videoTrack.samples, typeSupported = this.typeSupported, container = 'audio/mp4', tracks = {}, data = { tracks: tracks }, computePTSDTS = (this._initPTS === undefined), initPTS, initDTS;
+    MP4Remuxer.prototype.generateIS = function (audioTrack, FileTrack, timeOffset) {
+        var observer = this.observer, audioSamples = audioTrack.samples, FileSamples = FileTrack.samples, typeSupported = this.typeSupported, container = 'audio/mp4', tracks = {}, data = { tracks: tracks }, computePTSDTS = (this._initPTS === undefined), initPTS, initDTS;
         if (computePTSDTS) {
             initPTS = initDTS = Infinity;
         }
@@ -14372,23 +14372,23 @@ var MP4Remuxer = /** @class */ (function () {
                 initPTS = initDTS = audioSamples[0].pts - audioTrack.inputTimeScale * timeOffset;
             }
         }
-        if (videoTrack.sps && videoTrack.pps && videoSamples.length) {
-            // let's use input time scale as MP4 video timescale
+        if (FileTrack.sps && FileTrack.pps && FileSamples.length) {
+            // let's use input time scale as MP4 File timescale
             // we use input time scale straight away to avoid rounding issues on frame duration / cts computation
-            var inputTimeScale = videoTrack.inputTimeScale;
-            videoTrack.timescale = inputTimeScale;
-            tracks.video = {
-                container: 'video/mp4',
-                codec: videoTrack.codec,
-                initSegment: mp4_generator_1.default.initSegment([videoTrack]),
+            var inputTimeScale = FileTrack.inputTimeScale;
+            FileTrack.timescale = inputTimeScale;
+            tracks.File = {
+                container: 'File/mp4',
+                codec: FileTrack.codec,
+                initSegment: mp4_generator_1.default.initSegment([FileTrack]),
                 metadata: {
-                    width: videoTrack.width,
-                    height: videoTrack.height
+                    width: FileTrack.width,
+                    height: FileTrack.height
                 }
             };
             if (computePTSDTS) {
-                initPTS = Math.min(initPTS, videoSamples[0].pts - inputTimeScale * timeOffset);
-                initDTS = Math.min(initDTS, videoSamples[0].dts - inputTimeScale * timeOffset);
+                initPTS = Math.min(initPTS, FileSamples[0].pts - inputTimeScale * timeOffset);
+                initDTS = Math.min(initDTS, FileSamples[0].dts - inputTimeScale * timeOffset);
                 this.observer.trigger(events_1.default.INIT_PTS_FOUND, { initPTS: initPTS });
             }
         }
@@ -14401,10 +14401,10 @@ var MP4Remuxer = /** @class */ (function () {
             }
         }
         else {
-            observer.trigger(events_1.default.ERROR, { type: errors_1.ErrorTypes.MEDIA_ERROR, details: errors_1.ErrorDetails.FRAG_PARSING_ERROR, fatal: false, reason: 'no audio/video samples found' });
+            observer.trigger(events_1.default.ERROR, { type: errors_1.ErrorTypes.MEDIA_ERROR, details: errors_1.ErrorDetails.FRAG_PARSING_ERROR, fatal: false, reason: 'no audio/File samples found' });
         }
     };
-    MP4Remuxer.prototype.remuxVideo = function (track, timeOffset, contiguous, audioTrackLength, accurateTimeOffset) {
+    MP4Remuxer.prototype.remuxFile = function (track, timeOffset, contiguous, audioTrackLength, accurateTimeOffset) {
         var offset = 8;
         var mp4SampleDuration;
         var mdat;
@@ -14446,7 +14446,7 @@ var MP4Remuxer = /** @class */ (function () {
             sample.pts = ptsNormalize(sample.pts - initPTS, nextAvcDts);
             sample.dts = ptsNormalize(sample.dts - initPTS, nextAvcDts);
         });
-        // sort video samples by DTS then PTS then demux id order
+        // sort File samples by DTS then PTS then demux id order
         inputSamples.sort(function (a, b) {
             var deltadts = a.dts - b.dts;
             var deltapts = a.pts - b.pts;
@@ -14455,7 +14455,7 @@ var MP4Remuxer = /** @class */ (function () {
         // handle broken streams with PTS < DTS, tolerance up 200ms (18000 in 90kHz timescale)
         var PTSDTSshift = inputSamples.reduce(function (prev, curr) { return Math.max(Math.min(prev, curr.pts - curr.dts), -18000); }, 0);
         if (PTSDTSshift < 0) {
-            logger_1.logger.warn("PTS < DTS detected in video samples, shifting DTS by " + Math.round(PTSDTSshift / 90) + " ms to overcome this issue");
+            logger_1.logger.warn("PTS < DTS detected in File samples, shifting DTS by " + Math.round(PTSDTSshift / 90) + " ms to overcome this issue");
             for (var i = 0; i < inputSamples.length; i++) {
                 inputSamples[i].dts += PTSDTSshift;
             }
@@ -14481,7 +14481,7 @@ var MP4Remuxer = /** @class */ (function () {
                 // offset PTS as well, ensure that PTS is smaller or equal than new DTS
                 firstPTS = Math.max(firstPTS - delta, nextAvcDts);
                 inputSamples[0].pts = firstPTS;
-                logger_1.logger.log("Video/PTS/DTS adjusted: " + Math.round(firstPTS / 90) + "/" + Math.round(firstDTS / 90) + ",delta:" + delta + " ms");
+                logger_1.logger.log("File/PTS/DTS adjusted: " + Math.round(firstPTS / 90) + "/" + Math.round(firstDTS / 90) + ",delta:" + delta + " ms");
             }
         }
         // compute lastPTS/lastDTS
@@ -14516,14 +14516,14 @@ var MP4Remuxer = /** @class */ (function () {
             // ensure that computed value is greater or equal than sample DTS
             sample_1.pts = Math.max(sample_1.pts, sample_1.dts);
         }
-        /* concatenate the video data and construct the mdat in place
+        /* concatenate the File data and construct the mdat in place
           (need 8 more bytes to fill length and mpdat type) */
         var mdatSize = naluLen + (4 * nbNalu) + 8;
         try {
             mdat = new Uint8Array(mdatSize);
         }
         catch (err) {
-            this.observer.trigger(events_1.default.ERROR, { type: errors_1.ErrorTypes.MUX_ERROR, details: errors_1.ErrorDetails.REMUX_ALLOC_ERROR, fatal: false, bytes: mdatSize, reason: "fail allocating video mdat " + mdatSize });
+            this.observer.trigger(events_1.default.ERROR, { type: errors_1.ErrorTypes.MUX_ERROR, details: errors_1.ErrorDetails.REMUX_ALLOC_ERROR, fatal: false, bytes: mdatSize, reason: "fail allocating File mdat " + mdatSize });
             return;
         }
         var view = new DataView(mdat.buffer);
@@ -14547,21 +14547,21 @@ var MP4Remuxer = /** @class */ (function () {
                 }
                 else {
                     var config = this.config, lastFrameDuration = avcSample.dts - inputSamples[i > 0 ? i - 1 : i].dts;
-                    if (config.stretchShortVideoTrack) {
-                        // In some cases, a segment's audio track duration may exceed the video track duration.
+                    if (config.stretchShortFileTrack) {
+                        // In some cases, a segment's audio track duration may exceed the File track duration.
                         // Since we've already remuxed audio, and we know how long the audio track is, we look to
                         // see if the delta to the next segment is longer than maxBufferHole.
                         // If so, playback would potentially get stuck, so we artificially inflate
                         // the duration of the last frame to minimize any potential gap between segments.
                         var maxBufferHole = config.maxBufferHole, gapTolerance = Math.floor(maxBufferHole * timeScale), deltaToFrameEnd = (audioTrackLength ? firstPTS + audioTrackLength * timeScale : this.nextAudioPts) - avcSample.pts;
                         if (deltaToFrameEnd > gapTolerance) {
-                            // We subtract lastFrameDuration from deltaToFrameEnd to try to prevent any video
+                            // We subtract lastFrameDuration from deltaToFrameEnd to try to prevent any File
                             // frame overlap. maxBufferHole should be >> lastFrameDuration anyway.
                             mp4SampleDuration = deltaToFrameEnd - lastFrameDuration;
                             if (mp4SampleDuration < 0) {
                                 mp4SampleDuration = lastFrameDuration;
                             }
-                            logger_1.logger.log("It is approximately " + deltaToFrameEnd / 90 + " ms to the next segment; using duration " + mp4SampleDuration / 90 + " ms for the last video frame.");
+                            logger_1.logger.log("It is approximately " + deltaToFrameEnd / 90 + " ms to the next segment; using duration " + mp4SampleDuration / 90 + " ms for the last File frame.");
                         }
                         else {
                             mp4SampleDuration = lastFrameDuration;
@@ -14615,9 +14615,9 @@ var MP4Remuxer = /** @class */ (function () {
             endPTS: (lastPTS + mp4SampleDuration) / timeScale,
             startDTS: firstDTS / timeScale,
             endDTS: this.nextAvcDts / timeScale,
-            type: 'video',
+            type: 'File',
             hasAudio: false,
-            hasVideo: true,
+            hasFile: true,
             nb: outputSamples.length,
             dropped: dropped
         };
@@ -14859,7 +14859,7 @@ var MP4Remuxer = /** @class */ (function () {
                 endDTS: end,
                 type: 'audio',
                 hasAudio: true,
-                hasVideo: false,
+                hasFile: false,
                 nb: nbSamples
             };
             this.observer.trigger(events_1.default.FRAG_PARSING_DATA, audioData);
@@ -14867,10 +14867,10 @@ var MP4Remuxer = /** @class */ (function () {
         }
         return null;
     };
-    MP4Remuxer.prototype.remuxEmptyAudio = function (track, timeOffset, contiguous, videoData) {
+    MP4Remuxer.prototype.remuxEmptyAudio = function (track, timeOffset, contiguous, FileData) {
         var inputTimeScale = track.inputTimeScale, mp4timeScale = track.samplerate ? track.samplerate : inputTimeScale, scaleFactor = inputTimeScale / mp4timeScale, nextAudioPts = this.nextAudioPts, 
-        // sync with video's timestamp
-        startDTS = (nextAudioPts !== undefined ? nextAudioPts : videoData.startDTS * inputTimeScale) + this._initDTS, endDTS = videoData.endDTS * inputTimeScale + this._initDTS, 
+        // sync with File's timestamp
+        startDTS = (nextAudioPts !== undefined ? nextAudioPts : FileData.startDTS * inputTimeScale) + this._initDTS, endDTS = FileData.endDTS * inputTimeScale + this._initDTS, 
         // one sample's duration value
         sampleDuration = 1024, frameDuration = scaleFactor * sampleDuration, 
         // samples count of this segment's duration
@@ -14986,14 +14986,14 @@ var PassThroughRemuxer = /** @class */ (function () {
     };
     PassThroughRemuxer.prototype.resetInitSegment = function () {
     };
-    PassThroughRemuxer.prototype.remux = function (audioTrack, videoTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset, rawData) {
+    PassThroughRemuxer.prototype.remux = function (audioTrack, FileTrack, id3Track, textTrack, timeOffset, contiguous, accurateTimeOffset, rawData) {
         var observer = this.observer;
         var streamType = '';
         if (audioTrack) {
             streamType += 'audio';
         }
-        if (videoTrack) {
-            streamType += 'video';
+        if (FileTrack) {
+            streamType += 'File';
         }
         observer.trigger(events_1.default.FRAG_PARSING_DATA, {
             data1: rawData,
@@ -15001,7 +15001,7 @@ var PassThroughRemuxer = /** @class */ (function () {
             startDTS: timeOffset,
             type: streamType,
             hasAudio: !!audioTrack,
-            hasVideo: !!videoTrack,
+            hasFile: !!FileTrack,
             nb: 1,
             dropped: 0
         });
@@ -15373,7 +15373,7 @@ var BufferHelper = /** @class */ (function () {
     };
     BufferHelper.bufferedInfo = function (buffered, pos, maxHoleDuration) {
         var buffered2 = [], 
-        // bufferStart and bufferEnd are buffer boundaries around current video position
+        // bufferStart and bufferEnd are buffer boundaries around current File position
         bufferLen, bufferStart, bufferEnd, bufferStartNext, i;
         // sort on buffer.start/smaller end (IE does not always return sorted buffered range)
         buffered.sort(function (a, b) {
@@ -16580,7 +16580,7 @@ var sampleEntryCodesISO = {
         'twos': true,
         'ulaw': true
     },
-    video: {
+    File: {
         'avc1': true,
         'avc2': true,
         'avc3': true,
@@ -16614,7 +16614,7 @@ function isCodecType(codec, type) {
 }
 exports.isCodecType = isCodecType;
 function isCodecSupportedInMp4(codec, type) {
-    return window.MediaSource.isTypeSupported((type || 'video') + "/mp4;codecs=\"" + codec + "\"");
+    return window.MediaSource.isTypeSupported((type || 'File') + "/mp4;codecs=\"" + codec + "\"");
 }
 exports.isCodecSupportedInMp4 = isCodecSupportedInMp4;
 
@@ -17149,7 +17149,7 @@ exports.default = OutputFilter;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-function sendAddTrackEvent(track, videoEl) {
+function sendAddTrackEvent(track, FileEl) {
     var event = null;
     try {
         event = new window.Event('addtrack');
@@ -17160,7 +17160,7 @@ function sendAddTrackEvent(track, videoEl) {
         event.initEvent('addtrack', false, false);
     }
     event.track = track;
-    videoEl.dispatchEvent(event);
+    FileEl.dispatchEvent(event);
 }
 exports.sendAddTrackEvent = sendAddTrackEvent;
 function clearCurrentCues(track) {
@@ -17470,7 +17470,7 @@ exports.default = (function () {
         /**
          * Other <track> spec defined properties
          */
-        // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#text-track-cue-display-state
+        // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-File-element.html#text-track-cue-display-state
         cue.displayState = undefined;
         if (isIE8) {
             return cue;

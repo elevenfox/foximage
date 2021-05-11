@@ -289,7 +289,7 @@
      * Other <track> spec defined properties
      */
 
-    // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#text-track-cue-display-state
+    // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-File-element.html#text-track-cue-display-state
     cue.displayState = undefined;
 
     if (isIE8) {
@@ -1481,7 +1481,7 @@
   // a list of other boxes that the styleBox can't overlap with.
   function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
 
-    // Find the best position for a cue box, b, on the video. The axis parameter
+    // Find the best position for a cue box, b, on the File. The axis parameter
     // is a list of axis, the order of which, it will move the box along. For example:
     // Passing ["+x", "-x"] will move the box first along the x axis in the positive
     // direction. If it doesn't find a good position for it there it will then move
@@ -1551,9 +1551,9 @@
       }
 
       // If computed line position returns negative then line numbers are
-      // relative to the bottom of the video instead of the top. Therefore, we
+      // relative to the bottom of the File instead of the top. Therefore, we
       // need to increase our initial position by the length or width of the
-      // video, depending on the writing direction, and reverse our axis directions.
+      // File, depending on the writing direction, and reverse our axis directions.
       if (linePos < 0) {
         position += cue.vertical === "" ? containerBox.height : containerBox.width;
         axis = axis.reverse();

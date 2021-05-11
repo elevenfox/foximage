@@ -23,9 +23,9 @@ Class tagContentsController extends ControllerCore {
         );
 
         $items['tags/%'] = array(
-            'title' => 'Videos with this tag',
+            'title' => 'Files with this tag',
             'access callback' => TRUE,
-            'modelMethod' => 'getVideosByTag',
+            'modelMethod' => 'getFilesByTag',
             'template' => 'page-tag-contents',
         );
 

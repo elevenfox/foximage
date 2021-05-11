@@ -65,8 +65,8 @@ function isAdmin() {
     return !empty($_SESSION['user']) && $_SESSION['user']['uid'] == 1;
 }
 
-function is_hd_video($video) {
-  return !empty($video['quality_1080p']) || !empty($video['quality_720p']);
+function is_hd_File($File) {
+  return !empty($File['quality_1080p']) || !empty($File['quality_720p']);
 }
 
 function seconds_to_duration($seconds) {
@@ -74,7 +74,7 @@ function seconds_to_duration($seconds) {
     return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);
 }
 
-function get_default_video_api_url() {
+function get_default_File_api_url() {
     $http_host = $_SERVER['HTTP_HOST'];
     $arr = explode('.', $http_host);
     if(count($arr) == 2 || count($arr) == 3 ) {
@@ -84,19 +84,19 @@ function get_default_video_api_url() {
     return $new_url;
 }
 
-function get_gif_preview($source, $video) {
+function get_gif_preview($source, $File) {
     if(!empty($source)) {
         $needle = 'gif-preview=';
-        if(substr($video['gif_preview'], 0, strlen($needle)) == $needle) {
-            return $video['gif_preview'];
+        if(substr($File['gif_preview'], 0, strlen($needle)) == $needle) {
+            return $File['gif_preview'];
         }
         else {
             switch ($source) {
                 case 'pornhub':
-                    if(empty($video['gif_preview'])) {
+                    if(empty($File['gif_preview'])) {
                         $ext = '.jpg';
                         $preivews = array();
-                        $thumbnail = $video['thumbnail'];
+                        $thumbnail = $File['thumbnail'];
                         if( (strlen($thumbnail) - 4) == stripos($thumbnail, $ext) ) {
                             $res = explode(')', str_ireplace($ext, '', $thumbnail));
                             array_pop($res);
@@ -109,9 +109,9 @@ function get_gif_preview($source, $video) {
                         return 'gif-preview="'. implode(',', $preivews) .'"';
                     }
                     else {
-                        $thumb_info = json_decode('{'.$video['gif_preview'].'}');
+                        $thumb_info = json_decode('{'.$File['gif_preview'].'}');
                         if(empty($thumb_info)) {
-                            $thumb_info = json_decode($video['gif_preview']);
+                            $thumb_info = json_decode($File['gif_preview']);
                         }
                         $res = explode('/',$thumb_info->urlPattern);
                         $last = array_pop($res);
@@ -125,7 +125,7 @@ function get_gif_preview($source, $video) {
                 case 'youjizz':
                     $ext = '.jpg';
                     $preivews = array();
-                    $thumbnail = $video['thumbnail'];
+                    $thumbnail = $File['thumbnail'];
                     if( (strlen($thumbnail) - 4) == stripos($thumbnail, $ext) ) {
                         $res = explode('-', str_ireplace($ext, '', $thumbnail));
                         array_pop($res);
@@ -138,7 +138,7 @@ function get_gif_preview($source, $video) {
                     return 'gif-preview="'. implode(',', $preivews) .'"';
                     break;
                 case 'redtube':
-                    $thumb_info = json_decode($video['gif_preview']);
+                    $thumb_info = json_decode($File['gif_preview']);
                     if(!empty($thumb_info)) {
                         $res = explode('/', $thumb_info->urlPattern);
                         $last = array_pop($res);

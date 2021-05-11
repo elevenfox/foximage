@@ -1,0 +1,183 @@
+<?php
+
+/*
+ * This is the model for home page
+ * @author: Eric
+ */
+
+import('dao.Tag');
+
+Class siteMapModel extends ModelCore {
+
+    private $urlsPerSiteMapFile = 4999;
+
+    public function __construct(Request $request) {
+        parent::__construct($request);
+    }
+
+    public function make() {
+        parent::make();
+    }
+
+    public function genSiteMapIndex() {
+        $totalVideoCount = Video::getAllVideoscount();
+        //$totalTagCount = Tag::getAllTagsCount();
+
+        $totalSiteMapFiles = ceil($totalVideoCount / $this->urlsPerSiteMapFile) + 1;
+
+        $domain = $this->getDomainUrl();
+
+
+        $xml = <<< EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
+EOF;
+
+
+
+
+        for($i = 0; $i<$totalSiteMapFiles; $i++) {
+            $count = $i + 1;
+            $xml .= '<sitemap><loc>'.$domain.'/sitemap/'.$count.'/sitemap-content-'.$count.'.xml</loc></sitemap>';
+        }
+
+        $xml .= '</sitemapindex>';
+
+        Header('Content-type: text/xml');
+
+        echo $this->utf8_for_xml(trim($xml));
+
+        exit;
+    }
+
+    public function genSiteMapPage() {
+        $fileId = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
+
+        $domain = $this->getDomainUrl();
+
+        $xml = <<< EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+EOF;
+
+        if($fileId == 1) {
+            $totalTagCount = Tag::getAllTagsCount();
+            $totalTagCount = ($totalTagCount > $this->urlsPerSiteMapFile) ? $this->urlsPerSiteMapFile : $totalTagCount;
+
+            $xml .= '<url>
+<loc>' . $domain . '/</loc>
+<changefreq>hourly</changefreq>
+<priority>0.9</priority>
+</url>';
+
+            $tags = Tag::getAllTags(1, $totalTagCount);
+
+            foreach ($tags as $tag) {
+                if(!empty($tag['name'])) {
+                    $url = cleanStringForUrl($tag['name']);
+                    if(!empty($url)) {
+                        $xml .= '<url><loc>' . $domain . '/tags/' . $url . '</loc><changefreq>daily</changefreq><priority>0.7</priority></url>';
+                    }
+                }
+            }
+        }
+        else {
+            $page = $fileId - 1;
+            $videos = Video::getVideos($page, $this->urlsPerSiteMapFile);
+
+            foreach ($videos as $video) {
+                if(!empty($video['title'])) {
+                    $url = utf8_encode(cleanStringForUrl($video['title']) . '/' . $video['source_url_md5']);
+                    if(!empty($url)) {
+                        $xml .= '<url><loc>' . $domain . '/video/' . $url . '</loc><changefreq>weekly</changefreq></url>';
+                    }
+                }
+            }
+        }
+
+        $xml .= '</urlset>';
+
+        Header('Content-type: text/xml');
+
+        echo $this->utf8_for_xml(trim($xml));
+
+        exit;
+    }
+
+    private function getDomainUrl() {
+        $serverVars = $this->request->getServer();
+
+        if (isset($_SERVER['HTTPS']) &&
+            ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+            isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+            $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+            $protocol = 'https://';
+        }
+        else {
+            $protocol = 'http://';
+        }
+
+        $domain = empty($serverVars['HTTP_X_FORWARDED_SERVER']) ? $serverVars['SERVER_NAME'] : $serverVars['HTTP_X_FORWARDED_SERVER'];
+
+        return $protocol . $domain;
+    }
+
+
+    public function genRobotsTxt() {
+        $txt = <<<EOF
+User-agent: *
+Crawl-delay: 10
+# CSS, JS, Images
+Allow: /libraries/*.css$
+Allow: /libraries/*.css?
+Allow: /libraries/*.js$
+Allow: /libraries/*.js?
+Allow: /libraries/*.gif
+Allow: /libraries/*.jpg
+Allow: /libraries/*.jpeg
+Allow: /libraries/*.png
+Allow: /themes/*.css$
+Allow: /themes/*.css?
+Allow: /themes/*.js$
+Allow: /themes/*.js?
+Allow: /themes/*.gif
+Allow: /themes/*.jpg
+Allow: /themes/*.jpeg
+Allow: /themes/*.png
+# Directories
+Disallow: /libraries/
+Disallow: /themes/
+Disallow: /class/
+Disallow: /conf/
+Disallow: /misc/
+# Files
+Disallow: /CHANGELOG.txt
+# Paths (clean URLs)
+Disallow: /api/
+Disallow: /user/register/
+Disallow: /user/login/
+Disallow: /user/logout/
+# Paths (no clean URLs)
+Disallow: /?q=api/
+Disallow: /?q=user/register/
+Disallow: /?q=user/login/
+Disallow: /?q=user/logout/
+EOF;
+
+        $sitemap = "\n\nSitemap: " . $this->getDomainUrl() . '/sitemap.xml';
+
+        $txt .= $sitemap;
+
+        Header('Content-type: text/plain');
+
+        echo trim($txt);
+
+        exit;
+
+    }
+
+    private function utf8_for_xml($string)
+    {
+        return preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
+    }
+}

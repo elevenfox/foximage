@@ -10,18 +10,18 @@ include 'header.tpl.php';
 
 ?>
 
-    <div class="content-container tag-Files-list-page">
+    <div class="content-container tag-file-list-page">
         <h1><?php print $data['page_title']; ?></h1>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
         <div id="content" class="content">
          <?php
-            if(!empty($data['Files'])) {
+            if(!empty($data['files'])) {
                 $i = 0;
                 $j = 1;
                 $apply_mobile_native_ads = true;
-                foreach ($data['Files'] as $File) {
+                foreach ($data['files'] as $File) {
                     echo $theme->render($File, 'File-teaser');
                     $i++;
 
@@ -35,7 +35,7 @@ include 'header.tpl.php';
             else {
                 echo "<h4 style='line-height: 50px; width: 100%; text-align: center; padding: 5px 10px 40px 10px; border-bottom: 1px solid;'>No File found!</h4>";
 
-                echo '<h4 style="margin: 20px 0;">Other Files you may like: </h4>';
+                echo '<h4 style="margin: 20px 0;">Other file you may like: </h4>';
 
                 if(!empty($data['otherFiles'])) {
                     foreach ($data['otherFiles'] as $File) {

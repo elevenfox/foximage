@@ -150,9 +150,23 @@ form input[type="submit"], form input[type="button"] {
 .header .header__region {
   clear: none;
 }
+.header__logo {
+  white-space: nowrap;
+}
+.header__logo:hover {
+  text-decoration: none;
+}
 .header__logo-image {
-  width: 60px;
-  padding: 20px 0;
+  width: 45px;
+  padding: 5px 0;
+  vertical-align: bottom;
+}
+.header__logo span {
+  font-size: 25px;
+  white-space: nowrap;
+  padding: 0 0 0 5px;
+  line-height: 50px;
+  color: #f27bab;
 }
 .header #h-left {
   float: left;
@@ -270,7 +284,7 @@ form input[type="submit"], form input[type="button"] {
   color: white;
 }
 .navbar li.active a {
-  color: #e34449;
+  color: #f27bab;
 }
 
 #quick-nav {
@@ -594,7 +608,7 @@ article.file header {
 
 .file-tags .tag {
     padding: 5px 15px;
-    background-color: red;
+    background-color: #f27bab;
     border-radius: 5px;
     color: white;
     text-decoration: none;

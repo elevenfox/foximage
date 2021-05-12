@@ -10,11 +10,14 @@ $pre = Config::get('db_table_prefix');
 
 $supported_sources = [
     'qqc962.com' => 'qqc',
+    'qqc962.com-2' => 'qqc',
+    'qqc962.com-3' => 'qqc',
+    'qqc962.com-4' => 'qqc',
+    'qqc962.com-5' => 'qqc',
 ];
 
 
 $action = empty($_REQUEST['ac']) ? 'default' : $_REQUEST['ac'];
-
 switch($action) {
     case 'get_max_File_id':
         echo File::getMaxFileId();
@@ -34,6 +37,9 @@ switch($action) {
     //     break;
 
     case 'import_file':
+        $error = '';
+        $status = 0;
+
         $the_url = $_GET['url'];
         $target_url = urldecode($the_url);
 
@@ -48,12 +54,33 @@ switch($action) {
             import('parser.' . $decoder_class);
             
             $file_array = $decoder_class::parse_html($target_url);
-            $file_obj = (object) $file_array;
-            $file_obj->source = '$decoder_class';
-            $file_obj->source_url = $target_url;
 
-            File::save($file_obj);
+            if(empty($file_array)) {
+                $error .= 'Cannot parse content from url: ' . $target_url;
+            }
+            else {
+                if(count($file_array['images']) < 5) {
+                    ZDebug::my_print($file_array);
+                    $error .= 'Bypass item which has lesson than 5 photos.';
+                }
+                else {
+                    $file_obj = (object) $file_array;
+                    $file_obj->source = $decoder_class;
+                    $file_obj->source_url = $target_url;
+
+                    $res = File::save($file_obj);
+                    if($res) {
+                        $status = 1;
+                    }
+                    else {
+                        $error .= 'Failed to save video data to node. ';
+                    }
+                }
+            }
         }
+
+        header('Content-Type: application/json');
+        echo json_encode(array('status'=>$status, 'msg'=>$error, 'result'=>$res));
 
         break;
 
@@ -129,34 +156,22 @@ switch($action) {
         apiReturnJson($res);
         break;
 
-    case 'delete_File_by_user':
+    case 'delete_file_by_user':
         $res = false;
 
-        $File_md5_id = $_POST['File_md5_id'];
+        $file_id = $_POST['file_id'];
         // Make sure can only delete File owned by current user
         if(!empty($_SESSION['user'])) {
-            $File = File::getFileByMd5($File_md5_id);
-            if(!empty($File) && ($File['user_name'] == $_SESSION['user']['name'] || isAdmin()) ) {
-                $res = File::deleteByMd5($File_md5_id);
+            $file = File::getFileByID($file_id);
+            if(!empty($file) && ($file['user_name'] == $_SESSION['user']['name'] || isAdmin()) ) {
+                $res = File::deleteById($file_id);
             }
         }
 
         apiReturnJson($res);
         break;
 
-    case 'delete_File_by_admin_opln35lmz9517sdjf':
-        $res = false;
-
-        $File_md5_id = $_POST['File_md5_id'];
-        $token = $_POST['d_token'];
-        if( !empty($token) && $token == Config::get('db_driver') ) {
-            $res = File::deleteByMd5($File_md5_id);
-        }
-
-        apiReturnJson($res);
-        break;
-
-    case 'mark_File_for_deleting_kgdfur35fjgf9517lsdmh':
+    case 'mark_file_for_deleting_kgdfur35fjgf9517lsdmh':
         $res = false;
 
         $source_url = $_POST['source_url'];

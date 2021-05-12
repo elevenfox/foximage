@@ -37,7 +37,7 @@
                     // Ajax call to delete the File
                     var data = {
                       'ac' : 'delete_file_by_user',
-                      'file_md5_id': file_md5_id,
+                      'file_id': file_id,
                     };
                     $.post('/api/', data, function (res) {
                       if(res) {

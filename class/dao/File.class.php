@@ -56,20 +56,39 @@ Class File {
         }
     }
 
+    public static function deleteById($fileId) {
+        self::setTables();
+
+        $fileId = DB::sanitizeInput($fileId);
+
+        // Delete tag_video records, count down tag vid
+        $tags = Tag::getTagsFromTagFileByFileId($fileId);
+        foreach ($tags as $tag) {
+            Tag::decreaseTagVidCount($tag['tid']);
+        }
+
+        $res = Tag::deleteFileTagsByFileId($fileId);
+        if($res) {
+            $sql = "delete from " . self::$table_files . " where id = '" . $fileId . "'";
+            return DB::$dbInstance->query($sql);
+        }
+        return false;
+    }
+
     public static function getFiles($page=1, $limit=20, $sort='desc') {
         self::setTables();
 
         $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
-        // if(APCU && !isAdmin()) {
-        //     $res = apcu_fetch($cacheKey);
-        //     if(!empty($res)) {
-        //         return $res;
-        //     }
-        // }
+        if(APCU && !isAdmin()) {
+            $res = apcu_fetch($cacheKey);
+            if(!empty($res)) {
+                return $res;
+            }
+        }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
         $query = 'select * from '.self::$table_files.' order by id ' . $sort . ' limit ' . $limit;
-        ZDebug::my_print($query);
+ 
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
@@ -158,7 +177,7 @@ Class File {
 
         $totalFile = $res[0]['total'];
 
-        $limit = random_int(1, $totalFile) .',' . 20;
+        $limit = random_int(1, $totalFile-8) .',' . 8;
         $query = 'select * from '.self::$table_files.' order by id desc  limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
@@ -323,7 +342,7 @@ Class File {
 
             foreach ($tags as $tag) {
                 $tagObj = Tag::upsertTag($tag);
-                Tag::upsertFileTag($tagObj['tid'], $tagObj['name'], $file['id'], $file['source_url_md5']);
+                Tag::upsertFileTag($tagObj['tid'], $tagObj['name'], $file['id']);
             }
         }
     }

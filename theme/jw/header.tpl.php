@@ -12,7 +12,7 @@ $domainUrl = getDomainUrl();
     <meta name="referrer" content="no-referrer" />
     <meta name="robots" content="follow, index" />
 
-    <link rel="shortcut icon" href="/theme/jp/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="/theme/jw/favicon.ico" type="image/vnd.microsoft.icon" />
 
     <meta name="description" content="<?=$data['meta_desc']?>" />
     <meta name="keywords" content="<?=$data['meta_keywords']?>" />
@@ -79,17 +79,18 @@ $domainUrl = getDomainUrl();
         <div id="h-left">
             <div style="position: absolute; left: 15px; top: 20px; ">
             <span id="quick-nav">
-                <img src="/theme/jp/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation">
+                <img src="/theme/jw/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation">
             </span>
                 <span id="mobile-back">
-                <a href="javascript:history.go(-1)" class="ui-link"><img src="/theme/jp/images/back100bsa.png" title="Go Back" alt="Go Back"></a>
+                <a href="javascript:history.go(-1)" class="ui-link"><img src="/theme/jw/images/back100bsa.png" title="Go Back" alt="Go Back"></a>
             </span>
             </div>
             <a href="/" title="Home" rel="home" class="header__logo">
-                <img src="/theme/jp/logo.png" alt="Home" class="header__logo-image">
+                <img src="/theme/jw/logo.png" alt="Home" class="header__logo-image">
+                <span>JAVWall8.com</span>
             </a>
             <div id="search-button-div">
-                <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jp/images/search100bsa.png" title="Search" alt="Search"></a>
+                <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search"></a>
                 <a id="user-actions" href="/user/<?=empty($_SESSION['user'])?'login':''?>"><span class="glyphicon glyphicon-user"></span></a>
             </div>
         </div>

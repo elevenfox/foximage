@@ -37,6 +37,10 @@ class qqc {
         
         if(empty($data['description'])) {
             $description = $all_sections->item(0)->nodeValue;
+            $description = trim(str_replace($data['title'], '', $description));
+            if($description[0] == ',' || $description[0] == '.') {
+                $description = substr($description, 1);
+            }
             $data['description'] = $description;
         }
 

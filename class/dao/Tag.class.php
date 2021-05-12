@@ -131,11 +131,11 @@ Class Tag {
         }
     }
 
-    public static function upsertFileTag($tid, $tagName, $file_id, $file_md5_id) {
+    public static function upsertFileTag($tid, $tagName, $file_id) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
-        $res = DB::$dbInstance->getRows("select * from ".self::$table_tag_file." where term_name='". $tagName ."' and file_md5_id='" . $file_md5_id . "' ");
+        $res = DB::$dbInstance->getRows("select * from ".self::$table_tag_file." where term_name='". $tagName ."' and file_id='" . $file_id . "' ");
         if($res && count($res) > 0) {
             return $res[0];
         }
@@ -143,27 +143,26 @@ Class Tag {
             $res = DB::$dbInstance->query("insert into ".self::$table_tag_file." set 
                     `tid`=" . $tid . ", 
                     `term_name`= '" . $tagName . "',
-                    file_id = ". $file_id . ",
-                    file_md5_id = '" . $file_md5_id . "'
-            ");
+                    file_id = ". $file_id
+            );
 
             return $res;
         }
     }
 
-    public static function deleteFileTagsByFileMd5Id($fileMd5Id) {
+    public static function deleteFileTagsByFileId($fileId) {
         self::setTables();
 
-        $fileMd5Id = DB::sanitizeInput($fileMd5Id);
-        $sql = "delete from " . self::$table_tag_file . " where file_md5_id='" . $fileMd5Id . "'";
+        $fileId = DB::sanitizeInput($fileId);
+        $sql = "delete from " . self::$table_tag_file . " where file_id='" . $fileId . "'";
         return DB::$dbInstance->query($sql);
     }
 
-    public static function getTagsFromTagFileByFileMd5($fileMd5Id) {
+    public static function getTagsFromTagFileByFileId($fileId) {
         self::setTables();
 
         $tags = [];
-        $query = "select tid, term_name from " . self::$table_tag_file . " where file_md5_id ='" . $fileMd5Id . "'";
+        $query = "select tid, term_name from " . self::$table_tag_file . " where file_id ='" . $fileId . "'";
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             $tags = $res;

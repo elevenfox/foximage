@@ -1,10 +1,47 @@
 <?php
 $sources = array(
+	// xiuren 秀人网
     'qqc962.com' => array(
         'key_class_name' => 'excerpt-one',
         'keywords_of_file_link' => '/xiurenwang/2',
         'tag_links' => array(
             'https://qqc962.com/xiurenwang/list_14_#page.html',
+			
+        ),
+    ),
+	// 撸一撸
+	'qqc962.com-2' => array(
+        'key_class_name' => 'excerpt-one',
+        'keywords_of_file_link' => '/luyilu/2',
+        'tag_links' => array(
+            'https://qqc962.com/luyilu/list_5_#page.html',
+			
+        ),
+    ),
+	// 宅福利
+	'qqc962.com-3' => array(
+        'key_class_name' => 'excerpt-one',
+        'keywords_of_file_link' => '/zhaifuli/2',
+        'tag_links' => array(
+            'https://qqc962.com/zhaifuli/list_2_#page.html',
+			
+        ),
+    ),
+	// 宅男舍
+	'qqc962.com-4' => array(
+        'key_class_name' => 'excerpt-one',
+        'keywords_of_file_link' => '/zhainanshe/2',
+        'tag_links' => array(
+            'https://qqc962.com/zhainanshe/list_4_#page.html',
+			
+        ),
+    ),
+	// 蜜桃社
+	'qqc962.com-5' => array(
+        'key_class_name' => 'excerpt-one',
+        'keywords_of_file_link' => '/MiiTao/2',
+        'tag_links' => array(
+            'https://v8.qqv13.vip:5561/MiiTao/list_12_#page.html',
 			
         ),
     ),

@@ -49,7 +49,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                 <div>
                     <?php
                         $images = explode(',', $file['filename']);
-                        $num = empty($_GET['at']) ? 0 : $_GET['at'];
+                        $num = empty($_GET['at']) ? 1 : $_GET['at'];
                         $num = $num >= count($images) ? count($images) : $num;
                     ?>
                     <div style="text-align: center" id="fdp-photo">

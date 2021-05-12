@@ -20,8 +20,8 @@ include 'header.tpl.php';
             $i = 0;
             $j = 1;
             $apply_mobile_native_ads = true;
-            foreach ($data['Files'] as $File) {
-                echo $theme->render($File, 'File-teaser');
+            foreach ($data['files'] as $file) {
+                echo $theme->render($file, 'file-teaser');
                 $i++;
 
                 if($i % 4 === 0 && is_mobile() && $j<= 3) {

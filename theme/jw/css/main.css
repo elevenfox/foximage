@@ -495,7 +495,7 @@ footer .the-tag {
   min-width: 200px;
 }
 
-.node-teaser .teaser-File-title {
+.node-teaser .teaser-file-title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -506,13 +506,13 @@ footer .the-tag {
   text-align: left;
 }
 
-.node-teaser .teaser-File-title a,
-.node-teaser .teaser-File-title a:hover,
-.node-teaser .teaser-File-title a:visited {
+.node-teaser .teaser-file-title a,
+.node-teaser .teaser-file-title a:hover,
+.node-teaser .teaser-file-title a:visited {
   color: initial;
 }
 
-.node-teaser .teaser-File-info {
+.node-teaser .teaser-file-info {
   font-size: 12px;
   padding: 5px 5px 20px;
   color: #888;
@@ -525,7 +525,7 @@ footer .the-tag {
   text-align: left;
 }
 
-.node-teaser .teaser-File-info.right {
+.node-teaser .teaser-file-info.right {
   text-align: right;
 }
 
@@ -583,38 +583,40 @@ div.stretchy-wrapper > img {
 
 
 /**** File detail page****/
-article.File header {
+article.file header {
   text-align: left;
   padding: 10px;
 }
-.tags {
-  margin: 1em 0 2.5em;
+.file-tags {
+  margin: 1em 0;
+  font-size: 20px;
 }
 
-.tags .tag {
-  padding: 3px 5px;
-  color: gold;
-  display: inline-block;
+.file-tags .tag {
+    padding: 5px 15px;
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
 }
-.File-detail {
+.file-tags.ft-bottom {
+  text-align: center;
+  margin-bottom: 3em;
+}
+.file-detail-page .file-description {
+  padding: 15px 0;
+  margin: 15px 0;
+}
+.file-detail {
   text-align: left;
-  border-bottom: 1px solid;
   margin: 0 0 30px;
   padding: 0 10px 20px 10px;
 }
-.videp-title h2 {
-  line-height: 0;
-  margin-top: 2.5rem;
-}
 
-.File-info,
+.file-info,
 .vidoe-tag {
   line-height: 2em;
-}
-.fluid_File_wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 
@@ -685,6 +687,9 @@ article.File header {
   .node-teaser {
     width: 32%;
   }
+  .file-detail img {
+    width: 100%;
+  }
 }
 
 @media (max-width: 999px) {
@@ -698,7 +703,7 @@ article.File header {
     display: none;
   }
   .content-container .content {
-    margin-right: 185px;
+    margin-right: 0;
   }
   .ad-side-right {
     width: 165px;
@@ -714,6 +719,16 @@ article.File header {
   }
   .header form .form-item-search-block-form {
     width: 200px;
+  }
+  .content-container {
+    width: calc(100% - 180px);
+    margin-right: 0;
+  }
+  article.file header {
+    padding: 0;
+  }
+  .file-detail {
+    padding: 10px 0;
   }
 }
 
@@ -797,6 +812,7 @@ article.File header {
   }
   .content-container h1 {
     margin: 3px 5px 25px 0;
+    font-size: 26px;
   }
   .content-container .content {
     margin-right: 0;
@@ -864,7 +880,7 @@ article.File header {
   .dashboard-section .ds-row {
     height: auto;
   }
-  .dashboard-section .ds-File-intro {
+  .dashboard-section .ds-file-intro {
     display: none;
   }
   .dashboard-section .account-mail a, .dashboard-section .account-pass a {
@@ -872,7 +888,7 @@ article.File header {
     width: 100%;
     float: left;
   }
-  .dashboard-section .upload-File {
+  .dashboard-section .upload-file {
     display: block;
     border: 1px solid #ccc;
     background-color: #f2f2f2;
@@ -884,7 +900,7 @@ article.File header {
   }
 
 
-  #in-File-ad {
+  #in-file-ad {
     border: 0;
   }
   #block-ads-jp-right-sidebar-ad-v,

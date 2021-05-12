@@ -30,26 +30,13 @@ Class fileDetailPageModel extends ModelCore {
        // @TODO Will disable this to normal users later
        $res = File::getFileByID($fileAlias);  // file/123/<title>
     }
-    elseif($fileAlias == 'file' && !empty($fileId)) {
-        $res = File::getFileByUrlAlias($fileId); // file/file/<text> --> this is a weird case
-    }
     else {
-        if(empty($fileId)) {
-            $res = File::getFileByUrlAlias($fileAlias); // file/<title>
-        }
-        else {
-            if (ctype_digit($fileId)) {
-                $res = File::getFileByID($fileId); // file/<title>/123
-            }
-            else {
-                $res = File::getFileByMd5($fileId); // file/<title>/<md5>
-            }
-        }
+        $res = File::getFileByID($fileId); // file/<title>/123
     }
 
     // increase view count here since this is for sure a file-view
     if(!empty($res)) {
-        File::updateViewCount($res['source_url_md5']);
+        File::updateViewCount($res['id']);
     }
 
     if(empty($res)) {

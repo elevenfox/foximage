@@ -25,6 +25,7 @@ class Pager {
   private $totalPageNum;          //总页数  
   private $arrPage = array();        //用来构造分页的数组  
   private $subPageLink;          //每个分页的链接  
+  private $subPageLinkAppend;          //每个分页的链接addition  
   private $firstPageText = '<<';      //第一页显示的文字  
   private $lastPageText = '>>';          //最后一页显示的文字  
   private $prePageText = '<';        //上一页显示的文字  
@@ -184,11 +185,12 @@ class Pager {
    * @param integer $nums 总条目数  
    * @param integer $current_num 当前被选中的页  
    * @param integer $showPageNum 每次显示的页数  
-   * @param integer $subPageLink 每个分页的链接  
+   * @param integer $subPageLink 每个分页的链接
+   * @param integer $subPageLinkAppend 每个分页的链接  
    * @param integer $subPage_type 显示分页的类型  
    * @return void  
    */  
-  public function __construct($eachDisNums, $nums, $currentPage, $subPageLink){  
+  public function __construct($eachDisNums, $nums, $currentPage, $subPageLink, $subPageLinkAppend=''){  
     $this->eachDisNums=intval($eachDisNums);  
     $nums = $nums==0 ? 1: $nums;  
     $this->nums = intval($nums);  
@@ -197,6 +199,7 @@ class Pager {
     $this->currentPage =  $this->currentPage<=0 ? 1: $this->currentPage;  
     $this->currentPage = $this->currentPage > $this->totalPageNum ? 1 : $this->currentPage;  
     $this->subPageLink = $subPageLink;
+    $this->subPageLinkAppend = $subPageLinkAppend;
     $this->firstPageText = '« first';
     $this->lastPageText = 'last »';
     $this->nextPageText = 'next ›';
@@ -211,7 +214,8 @@ class Pager {
     unset($this->curIndexPage);  
     unset($this->totalPageNum);  
     unset($this->arrPage);  
-    unset($this->subPageLink);  
+    unset($this->subPageLink);
+    unset($this->subPageLinkAppend);  
     unset($this->firstPageText);  
     unset($this->lastPageText);  
     unset($this->prePageText);  
@@ -244,7 +248,7 @@ class Pager {
       
     if($isShow){  
       if($this->currentPage > 1){  
-        $prewPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage-1);  
+        $prewPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage-1).$this->subPageLinkAppend;  
         if($this->isShowFirstLast){  
           $firstPageUrl = $this->subPageLink.$this->linkSymbol."1";  
           $subPageCss2Str .= '<a href="'.$firstPageUrl.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->firstPageText.'</a>';  
@@ -258,15 +262,15 @@ class Pager {
         if($s == $this->currentPage ){  
           $subPageCss2Str .= '<a href="#" class="'.$this->curPageCss.'" style="'.$this->curPageStyle.'">'.$s.'</a>';  
         }else{  
-          $url = $this->subPageLink.$this->linkSymbol.$s;  
+          $url = $this->subPageLink.$this->linkSymbol.$s.$this->subPageLinkAppend;  
           $subPageCss2Str .= '<a href="'.$url.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$s.'</a>';  
         }  
       }  
       if($this->currentPage < $this->totalPageNum){  
-        $nextPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage+1);  
+        $nextPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage+1).$this->subPageLinkAppend;  
         $subPageCss2Str .= '<a href="'.$nextPageUrl.'" class="'.$this->pageCss.' page-next" style="'.$this->pageStyle.'">'.$this->nextPageText.'</a>';
         if($this->isShowFirstLast){  
-          $lastPageUrl = $this->subPageLink.$this->linkSymbol.$this->totalPageNum;  
+          $lastPageUrl = $this->subPageLink.$this->linkSymbol.$this->totalPageNum.$this->subPageLinkAppend;  
           $subPageCss2Str .= '<a href="'.$lastPageUrl.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->lastPageText.'</a> ';  
         }  
       }  

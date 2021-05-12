@@ -7,6 +7,12 @@ import('dao.File');
 
 $pre = Config::get('db_table_prefix');
 
+
+$supported_sources = [
+    'qqc962.com' => 'qqc',
+];
+
+
 $action = empty($_REQUEST['ac']) ? 'default' : $_REQUEST['ac'];
 
 switch($action) {
@@ -31,12 +37,27 @@ switch($action) {
         $the_url = $_GET['url'];
         $target_url = urldecode($the_url);
 
-        echo $target_url;
+        $decoder_class = null;
+        foreach($supported_sources as $key => $val) {
+            if(strpos($target_url, $key) !== false) {
+                $decoder_class = $val;
+            }
+        }
+
+        if(!empty($decoder_class)) {
+            import('parser.' . $decoder_class);
+            
+            $file_array = $decoder_class::parse_html($target_url);
+            $file_obj = (object) $file_array;
+            $file_obj->source = '$decoder_class';
+            $file_obj->source_url = $target_url;
+
+            File::save($file_obj);
+        }
 
         break;
 
     case 'save_File_data':
-    case 'save_File_data_and_node':
         $FileObj = json_decode($_POST['obj']);
         if(empty($FileObj)) {
             $post = json_decode(file_get_contents("php://input"));

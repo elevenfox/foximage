@@ -16,21 +16,21 @@ Class homePageController extends ControllerCore {
       $items = array();
 
       $items['newest'] = array(
-          'title' => 'Newest Files',
+          'title' => 'Newest Photos',
           'access callback' => TRUE,
           'modelMethod' => 'getNewest',
           'template' => 'page',
       );
 
       $items['newest/%'] = array(
-          'title' => 'Newest Files',
+          'title' => 'Newest Photos',
           'access callback' => TRUE,
           'modelMethod' => 'getNewest',
           'template' => 'page',
       );
 
       $items['search'] = array(
-          'title' => 'Search Files',
+          'title' => 'Search Photos',
           'access callback' => TRUE,
           'modelMethod' => 'getSearchResult',
           'template' => 'page',

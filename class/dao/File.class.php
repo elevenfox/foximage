@@ -60,15 +60,16 @@ Class File {
         self::setTables();
 
         $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
-        if(APCU && !isAdmin()) {
-            $res = apcu_fetch($cacheKey);
-            if(!empty($res)) {
-                return $res;
-            }
-        }
+        // if(APCU && !isAdmin()) {
+        //     $res = apcu_fetch($cacheKey);
+        //     if(!empty($res)) {
+        //         return $res;
+        //     }
+        // }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
         $query = 'select * from '.self::$table_files.' order by id ' . $sort . ' limit ' . $limit;
+        ZDebug::my_print($query);
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
@@ -203,16 +204,9 @@ Class File {
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
                         `source` = '". $fileObj->source . "',
                         `source_url` = '". str_replace("'", "\'", $fileObj->source_url) . "',
-                        `source_url_md5` = '". md5($fileObj->source_url) . "',
-                        `duration` = ".  (int)$fileObj->duration . ",
-                        `saved_locally` = 0,
-                        `quality_1080p` = '". str_replace("'", "\'", $fileObj->quality_1080p) . "',
-                        `quality_720p` = '". str_replace("'", "\'", $fileObj->quality_720p) . "',
-                        `quality_480p` = '". str_replace("'", "\'", $fileObj->quality_480p) . "',
-                        `quality_360p` = '". str_replace("'", "\'", $fileObj->quality_360p) . "',
-                        `quality_240p` = '". str_replace("'", "\'", $fileObj->quality_240p) . "',
+                        `description` = '". $fileObj->description . "',
+                        `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
-                        `gif_preview` = '". str_replace("'", "\'", $fileObj->gif_preview) . "',
                         `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',
                         `created` = '".  date('Y-m-d H:i:s', time()) . "',
                         `user_name` = '" . $user_name . "',
@@ -233,14 +227,8 @@ Class File {
             try {
                 $sql = "update ".self::$table_files." set 
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
-                        `duration` = ".  (int)$fileObj->duration . ",
-                        `quality_1080p` = '". str_replace("'", "\'", $fileObj->quality_1080p) . "',
-                        `quality_720p` = '". str_replace("'", "\'", $fileObj->quality_720p) . "',
-                        `quality_480p` = '". str_replace("'", "\'", $fileObj->quality_480p) . "',
-                        `quality_360p` = '". str_replace("'", "\'", $fileObj->quality_360p) . "',
-                        `quality_240p` = '". str_replace("'", "\'", $fileObj->quality_240p) . "',
+                        `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
-                        `gif_preview` = '". str_replace("'", "\'", $fileObj->gif_preview) . "',
                         `tags` = '". str_replace("'", "\'", $fileObj->tags) . "'
                         where id = " . $file['id'] . "
                       ";
@@ -260,10 +248,10 @@ Class File {
     }
 
 
-    public static function updateViewCount($file_md5_id) {
+    public static function updateViewCount($file_id) {
         self::setTables();
 
-        $sql = 'update ' . self::$table_files . ' set view_count = view_count + 10, modified=modified where source_url_md5 = \'' . $file_md5_id . '\'';
+        $sql = 'update ' . self::$table_files . ' set view_count = view_count + 10, modified=modified where id = \'' . $file_id . '\'';
         return DB::$dbInstance->query($sql);
     }
 

@@ -7,6 +7,7 @@ $sources = array(
         'tag_links' => array(
             'https://qqc962.com/xiurenwang/list_14_#page.html',			
         ),
+		'start_page_num' => 29,
     ),
 	// 撸一撸
 	'qqc962.com-2' => array(
@@ -15,6 +16,7 @@ $sources = array(
         'tag_links' => array(
             'https://qqc962.com/luyilu/list_5_#page.html',			
         ),
+		'start_page_num' => 11,
     ),
 	// 宅福利
 	'qqc962.com-3' => array(
@@ -23,6 +25,7 @@ $sources = array(
         'tag_links' => array(
             'https://qqc962.com/zhaifuli/list_2_#page.html',			
         ),
+		'start_page_num' => 16,
     ),
 	// 宅男舍
 	'qqc962.com-4' => array(
@@ -31,6 +34,7 @@ $sources = array(
         'tag_links' => array(
             'https://qqc962.com/zhainanshe/list_4_#page.html',			
         ),
+		'start_page_num' => 30,
     ),
 	// 蜜桃社
 	'qqc962.com-5' => array(
@@ -39,6 +43,7 @@ $sources = array(
         'tag_links' => array(
             'https://v8.qqv13.vip:5561/MiiTao/list_12_#page.html',			
         ),
+		'start_page_num' => 30,
     ),
 	// MFStar
 	'qqc962.com-6' => array(
@@ -47,6 +52,7 @@ $sources = array(
         'tag_links' => array(
             'https://v8.qqv13.vip:5561/MFStar/list_20_#page.html',
         ),
+		'start_page_num' => 30,
     ),
 );
 
@@ -65,7 +71,7 @@ $max_urls_per_source = empty($max_urls_per_source) ? 500 : $max_urls_per_source;
 
 $prod_api = Config::get('prod_api_url');
 $site_name = Config::get('theme');
-$default_start_page = 8;
+$default_start_page = 1;
 $existed_files = 0;
 $total_parsed_urls = 0;
 
@@ -76,6 +82,11 @@ $total_parsed_urls = 0;
 ###################### Define functions ################
 function file_db_exist($url) {
 	$res = File::getFileBySourceUrl($url);
+
+	if(!$res) {
+		$res = File::getIgnoredFileBySourceUrl($url);
+	}
+
 	return !empty($res);
 }
 
@@ -132,7 +143,8 @@ $urls = array();
 // Get urls first
 foreach ($sources as $source) {
 	$urls_of_this_source = array();
-	$start_page = $default_start_page;
+	$start_page = $source['start_page_num'];
+	$page_processed = 0;
 	while(count($urls_of_this_source) < $max_urls_per_source) {
 		shuffle($source['tag_links']);
 		foreach($source['tag_links'] as $tag_link) {
@@ -142,7 +154,8 @@ foreach ($sources as $source) {
 			}
 		}
 		$start_page++;
-		if($start_page > 30) {
+		$page_processed++;
+		if($page_processed > 30) {
 			break 1;
 		}
 	}

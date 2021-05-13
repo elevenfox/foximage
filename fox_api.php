@@ -57,8 +57,9 @@ switch($action) {
             }
             else {
                 if(count($file_array['images']) < 5) {
-
                     $error .= 'Bypass item which has lesson than 5 photos.';
+                    $query = "INSERT INTO `". $pre . "files_ignored` (`source_url`) VALUES ('$target_url')";
+                    DB::$dbInstance->query($query);
                 }
                 else {
                     $file_obj = (object) $file_array;

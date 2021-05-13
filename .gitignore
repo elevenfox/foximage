@@ -3,3 +3,4 @@
 settings.local.ini
 cache/neverblock/*
 !cache/neverblock/placeholder.txt
+photos

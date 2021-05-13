@@ -21,8 +21,8 @@ include 'header.tpl.php';
                 $i = 0;
                 $j = 1;
                 $apply_mobile_native_ads = true;
-                foreach ($data['files'] as $File) {
-                    echo $theme->render($File, 'File-teaser');
+                foreach ($data['files'] as $file) {
+                    echo $theme->render($file, 'file-teaser');
                     $i++;
 
                     if($i % 4 === 0  && is_mobile() && $j<= 3) {
@@ -33,13 +33,13 @@ include 'header.tpl.php';
                 }
             }
             else {
-                echo "<h4 style='line-height: 50px; width: 100%; text-align: center; padding: 5px 10px 40px 10px; border-bottom: 1px solid;'>No File found!</h4>";
+                echo "<h4 style='line-height: 50px; width: 100%; text-align: center; padding: 5px 10px 40px 10px; border-bottom: 1px solid;'>No file found!</h4>";
 
                 echo '<h4 style="margin: 20px 0;">Other file you may like: </h4>';
 
                 if(!empty($data['otherFiles'])) {
-                    foreach ($data['otherFiles'] as $File) {
-                        echo $theme->render($File, 'File-teaser');
+                    foreach ($data['otherFiles'] as $file) {
+                        echo $theme->render($file, 'file-teaser');
                     }
                 }
             }

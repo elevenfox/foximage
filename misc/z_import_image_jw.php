@@ -5,8 +5,7 @@ $sources = array(
         'key_class_name' => 'excerpt-one',
         'keywords_of_file_link' => '/xiurenwang/2',
         'tag_links' => array(
-            'https://qqc962.com/xiurenwang/list_14_#page.html',
-			
+            'https://qqc962.com/xiurenwang/list_14_#page.html',			
         ),
     ),
 	// 撸一撸
@@ -14,8 +13,7 @@ $sources = array(
         'key_class_name' => 'excerpt-one',
         'keywords_of_file_link' => '/luyilu/2',
         'tag_links' => array(
-            'https://qqc962.com/luyilu/list_5_#page.html',
-			
+            'https://qqc962.com/luyilu/list_5_#page.html',			
         ),
     ),
 	// 宅福利
@@ -23,8 +21,7 @@ $sources = array(
         'key_class_name' => 'excerpt-one',
         'keywords_of_file_link' => '/zhaifuli/2',
         'tag_links' => array(
-            'https://qqc962.com/zhaifuli/list_2_#page.html',
-			
+            'https://qqc962.com/zhaifuli/list_2_#page.html',			
         ),
     ),
 	// 宅男舍
@@ -32,8 +29,7 @@ $sources = array(
         'key_class_name' => 'excerpt-one',
         'keywords_of_file_link' => '/zhainanshe/2',
         'tag_links' => array(
-            'https://qqc962.com/zhainanshe/list_4_#page.html',
-			
+            'https://qqc962.com/zhainanshe/list_4_#page.html',			
         ),
     ),
 	// 蜜桃社
@@ -41,8 +37,15 @@ $sources = array(
         'key_class_name' => 'excerpt-one',
         'keywords_of_file_link' => '/MiiTao/2',
         'tag_links' => array(
-            'https://v8.qqv13.vip:5561/MiiTao/list_12_#page.html',
-			
+            'https://v8.qqv13.vip:5561/MiiTao/list_12_#page.html',			
+        ),
+    ),
+	// MFStar
+	'qqc962.com-6' => array(
+        'key_class_name' => 'excerpt-one',
+        'keywords_of_file_link' => '/MFStar/2',
+        'tag_links' => array(
+            'https://v8.qqv13.vip:5561/MFStar/list_20_#page.html',
         ),
     ),
 );
@@ -167,7 +170,7 @@ foreach ($urls as $url) {
     $imv_url = $api_server . '?ac=import_file&url=' . urlencode($url);
     echo date('Y-m-d H:i:s') . ' - ' . "calling: $imv_url \n";
 	$res = json_decode(curl_call($imv_url));
-	echo date('Y-m-d H:i:s') . ' - ' . "---- status: ".$res->status.", msg: ".$res->msg." \n";
+	echo date('Y-m-d H:i:s') . ' - ' . "---- status: ".$res->status.", msg: ".$res->msg." \n\n";
 	if($res->status) {
 		$success++;
 	}

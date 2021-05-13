@@ -10,10 +10,7 @@ $pre = Config::get('db_table_prefix');
 
 $supported_sources = [
     'qqc962.com' => 'qqc',
-    'qqc962.com-2' => 'qqc',
-    'qqc962.com-3' => 'qqc',
-    'qqc962.com-4' => 'qqc',
-    'qqc962.com-5' => 'qqc',
+    'v8.qqv13.vip' => 'qqc',
 ];
 
 
@@ -42,14 +39,14 @@ switch($action) {
 
         $the_url = $_GET['url'];
         $target_url = urldecode($the_url);
-
+        
         $decoder_class = null;
         foreach($supported_sources as $key => $val) {
             if(strpos($target_url, $key) !== false) {
                 $decoder_class = $val;
             }
         }
-
+        
         if(!empty($decoder_class)) {
             import('parser.' . $decoder_class);
             
@@ -60,7 +57,7 @@ switch($action) {
             }
             else {
                 if(count($file_array['images']) < 5) {
-                    ZDebug::my_print($file_array);
+
                     $error .= 'Bypass item which has lesson than 5 photos.';
                 }
                 else {

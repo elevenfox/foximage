@@ -94,11 +94,16 @@ $m .= "#####################################\n";
 echo $m;
 $mailMsg .= $m;
 
+$tmp_num_file = '/tmp/z_import_jw-lastest-page-num-2';
+$latest_page_numbers = (array)json_decode(file_get_contents($tmp_num_file));
+$latest_page_nums = array();
+
 $urls = array();
 // Get urls first
 foreach ($sources as $source) {
 	$urls_of_this_source = array();
-	$start_page = $source['start_page_num'];
+	$latest_num = $latest_page_numbers[$s_key];
+	$start_page = empty($latest_num) ? $source['start_page_num'] : $latest_num;
 	$page_processed = 0;
 	while(count($urls_of_this_source) < $max_urls_per_source) {
 		shuffle($source['tag_links']);
@@ -115,8 +120,12 @@ foreach ($sources as $source) {
 		}
 	}
 
+	$latest_page_nums[$s_key] = $start_page;
+
 	$urls = array_merge($urls, $urls_of_this_source);
 }
+
+file_put_contents($tmp_num_file, json_encode($latest_page_nums));
 
 shuffle($urls);
 

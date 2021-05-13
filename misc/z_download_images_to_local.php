@@ -37,7 +37,7 @@ if(!empty($force_file_id)) {
 $res = DB::$dbInstance->getRows($query);
 if(count($res) >0) {
     foreach ($res as $row) {
-        echo date('Y-m-d H:i:s') . ' - ' . ($album_processed+1) . " -- processing: " . $row['title'] . " \n";  
+        echo date('Y-m-d H:i:s') . ' - ' . ($album_processed+1) . " -- processing: id=" . $row['id'] .', '. $row['title'] . " \n";  
         // Use <file_root>/source/<file_title>/ as file structure
         $physical_path = $file_root . $row['source'] . '/' . cleanStringForFilename($row['title']);
         if(!is_dir($physical_path) || !empty($force_file_id)) {
@@ -49,7 +49,7 @@ if(count($res) >0) {
             else {
                 $res = true;
             }
-            
+
             if($res) {
                 $photo_downloaded = 0;
                 $images = explode(',', $row['filename']);

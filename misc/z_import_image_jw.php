@@ -167,7 +167,7 @@ foreach ($sources as $s_key => $source) {
 		}
 	}
 
-	$latest_page_nums[$s_key] = $start_page - 1;
+	$latest_page_nums[$s_key] = $start_page;
 
 	$urls = array_merge($urls, $urls_of_this_source);
 }

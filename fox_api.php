@@ -11,6 +11,7 @@ $pre = Config::get('db_table_prefix');
 $supported_sources = [
     'qqc962.com' => 'qqc',
     'v8.qqv13.vip' => 'qqc',
+    'tujigu.com' => 'tujigu',
 ];
 
 

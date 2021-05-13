@@ -1,61 +1,14 @@
 <?php
-
-// // 宅男舍 - done 11 pages
-// 'qqc962.com-4' => array(
-//     'key_class_name' => 'excerpt-one',
-//     'keywords_of_file_link' => '/zhainanshe/2',
-//     'tag_links' => array(
-//         'https://qqc962.com/zhainanshe/list_4_#page.html',			
-//     ),
-// 	'start_page_num' => 60,
-// ),
-// // 蜜桃社 - done 15 pages
-// 'qqc962.com-5' => array(
-//     'key_class_name' => 'excerpt-one',
-//     'keywords_of_file_link' => '/MiiTao/2',
-//     'tag_links' => array(
-//         'https://v8.qqv13.vip:5561/MiiTao/list_12_#page.html',			
-//     ),
-// 	'start_page_num' => 60,
-// ),
-// // 宅福利 done 19 pages
-// 'qqc962.com-3' => array(
-//     'key_class_name' => 'excerpt-one',
-//     'keywords_of_file_link' => '/zhaifuli/2',
-//     'tag_links' => array(
-//         'https://qqc962.com/zhaifuli/list_2_#page.html',			
-//     ),
-// 	'start_page_num' => 17,
-// ),
-// // MFStar total 37 pages
-// 'qqc962.com-6' => array(
-//     'key_class_name' => 'excerpt-one',
-//     'keywords_of_file_link' => '/MFStar/2',
-//     'tag_links' => array(
-//         'https://v8.qqv13.vip:5561/MFStar/list_20_#page.html',
-//     ),
-// 	'start_page_num' => 37,
-// ),
-
 $sources = array(
-	// xiuren 秀人网 total 188 pages
-    'qqc962.com' => array(
-        'key_class_name' => 'excerpt-one',
-        'keywords_of_file_link' => '/xiurenwang/2',
+	// Tujigu 
+    'tujigu.com' => array(
+        'key_class_name' => 'hezi',
+        'keywords_of_file_link' => '/a/',
         'tag_links' => array(
-            'https://qqc962.com/xiurenwang/list_14_#page.html',			
+            'https://www.tujigu.com/zhongguo/#page.html',			
         ),
-		'start_page_num' => 94,
+		'start_page_num' => 2,
     ),
-	// 撸一撸 total 298 pages
-	'qqc962.com-2' => array(
-        'key_class_name' => 'excerpt-one',
-        'keywords_of_file_link' => '/luyilu/2',
-        'tag_links' => array(
-            'https://qqc962.com/luyilu/list_5_#page.html',			
-        ),
-		'start_page_num' => 76,
-    ),	
 );
 
 
@@ -141,16 +94,11 @@ $m .= "#####################################\n";
 echo $m;
 $mailMsg .= $m;
 
-$tmp_num_file = '/tmp/z_import_jw-lastest-page-num';
-$latest_page_numbers = (array)json_decode(file_get_contents($tmp_num_file));
-$latest_page_nums = array();
-
 $urls = array();
 // Get urls first
-foreach ($sources as $s_key => $source) {
+foreach ($sources as $source) {
 	$urls_of_this_source = array();
-	$latest_num = $latest_page_numbers[$s_key];
-	$start_page = empty($latest_num) ? $source['start_page_num'] : $latest_num;
+	$start_page = $source['start_page_num'];
 	$page_processed = 0;
 	while(count($urls_of_this_source) < $max_urls_per_source) {
 		shuffle($source['tag_links']);
@@ -167,12 +115,8 @@ foreach ($sources as $s_key => $source) {
 		}
 	}
 
-	$latest_page_nums[$s_key] = $start_page - 1;
-
 	$urls = array_merge($urls, $urls_of_this_source);
 }
-
-file_put_contents($tmp_num_file, json_encode($latest_page_nums));
 
 shuffle($urls);
 

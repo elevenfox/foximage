@@ -14,13 +14,14 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 <div class="content-container file-detail-page">
 
     <article class="file content" itemscope itemtype="http://schema.org/fileObject">
-
-        <header style="text-align: left">
-          <?php if(!empty($data['not-found'])) : ?>
-              <h1>Photo not found</h1>
-              <p>&nbsp;</p>
-              <h4><i>You might want to see other photos: </i></h4>
-          <?php else:?>
+        <?php if(!empty($data['not-found'])) : ?>
+          <div class="fc-text-content">
+            <h1>Photo not found</h1>
+            <p>&nbsp;</p>
+            <h4><i>You might want to see other photos: </i></h4>
+          </div>
+        <?php else:?>
+          <div class="fc-text-content">
             <h1 itemprop="name"><?= $file['title'] ?></h1>
 
             <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
@@ -43,37 +44,37 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                 ?>
             </div>
             <div class="file-description"><?= nl2br($file['description'])?></div>
+          </div>
 
-            <div class="task" id="task">
-              <div class="file-detail">
-                <div>
-                    <?php
-                        $images = explode(',', $file['filename']);
-                        $num = empty($_GET['at']) ? 1 : $_GET['at'];
-                        $num = $num >= count($images) ? count($images) : $num;
-                    ?>
-                    <div style="text-align: center" id="fdp-photo">
-                      <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" style="cursor:e-resize"><img src="<?=$images[$num-1]?>" alt="<?=$file['title']?>"></img></a>
-                    </div>
-                </div>
+          <div class="task" id="task">
+            <div class="file-detail">
+              <div>
+                  <?php
+                      $images = explode(',', $file['filename']);
+                      $num = empty($_GET['at']) ? 1 : $_GET['at'];
+                      $num = $num >= count($images) ? count($images) : $num;
+                  ?>
+                  <div style="text-align: center" id="fdp-photo">
+                    <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" style="cursor:e-resize"><img src="<?=$images[$num-1]?>" alt="<?=$file['title']?>"></img></a>
+                  </div>
               </div>
             </div>
+          </div>
 
-            <?php
-              import('Pager');
-              $pager = new Pager(
-                      1,
-                      count($images),
-                      $num,
-                      '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at=',
-                      '#fdp-photo'
-                    );
-              $pagerHtml = $pager->generatePages();
-            ?>
-            <div id="pager"><?=$pagerHtml?></div>
-        
-          <?php endif;?>
-        </header>
+          <?php
+            import('Pager');
+            $pager = new Pager(
+                    1,
+                    count($images),
+                    $num,
+                    '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at=',
+                    '#fdp-photo'
+                  );
+            $pagerHtml = $pager->generatePages();
+          ?>
+          <div id="pager"><?=$pagerHtml?></div>
+      
+        <?php endif;?>
         
         <div class="file-tags ft-bottom">
                     Tags:

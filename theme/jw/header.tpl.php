@@ -87,7 +87,7 @@ $domainUrl = getDomainUrl();
             </div>
             <a href="/" title="Home" rel="home" class="header__logo">
                 <img src="/theme/jw/logo.png" alt="Home" class="header__logo-image">
-                <span>JAVWall8.com</span>
+                <span><span class="not-in-mobile">JAVWall8 </span>高清美女图集</span>
             </a>
             <div id="search-button-div">
                 <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search"></a>

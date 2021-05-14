@@ -36,17 +36,17 @@
 //     ),
 // 	'start_page_num' => 37,
 // ),
-
+// // xiuren 秀人网 total 188 pages
+// 'qqc962.com' => array(
+//     'key_class_name' => 'excerpt-one',
+//     'keywords_of_file_link' => '/xiurenwang/2',
+//     'tag_links' => array(
+//         'https://qqc962.com/xiurenwang/list_14_#page.html',			
+//     ),
+// 	'start_page_num' => 94,
+// ),
 $sources = array(
-	// xiuren 秀人网 total 188 pages
-    'qqc962.com' => array(
-        'key_class_name' => 'excerpt-one',
-        'keywords_of_file_link' => '/xiurenwang/2',
-        'tag_links' => array(
-            'https://qqc962.com/xiurenwang/list_14_#page.html',			
-        ),
-		'start_page_num' => 94,
-    ),
+
 	// 撸一撸 total 298 pages
 	'qqc962.com-2' => array(
         'key_class_name' => 'excerpt-one',

@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://syndication.exosrv.com/splash.php?idzone=3502517&capping=0"></script>
+<script type="text/javascript" src="https://syndication.exosrv.com/splash.php?idzone=4279892&capping=0"></script>
 
 <script type="application/javascript">
   (function() {
@@ -8,7 +8,7 @@
     var adConfig = {
       "ads_host": "a.realsrv.com",
       "syndication_host": "syndication.realsrv.com",
-      "idzone": 3502515,
+      "idzone": 4279890,
       "popup_fallback": true,
       "popup_force": false,
       "chrome_enabled": true,
@@ -30,8 +30,8 @@
     function randStr(e,t){for(var n="",r=t||"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",o=0;o<e;o++)n+=r.charAt(Math.floor(Math.random()*r.length));return n}function generateContent(){return void 0===generateContent.val&&(generateContent.val=" \ndocument.dispatchEvent("+randStr(4*Math.random()+3)+");"),generateContent.val}try{Object.defineProperty(document.currentScript,"innerHTML",{get:generateContent}),Object.defineProperty(document.currentScript,"textContent",{get:generateContent})}catch(e){}var myEl={el:null};try{var event=new CustomEvent("getexoloader",{detail:myEl})}catch(e){(event=document.createEvent("CustomEvent")).initCustomEvent("getexoloader",!1,!1,myEl)}window.document.dispatchEvent(event);var ExoLoader=myEl.el;
 
     //Code to add zones can be placed multiple times on page
-    ExoLoader.addZone({"idzone":"3502517"}); // m-instantMsg
-    ExoLoader.addZone({"idzone":"3502515"}); // m-pop-under
+    ExoLoader.addZone({"idzone":"4279892"}); // m-instantMsg
+    ExoLoader.addZone({"idzone":"4279890"}); // m-pop-under
 
     //If you want to use sub id, add a numeric sub parameter to object, passed to addZone
     //ExoLoader.addZone({"idzone":"111", "sub": "1"});

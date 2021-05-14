@@ -1,13 +1,115 @@
 <?php
 $sources = array(
-	// Tujigu 
+	// Tujigu  China beauty 50 pages
     'tujigu.com' => array(
         'key_class_name' => 'hezi',
         'keywords_of_file_link' => '/a/',
         'tag_links' => array(
-            'https://www.tujigu.com/zhongguo/#page.html',			
+            //'https://www.tujigu.com/zhongguo/#page.html', // 中国美女
+			//'https://www.tujigu.com/x/62/index_#page.html', // 尤果圈爱尤物
+			//'https://www.tujigu.com/x/107/index_#page.html', // 奈丝
+
+			//'https://www.tujigu.com/x/106/', // 大生模拍 index
+			//'https://www.tujigu.com/x/106/index_#page.html', //大生模拍 index
+
+			//'https://www.tujigu.com/x/105/', // 佳爷SJA
+			//'https://www.tujigu.com/x/105/index_#page.html', // 佳爷SJA
+
+			//'https://www.tujigu.com/x/101/', // ARTGRAVIA
+
+			//'https://www.tujigu.com/x/100/', //一千零一夜
+			//'https://www.tujigu.com/x/100/index_#page.html', // 一千零一夜
+
+			//'https://www.tujigu.com/x/99/', //丽丝映像
+			//'https://www.tujigu.com/x/99/index_#page.html', //丽丝映像
+
+			//'https://www.tujigu.com/x/98/', //斯文传媒
+			//'https://www.tujigu.com/x/98/index_#page.html', //斯文传媒
+
+			//'https://www.tujigu.com/x/97/', // 轻兰映画
+
+			//'https://www.tujigu.com/x/96/', // NS纳丝摄影
+			//'https://www.tujigu.com/x/96/index_#page.html', // NS纳丝摄影
+
+			//'https://www.tujigu.com/x/95/', //喵糖映画
+			//'https://www.tujigu.com/x/95/index_#page.html', //喵糖映画
+
+			//'https://www.tujigu.com/x/94/', //Young Magazine杂志写真
+			//'https://www.tujigu.com/x/94/index_#page.html', //Young Magazine杂志写真
+
+			//'https://www.tujigu.com/x/93/', //Young Gangan杂志写真
+			//'https://www.tujigu.com/x/93/index_#page.html', //Young Gangan杂志写真
+
+			// 'https://www.tujigu.com/x/92/', //Young Champion杂志写真
+			// 'https://www.tujigu.com/x/92/index_#page.html', //Young Champion杂志写真
+
+			//'https://www.tujigu.com/x/91/', //Weekly Big Comic Spirits杂志写真
+			//'https://www.tujigu.com/x/91/index_#page.html', //Weekly Big Comic Spirits杂志写真
+
+			// 'https://www.tujigu.com/x/90/', //FRIDAY杂志
+			// 'https://www.tujigu.com/x/90/index_#page.html', //FRIDAY杂志
+
+			// 'https://www.tujigu.com/x/89/', //FLASH写真杂志
+			// 'https://www.tujigu.com/x/89/index_#page.html', //FLASH写真杂志
+
+			// 'https://www.tujigu.com/x/88/', //阳光宝贝 46
+			// 'https://www.tujigu.com/x/88/index_#page.html', //阳光宝贝
+
+			// 'https://www.tujigu.com/x/87/', //丝意SIEE 258
+			// 'https://www.tujigu.com/x/87/index_#page.html', //丝意SIEE 
+			
+			// 'https://www.tujigu.com/x/86/', //风之领域  149
+			// 'https://www.tujigu.com/x/86/index_#page.html', //风之领域 
+
+			'https://www.tujigu.com/x/85/', //语画界  442
+			'https://www.tujigu.com/x/85/index_#page.html', //语画界
+
+			// 'https://www.tujigu.com/x/84/', //YouMei尤美  93
+			// 'https://www.tujigu.com/x/84/index_#page.html', //YouMei尤美
+
+			// 'https://www.tujigu.com/x/83/', //日本CosPlay  514
+			// 'https://www.tujigu.com/x/83/index_#page.html', //日本CosPlay
+			
+			// 'https://www.tujigu.com/x/82/', //森萝财团   203
+			// 'https://www.tujigu.com/x/82/index_#page.html', //森萝财团
+
+			// 'https://www.tujigu.com/x/81/', //蜜丝MISSLEG   58
+			// 'https://www.tujigu.com/x/81/index_#page.html', //蜜丝MISSLEG
+
+			// 'https://www.tujigu.com/x/80/', //Cosdoki    581
+			// 'https://www.tujigu.com/x/80/index_#page.html', //Cosdoki
+
+			// 'https://www.tujigu.com/x/79/', //Girlz-High   712
+			// 'https://www.tujigu.com/x/79/index_#page.html', //Girlz-High
+			
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+			
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
+			
+			// 'https://www.tujigu.com/x/93/', //杂志写真
+			// 'https://www.tujigu.com/x/93/index_#page.html', //杂志写真
         ),
-		'start_page_num' => 2,
+		'start_page_num' => 1,
     ),
 );
 
@@ -115,7 +217,7 @@ foreach ($sources as $source) {
 		}
 		$start_page++;
 		$page_processed++;
-		if($page_processed > 30) {
+		if($page_processed > 10) {
 			break 1;
 		}
 	}

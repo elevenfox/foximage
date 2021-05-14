@@ -34,12 +34,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                 $tags = explode(',', $file['tags']);
                 foreach($tags as $tag) {
                     $tag_flat = str_replace(' ','-',strtolower($tag));
-                    if ($tag === end($tags)) {
-                        echo '<a class="tag" href="/tags/'.$tag_flat.'">'.$tag.'</a>';
-                    }
-                    else {
-                        echo '<a class="tag" href="/tags/'.$tag_flat.'">'.$tag.'</a>, ';
-                    }
+                    echo '<a class="tag" href="/tags/'.$tag_flat.'">'.$tag.'</a>';
                 }
                 ?>
             </div>
@@ -82,12 +77,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                     $tags = explode(',', $file['tags']);
                     foreach($tags as $tag) {
                         $tag_flat = str_replace(' ','-',strtolower($tag));
-                        if ($tag === end($tags)) {
-                            echo '<a class="tag" href="/tags/'.$tag_flat.'">'.$tag.'</a>';
-                        }
-                        else {
-                            echo '<a class="tag" href="/tags/'.$tag_flat.'">'.$tag.'</a>, ';
-                        }
+                        echo '<a class="tag" href="/tags/'.$tag_flat.'">'.$tag.'</a>';
                     }
                     ?>
         </div>

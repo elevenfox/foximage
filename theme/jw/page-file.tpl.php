@@ -49,8 +49,14 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       $num = empty($_GET['at']) ? 1 : $_GET['at'];
                       $num = $num >= count($images) ? count($images) : $num;
                   ?>
-                  <div style="text-align: center" id="fdp-photo">
-                    <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" style="cursor:e-resize"><img src="<?=$images[$num-1]?>" alt="<?=$file['title']?>"></img></a>
+                  <div id="fdp-photo">
+                    <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" style="cursor:e-resize">
+                      <img src="<?=$images[$num-1]?>" alt="<?=$file['title']?>"></img>
+                    </a>
+                    <div class="fdp-click-area">
+                      <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>
+                      <a class="fdp-click-area-right"  title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>"></a>
+                    </div>
                   </div>
               </div>
             </div>

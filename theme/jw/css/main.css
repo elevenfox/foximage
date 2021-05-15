@@ -601,12 +601,15 @@ article.file header {
   text-align: left;
   padding: 10px;
 }
-.file-tags {
+article.file .file-info {
+  line-height: 2em;
+}
+article.file .file-tags {
   margin: 1em 0;
   font-size: 20px;
 }
 
-.file-tags .tag {
+article.file .file-tags .tag {
     padding: 5px 15px;
     background-color: #f27bab;
     border-radius: 5px;
@@ -617,27 +620,54 @@ article.file header {
     margin: 5px 8px;
     display: inline-block;
 }
-.file-tags.ft-bottom {
+article.file .file-tags.ft-bottom {
   text-align: center;
   margin-bottom: 3em;
 }
-.file-detail-page .file-description {
+article.file .file-description {
   padding: 15px 0;
   margin: 15px 0;
 }
-.file-detail {
+article.file .file-detail {
   text-align: left;
   margin: 0 0 30px;
   padding: 0 10px 20px 10px;
 }
-.file-detail img {
+article.file .file-detail img {
   width: 100%;
 }
-
-.file-info,
-.vidoe-tag {
-  line-height: 2em;
+article.file #fdp-photo {
+  text-align: center;
+  position: relative;
 }
+article.file .fdp-click-area {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+}
+article.file .fdp-click-area-left {
+  flex: 1;
+  cursor: url("/theme/jw/images/cursor-arrow-left.png") 16 16, pointer;
+}
+article.file .fdp-click-area-left:hover {
+  background: url("/theme/jw/images/arrow-left.svg") no-repeat;
+  background-position: left;
+  background-size: 80px 60px;
+}
+article.file .fdp-click-area-right {
+  flex: 1;
+  cursor: url("/theme/jw/images/cursor-arrow-right.png") 16 16, pointer;
+}
+article.file .fdp-click-area-right:hover {
+  background: url("/theme/jw/images/arrow-right.svg") no-repeat;
+  background-position: right;
+  background-size: 80px 60px;
+}
+
+
 
 
 /********** Page user **********/

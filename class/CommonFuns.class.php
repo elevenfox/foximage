@@ -50,7 +50,7 @@ function apiReturnJson($str) {
 }
 
 
-function curl_call($url, $method='get', $data=null) {
+function curl_call($url, $method='get', $data=null, $timeout=0) {
     $postData = $data;
 
     $ch = curl_init(); // 启动一个CURL会话
@@ -68,6 +68,10 @@ function curl_call($url, $method='get', $data=null) {
     if($method == 'post') {
         curl_setopt($ch, CURLOPT_POST, count($postData));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    }
+
+    if(!empty($timeout)) {
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
     }
 
     $result = curl_exec($ch); // 执行操作
@@ -331,4 +335,24 @@ function cleanStringForFilename($filename) {
     */
     $filename = str_replace(' ', '-', $filename);
     return $filename;
+}
+
+
+function buildPhysicalPath($file_row) {
+    $file_root = Config::get('file_root');
+    if($file_row['source'] != 'tujigu') {
+        $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
+    }
+    else {
+        import('parser.tujigu');
+        $org = tujigu::getOrganizationFromTitle($file_row['title']);
+        if(empty($org)) {
+            $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
+        }
+        else {
+            $physical_path = $file_root . $file_row['source'] . '/' . $org . '/'. cleanStringForFilename($file_row['title']);
+        }
+    }
+
+    return $physical_path;
 }

@@ -48,14 +48,14 @@
 $sources = array(
 
 	// 撸一撸 total 298 pages
-	'qqc962.com-2' => array(
-        'key_class_name' => 'excerpt-one',
-        'keywords_of_file_link' => '/luyilu/2',
-        'tag_links' => array(
-            'https://qqc962.com/luyilu/list_5_#page.html',			
-        ),
-		'start_page_num' => 76,
-    ),	
+	// 'qqc962.com-2' => array(
+    //     'key_class_name' => 'excerpt-one',
+    //     'keywords_of_file_link' => '/luyilu/2',
+    //     'tag_links' => array(
+    //         'https://qqc962.com/luyilu/list_5_#page.html',			
+    //     ),
+	// 	'start_page_num' => 76,
+    // ),	
 );
 
 

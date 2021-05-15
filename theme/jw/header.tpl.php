@@ -46,13 +46,13 @@ $domainUrl = getDomainUrl();
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146802304-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-197042779-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'UA-146802304-1');
+      gtag('config', 'UA-197042779-1');
     </script>
 
     <?php print $data['metas']; ?>
@@ -87,7 +87,7 @@ $domainUrl = getDomainUrl();
             </div>
             <a href="/" title="Home" rel="home" class="header__logo">
                 <img src="/theme/jw/logo.png" alt="Home" class="header__logo-image">
-                <span><span class="not-in-mobile">JAVWall8 </span>高清美女图集</span>
+                <span>图城<span class="not-in-mobile">- 高清美女图集</span></span>
             </a>
             <div id="search-button-div">
                 <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search"></a>

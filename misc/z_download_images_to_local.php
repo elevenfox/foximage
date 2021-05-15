@@ -1,5 +1,9 @@
 <?php
 
+$fp = fopen("/tmp/z_download.lock", "r+");
+if (flock($fp, LOCK_EX | LOCK_NB)) {  // 进行排它型锁定
+// Runing job under a lock
+
 require_once '../bootstrap.inc';
 
 set_time_limit(0);
@@ -27,7 +31,8 @@ $photo_downloaded_total = 0;
 $album_processed = 0;
 
 // Readout db files records which `saved_locally` is null
-$query = 'SELECT * FROM '. $pre . 'files where saved_locally is null';
+$query = 'SELECT * FROM '. $pre . 'files where saved_locally is null and source ="tujigu" and title like \'尤果%\' limit 1';
+//$query = 'SELECT * FROM '. $pre . 'files where saved_locally is null limit 1';
 
 // If there is a force_file_id, query that file and re-download no matter what
 if(!empty($force_file_id)) {
@@ -37,58 +42,62 @@ if(!empty($force_file_id)) {
 $res = DB::$dbInstance->getRows($query);
 if(count($res) >0) {
     foreach ($res as $row) {
-        echo date('Y-m-d H:i:s') . ' - ' . ($album_processed+1) . " -- processing: id=" . $row['id'] .', '. $row['title'] . " \n";  
-        // Use <file_root>/source/<file_title>/ as file structure
-        $physical_path = $file_root . $row['source'] . '/' . cleanStringForFilename($row['title']);
-        if(!is_dir($physical_path) || !empty($force_file_id)) {
-            // If folder not exist, create the folder, then get all images url, download them to the folder
-            if(empty($force_file_id)) {
-                echo date('Y-m-d H:i:s') . ' -' . "---- creating directory: " . $physical_path . " \n";
-                $res = mkdir($physical_path, 0744, true);
-            }
-            else {
-                $res = true;
-            }
+        echo date('Y-m-d H:i:s') . ' - ' . ($album_processed+1) . " - processing: id=" . $row['id'] .', '. $row['title'] . " \n";  
+        
+        // Build physical path: Use <file_root>/source/<file_title>/ as file structure
+        //$physical_path = $file_root . $row['source'] . '/' . cleanStringForFilename($row['title']);
+        $physical_path = buildPhysicalPath($row);
 
-            if($res) {
-                $photo_downloaded = 0;
-                $images = explode(',', $row['filename']);
-                echo date('Y-m-d H:i:s') . ' -' . "------ found photos: " . count($images) . " \n";
-                foreach ($images as $img) {
-                    $name_arr = explode('/', $img);
-                    $filename = array_pop($name_arr);
-                    $fullname = $physical_path . '/' . $filename;
-             
-                    $result = curl_call($img);
-                    if(!empty($result)) {
-                        echo date('Y-m-d H:i:s') . ' --------' . ($photo_downloaded+1) . " - saving file: " . $fullname . " \n";    
-                        $res = file_put_contents($fullname, $result);
-                        if(!$res) {
-                            echo date('Y-m-d H:i:s') . ' - ' . "------------ failed!!! \n";    
-                        }
-                        else {
-                            $photo_downloaded++;
-                            $photo_downloaded_total++;
-                            echo date('Y-m-d H:i:s') . ' - ' . "------------ succes \n";    
-                        }
+        // If folder not exist, create the folder
+        if(!is_dir($physical_path)) {
+            echo date('Y-m-d H:i:s') . " ----- creating directory: " . $physical_path . " \n";
+            $res = mkdir($physical_path, 0744, true);
+            if(!$res) {
+                echo date('Y-m-d H:i:s') . " ----- failed to create directory: " . $physical_path . " \n";
+            }
+        }
+
+        // Get all photo urls
+        $photo_downloaded = 0;
+        $images = explode(',', $row['filename']);
+        echo date('Y-m-d H:i:s') . " ----- found photos: " . count($images) . " \n";
+        foreach ($images as $img) {
+            // Build local filename
+            $name_arr = explode('/', $img);
+            $filename = array_pop($name_arr);
+            $fullname = $physical_path . '/' . $filename;
+
+            // if file does not exist locally or force_download, then download it
+            if(!file_exists($fullname) || !empty($force_file_id)) {
+                echo date('Y-m-d H:i:s') . ' -------- ' . ($photo_downloaded+1) . " - downloading file: " . $img . " \n";    
+                $result = curl_call($img, 'get', null, 60);
+                if(!empty($result)) {
+                    echo date('Y-m-d H:i:s') . " ------------ saving file: " . $fullname . " \n";    
+                    $res = file_put_contents($fullname, $result);
+                    if(!$res) {
+                        echo date('Y-m-d H:i:s') . " ------------------ failed!!! \n";    
                     }
                     else {
-                        echo date('Y-m-d H:i:s') . ' - ' . "-------- failed to download: " . $img . " \n"; 
+                        $photo_downloaded++;
+                        $photo_downloaded_total++;
+                        echo date('Y-m-d H:i:s') . " ------------------ succes \n";    
                     }
-                    
                 }
-
-                // then update record `saved_locally` to 1
-                if($photo_downloaded == count($images)) {
-                    $sql = "update ". $pre . "files set saved_locally=1 where id = '" . $row['id'] . "'";
-                    $res = DB::$dbInstance->query($sql);
-                    if(!$res) {
-                        echo date('Y-m-d H:i:s') . ' - ' . "---- failed to update db record.\n";        
-                    }
+                else {
+                    echo date('Y-m-d H:i:s') . " --------- failed to download: " . $img . " \n"; 
                 }
             }
-            else {
-                echo date('Y-m-d H:i:s') . ' - ' . "---- failed to create directory: " . $physical_path . " \n";
+        }
+
+        // Get files count under this folder
+        $files = scandir($physical_path);
+        $num_files = count($files)-2;
+        // If files count >= images count in db, we are good to set saved-local to 1
+        if($num_files >= count($images)) {
+            $sql = "update ". $pre . "files set saved_locally=1 where id = '" . $row['id'] . "'";
+            $res = DB::$dbInstance->query($sql);
+            if(!$res) {
+                echo date('Y-m-d H:i:s') . ' - ' . "---- failed to update db record.\n";        
             }
         }
 
@@ -103,3 +112,8 @@ echo date('Y-m-d H:i:s') . ' - ' . "Totally processed $album_processed albums, d
 echo "-----------------------------------\n\n";
 
 
+} 
+else {
+    // previous script is running, do nothing.
+    echo "- JOB is running, wait for next time! \n";
+}

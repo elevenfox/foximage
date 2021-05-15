@@ -83,4 +83,12 @@ class tujigu {
 
         return $data;
     }
+
+
+    public static function getOrganizationFromTitle($title) {
+        $arr = explode('_', $title);
+        $org = $arr[0];
+        
+        return  empty($org) ? null : $org;
+    }
 }

@@ -777,7 +777,7 @@ article.file .fdp-click-area-right:hover {
   article.file header {
     padding: 0;
   }
-  .file-detail {
+  article.file .file-detail {
     padding: 10px 0;
   }
 }

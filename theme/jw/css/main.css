@@ -507,6 +507,7 @@ footer .the-tag {
   width: 24%;
   display: inline-block;
   min-width: 200px;
+  margin-bottom: 20px;
 }
 
 .node-teaser .teaser-file-title {
@@ -575,7 +576,7 @@ footer .the-tag {
 
 div.stretchy-wrapper {
   width: 100%;
-  padding-bottom: 56.25%;
+  padding-bottom: 66.25%;
   /* 16:9 */
   position: relative;
   background: black;
@@ -779,6 +780,14 @@ article.file .fdp-click-area-right:hover {
   }
   article.file .file-detail {
     padding: 10px 0;
+  }
+  article.file .file-tags {
+    text-align: center;
+  }
+  article.file .fdp-click-area-right:hover,
+  article.file .fdp-click-area-left:hover
+  {
+    background-size: 60px 40px;
   }
 }
 

@@ -27,6 +27,7 @@ class tujigu {
         if(empty($data['tags'])) {
             $section = find_between($page_content, 'tags', '</div>');
             $tag_arr = find_between($section[0], 'target="_blank">', '</a>');
+            $tag_arr[] = $org_text;
             $data['tags'] = $tag_arr;
         }
         

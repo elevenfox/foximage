@@ -31,7 +31,12 @@ Class fileDetailPageModel extends ModelCore {
        $res = File::getFileByID($fileAlias);  // file/123/<title>
     }
     else {
-        $res = File::getFileByID($fileId); // file/<title>/123
+      if (ctype_digit($fileId)) {
+          $res = File::getFileByID($fileId); // video/<title>/123
+      }
+      else {
+          $res = File::getFileByMd5($fileId); // video/<title>/<md5>
+      }
     }
 
     // increase view count here since this is for sure a file-view

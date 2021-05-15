@@ -42,6 +42,21 @@ Class File {
         }
     }
 
+    public static function getFileByMd5($md5) {
+        self::setTables();
+
+        $md5 = DB::sanitizeInput($md5);
+        $query = "SELECT * FROM ".self::$table_files." WHERE source_url_md5 = '$md5' ";
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res)) {
+            return $res[0];
+        }
+        else {
+            error_log('Failed to get file by source_url md5: ' . $md5);
+            return false;
+        }
+    }
+
     public static function getFileBySourceUrl($url) {
         self::setTables();
 
@@ -106,6 +121,33 @@ Class File {
 
         $limit = ($page - 1) * $limit . ',' . $limit;
         $query = 'select * from '.self::$table_files.' order by id ' . $sort . ' limit ' . $limit;
+ 
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            if(APCU && !isAdmin()) {
+                apcu_store($cacheKey, $res, 600);
+            }
+
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static function getFilesRand($page=1, $limit=20, $sort='desc') {
+        self::setTables();
+        
+        $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
+        if(APCU && !isAdmin()) {
+            $res = apcu_fetch($cacheKey);
+            if(!empty($res)) {
+                return $res;
+            }
+        }
+
+        $limit = ($page - 1) * $limit . ',' . $limit;
+        $query = 'select * from '.self::$table_files.' order by rand_id ' . $sort . ' limit ' . $limit;
  
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
@@ -323,8 +365,8 @@ Class File {
      * @return array
      */
     public static function handle_tag_array($tag_array) {
-        $default_terms = ['blow job', 'big tits', 'babe', 'fuck'];
-        $default_jp_terms = ['日本成人', '美女性感', '肉棒', '鸡吧', '鸡巴', '大肉棒', '大鸡吧', '大鸡巴', '大鸡吧操逼', '大鸡巴操逼', '日小穴', '操屁眼儿', '日逼', '大鸡吧操', '大鸡巴操', '大奶子', '大胸', '美女', '美穴'];
+        $default_terms = ['美胸', '大尺度', '美女写真', '尤物'];
+        $default_jp_terms = ['美胸', '大尺度', '美女写真', '尤物'];
 
         $tag_array = empty($tag_array) || count($tag_array) == 0 ? [$default_terms[array_rand($default_terms)]] : $tag_array;
 

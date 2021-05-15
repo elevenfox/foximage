@@ -34,7 +34,7 @@ Class Tag {
 
         $where = "WHERE term_name = '$tagName'";
 
-        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on tv.file_id=v.id $where order by file_id desc limit " . $limit;
+        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on tv.file_id=v.id $where order by v.rand_id desc limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             if(APCU && !isAdmin()) {
@@ -78,7 +78,7 @@ Class Tag {
         }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = "select * from ".self::$table_tags." where vid > 5 order by name " . $sort . ' limit ' . $limit;
+        $query = "select * from ".self::$table_tags." where vid > 5 order by convert(name using gbk) collate gbk_chinese_ci " . $sort . ' limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {

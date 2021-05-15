@@ -29,6 +29,20 @@ Class homePageController extends ControllerCore {
           'template' => 'page',
       );
 
+      $items['newest-2'] = array(
+        'title' => 'Newest Photos',
+        'access callback' => TRUE,
+        'modelMethod' => 'getNewest_real',
+        'template' => 'page',
+      );
+
+      $items['newest-2/%'] = array(
+        'title' => 'Newest Photos',
+        'access callback' => TRUE,
+        'modelMethod' => 'getNewest_real',
+        'template' => 'page',
+      );
+
       $items['search'] = array(
           'title' => 'Search Photos',
           'access callback' => TRUE,

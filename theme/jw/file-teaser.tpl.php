@@ -6,7 +6,7 @@
     <div class="task" id="task" style="position: relative">
         <div class="thumbnail-container">
             <div class="teaser-thumbnail" itemprop="thumbnail">
-                <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['id']?>" itemprop="url">
+                <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url">
                     <div class="stretchy-wrapper">
                         <img
                                 src="<?=str_replace('http://', 'https://',$data['thumbnail'])?>"
@@ -18,7 +18,7 @@
         </div>
         <div class="teaser-file-detail">
             <div class="teaser-file-title" itemprop="name">
-                <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['id']?>" itemprop="url"><?=$data['title']?></a>
+                <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url"><?=$data['title']?></a>
             </div>
             <div class="teaser-file-info"><i class="icon-white glyphicon glyphicon-upload"></i> By: <?=$data['user_name'] ? $data['user_name'] : 'Anonymous' ?></div>
             <div class="teaser-file-info right" itemprop="userInteractionCount">

@@ -29,7 +29,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
             <div class="file-info">Uploaded By: <?=$file['user_name']?></div>
             <div class="file-info" itemprop="userInteractionCount">Views: <?=$file['view_count'] ? number_format($file['view_count']) : rand(1, 500) ?></div>
             <div class="file-tags">
-                Tags:
+                <span class="not-in-mobile">Tags:</span>
                 <?php
                 $tags = explode(',', $file['tags']);
                 foreach($tags as $tag) {
@@ -78,7 +78,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
         <?php endif;?>
         
         <div class="file-tags ft-bottom">
-                    Tags:
+            <span class="not-in-mobile">Tags:</span>
                     <?php
                     $tags = explode(',', $file['tags']);
                     foreach($tags as $tag) {

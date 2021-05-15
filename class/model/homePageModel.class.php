@@ -21,6 +21,19 @@ Class homePageModel extends ModelCore {
     $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
     $this->data['page'] = $page;
 
+    $res = File::getFilesRand($page);
+    $this->data['files'] = $res;
+
+    $count = File::getAllFilescount();
+    $this->data['files_total'] = $count;
+
+    $this->data['pageTitle'] = 'Newest';
+  }
+
+  public function getNewest_real() {
+    $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
+    $this->data['page'] = $page;
+
     $res = File::getFiles($page);
     $this->data['files'] = $res;
 

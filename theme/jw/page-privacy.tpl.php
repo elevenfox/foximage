@@ -20,11 +20,11 @@ include 'header.tpl.php';
             <div class="text-container">
                 <p><strong>GENERAL</strong></p>
 
-                <p>This Privacy Policy details important information regarding the use and disclosure of User Data collected on JAVWall.com. This Policy does not cover any information that we may receive from or about you through channels other than through the use of the Site.&nbsp;</p>
+                <p>This Privacy Policy details important information regarding the use and disclosure of User Data collected on JAVWall8.com. This Policy does not cover any information that we may receive from or about you through channels other than through the use of the Site.&nbsp;</p>
 
-                <p>The security of your Data is very important to JAVWall.com and as such we take all appropriate steps to limit the risk that it may be lost, damaged or misused.</p>
+                <p>The security of your Data is very important to JAVWall8.com and as such we take all appropriate steps to limit the risk that it may be lost, damaged or misused.</p>
 
-                <p>JAVWall.com expressly and strictly limits its membership and/or viewing privileges to adults 18 years of age and over or having attained the age of majority in their community. All persons who do not meet its criteria are strictly forbidden from accessing or viewing the contents of this Site. We do not knowingly seek or collect any personal information or data from persons who have not attained the age of majority.</p>
+                <p>JAVWall8.com expressly and strictly limits its membership and/or viewing privileges to adults 18 years of age and over or having attained the age of majority in their community. All persons who do not meet its criteria are strictly forbidden from accessing or viewing the contents of this Site. We do not knowingly seek or collect any personal information or data from persons who have not attained the age of majority.</p>
 
                 <p><br>
                     <strong>REVISIONS TO THIS POLICY</strong></p>
@@ -42,20 +42,20 @@ include 'header.tpl.php';
 
                 <p>Content Uploaded to the site: Any personal information or File content that you voluntarily disclose online becomes publicly available and can be collected and used by others.</p>
 
-                <p>Cookies: When you visit JAVWall.com, we may send one or more cookies to your computer that uniquely identifies your browser session. JAVWall.com uses both session cookies and persistent cookies. If you remove your persistent cookie, some of the site's features may not function properly.</p>
+                <p>Cookies: When you visit JAVWall8.com, we may send one or more cookies to your computer that uniquely identifies your browser session. JAVWall8.com uses both session cookies and persistent cookies. If you remove your persistent cookie, some of the site's features may not function properly.</p>
 
-                <p>Log File Information: When you visit JAVWall.com, our servers may automatically record certain information that your web browser sends such as your web request, IP address, browser type, browser language, referring URL, platform type, domain names and the date and time of your request.</p>
+                <p>Log File Information: When you visit JAVWall8.com, our servers may automatically record certain information that your web browser sends such as your web request, IP address, browser type, browser language, referring URL, platform type, domain names and the date and time of your request.</p>
 
                 <p>Emails: If you contact us, we may keep a record of that correspondence.</p>
 
                 <p><br>
                     <strong>HOW WE USE YOUR INFORMATION</strong></p>
 
-                <p>Your Personally identifiable information submitted to JAVWall.com is used to provide to the user the website's features and special personalized features.</p>
+                <p>Your Personally identifiable information submitted to JAVWall8.com is used to provide to the user the website's features and special personalized features.</p>
 
-                <p>Your chosen username (not your email address) is displayed to other Users alongside the content you upload, including Files, comments, at, the messages you send through the JAVWall.com private mail, etc. Other Users can contact you through, private messages.</p>
+                <p>Your chosen username (not your email address) is displayed to other Users alongside the content you upload, including Files, comments, at, the messages you send through the JAVWall8.com private mail, etc. Other Users can contact you through, private messages.</p>
 
-                <p>Any Files that you submit to JAVWall.com may be redistributed through the internet and other media channels, and may be viewed by the general public.</p>
+                <p>Any Files that you submit to JAVWall8.com may be redistributed through the internet and other media channels, and may be viewed by the general public.</p>
 
                 <p>We do not use your email address or other personally identifiable information to send commercial or marketing messages without your consent.</p>
 
@@ -64,23 +64,23 @@ include 'header.tpl.php';
                 <p><br>
                     <strong>DISCLOSURE OF INFORMATION</strong></p>
 
-                <p>if under duty to do so JAVWall.com may release data to comply with any legal obligation, or in order to enforce our Terms Of Service and other agreements; or to protect the rights, property or safety of JAVWall.com or our subscribers or others. This includes exchanging information with other companies and organizations including the police and governmental authorities for the purposes of protection against fraud or any other kind of illegal activity whether or not identified in the Terms Of Service. It is JAVWall.com's policy, whenever possible and legally permissible, to promptly notify you upon an obligation to supply data to any third party.</p>
+                <p>if under duty to do so JAVWall8.com may release data to comply with any legal obligation, or in order to enforce our Terms Of Service and other agreements; or to protect the rights, property or safety of JAVWall8.com or our subscribers or others. This includes exchanging information with other companies and organizations including the police and governmental authorities for the purposes of protection against fraud or any other kind of illegal activity whether or not identified in the Terms Of Service. It is JAVWall8.com's policy, whenever possible and legally permissible, to promptly notify you upon an obligation to supply data to any third party.</p>
 
-                <p>Should you deliberately upload any illegal material JAVWall.com shall forward all available information to all relevant authorities and this without notice.&nbsp;</p>
+                <p>Should you deliberately upload any illegal material JAVWall8.com shall forward all available information to all relevant authorities and this without notice.&nbsp;</p>
 
                 <p>We do not share your personally identifiable information (such as name or email address) with other, third-party companies for their commercial or marketing use without your consent or except as part of a specific program or feature for which you will have the ability to opt-in or opt-out.</p>
 
                 <p>OPT-IN AND USER COMMUNICATION – Subscriber's expressly and specifically acknowledges and agrees that his email address or other means of communicating with subscriber may be used to send him offers, information or any other commercially oriented emails or other means of communications. More specifically, some offers may be presented to the subscriber via email campaigns or other means of communications with the option to express the subscriber's preference by either clicking or entering "accept" (alternatively "yes") or "decline" (alternatively "no"). By selecting or clicking the "accept" or "yes", the subscriber indicates that the subscriber "OPTS-IN" to that offer and thereby agrees and assents that the subscriber's personal information, including its email address and data may be used for that matter or disclosed to third-parties."</p>
 
                 <p>OPT-OUT AND USER COMMUNICATION – Subscriber's expressly and specifically acknowledges and agrees that his email address or other means of communicating with subscriber may be used to send him offers, information or any other commercially oriented emails or other means of communications. More specifically, other offers may be presented to the subscriber via email campaigns or other means of communications with a pre-selected preference or choice. If the subscriber does not deselect the pre-selected preference of choice (i.e. "OPT-OUT" of the offer) then the site may transfer the subscriber's personal profile information to the third-party service or content provider making the offer. If the subscriber deselects the pre-selected preference then no personal information about the subscriber may be disclosed to any third-party service or content provider.<br>
-                    We analyze aggregated user traffic information to help streamline our marketing and hosting operations and to improve the quality of the JAVWall.com user-experience.</p>
+                    We analyze aggregated user traffic information to help streamline our marketing and hosting operations and to improve the quality of the JAVWall8.com user-experience.</p>
 
                 <p><br>
                     <strong>SECURITY</strong></p>
 
                 <p>Where we have given you (or where you have chosen a password) which enables you to access certain parts of our site, you are responsible for keeping this password confidential. We ask you not to share your password with anyone.</p>
 
-                <p>Unfortunately, the transmission of information via the Internet is not completely secure. JAVWall.com uses commercially reasonable physical, managerial and technical safeguards to preserve the integrity and security of your personal information. We cannot, however, ensure or warrant the security of any information you transmit to JAVWall.com and you do so at your own risk.</p>
+                <p>Unfortunately, the transmission of information via the Internet is not completely secure. JAVWall8.com uses commercially reasonable physical, managerial and technical safeguards to preserve the integrity and security of your personal information. We cannot, however, ensure or warrant the security of any information you transmit to JAVWall8.com and you do so at your own risk.</p>
 
                 <p><br>
                     <strong>SPECIAL CASES</strong></p>
@@ -100,7 +100,7 @@ include 'header.tpl.php';
                     B. Any information or content you voluntarily provide to Us should be considered public. You may have the opportunity to provide additional information or content that is not required for registration to the Site, and your voluntary provision of such information is solely your decision<br>
                     &nbsp;</p>
 
-                <p>Please contact us for any issues&nbsp;by emailing service@JAVWall.com.&nbsp;</p>
+                <p>Please contact us for any issues&nbsp;by emailing service@JAVWall8.com.&nbsp;</p>
             </div>
 
         </div>

@@ -18,7 +18,7 @@ include 'header.tpl.php';
         <div id="content" class="content">
 
             <div class="text-container">
-                <p>www.JAVWall.com (“JAVWall”) qualifies as a “Service Provider” within the meaning of 17 U.S.C. § 512(k)(1) of the Digital Millennium Copyright Act (“DMCA”). &nbsp;</p>
+                <p>www.JAVWall8.com (“JAVWall”) qualifies as a “Service Provider” within the meaning of 17 U.S.C. § 512(k)(1) of the Digital Millennium Copyright Act (“DMCA”). &nbsp;</p>
 
                 <p>Accordingly, it is entitled to certain protections from claims of copyright infringement under the DMCA, commonly referred to as the “safe harbor” provisions. We respect the intellectual property of others, and we ask our users to do the same. We will respond to notices of alleged copyright infringement that comply with the “DMCA” or any other applicable intellectual property legislation or laws. Responses may include removing, blocking or disabling access to material claimed to be the subject of infringing activity, terminating the user’s access to JAVWall, or all of the foregoing.</p>
 
@@ -99,7 +99,7 @@ include 'header.tpl.php';
                 <p><br>
                     <strong>CUSTOMER SERVICE REQUESTS</strong></p>
 
-                <p>Please note that the DMCA Agent is not associated with the Site in any other capacity, but is an attorney with a private law firm. Customer service inquiries, payment questions, and cancellation requests will not receive a response. All such communications must be directed to the Site's customer service department. service@JAVWall.com</p>
+                <p>Please note that the DMCA Agent is not associated with the Site in any other capacity, but is an attorney with a private law firm. Customer service inquiries, payment questions, and cancellation requests will not receive a response. All such communications must be directed to the Site's customer service department. service@JAVWall8.com</p>
 
                 <p>&nbsp;</p>
             </div>

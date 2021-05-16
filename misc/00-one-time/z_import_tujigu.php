@@ -1,6 +1,6 @@
 <?php
 
-require_once '../bootstrap.inc';
+require_once '../../bootstrap.inc';
 
 set_time_limit(0);
 ini_set('memory_limit','2048M');
@@ -15,7 +15,7 @@ echo date('Y-m-d H:i:s') . ' - ' . "-- on " . Config::get('theme') . " \n";
 echo "#####################################\n\n";
 
 // Read from db which source is tujigu and id < 18523
-$query = 'SELECT * FROM '. $pre . 'files where source ="tujigu" and filename = "" and id < 18523 order by id';
+$query = 'SELECT * FROM '. $pre . 'files where source ="tujigu" and filename = ""';
 
 $res = DB::$dbInstance->getRows($query);
 if(count($res) >0) {

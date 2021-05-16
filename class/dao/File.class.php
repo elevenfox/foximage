@@ -238,7 +238,7 @@ Class File {
         $totalFile = $res[0]['total'];
 
         $limit = random_int(1, $totalFile-8) .',' . 8;
-        $query = 'select * from '.self::$table_files.' order by id desc  limit ' . $limit;
+        $query = 'select * from '.self::$table_files.' order by rand_id desc  limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
@@ -283,6 +283,7 @@ Class File {
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
                         `source` = '". $fileObj->source . "',
                         `source_url` = '". str_replace("'", "\'", $fileObj->source_url) . "',
+                        `source_url_md5` = '". md5(str_replace("'", "\'", $fileObj->source_url)) . "',
                         `description` = '". $fileObj->description . "',
                         `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',

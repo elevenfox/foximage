@@ -500,6 +500,9 @@ footer .the-tag {
   text-align: left;
   padding: 0 0 20px 15px;
 }
+.layout-center .content-container .fc-text-content {
+  padding: 10px;
+}
 
 
 /***** File teaser *******/
@@ -741,6 +744,9 @@ article.file .fdp-click-area-right:hover {
   .file-detail img {
     width: 100%;
   }
+  .content-container .content {
+    padding: 0;
+  }
 }
 
 @media (max-width: 999px) {
@@ -757,7 +763,11 @@ article.file .fdp-click-area-right:hover {
     margin-right: 0;
   }
   .ad-side-right {
-    width: 165px;
+    /* width: 165px; */
+    display: none;
+  }
+  article.file .file-detail {
+    padding: 10px 0;
   }
 }
 
@@ -772,15 +782,13 @@ article.file .fdp-click-area-right:hover {
     width: 200px;
   }
   .content-container {
-    width: calc(100% - 180px);
+    /* width: calc(100% - 180px); */
     margin-right: 0;
   }
   article.file header {
     padding: 0;
   }
-  article.file .file-detail {
-    padding: 10px 0;
-  }
+  
   article.file .file-tags {
     text-align: center;
   }
@@ -880,9 +888,6 @@ article.file .fdp-click-area-right:hover {
   .layout-center .content-container {
     width: 100% !important;
     margin: 0;
-  }
-  .layout-center .content-container .fc-text-content {
-    padding: 10px;
   }
   .content-container h1 {
     margin: 3px 5px 25px 0;

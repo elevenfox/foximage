@@ -48,10 +48,23 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       $images = explode(',', $file['filename']);
                       $num = empty($_GET['at']) ? 1 : $_GET['at'];
                       $num = $num >= count($images) ? count($images) : $num;
+
+                      $cur_image_url = $images[$num-1];
+                      
+                      $name_arr = explode('/', $cur_image_url);
+                      $filename = array_pop($name_arr);
+                      $physical_path = buildPhysicalPath($file);
+                      $file_root = Config::get('file_root');
+                      $relative_path = str_replace($file_root, '', $physical_path);
+                      $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
+                      if(file_exists($_SERVER['DOCUMENT_ROOT'] . $relative_fullname)) {
+                        $cur_image_url = $relative_fullname;
+                      }
+
                   ?>
                   <div id="fdp-photo">
                     <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" style="cursor:e-resize">
-                      <img src="<?=$images[$num-1]?>" alt="<?=$file['title']?>"></img>
+                      <img src="<?=$cur_image_url?>" alt="<?=$file['title']?>"></img>
                     </a>
                     <div class="fdp-click-area">
                       <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>

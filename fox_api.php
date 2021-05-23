@@ -249,7 +249,21 @@ switch($action) {
         }
 
         break;
+    
+    case 'get_random_file_by_tag':
+        $url = '';
+        $tagName = $_REQUEST['tag'];
+        $query = 'select f.* from '.$pre.'tag_file tf left join '.$pre.'files f on f.id=tf.file_id where term_name="'.$tagName.'" ORDER BY RAND() LIMIT 1';
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res)) {
+            $file = $res[0];
+            $images = explode(',',$file['filename']);
+            $num = rand(1, count($images));
 
+            $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.$num.'&ppt=1&tag='.$tagName.'#fdp-photo';
+        }
+        apiReturnJson(['status'=>1, 'url'=>$url]);
+        break;
 
     case 'default':
         echo 'File api';

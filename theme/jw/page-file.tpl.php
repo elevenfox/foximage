@@ -178,6 +178,18 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
         $('#alert-modal').modal('hide');
         window.location.reload();
       });
+
+      <?php if( !empty($_REQUEST['ppt']) ):?>
+        setTimeout(function () {
+          let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$_REQUEST['tag']?>';
+          $.get(api_endpoint, function(data) {
+              if(data.url) {
+                  window.location.href = data.url;
+              }
+          });
+        }, 20000);
+      <?php endif; ?>
+
 })(jQuery);
 </script>
 <?php endif;?>

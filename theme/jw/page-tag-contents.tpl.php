@@ -12,6 +12,7 @@ include 'header.tpl.php';
 
     <div class="content-container tag-file-list-page">
         <h1><?php print $data['page_title']; ?></h1>
+        <span id="random-play" class="glyphicon glyphicon-play-circle">随机播放</span>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
@@ -58,3 +59,16 @@ include 'header.tpl.php';
 
 
 <?php include 'footer.tpl.php';?>
+
+<script type="text/javascript">
+$(function () {
+    $('#random-play').on('click', function () {
+        let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$data['tagName']?>';
+        $.get(api_endpoint, function(data) {
+            if(data.url) {
+                window.location.href = data.url;
+            }
+        });
+    })
+});
+</script>

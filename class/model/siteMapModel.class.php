@@ -87,7 +87,7 @@ EOF;
 
             foreach ($files as $file) {
                 if(!empty($file['title'])) {
-                    $url = utf8_encode(cleanStringForUrl($file['title']) . '/' . $file['source_url_md5']);
+                    $url = cleanStringForUrl($file['title']) . '/' . $file['source_url_md5'];
                     if(!empty($url)) {
                         $xml .= '<url><loc>' . $domain . '/file/' . $url . '</loc><changefreq>weekly</changefreq></url>';
                     }

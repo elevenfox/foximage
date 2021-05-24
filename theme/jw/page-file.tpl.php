@@ -155,6 +155,9 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
         let intervalCallback = function() {
           seconds = seconds - 1;
           $('.fdp-random-count-down').text(seconds);
+          if(seconds < -5) {
+            timeoutCallback();
+          }
         };
 
         let to = setTimeout(timeoutCallback, seconds * 1000);

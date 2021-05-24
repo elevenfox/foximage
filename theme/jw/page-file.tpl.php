@@ -70,6 +70,14 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>
                       <a class="fdp-click-area-right"  title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>"></a>
                     </div>
+                    <?php if( !empty($_REQUEST['ppt']) ):?>
+                    <div class="fdp-random-btns">
+                      <span class="fdp-random-count-down">20</span>
+                      <span class="fdp-random-previous glyphicon glyphicon-backward" title="Previous"></span>
+                      <span class="fdp-random-pause glyphicon glyphicon-pause" title="Pause"></span>
+                      <span class="fdp-random-next glyphicon glyphicon-forward" title="Next"></span>
+                    </div>
+                    <?php endif;?>
                   </div>
               </div>
             </div>
@@ -130,64 +138,53 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 <?=$theme->render(null, 'ads_templates/ad-side-right')?>
 
 
-    <!-- Modal -->
-    <div id="alert-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <!-- Modal content-->
-            <div class="modal-content" style="background-color: white; padding: 25px; min-width: 400px">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <div class="a_message" style="padding: 30px 0;font-size: 1.8em;text-align: center;border-bottom: 1px solid #ddd;margin: 5px 0;"></div>
-
-
-                <div class="ad-container" style="text-align: center">
-                    <script type="application/javascript">
-                      var ad_idzone = "3502519",
-                        ad_width = "300",
-                        ad_height = "100"
-                    </script>
-                    <script type="application/javascript" src="https://a.realsrv.com/ads.js"></script>
-                    <noscript>
-                        <iframe src="https://syndication.realsrv.com/ads-iframe-display.php?idzone=3502519&output=noscript&type=300x100" width="300" height="100" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-                    </noscript>
-                </div>
-
-                <script type="text/javascript">
-                  (function () {
-                    var myEl = {el: null}; var event = new CustomEvent('getexoloader', {"detail": myEl}); window.document.dispatchEvent(event); var ExoLoader = myEl.el || window['ExoLoader'];
-                    ExoLoader.addZone({"idzone":"3502519"}); // m_middle
-                  })();
-                </script>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" style="min-width: 100px;">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 <?php if(empty($data['not-found'])) : ?>
 <script>
 (function($) {
 
-      function showAlert(msg) {
-        $('#alert-modal').modal('show');
-        $('#alert-modal .a_message').text(msg);
-      }
-
-      $('#alert-modal .btn-primary').on('click', function () {
-        $('#alert-modal').modal('hide');
-        window.location.reload();
-      });
-
       <?php if( !empty($_REQUEST['ppt']) ):?>
-        setTimeout(function () {
+        let seconds = 20;
+        let timeoutCallback = function() {
           let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$_REQUEST['tag']?>';
           $.get(api_endpoint, function(data) {
               if(data.url) {
                   window.location.href = data.url;
               }
           });
-        }, 20000);
+        };
+        let intervalCallback = function() {
+          seconds = seconds - 1;
+          $('.fdp-random-count-down').text(seconds);
+        };
+
+        let to = setTimeout(timeoutCallback, seconds * 1000);
+
+        let itv = setInterval(intervalCallback, 1000);
+
+        $('.fdp-random-pause').on('click', function() {
+          if($('.fdp-random-pause').hasClass('glyphicon-pause')) {
+            window.clearInterval(itv);
+            window.clearTimeout(to);
+            $('.fdp-random-pause').removeClass('glyphicon-pause');
+            $('.fdp-random-pause').addClass('glyphicon-play');
+          }
+          else {
+            $('.fdp-random-pause').removeClass('glyphicon-play');
+            $('.fdp-random-pause').addClass('glyphicon-pause');
+            to = setTimeout(timeoutCallback, seconds * 1000);
+            itv = setInterval(intervalCallback, 1000);
+          }
+        });
+
+        $('.fdp-random-previous').on('click', function(){
+          window.history.go(-1);
+        });
+
+        $('.fdp-random-next').on('click', function(){
+          timeoutCallback();
+        });
+
+
       <?php endif; ?>
 
 })(jQuery);

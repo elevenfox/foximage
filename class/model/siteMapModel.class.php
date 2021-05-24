@@ -89,7 +89,7 @@ EOF;
                 if(!empty($file['title'])) {
                     $url = cleanStringForUrl($file['title']) . '/' . $file['source_url_md5'];
                     if(!empty($url)) {
-                        $xml .= '<url><loc>' . $domain . '/file/' . $url . '</loc><changefreq>weekly</changefreq></url>';
+                        $xml .= '<url><loc>' . $domain . '/file/' . $url . '</loc><changefreq>weekly</changefreq></url>' . "\n";
                     }
                 }
             }

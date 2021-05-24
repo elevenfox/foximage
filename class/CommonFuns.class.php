@@ -191,7 +191,7 @@ function cleanStringForUrl($string, $separator = '-') {
             'reduce_ascii' => TRUE,
             'ignore_words_regex' => FALSE,
             'lowercase' => TRUE,
-            'maxlength' => 100,
+            'maxlength' => 1000,
         );
 
         // Generate and cache the punctuation replacements for strtr().

@@ -843,6 +843,71 @@ article.file #fdp-photo .fdp-random-btns span {
     float: left;
 }
 
+
+/*** glyphicon ***/
+
+.content-container #random-play {
+    display: inline-flex;
+}
+
+.glyphicon-circle {
+    border: 1px solid #999;
+    width: 14px;
+    height: 14px;
+    border-radius: 20px;
+    text-align: center;
+    padding: 2px;
+    margin: 0 5px;
+    float: left;
+}
+
+.glyphicon-play {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+    border-color: transparent transparent transparent #000;
+    transition: 100ms all ease;
+    will-change: border-width;
+    border-style: solid;
+    border-width: 6px 0 6px 12px;
+    margin: 0 0 3px 2px;
+}
+
+.glyphicon-pause {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 0;
+    height: 12px;
+    cursor: pointer;
+    border-color: transparent transparent transparent #000;
+    transition: 100ms all ease;
+    will-change: border-width;
+    border-style: double;
+    border-width: 0px 0 0px 12px;
+    margin: 0 0 3px 2px;
+}
+
+#fdp-photo .glyphicon {
+    position: relative;
+    top: 5px;
+}
+
+#fdp-photo .fdp-random-next,
+#fdp-photo .fdp-random-previous {
+    position: relative;
+    top: 3px;
+}
+
+#fdp-photo .fdp-random-pause {
+    width: 0;
+    margin: 0 0 3px 10px;
+}
+
+
+/**** Mobile ****/
+
 @media (max-width: 1200px) {
     .node-teaser {
         width: 32%;

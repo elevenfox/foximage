@@ -12,7 +12,7 @@ include 'header.tpl.php';
 
     <div class="content-container tag-file-list-page">
         <h1><?php print $data['page_title']; ?>
-        <span id="random-play" class="glyphicon glyphicon-play-circle">随机播放</span>
+        <span id="random-play"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</span>
         </h1>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>

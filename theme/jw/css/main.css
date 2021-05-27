@@ -40,6 +40,7 @@ span {
 a {
     color: #337ab7;
     -webkit-text-decoration-skip: objects;
+    text-decoration: none;
 }
 
 :visited {
@@ -293,7 +294,7 @@ form input[type="button"] {
 .header form .form-item-search-block-form {
     display: inline-block;
     width: 250px;
-    padding: 20px;
+    padding: 8px;
     margin: 0;
 }
 
@@ -399,10 +400,10 @@ form input[type="button"] {
 #search-block-form input[name='op'] {
     background-color: black;
     border: 0;
-    background: url("/theme/jp/images/search100bsa-black.png") no-repeat center;
+    background: url("/theme/jw/images/search100bsa-black.png") no-repeat center;
     background-size: 15px 15px;
     position: relative;
-    left: -50px;
+    left: -38px;
     top: 5px;
     width: 20px;
 }
@@ -410,6 +411,7 @@ form input[type="button"] {
 #search-block-form input[name='search_term'] {
     width: 90%;
     padding-right: 30px;
+    height: 25px;
 }
 
 footer {
@@ -601,7 +603,7 @@ footer .the-tag {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 50%;
+    width: 60%;
     float: left;
     padding: 5px;
     text-align: left;
@@ -609,6 +611,11 @@ footer .the-tag {
 
 .node-teaser .teaser-file-info.right {
     text-align: right;
+    width: 30%;
+}
+
+.node-teaser .teaser-file-info img {
+    vertical-align: text-top;
 }
 
 .node-teaser .duration {

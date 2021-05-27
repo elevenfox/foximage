@@ -80,7 +80,7 @@ $domainUrl = getDomainUrl();
             </span>
             </div>
             <a href="/" title="Home" rel="home" class="header__logo">
-                <img src="/theme/jw/logo.png" alt="Home" class="header__logo-image">
+                <img src="/theme/jw/logo.png" width="45" height="45"alt="Tuzac home" class="header__logo-image">
                 <span>图宅<span class="not-in-mobile">- 高清美女图集</span></span>
             </a>
             <div id="search-button-div">

@@ -1,40 +1,41 @@
-
-jQuery(function () {
-  var winWidth = jQuery(window).width();
-  var mobileWidth = 760;
-
-
-  function getAdWidth() {
+jQuery(function() {
     var winWidth = jQuery(window).width();
-    var adWidth = winWidth >= 999 ? 370 : 185;
-    adWidth = winWidth <= 600 ? 0 : adWidth;
-    return adWidth;
-  }
-  //jQuery('.layout-3col__left-content').width(jQuery(window).width() - getAdWidth());
+    var mobileWidth = 760;
 
-  jQuery('#buttonSearch').click(function () {
-    jQuery('#h-middle').toggle();
-    jQuery('#h-middle input[name="op"]').val('Search');
-  });
 
-  if (winWidth <= mobileWidth) {
-    jQuery('#quick-nav').click(function () {
-      jQuery('.main-menu').toggle();
+    function getAdWidth() {
+        var winWidth = jQuery(window).width();
+        var adWidth = winWidth >= 999 ? 370 : 185;
+        adWidth = winWidth <= 600 ? 0 : adWidth;
+        return adWidth;
+    }
+    //jQuery('.layout-3col__left-content').width(jQuery(window).width() - getAdWidth());
+
+    jQuery('#buttonSearch').click(function() {
+        jQuery('#h-middle').toggle();
+        jQuery('#h-middle input[name="op"]').val('Search');
     });
 
-    jQuery(document).on('click', function (e) {
-      var container = jQuery('.main-menu');
-      var triggers = jQuery('#quick-nav, #quick-nav img');
-      if (!triggers.is(e.target) && !container.is(e.target)) {
-        container.hide();
-      }
-    });
+    if (winWidth <= mobileWidth) {
+        jQuery('#quick-nav').click(function() {
+            jQuery('.main-menu').toggle();
+        });
 
-    jQuery(document).on('scroll', function (e) {
-      jQuery('.main-menu').hide();
-    });
-  }
+        jQuery(document).on('click', function(e) {
+            var container = jQuery('.main-menu');
+            var triggers = jQuery('#quick-nav, #quick-nav img');
+            if (!triggers.is(e.target) && !container.is(e.target)) {
+                container.hide();
+            }
+        });
 
-  jQuery('.main-menu a[href*="http://www.javcook.com"]').attr('target', '_blank');
+        jQuery(document).on('scroll', function(e) {
+            jQuery('.main-menu').hide();
+        });
+    }
+
+    jQuery('.main-menu a[href*="http://www.javcook.com"]').attr('target', '_blank');
+
+    jQuery('.lazy').lazy();
 
 });

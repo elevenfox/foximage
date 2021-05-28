@@ -657,6 +657,18 @@ div.stretchy-wrapper {
     overflow: hidden;
 }
 
+div.stretchy-wrapper::before {
+    color: #999;
+    content: attr(data-bg-text);
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 div.stretchy-wrapper>img {
     width: 100%;
     pointer-events: none;
@@ -715,11 +727,30 @@ article.file .file-detail {
 
 article.file .file-detail img {
     width: 100%;
+    position: relative;
 }
 
 article.file #fdp-photo {
     text-align: center;
     position: relative;
+}
+
+article.file #fdp-photo>a {
+    min-height: 500px;
+    background-color: #fff7fe;
+    display: block;
+}
+
+article.file #fdp-photo>a::before {
+    color: #999;
+    content: attr(data-bg-text);
+    display: block;
+    font-size: 26px;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 article.file .fdp-click-area {

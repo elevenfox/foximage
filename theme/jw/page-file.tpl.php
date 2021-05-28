@@ -63,8 +63,8 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
                   ?>
                   <div id="fdp-photo">
-                    <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" style="cursor:e-resize">
-                      <img src="<?=$cur_image_url?>" alt="<?=$file['title']?>"></img>
+                    <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="Loading...">
+                      <img src="<?=$cur_image_url?>" alt="<?=$file['title']?>" loading="lazy"></img>
                     </a>
                     <div class="fdp-click-area">
                       <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>

@@ -62,7 +62,7 @@ Class homePageModel extends ModelCore {
 
           $res = File::searchFile($term, $page);
 
-          $this->data['files'] = $res;
+          $this->data['files'] = empty($res) ? [] : $res;
 
           $count = File::searchFileCount($term);
           $this->data['files_total'] = $count;

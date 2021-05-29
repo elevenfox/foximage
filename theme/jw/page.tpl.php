@@ -17,17 +17,22 @@ include 'header.tpl.php';
 
         <div id="content" class="content">
             <?php
-            $i = 0;
-            $j = 1;
-            $apply_mobile_native_ads = true;
-            foreach ($data['files'] as $file) {
-                echo $theme->render($file, 'file-teaser');
-                $i++;
+            if(empty($data['files'])) {
+                echo '<h2 style="text-align: center">No photos found.</h2>';
+            }
+            else {
+                $i = 0;
+                $j = 1;
+                $apply_mobile_native_ads = true;
+                foreach ($data['files'] as $file) {
+                    echo $theme->render($file, 'file-teaser');
+                    $i++;
 
-                if($i % 4 === 0 && is_mobile() && $j<= 3) {
-                    include ('ads_templates/ad-native-'.$j.'.tpl.php');
-                    $j++;
-                    //$j = $j >3 ? 1 : $j;
+                    if($i % 4 === 0 && is_mobile() && $j<= 3) {
+                        include ('ads_templates/ad-native-'.$j.'.tpl.php');
+                        $j++;
+                        //$j = $j >3 ? 1 : $j;
+                    }
                 }
             }
             ?>

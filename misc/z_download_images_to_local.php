@@ -35,6 +35,7 @@ $album_processed = 0;
 //$query = 'SELECT * FROM '. $pre . 'files where saved_locally is null limit 1';
 //$query = 'SELECT * FROM '. $pre . 'files where saved_locally is null and source ="tujigu" and title like \'尤果%\' limit 1';
 $query = 'SELECT * FROM '. $pre . 'files where saved_locally is null and source ="tujigu" limit 1';
+//$query = 'SELECT * FROM '. $pre . 'files where saved_locally is null and source ="tujigu" ORDER BY RAND() limit 1';
 
 // If there is a force_file_id, query that file and re-download no matter what
 if(!empty($force_file_id)) {

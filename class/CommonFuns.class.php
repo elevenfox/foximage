@@ -50,11 +50,14 @@ function apiReturnJson($str) {
 }
 
 
-function curl_call($url, $method='get', $data=null, $timeout=0) {
+function curl_call($url, $method='get', $data=null, $timeout=0, $use_proxy=false) {
     $postData = $data;
 
     $ch = curl_init(); // 启动一个CURL会话
     curl_setopt($ch, CURLOPT_URL, $url); // 要访问的地址
+    if($use_proxy) {
+        curl_setopt($ch, CURLOPT_PROXY, 'socks5://localhost:9050');
+    }
     // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查，0表示阻止对证书的合法性的检查。
     // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
     curl_setopt($ch, CURLOPT_HTTPHEADER,array('Accept-Encoding: gzip, deflate',"charset=UTF-8"));

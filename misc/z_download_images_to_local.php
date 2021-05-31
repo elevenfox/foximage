@@ -18,6 +18,7 @@ $pre = Config::get('db_table_prefix');
 
 $force_file_id = isset($argv[1]) ? (int)$argv[1] : null;
 
+
 ###################### End of define variables ################
 
 
@@ -71,7 +72,7 @@ if(count($res) >0) {
             // if file does not exist locally or force_download, then download it
             if(!file_exists($fullname) || !empty($force_file_id)) {
                 echo date('Y-m-d H:i:s') . ' -------- ' . ($photo_downloaded+1) . " - downloading file: " . $img . " \n";    
-                $result = curl_call($img, 'get', null, 60);
+                $result = curl_call($img, 'get', null, 15);
                 if(!empty($result)) {
                     echo date('Y-m-d H:i:s') . " ------------ saving file: " . $fullname . " \n";    
                     $res = file_put_contents($fullname, $result);
@@ -85,7 +86,7 @@ if(count($res) >0) {
                     }
                 }
                 else {
-                    echo date('Y-m-d H:i:s') . " --------- failed to download: " . $img . " \n"; 
+                    echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
                 }
             }
         }
@@ -98,7 +99,10 @@ if(count($res) >0) {
             $sql = "update ". $pre . "files set saved_locally=1 where id = '" . $row['id'] . "'";
             $res = DB::$dbInstance->query($sql);
             if(!$res) {
-                echo date('Y-m-d H:i:s') . ' - ' . "---- failed to update db record.\n";        
+                echo date('Y-m-d H:i:s') . ' - ' . "---- \033[31m failed to update db record. \033[39m \n";        
+            }
+            else {
+                echo date('Y-m-d H:i:s') . ' - ' . "---- Saved locally completed.\n";        
             }
         }
 

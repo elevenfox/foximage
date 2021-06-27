@@ -350,6 +350,9 @@ function cleanStringForFilename($filename) {
 
 function buildPhysicalPath($file_row) {
     $file_root = Config::get('file_root');
+    if(empty($file_root)) {
+        $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+    }
     if($file_row['source'] != 'tujigu') {
         $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
     }
@@ -378,3 +381,47 @@ function getReferrer($source) {
 
     return $referrer;
 }
+
+
+function processThumbnail($row) {
+    // Build physical path: Use <file_root>/source/<file_title>/ as file structure
+    $physical_path = buildPhysicalPath($row);
+
+    // If folder not exist, create the folder
+    if(!is_dir($physical_path)) {
+        $res = mkdir($physical_path, 0744, true);
+        if(!$res) {
+            error_log(" ----- failed to create directory: " . $physical_path );
+        }
+    }
+
+    $fullname = $physical_path . '/thumbnail.jpg';
+
+    $name_arr = explode('/jw-photos/', $fullname);
+    $relative_path = '/jw-photos/' . $name_arr[1];    
+
+    $result = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
+
+    // if file does not exist locally or force_download, then download it
+    if(!file_exists($fullname)) {
+      $referrer = getReferrer($row['source']);  
+      $result = curl_call(str_replace('http://', 'https://',$row['thumbnail']), 'get', null, ['referrer'=>$referrer]);
+      if(!empty($result)) {
+          $res = file_put_contents($fullname, $result);
+          if(!$res) {
+              error_log(" ----- failed to save thumbnail: " . $fullname);    
+          }
+          else {
+            $result = $relative_path;
+          }
+      }
+      else {
+          echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
+      }
+    }
+    else {
+      $result = $relative_path;
+    }
+
+    return $result;
+  }  

@@ -53,37 +53,36 @@ Class fileDetailPageModel extends ModelCore {
 
   }
 
+  public function getFileThumbnail() {
+      $fileId = empty($this->request->arg[1]) ? '' : $this->request->arg[1];
 
-public function getFileThumbnail() {
+      $res = File::getFileByMd5($fileId); // file/<md5>/th.jpg
+      if(!empty($res)) {
+        $referrer = getReferrer($res['source']);
+        $image_content = curl_call(str_replace('http://', 'https://',$res['thumbnail']), 'get', null, ['referrer'=>$referrer]);
+      }
+      header('Content-type: image/jpeg');
+      echo $image_content;
+      exit;
+  }
+
+  public function getFileContent() {
     $fileId = empty($this->request->arg[1]) ? '' : $this->request->arg[1];
+    $file = File::getFileByMd5($fileId); // file/<md5>/<num>/fc.jpg
 
-    $res = File::getFileByMd5($fileId); // file/<md5>/th.jpg
-    if(!empty($res)) {
-      $referrer = getReferrer($res['source']);
-      $image_content = curl_call(str_replace('http://', 'https://',$res['thumbnail']), 'get', null, ['referrer'=>$referrer]);
+    $images = explode(',', $file['filename']);
+    $num = empty($this->request->arg[2]) ? 1 : $this->request->arg[2];
+    $num = $num >= count($images) ? count($images) : $num;
+    $cur_image_url = $images[$num-1];
+
+    if(!empty($cur_image_url)) {
+      $referrer = getReferrer($file['source']);
+      $image_content = curl_call($cur_image_url, 'get', null, ['referrer'=>$referrer]);
     }
     header('Content-type: image/jpeg');
     echo $image_content;
     exit;
-}
-
-public function getFileContent() {
-  $fileId = empty($this->request->arg[1]) ? '' : $this->request->arg[1];
-  $file = File::getFileByMd5($fileId); // file/<md5>/<num>/fc.jpg
-
-  $images = explode(',', $file['filename']);
-  $num = empty($this->request->arg[2]) ? 1 : $this->request->arg[2];
-  $num = $num >= count($images) ? count($images) : $num;
-  $cur_image_url = $images[$num-1];
-
-  if(!empty($cur_image_url)) {
-    $referrer = getReferrer($file['source']);
-    $image_content = curl_call($cur_image_url, 'get', null, ['referrer'=>$referrer]);
   }
-  header('Content-type: image/jpeg');
-  echo $image_content;
-  exit;
-}
 
   public function defaultMake()
   {

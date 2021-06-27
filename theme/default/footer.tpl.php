@@ -3,13 +3,13 @@
 </html>
 <?php print $data['scripts_footer'];?>
 <script type="text/javascript">
-jQuery(document).ready(
-function($){
-$("img").lazyload({
-     placeholder : "/images/grey.gif",
-     effect      : "fadeIn"
-   });
-});
+// jQuery(document).ready(
+// function($){
+// $("img").lazyload({
+//      placeholder : "/images/grey.gif",
+//      effect      : "fadeIn"
+//    });
+// });
 
 // For menu displaying
 var height_org = $("#menu_window").height();

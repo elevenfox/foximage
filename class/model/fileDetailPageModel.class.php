@@ -59,7 +59,7 @@ Class fileDetailPageModel extends ModelCore {
       $res = File::getFileByMd5($fileId); // file/<md5>/th.jpg
       if(!empty($res)) {
         $referrer = getReferrer($res['source']);
-        $image_content = curl_call(str_replace('http://', 'https://',$res['thumbnail']), 'get', null, ['referrer'=>$referrer]);
+        $image_content = curl_call(str_replace('http://', 'https://',$res['thumbnail']), 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
       }
       header('Content-type: image/jpeg');
       echo $image_content;
@@ -77,7 +77,7 @@ Class fileDetailPageModel extends ModelCore {
 
     if(!empty($cur_image_url)) {
       $referrer = getReferrer($file['source']);
-      $image_content = curl_call($cur_image_url, 'get', null, ['referrer'=>$referrer]);
+      $image_content = curl_call($cur_image_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
     }
     header('Content-type: image/jpeg');
     echo $image_content;

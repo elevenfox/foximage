@@ -408,6 +408,7 @@ function processThumbnail($row) {
       $result = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['referrer'=>$referrer]);
       if(!empty($result)) {
           $res = file_put_contents($fullname, $result);
+          chmod($fullname, 0755);
           if(!$res) {
               error_log(" ----- failed to save thumbnail: " . $fullname);    
           }

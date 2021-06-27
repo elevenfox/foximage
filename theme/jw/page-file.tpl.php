@@ -61,7 +61,9 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                         $cur_image_url = $relative_fullname;
                       }
                       else {
-                        $cur_image_url = '/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+                        if($file['source'] == 'tujigu') {
+                          $cur_image_url = '/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+                        }
                       }
 
                   ?>

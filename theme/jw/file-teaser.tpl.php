@@ -9,7 +9,7 @@
                 <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url">
                     <div class="stretchy-wrapper" data-bg-text="Loading...">
                         <img class="lazy"
-                              data-src="<?=str_replace('http://', 'https://',$data['thumbnail'])?>"
+                              data-src="/file_thumbnail/<?=$data['source_url_md5']?>/th.jpg"
                               alt="<?=$data['title']?>"
                         >
                     </div>

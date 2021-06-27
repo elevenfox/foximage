@@ -21,6 +21,16 @@ Class fileDetailPageController extends ControllerCore {
           'modelMethod' => 'getFile',
           'template' => 'page-file',
       );
+      $items['file_thumbnail/%/th.jpg'] = array(
+          'title' => 'File page',
+          'access callback' => TRUE,
+          'modelMethod' => 'getFileThumbnail',
+      );
+      $items['file_content/%/%/fc.jpg'] = array(
+        'title' => 'File page',
+        'access callback' => TRUE,
+        'modelMethod' => 'getFileContent',
+      );
 
       Menu::setMenu($items, __CLASS__);
   }

@@ -73,7 +73,7 @@ if(count($res) >0) {
             // if file does not exist locally or force_download, then download it
             if(!file_exists($fullname) || !empty($force_file_id)) {
                 echo date('Y-m-d H:i:s') . ' -------- ' . ($photo_downloaded+1) . " - downloading file: " . $img . " \n";    
-                $result = curl_call($img, 'get', null, 15);
+                $result = curl_call($img, 'get', null, ['timeout' => 15]);
                 if(!empty($result)) {
                     echo date('Y-m-d H:i:s') . " ------------ saving file: " . $fullname . " \n";    
                     $res = file_put_contents($fullname, $result);

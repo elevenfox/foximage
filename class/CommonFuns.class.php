@@ -50,8 +50,12 @@ function apiReturnJson($str) {
 }
 
 
-function curl_call($url, $method='get', $data=null, $timeout=0, $use_proxy=false) {
+function curl_call($url, $method='get', $data=null, $options=[]) {
     $postData = $data;
+
+    $timeout = empty($options['timeout']) ? 0 : $options['timeout']; 
+    $use_proxy = empty($options['user_proxy']) ? false : $options['user_proxy']; 
+    $referrer = empty($options['referrer']) ? null : $options['referrer']; 
 
     $ch = curl_init(); // 启动一个CURL会话
     curl_setopt($ch, CURLOPT_URL, $url); // 要访问的地址
@@ -64,6 +68,9 @@ function curl_call($url, $method='get', $data=null, $timeout=0, $use_proxy=false
     curl_setopt($ch, CURLOPT_ENCODING, '');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_VERBOSE, 0);
+    if(!empty($referrer)) {
+        curl_setopt($ch, CURLOPT_REFERER, $referrer);
+    }
     curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36');
     // 获取的信息以文件流的形式返回，而不是直接输出。
     curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -81,7 +88,7 @@ function curl_call($url, $method='get', $data=null, $timeout=0, $use_proxy=false
     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
     if ($result == NULL) {
-        error_log('CURL error: ' . curl_errno($ch) . " – " . curl_error($ch));
+        error_log('CURL error: ' . curl_errno($ch) . " – " . print_r(curl_error($ch),1));
     }
     curl_close($ch); // 关闭CURL会话
 
@@ -358,4 +365,16 @@ function buildPhysicalPath($file_row) {
     }
 
     return $physical_path;
+}
+
+function getReferrer($source) {
+    $referrer = '';
+    if($source == 'tujigu') {
+        $referrer = 'https://www.tujigu.com/';
+    }
+    if($source == 'qqc') {
+        $referrer = 'https://qqc962.com/';
+    }
+
+    return $referrer;
 }

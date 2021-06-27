@@ -12,6 +12,8 @@ $domainUrl = getDomainUrl();
     <meta name="referrer" content="no-referrer" />
     <meta name="robots" content="follow, index" />
 
+    <meta http-equiv="cache-control" content="max-age=864000" />
+
     <link rel="shortcut icon" href="/theme/jw/favicon.ico" type="image/vnd.microsoft.icon" />
 
     <meta name="description" content="<?=$data['meta_desc']?>" />

@@ -56,13 +56,47 @@ Class fileDetailPageModel extends ModelCore {
   public function getFileThumbnail() {
       $fileId = empty($this->request->arg[1]) ? '' : $this->request->arg[1];
 
+      $img_data = null;
       $res = File::getFileByMd5($fileId); // file/<md5>/th.jpg
       if(!empty($res)) {
-        $referrer = getReferrer($res['source']);
-        $image_content = curl_call(str_replace('http://', 'https://',$res['thumbnail']), 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
+        $row = $res;
+        // Build physical path: Use <file_root>/source/<file_title>/ as file structure
+        $physical_path = buildPhysicalPath($row);
+
+        // If folder not exist, create the folder
+        if(!is_dir($physical_path)) {
+            $res = mkdir($physical_path, 0744, true);
+            if(!$res) {
+                error_log(" ----- failed to create directory: " . $physical_path );
+            }
+        }
+
+        $fullname = $physical_path . '/thumbnail.jpg';
+        // if file does not exist locally or force_download, then download it
+        if(!file_exists($fullname)) {
+          $referrer = getReferrer($row['source']);  
+          $result = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
+          if(!empty($result)) {
+              $res = file_put_contents($fullname, $result);
+              chmod($fullname, 0755);
+              if(!$res) {
+                  error_log(" ----- failed to save thumbnail: " . $fullname);    
+              }
+              else {
+                $img_data = $result;
+              }
+          }
+          else {
+              error_log(" ---- failed to download: " . $row['thumbnail'] ); 
+          }
+        }
+        else {
+          $img_data = file_get_contents($fullname);
+        }
       }
+
       header('Content-type: image/jpeg');
-      echo $image_content;
+      echo $img_data;
       exit;
   }
 

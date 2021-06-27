@@ -1,7 +1,11 @@
 <?php
 /* @var File $data */
 
-$thumbnail = processThumbnail($data);
+//$thumbnail = processThumbnail($data);
+/* 
+data-src="<?=$thumbnail?>" 
+data-src="/file_thumbnail/<?=$data['source_url_md5']?>/th.jpg"
+*/
 ?>
 <article class="clearfix node-teaser" itemscope itemtype="http://schema.org/FileObject">
     <div class="task" id="task" style="position: relative">
@@ -10,7 +14,7 @@ $thumbnail = processThumbnail($data);
                 <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url">
                     <div class="stretchy-wrapper" data-bg-text="Loading...">
                         <img class="lazy"
-                              data-src="<?=$thumbnail?>"
+                              data-src="/file_thumbnail/<?=$data['source_url_md5']?>/th.jpg"
                               alt="<?=$data['title']?>"
                               src=""
                         >

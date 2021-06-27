@@ -400,20 +400,19 @@ function processThumbnail($row) {
     $name_arr = explode('/jw-photos/', $fullname);
     $relative_path = '/jw-photos/' . $name_arr[1];    
 
-    $result = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
-
+    $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
     // if file does not exist locally or force_download, then download it
     if(!file_exists($fullname)) {
       $referrer = getReferrer($row['source']);  
-      $result = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['referrer'=>$referrer]);
-      if(!empty($result)) {
-          $res = file_put_contents($fullname, $result);
+      $img_data = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
+      if(!empty($img_data)) {
+          $res = file_put_contents($fullname, $img_data);
           chmod($fullname, 0755);
           if(!$res) {
               error_log(" ----- failed to save thumbnail: " . $fullname);    
           }
           else {
-            $result = $relative_path;
+            $img_src = $relative_path;
           }
       }
       else {
@@ -421,8 +420,8 @@ function processThumbnail($row) {
       }
     }
     else {
-      $result = $relative_path;
+      $img_src = $relative_path;
     }
 
-    return $result;
+    return $img_src;
   }  

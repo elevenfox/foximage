@@ -405,7 +405,7 @@ function processThumbnail($row) {
     // if file does not exist locally or force_download, then download it
     if(!file_exists($fullname)) {
       $referrer = getReferrer($row['source']);  
-      $result = curl_call(str_replace('http://', 'https://',$row['thumbnail']), 'get', null, ['referrer'=>$referrer]);
+      $result = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['referrer'=>$referrer]);
       if(!empty($result)) {
           $res = file_put_contents($fullname, $result);
           if(!$res) {
@@ -416,7 +416,7 @@ function processThumbnail($row) {
           }
       }
       else {
-          echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
+          error_log(" ---- failed to download: " . $row['thumbnail'] ); 
       }
     }
     else {

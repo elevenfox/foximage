@@ -65,7 +65,7 @@ Class fileDetailPageModel extends ModelCore {
 
         // If folder not exist, create the folder
         if(!is_dir($physical_path)) {
-            $res = mkdir($physical_path, 0744, true);
+            $res = mkdir($physical_path, 0755, true);
             if(!$res) {
                 error_log(" ----- failed to create directory: " . $physical_path );
             }

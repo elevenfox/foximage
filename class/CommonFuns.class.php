@@ -348,11 +348,14 @@ function cleanStringForFilename($filename) {
 }
 
 
-function buildPhysicalPath($file_row) {
-    $file_root = Config::get('file_root');
+function buildPhysicalPath($file_row, $file_root='') {
+    if(empty($file_root)) {
+        $file_root = Config::get('file_root');
+    }
     if(empty($file_root)) {
         $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
     }
+    
     if($file_row['source'] != 'tujigu') {
         $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
     }

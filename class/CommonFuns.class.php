@@ -392,7 +392,7 @@ function processThumbnail($row) {
 
     // If folder not exist, create the folder
     if(!is_dir($physical_path)) {
-        $res = mkdir($physical_path, 0744, true);
+        $res = mkdir($physical_path, 0755, true);
         if(!$res) {
             error_log(" ----- failed to create directory: " . $physical_path );
         }
@@ -404,23 +404,14 @@ function processThumbnail($row) {
     $relative_path = '/jw-photos/' . $name_arr[1];    
 
     $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
-    // if file does not exist locally or force_download, then download it
+    // if file does not exist locally, then use download url
     if(!file_exists($fullname)) {
-      $referrer = getReferrer($row['source']);  
-      $img_data = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
-      if(!empty($img_data)) {
-          $res = file_put_contents($fullname, $img_data);
-          chmod($fullname, 0755);
-          if(!$res) {
-              error_log(" ----- failed to save thumbnail: " . $fullname);    
-          }
-          else {
-            $img_src = $relative_path;
-          }
-      }
-      else {
-          error_log(" ---- failed to download: " . $row['thumbnail'] ); 
-      }
+        if($row['source'] == 'tujigu') {
+            $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
+        }
+        else {
+            $img_src = $row['thumbnail'];
+        }
     }
     else {
       $img_src = $relative_path;

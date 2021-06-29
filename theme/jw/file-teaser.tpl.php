@@ -1,28 +1,7 @@
 <?php
 /* @var File $data */
 
-//$thumbnail = processThumbnail($data);
-/* 
-data-src="<?=$thumbnail?>" 
-data-src="/file_thumbnail/<?=$data['source_url_md5']?>/th.jpg"
-*/
-
-// Build physical path: Use <file_root>/source/<file_title>/ as file structure
-$physical_path = buildPhysicalPath($data);
-$fullname = $physical_path . '/thumbnail.jpg';
-
-$name_arr = explode('/jw-photos/', $fullname);
-$relative_path = '/jw-photos/' . $name_arr[1];    
-
-
-// if file does not exist locally or force_download, then download it
-if(file_exists($fullname)) {
-  $thumbnail = $relative_path;
-}
-else {
-  $thumbnail = '/file_thumbnail/' . $data['source_url_md5'] . '/th.jpg';
-}
-
+$thumbnail = processThumbnail($data);
 
 ?>
 <article class="clearfix node-teaser" itemscope itemtype="http://schema.org/FileObject">

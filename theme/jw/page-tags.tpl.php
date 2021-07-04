@@ -23,7 +23,7 @@ include 'header.tpl.php';
                         <div class="thumbnail-container">
                             <div class="teaser-thumbnail">
                                 <a href="/tags/<?=$tag['name']?>">
-                                    <?=ucwords($tag['name'])?>
+                                    <?=ucwords($tag['name'])?> (<?=$tag['vid']?>)
                                 </a>
                             </div>
                         </div>

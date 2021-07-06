@@ -946,6 +946,14 @@ article.file #fdp-photo .fdp-random-btns span {
 
 
 /**** Mobile ****/
+@media screen and (orientation:portrait) {
+    .ad-side-right {
+        display: none;
+    }
+    .content-container .content {
+        margin-right: 0;
+    }
+}
 
 @media (max-width: 1200px) {
     .node-teaser {

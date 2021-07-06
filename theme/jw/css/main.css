@@ -547,7 +547,7 @@ footer .the-tag {
 
 .content-container .content {
     margin-right: 350px;
-    padding: 0 0 0 10px;
+    /* padding: 0 0 0 10px; */
 }
 
 .content-container>h1 {
@@ -723,7 +723,7 @@ article.file .file-description {
 article.file .file-detail {
     text-align: left;
     margin: 0 0 30px;
-    padding: 0 10px 20px 10px;
+    padding: 0 0 20px 0;
 }
 
 article.file .file-detail img {

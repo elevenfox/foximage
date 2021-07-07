@@ -952,14 +952,14 @@ article.file #fdp-photo .fdp-random-btns span {
     } */
     .content-container {
         margin-right: 0;
-        position: relative;
-        z-index: 999;
     }
     .content-container .content {
         margin-right: 0;
     }
     article.file .file-detail {
         padding: 0;
+        position: relative;
+        z-index: 999;
     }
 }
 

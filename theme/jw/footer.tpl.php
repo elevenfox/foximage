@@ -70,7 +70,7 @@
            <span class="footer-link"><a href="/privacy-policy">Privacy Policy</a></span>
        </div>
        <div style="margin: 15px 0;">
-           © JAVWall8 图城 2020 - <?=date('Y', time())?>
+           © Tuzac 图宅网 2020 - <?=date('Y', time())?>
        </div>
        <?php print $data['scripts_footer']; ?>
 

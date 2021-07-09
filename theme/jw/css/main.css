@@ -947,16 +947,13 @@ article.file #fdp-photo .fdp-random-btns span {
 
 /**** Mobile ****/
 @media screen and (orientation:portrait) {
-    /* .ad-side-right {
-        display: none;
-    } */
-    .content-container {
+    .content-container.dev-mode {
         margin-right: 0;
     }
-    .content-container .content {
+    .content-container.dev-mode .content {
         margin-right: 0;
     }
-    article.file .file-detail {
+    .content-container.dev-mode .file .file-detail {
         padding: 0;
         position: relative;
         z-index: 999;

@@ -11,7 +11,7 @@ $api_server = Config::get('api_server');
 $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 ?>
 
-<div class="content-container file-detail-page">
+<div class="content-container file-detail-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
 
     <article class="file content" itemscope itemtype="http://schema.org/fileObject">
         <?php if(!empty($data['not-found'])) : ?>

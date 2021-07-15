@@ -730,6 +730,14 @@ article.file .file-detail img {
     width: 100%;
     position: relative;
 }
+article.file .file-detail #the-photo.rotate {
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg); 
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -o-transform: rotate(90deg); 
+}
+
 
 article.file #fdp-photo {
     text-align: center;
@@ -1051,6 +1059,7 @@ article.file #fdp-photo .fdp-random-btns span {
     .header__logo-image {
         padding: 15px 0;
         width: 30px;
+        height: 30px;
     }
     .header__logo span {
         line-height: 60px;
@@ -1110,9 +1119,15 @@ article.file #fdp-photo .fdp-random-btns span {
         margin: 0;
     }
     .content-container h1 {
-        margin: 3px 5px 25px 0;
+        margin: 25px 5px 25px 0;
         font-size: 26px;
         line-height: 35px;
+    }
+    .content-container #random-play {
+        line-height: 22px;
+    }
+    .glyphicon-circle {
+        line-height: 22px;
     }
     .content-container .content {
         margin-right: 0;

@@ -15,6 +15,9 @@ Class ModelCore {
     $this->request = $request;
     $this->db = DB::$dbInstance;
     $this->initCoreBlock();
+
+    $dev_mode = Config::get('dev_mode');
+    $this->data['dev_mode'] = $dev_mode;
   }
   
   /*

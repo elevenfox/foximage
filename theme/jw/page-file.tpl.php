@@ -11,6 +11,39 @@ $api_server = Config::get('api_server');
 $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 ?>
 
+<script>
+  function orientation() {
+    <?php if(!empty($data['dev_mode'])):?>
+      let image = $('#the-photo');
+      let currentOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+      
+      let originImageWidth = image.width();
+      let originImageHeight = image.height();
+      let aspectRatio = originImageWidth/originImageHeight;
+      image.data("aspect-ratio", aspectRatio);
+
+      if( aspectRatio > 1 && currentOrientation === 'portrait' ) {
+          // Image is landscape, so rotate it
+          image.addClass('rotate');
+          $('#the-photo-link').width(originImageHeight * aspectRatio);
+          $('#the-photo-link').height(originImageWidth * aspectRatio);
+          image.width(originImageWidth * aspectRatio);
+          image.height(originImageHeight * aspectRatio);
+          image.css('top', (originImageWidth * (aspectRatio - 1))/2 );
+          image.css('left', (originImageWidth * (1 - aspectRatio))/2 );
+          
+      } 
+      if (aspectRatio < 1 && currentOrientation === 'landscape') {
+          // Image is portrait, rotate it to landscape and scale it
+          image.addClass('rotate');
+          $('#the-photo-link').height(originImageWidth * aspectRatio);
+          image.width(originImageWidth * aspectRatio);
+          image.height(originImageHeight * aspectRatio);
+          image.css('top', (originImageWidth * (aspectRatio-1))/2 );
+      }
+    <?php endif;?>
+  }
+</script>
 <div class="content-container file-detail-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
 
     <article class="file content" itemscope itemtype="http://schema.org/fileObject">
@@ -68,8 +101,8 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
                   ?>
                   <div id="fdp-photo">
-                    <a title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="Loading...">
-                      <img src="<?=$cur_image_url?>" alt="<?=$file['title']?>" loading="lazy"></img>
+                    <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="Loading...">
+                      <img id="the-photo" src="<?=$cur_image_url?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
                     </a>
                     <div class="fdp-click-area">
                       <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>
@@ -198,7 +231,6 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
 
       <?php endif; ?>
-
 })(jQuery);
 </script>
 <?php endif;?>

@@ -11,8 +11,6 @@ Class fileDetailPageModel extends ModelCore {
   
   public function __construct(Request $request) {
     parent::__construct($request);
-    $dev_mode = Config::get('dev_mode');
-    $this->data['dev_mode'] = $dev_mode;
   }
 
   public function make() {

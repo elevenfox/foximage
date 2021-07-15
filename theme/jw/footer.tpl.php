@@ -76,7 +76,7 @@
 
    </footer>
 
-    <?= $theme->render(null, 'ads_templates/ad-pop-under');?>
+    <?= $theme->render($data, 'ads_templates/ad-pop-under');?>
 
 <script type="text/javascript">
   (function () {

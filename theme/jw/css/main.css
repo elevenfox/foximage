@@ -952,21 +952,19 @@ article.file #fdp-photo .fdp-random-btns span {
     margin: 0 0 3px 10px;
 }
 
-
-/**** Mobile ****/
-@media screen and (orientation:portrait) {
-    .content-container.dev-mode {
-        margin-right: 0;
-    }
-    .content-container.dev-mode .content {
-        margin-right: 0;
-    }
-    .content-container.dev-mode .file .file-detail {
-        padding: 0;
-        position: relative;
-        z-index: 999;
-    }
+/**** dev-mode ****/
+.content-container.dev-mode {
+    margin-right: 0;
 }
+.content-container.dev-mode .content {
+    margin-right: 0;
+}
+.content-container.dev-mode .file .file-detail {
+    padding: 0;
+    position: relative;
+    z-index: 999;
+}
+/**** end of dev-mode ****/
 
 @media (max-width: 1200px) {
     .node-teaser {

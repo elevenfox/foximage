@@ -593,6 +593,7 @@ footer .the-tag {
     padding: 10px 5px 0;
     width: 100%;
     text-align: left;
+    box-sizing: border-box;
 }
 
 .node-teaser .teaser-file-title a,

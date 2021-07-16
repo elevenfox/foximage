@@ -741,7 +741,6 @@ article.file .file-detail #the-photo.rotate {
   -moz-transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   -o-transform: rotate(90deg); 
-  position: absolute;
 }
 
 
@@ -1253,5 +1252,9 @@ article.file #fdp-photo .fdp-random-btns span {
     }
     .the-tag {
         font-size: 12px;
+    }
+
+    article.file .file-detail #the-photo.rotate {
+        position: absolute;
     }
 }

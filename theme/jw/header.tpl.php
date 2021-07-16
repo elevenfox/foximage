@@ -73,7 +73,7 @@ $domainUrl = getDomainUrl();
     <header class="header" role="banner">
 
         <div id="h-left">
-            <div style="position: absolute; left: 15px; top: 20px; ">
+            <div style="position: absolute; left: 15px; top: 15px; ">
             <span id="quick-nav">
                 <img src="/theme/jw/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation">
             </span>

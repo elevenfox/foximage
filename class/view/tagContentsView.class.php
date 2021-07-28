@@ -24,7 +24,7 @@ Class tagContentsView extends ViewCore {
         $this->data['meta_desc'] = $this->data['tagName'] . ' files - ' .  $this->data['meta_desc'];
 
         // Set meta keyword
-        $this->data['meta_keywords'] = $this->data['tagName'] . ',' . $this->data['meta_keywords'];
+        $this->data['meta_keywords'] = $this->data['tagName'] . ', ' . $this->data['meta_keywords'];
     }
 
 

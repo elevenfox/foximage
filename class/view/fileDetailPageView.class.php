@@ -16,6 +16,6 @@ Class fileDetailPageView extends ViewCore {
     $this->data['meta_desc'] = $this->data['file']['title'] . ' - ' .  $this->data['meta_desc'];
 
     // Set meta keyword
-    $this->data['meta_keywords'] = $this->data['file']['tags'] . ',' . $this->data['meta_keywords'];
+    $this->data['meta_keywords'] = implode(', ', titleToKeywords($this->data['file']['title'])) . ', ' . $this->data['file']['tags'] . ',' . $this->data['meta_keywords'];
   }
 }

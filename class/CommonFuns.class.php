@@ -348,6 +348,55 @@ function cleanStringForFilename($filename) {
 }
 
 
+function titleToKeywords($title) {
+    $keywords = [];
+
+    // remove [xxp] at the end of the title if exists
+    if(stripos($title, ']') === strlen($title)-1) {
+        $textArr = find_between($title, '[', ']');
+        $text = '[' . $textArr[count($textArr) - 1] .']';
+        $title = str_replace($text, '', $title);
+    }
+    
+    // split by '_' first, add first element as keyword
+    $textArr = explode('_', $title);
+    if(count($textArr) > 1) {
+        $keywords[] = $textArr[0];
+        $t = $textArr[0]. '_';
+        $title = str_replace($t, '', $title);
+    }
+    
+    // If start with [xxxx], use it as keyword
+    
+    
+    // get word between 《》 as keyword, then remove it in title
+    $textArr = find_between($title, '《', '》');
+    if(!empty($textArr)) {
+        $keywords = array_merge($keywords, $textArr);
+        foreach($textArr as $t) {
+            $t = '《' . $t. '》';
+            $title = str_replace($t, ' ', $title);
+        }
+    }
+        
+    // split by space again for the rest elements
+    $rest = stringToKeywords($title);
+
+    return array_merge($keywords, $rest);
+}
+
+function stringToKeywords($string) {
+    $string = preg_replace("/ {2,}/", " ", $string);
+    $separators = ['_', '-', ' ', '+', '@' , '(', ')', '+'];
+    foreach($separators as $separator) {
+        $string = str_replace($separator, '|||', $string);
+    }
+    $res = explode('|||', $string);
+    $res = array_filter($res, function($value) { return !empty($value); });
+    return $res;
+}
+
+
 function buildPhysicalPath($file_row, $file_root='') {
     if(empty($file_root)) {
         $file_root = Config::get('file_root');
@@ -419,3 +468,5 @@ function processThumbnail($row) {
 
     return $img_src;
   }  
+
+

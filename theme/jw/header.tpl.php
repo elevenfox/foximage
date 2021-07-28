@@ -18,8 +18,8 @@ $domainUrl = getDomainUrl();
 
     <meta name="description" content="<?=$data['meta_desc']?>" />
     <meta name="keywords" content="<?=$data['meta_keywords']?>" />
-    <link rel="canonical" href="<?=$data['REQUEST_URI']?>" />
-    <link rel="shortlink" href="<?=$data['REQUEST_URI']?>" />
+    <link rel="canonical" href="<?=$domainUrl . $data['REQUEST_URI']?>" />
+    <link rel="shortlink" href="<?=$domainUrl . $data['REQUEST_URI']?>" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:url" content="<?=$domainUrl . $data['REQUEST_URI']?>" />

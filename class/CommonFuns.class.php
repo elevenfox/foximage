@@ -352,7 +352,7 @@ function titleToKeywords($title) {
     $keywords = [];
 
     // remove [xxp] at the end of the title if exists
-    if(stripos($title, ']') === strlen($title)-1) {
+    if(strrpos($title, ']') === strlen($title)-1) {
         $textArr = find_between($title, '[', ']');
         $text = '[' . $textArr[count($textArr) - 1] .']';
         $title = str_replace($text, '', $title);
@@ -367,7 +367,12 @@ function titleToKeywords($title) {
     }
     
     // If start with [xxxx], use it as keyword
-    
+    if(strpos($title, '[') === 0) {
+        $textArr = find_between($title, '[', ']');
+        $keywords[] = $textArr[0];
+        $text = '[' . $textArr[count($textArr) - 1] .']';
+        $title = str_replace($text, '', $title);
+    }
     
     // get word between 《》 as keyword, then remove it in title
     $textArr = find_between($title, '《', '》');
@@ -390,6 +395,14 @@ function stringToKeywords($string) {
     $separators = ['_', '-', ' ', '+', '@' , '(', ')', '+'];
     foreach($separators as $separator) {
         $string = str_replace($separator, '|||', $string);
+    }
+    $smarts = ['第', '套图', '写真', 'No.', 'Vol.'];
+    foreach($smarts as $smart) {
+        $string = str_replace($smart, '|||'.$smart, $string);
+    }
+    $smarts_r = ['期'];
+    foreach($smarts_r as $smart_r) {
+        $string = str_replace($smart_r, $smart_r.'|||', $string);
     }
     $res = explode('|||', $string);
     $res = array_filter($res, function($value) { return !empty($value); });

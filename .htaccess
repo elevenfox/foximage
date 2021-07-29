@@ -61,6 +61,11 @@ AddType application/octet-stream .csv
   php_value mbstring.encoding_translation   0
 </IfModule>
 
+# Always cache images
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+  Header set Cache-Control "max-age=63072000, public"
+</FilesMatch>
+
 # Requires mod_expires to be enabled.
 <IfModule mod_expires.c>
   # Enable expirations.

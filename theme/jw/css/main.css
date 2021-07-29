@@ -581,6 +581,7 @@ footer .the-tag {
     width: 24%;
     display: inline-block;
     min-width: 200px;
+    max-width: 350px;
     margin-bottom: 20px;
 }
 

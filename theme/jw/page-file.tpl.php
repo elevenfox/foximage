@@ -42,6 +42,8 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
           image.css('top', (originImageWidth * (aspectRatio-1))/2 );
       }
     <?php endif;?>
+
+    document.getElementById('the-photo').scrollIntoView();
   }
 </script>
 <div class="content-container file-detail-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">

@@ -38,8 +38,9 @@ Class tagContentsModel extends ModelCore {
         $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
         $this->data['page'] = $page;
 
-
-        $res = Tag::getAllTags($page);
+        $sort = empty($this->request->getSysRequest()['sort']) ? '1' : $this->request->getSysRequest()['sort'];
+        
+        $res = Tag::getAllTags($page, 120, $sort);
         $this->data['tags'] = $res;
 
         $count = Tag::getAllTagsCount();

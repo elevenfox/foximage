@@ -66,10 +66,18 @@ Class Tag {
         }
     }
 
-    public static function getAllTags($page=1, $limit=120, $sort='asc') {
+    /**
+     * Gett all tags function
+     *
+     * @param integer $page
+     * @param integer $limit
+     * @param integer $sort_by 1: alphabic asc, 2: alphabic desc, 3: vid asc, 4: vid desc
+     * @return void
+     */
+    public static function getAllTags($page=1, $limit=120, $sort_by = 1) {
         self::setTables();
 
-        $cacheKey = THEME . '_all_tags_' . $page . '_' . $limit . '_' . $sort;
+        $cacheKey = THEME . '_all_tags_' . $page . '_' . $limit . '_' . $sort_by;
         if(APCU && !isAdmin()) {
             $res = apcu_fetch($cacheKey);
             if(!empty($res)) {
@@ -78,7 +86,24 @@ Class Tag {
         }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = "select * from ".self::$table_tags." where vid > 5 order by convert(name using gbk) collate gbk_chinese_ci " . $sort . ' limit ' . $limit;
+        switch($sort_by) {
+            case 1:
+                $order_by = 'order by convert(name using gbk) collate gbk_chinese_ci asc';
+                break;
+            case 2:
+                $order_by = 'order by convert(name using gbk) collate gbk_chinese_ci desc';
+                break;
+            case 3:
+                $order_by = 'order by vid asc';
+                break;
+            case 4:
+                $order_by = 'order by vid desc';
+                break;
+            default:  
+                $order_by = 'order by convert(name using gbk) collate gbk_chinese_ci asc';
+                break;   
+        }
+        $query = "select * from ".self::$table_tags." where vid > 5 " . $order_by . ' limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {

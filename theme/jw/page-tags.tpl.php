@@ -11,8 +11,16 @@ include 'header.tpl.php';
 ?>
 
     <div class="content-container all-tags-page">
-        <h1><?php print $data['page_title']; ?></h1>
-
+        <h1>
+            <?php print $data['page_title']; ?>
+            <select name="sort_by" id="tags-sort-by">
+                <option value="1">按字母升序</option>
+                <option value="2">按字母降序</option>
+                <option value="3">按图集数量升序</option>
+                <option value="4">按图集数量降序</option>
+            </select>
+        </h1>
+        
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
         <div id="content" class="content">
@@ -41,3 +49,11 @@ include 'header.tpl.php';
 
 
 <?php include 'footer.tpl.php';?>
+
+<script>
+    $(function() {
+        $('#tags-sort-by').on('change', function() {
+            window.location.href = '?sort=' + $(this).val();
+        });
+    });
+</script>

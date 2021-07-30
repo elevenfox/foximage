@@ -553,10 +553,18 @@ footer .the-tag {
     margin-right: 350px;
     /* padding: 0 0 0 10px; */
 }
+.content-container.all-tags-page .content {
+    padding: 0 0 0 20px;
+}
+.content-container.all-tags-page h1 select {
+    float: right;
+    margin-right: 20px;
+}
 
 .content-container>h1 {
     text-align: left;
     margin: 30px 20px;
+    margin-right: 350px;
 }
 
 .content-container #random-play {
@@ -995,6 +1003,9 @@ article.file #fdp-photo .fdp-random-btns span {
         display: none;
     }
     .content-container .content {
+        margin-right: 0;
+    }
+    .content-container>h1 {
         margin-right: 0;
     }
     .ad-side-right {

@@ -26,7 +26,7 @@ Class fileDetailPageController extends ControllerCore {
           'access callback' => TRUE,
           'modelMethod' => 'getFileThumbnail',
       );
-      $items['file_content/%/%/fc.jpg'] = array(
+      $items['jw-photos/file_content/%/%/fc.jpg'] = array(
         'title' => 'File page',
         'access callback' => TRUE,
         'modelMethod' => 'getFileContent',

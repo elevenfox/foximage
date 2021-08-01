@@ -225,10 +225,18 @@ Class File {
         self::setTables();
 
         $cacheKey = THEME . '_related_files_' . $fileId;
+        $sessionCacheKey = THEME . '_related_files';
+        // Use memory cache for non-admin users
         if(APCU && !isAdmin()) {
             $res = apcu_fetch($cacheKey);
             if(!empty($res)) {
                 return $res;
+            }
+        }
+        else if (!isAdmin()) {
+            // If no memory cache available, at least use sesson to cache for current user
+            if($_SESSION['file_id'] == $fileId && !empty($_SESSION[$sessionCacheKey])) {
+                return $_SESSION[$sessionCacheKey];
             }
         }
 
@@ -244,6 +252,11 @@ Class File {
             if(APCU && !isAdmin()) {
                 apcu_store($cacheKey, $res, 600);
             }
+            else if (!isAdmin()) {
+                $_SESSION['file_id'] = $fileId;
+                $_SESSION[$sessionCacheKey] = $res;
+            }
+
             return $res;
         }
         else {

@@ -49,7 +49,7 @@ Class fileDetailPageModel extends ModelCore {
     }
 
     $this->data['file'] = $res;
-    $this->data['relatedFiles'] = File::getRelatedFilesById($fileId);
+    $this->data['relatedFiles'] = File::getRelatedFilesById($res['id']);
 
   }
 
@@ -101,17 +101,31 @@ Class fileDetailPageModel extends ModelCore {
   }
 
   public function getFileContent() {
-    $fileId = empty($this->request->arg[1]) ? '' : $this->request->arg[1];
-    $file = File::getFileByMd5($fileId); // file/<md5>/<num>/fc.jpg
+    $fileId = empty($this->request->arg[2]) ? '' : $this->request->arg[2];
+    $file = File::getFileByMd5($fileId); // jw-photos/file_content/<md5>/<num>/fc.jpg
 
     $images = explode(',', $file['filename']);
-    $num = empty($this->request->arg[2]) ? 1 : $this->request->arg[2];
+    $num = empty($this->request->arg[3]) ? 1 : $this->request->arg[3];
     $num = $num >= count($images) ? count($images) : $num;
     $cur_image_url = $images[$num-1];
 
     if(!empty($cur_image_url)) {
       $referrer = getReferrer($file['source']);
       $image_content = curl_call($cur_image_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
+    }
+    
+    if(empty($image_content) || stripos($image_content, '404 Not Found') !== false) {
+      $name_arr = explode('/', $cur_image_url);
+      $filename = array_pop($name_arr);
+      $physical_path = buildPhysicalPath($file);
+      $file_root = Config::get('file_root');
+      if(empty($file_root)) {
+        $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+      }
+      $relative_path = str_replace($file_root, '', $physical_path);
+      $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
+      $dev_url = 'http://dev.tuzac.com'.$relative_fullname;
+      $image_content = curl_call($dev_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
     }
     header('Content-type: image/jpeg');
     echo $image_content;

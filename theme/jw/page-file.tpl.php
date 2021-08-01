@@ -97,7 +97,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       }
                       else {
                         if($file['source'] == 'tujigu') {
-                          $cur_image_url = '/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+                          $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
                         }
                       }
 

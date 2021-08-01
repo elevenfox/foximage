@@ -13,9 +13,14 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
 <script>
   function orientation() {
-    <?php if(!empty($data['dev_mode'])):?>
-      let image = $('#the-photo');
-      let currentOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    let currentOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+
+    let devMode = <?= empty($data['dev_mode']) ? 0 : 1 ?>;
+    
+    let autoRotate = devMode || (window.innerWidth < 1000 && currentOrientation == 'portrait');
+    
+    if(autoRotate) {
+      let image = $('#the-photo'); 
       
       let originImageWidth = image.width();
       let originImageHeight = image.height();
@@ -41,7 +46,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
           image.height(originImageHeight * aspectRatio);
           image.css('top', (originImageWidth * (aspectRatio-1))/2 );
       }
-    <?php endif;?>
+    }
 
     document.getElementById('the-photo').scrollIntoView();
   }

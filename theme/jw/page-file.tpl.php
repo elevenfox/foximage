@@ -108,7 +108,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
                   ?>
                   <div id="fdp-photo">
-                    <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="Loading...">
+                    <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">
                       <img id="the-photo" src="<?=$cur_image_url?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
                     </a>
                     <div class="fdp-click-area">

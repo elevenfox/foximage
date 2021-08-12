@@ -768,7 +768,7 @@ article.file #fdp-photo>a::before {
     color: #999;
     content: attr(data-bg-text);
     display: block;
-    font-size: 26px;
+    font-size: 16px;
     line-height: 1;
     position: absolute;
     top: 50%;

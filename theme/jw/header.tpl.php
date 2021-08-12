@@ -128,8 +128,8 @@ $domainUrl = getDomainUrl();
                     <a href="<?= $menuLink['url']?>" title=""><?= $menuLink['name']?></a>
                 </li>
             <?php endforeach; ?>
-            <li class="outer-link"><a href="https://www.javcook.com" title="" target="_blank">JAVCOOK.com</a></li>
-            <li class="outer-link last"><a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com</a></li>
+            <!--li class="outer-link"><a href="https://www.javcook.com" title="" target="_blank">JAVCOOK.com</a></li>
+            <li class="outer-link last"><a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com</a></li-->
         </ul>
     </div>
 

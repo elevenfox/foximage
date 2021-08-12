@@ -62,6 +62,12 @@
            <span class="the-tag">
               <a href="/tags/蕾丝诱惑">蕾丝</a>
             </span>
+            <span class="the-tag">
+              <a href="https://www.javcook.com" title="" target="_blank">JAVCOOK.com</a>
+            </span>
+            <span class="the-tag">
+              <a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com</a>
+            </span>
        </div>
        <div class="footer-links">
            <span class="footer-link"><a href="/terms-conditions">Terms &amp; Conditions</a></span>

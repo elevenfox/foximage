@@ -17,7 +17,7 @@
       "chrome_enabled": true,
       "new_tab": true,
       "frequency_period": 15,
-      "frequency_count": 1,
+      "frequency_count": 2,
       "trigger_method": 3,
       "trigger_class": "",
       "only_inline": false,

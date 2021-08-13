@@ -109,10 +109,11 @@ Class fileDetailPageModel extends ModelCore {
     $num = $num >= count($images) ? count($images) : $num;
     $cur_image_url = $images[$num-1];
 
-    if(!empty($cur_image_url)) {
-      $referrer = getReferrer($file['source']);
-      $image_content = curl_call($cur_image_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
-    }
+    /* 2021-08-13 Looks like tujigu blocked our domain name, have to use dev for now */
+    // if(!empty($cur_image_url)) {
+    //   $referrer = getReferrer($file['source']);
+    //   $image_content = curl_call($cur_image_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
+    // }
     
     if(empty($image_content) || stripos($image_content, '404 Not Found') !== false) {
       $name_arr = explode('/', $cur_image_url);
@@ -125,7 +126,7 @@ Class fileDetailPageModel extends ModelCore {
       $relative_path = str_replace($file_root, '', $physical_path);
       $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
       $dev_url = 'http://dev.tuzac.com'.$relative_fullname;
-      $image_content = curl_call($dev_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
+      $image_content = curl_call($dev_url, 'get', null, ['timeout'=>10]);
     }
     header('Content-type: image/jpeg');
     echo $image_content;

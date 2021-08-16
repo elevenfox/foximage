@@ -98,8 +98,6 @@ if(count($res) >0) {
         }
 
         $album_processed++;
-
-        break;
     }
 }
 

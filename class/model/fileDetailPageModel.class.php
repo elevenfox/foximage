@@ -115,7 +115,11 @@ Class fileDetailPageModel extends ModelCore {
     //   $image_content = curl_call($cur_image_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
     // }
     
-    if(empty($image_content) || stripos($image_content, '404 Not Found') !== false) {
+    $image_content = null;
+    $relative_fullname = null;
+    if(!empty($cur_image_url)) {
+      // Try to use Onedrive for photo storage for now
+      import('Onedrive');
       $name_arr = explode('/', $cur_image_url);
       $filename = array_pop($name_arr);
       $physical_path = buildPhysicalPath($file);
@@ -124,9 +128,31 @@ Class fileDetailPageModel extends ModelCore {
         $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
       }
       $relative_path = str_replace($file_root, '', $physical_path);
+      
       $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
+      
+      $image_content = Onedrive::get_photo_content($relative_fullname);
+    }
+    
+    if( empty($image_content) 
+         || stripos($image_content, '404 Not Found') !== false 
+         || stripos($image_content, 'itemNotFound') !== false ) {
       $dev_url = 'http://dev.tuzac.com'.$relative_fullname;
       $image_content = curl_call($dev_url, 'get', null, ['timeout'=>10]);
+
+      // test Baidipan class (working!)
+      // import('Baidupan');
+      // $list = Baidupan::get_file_list_by_path('/jw-photos/' . $relative_path);
+      // $fs_id = null;
+      // foreach($list as $f) {
+      //     if($f->path == $relative_fullname) { 
+      //       $fs_id = $f->fs_id;
+      //     }
+      // }
+      // $image_content = Baidupan::get_photo_content($fs_id);
+      // header('Content-type: image/jpeg');
+      // echo $image_content;
+      // exit;
     }
     header('Content-type: image/jpeg');
     echo $image_content;

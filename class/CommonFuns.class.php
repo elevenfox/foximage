@@ -57,14 +57,18 @@ function curl_call($url, $method='get', $data=null, $options=[]) {
     $use_proxy = empty($options['user_proxy']) ? false : $options['user_proxy']; 
     $referrer = empty($options['referrer']) ? null : $options['referrer']; 
 
-    $ch = curl_init(); // 启动一个CURL会话
-    curl_setopt($ch, CURLOPT_URL, $url); // 要访问的地址
+    // Build request headers
+    $options_headers = empty($options['headers']) ? [] : $options['headers'];
+    $headers = array_merge($options_headers, ['Accept-Encoding: gzip, deflate', "charset=UTF-8"]);
+
+    $ch = curl_init(); 
+    curl_setopt($ch, CURLOPT_URL, $url); 
     if($use_proxy) {
         curl_setopt($ch, CURLOPT_PROXY, 'socks5://localhost:9050');
     }
     // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查，0表示阻止对证书的合法性的检查。
     // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
-    curl_setopt($ch, CURLOPT_HTTPHEADER,array('Accept-Encoding: gzip, deflate',"charset=UTF-8"));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_ENCODING, '');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -72,12 +76,19 @@ function curl_call($url, $method='get', $data=null, $options=[]) {
         curl_setopt($ch, CURLOPT_REFERER, $referrer);
     }
     curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36');
-    // 获取的信息以文件流的形式返回，而不是直接输出。
     curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 
     if($method == 'post') {
-        curl_setopt($ch, CURLOPT_POST, count($postData));
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    }
+
+    if($method == 'put') {
+        curl_setopt($ch, CURLOPT_PUT, 1);
+        curl_setopt($ch, CURLOPT_INFILE, fopen($data, 'rb'));
+        curl_setopt($ch, CURLOPT_INFILESIZE, filesize($data));
+        curl_setopt($ch, CURLOPT_UPLOAD, true);
+
     }
 
     if(!empty($timeout)) {

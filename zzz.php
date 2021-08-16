@@ -2,86 +2,128 @@
 
 require_once './bootstrap.inc';
 
+// $file_root = '/var/www/html/jw-photos';
+// $res = strpos($file_root, 'jw-photos');
 
-$titles = [
-    'YS Web_广濑爱丽丝/広瀬アリス《ヒロインとパーティー!》写真集 Vol.679[58P]',
-    'Beautyleg_腿模ChiChi《性感丝袜内衣美腿》 No.1801 写真集[55P]',
-    "3D全彩H漫画系列之The Gym无圣光套图[57P]",
-    "网络美女_ 一笑芳香沁 - 2B圣诞 写真套图[30P]",
-    "秀人网_ No.2561 淼淼小姐姐呀 - 条纹的独特内衣制服系列[39P]",
-    "爱丝_佳慧《美丝单车》 写真集[70P]",
-    "丝意SIEE_ No.294 婷婷 《停车场的故事》 写真集[49P]",
-    "魅妍社_米娅Miya《身材高挑、性感翘臀》 Vol.090 写真集[39P]",
-    "YS Web_矢吹春奈《桟桥で待ち合わせ》写真集 Vol.150[72P]",
-    "极品萝莉网红咬一口小奈樱你的乳胶小女仆无圣光套图[40P]",
-    "纳丝摄影_洋洋《长发长腿清秀美女》 NO.098 写真集[84P]",
-    "[亚站撸图]极品女神Stacy Cruz无圣光套图[119P]",
-    "魅妍社_网红嫩模@Abby李雅《完美身材女神》 Vol.144 写真集[41P]",
-    "丝意SIEE_小月《浓浓春意》 No.269 写真集[29P]",
-    "[VGirl]V女郎第11期小艺(孟狐狸)无圣光套图[40P]",
-    "丽柜_Model Wendy《黑丝高跟时尚丽人》上下全集 美腿玉足写真图片[59P]",
-    "Juicy Honey_ jh057 七海なな Nana Nanaumi 写真集[59P]",
-    "Girlz-High_ Mayumi Yamanaka 山中真由美 - 性感内衣 - bgyu_009_001 写真集[45P]",
-    "秀人网_周于希Sandy《浴室中的朦胧韵味黑丝内衣》 No.1556 写真集[56P]",
-    "Girlz-High_Riina Yoshimi 吉見りぃな #g024 Gravure Gallery 02 写真集[40P]",
-    "魅妍社_模特维娜《身材曼妙婀娜别致，肌肤娇嫩若雪》 Vol.278 写真集[42P]",
-    "Beautyleg_ NO.1030 Miso 美腿写真集[56P]",
-    "动感之星_动感之星ShowTimeDancer 可可 NO.008 写真集[57P]",
-    "头条女神_韵竹《风韵佳人》 写真集[21P]",
-    "思话_ SH171 苏羽 - 甜美学妹的肉丝[49P]",
-    "尤物馆_Luffy菲菲《诱人的蕾丝吊袜兔女郎》 Vol.150 写真集[45P]",
-    "尤果圈爱尤物_尹菲《不舍离开的眼睛》 No.1279 写真集[35P]",
-    "网络美女_ Kitaro_绮太郎 - 蕾姆运动服[18P]",
-    "克拉女神_曼琼《烈焰红唇》 写真集[15P]",
-    "NS Eyes_ SF-No.619 Saki Akai 赤井沙希 写真集[20P]",
-    "Girlz-High_ Mayumi Yamanaka 山中真由美 - 睡衣系列 - bmay_013_003 写真集[45P]",
-    "魅妍社_Olivia童安琪《巨乳新人、丰满美臀》 Vol.087 写真集[43P]",
-    "Cosdoki_ 森咲あみ morisakiami_pic_sailor1 写真集[64P]",
-    "秀人网_芝芝Booty《办公室主题》 No.1757 写真集[53P]",
-    "VYJ_制コレGP ソログラビア Vol.09 Yuui Aoya 青谷优衣 写真集[31P]",
-    "Graphis_ NO.463 加美杏奈 《Angel Smile》 写真集[70P]",
-    "头条女神_芃芃《黑丝玉足与比基尼》 写真集[25P]",
-    "瑞丝馆_李可可《蕾丝镂空半透内衣》 Vol.056 写真集[48P]",
-    "Graphis_知花メイサ/知花梅莎 First Gravure 初脱ぎ娘 写真集[62P]",
-    "YS Web_广濑爱丽丝/広瀬アリス《ヒロインとパーティー!》写真集 Vol.679[58P]",
-    "语画界_ Vol.266 芝芝Booty 《极致丝袜美腿+美尻》 写真集[76P]",
-    "尤果圈爱尤物_曼妮儿《蕾丝下的秘密》 NO.871 写真集[40P]",
-    "Beautyleg_ NO.605 Jill 美腿写真集[63P]",
-    "@misty_ No.170 Mio Suzuki 鈴木美生 写真集[50P]",
-    "丽柜_Model 雪儿《白领丽人的诱惑》 上下合集 美腿玉足写真图片[76P]",
-    "Beautyleg_黄镫娴Neko《肉丝高叉+黑丝制服》 No.1899 写真集[51P]",
-    "[MFStar]模范学院第18期Milk楚楚[42P]",
-    "尤蜜荟_Yumi-尤美《衫黑丝OL和泳池湿身》 Vol.044 写真集[50P]",
-    "极品萝莉网红我是美少女战士JK酱援交少女无圣光套图[59P]",
-    "尤果圈爱尤物_ No.1843 韩妍妍 《白梦情诗》 写真集[35P]",
-    "秀人网_ No.2761 张雨萌 - 狂野的豹纹吊裙系列[27P]",
-    "Cosdoki_ Ichika Kasagi 笠木いちか kasagiichika_pic_heyagi1[52P]",
-    "网络美女_ 斗鱼主播小女巫露娜 - 白色蕾丝长筒[38P]",
-    "[亚站撸图]极品女神Martina Mink无圣光套图[120P]",
-    "嗲囡囡_新人模特伊蓓Eva 《首套私房》 Vol.021 写真集[56P]",
-    "美媛馆_猫本amy《澳大利亚墨尔本归来的美妞~~》 Vol.130 写真集[30P]",
-    "Girlz-High_ 一花美沙 Misa Ichibana - ghwb_010_002 写真集[39P]",
-    "美媛馆_糯美子Mini《粉色的吊带与透空的内衣系列》 Vol.413 写真集[75P]",
-    "尤果圈爱尤物_沐若昕《如沐春风》 No.729 写真集[40P]",
-    "网络美女_COS萌妹沧霁桔梗 - 麻衣学姐",
-    "头条女神_莫晓希《丝蜜008期众筹回报特别篇-下辑》 写真集[6P]",
-    "@misty_ No.270 Saori Yamamoto 山本早織 写真集[60P]",
-    "克拉女神_ 西景 《细润の足》 写真集[30P]",
-    "Beautyleg_ NO.920 腿模Stephy崔德蓉 美腿写真集[56P]",
-    "@misty_ No.216 Yuuri Morishita 森下悠里 写真集[60P]",
-    "语画界_ Vol.303 Emily顾奈奈 《浴室上演湿身的淋漓诱惑》 写真集[67P]",
-    "丽柜_雪糕&amp;amp;amp;筱筱《姐妹花丝足诱惑》 美腿丝足写真集[80P]",
-    "Juicy Honey_ jh108 Kizaki Jessica 希崎ジェシカ/希崎杰西卡 写真集[54P]",
-    
-    //'[XiuRen]秀人网第1436期杨晨晨sugar套图[54P]',
-];
+// ZDebug::my_print(strlen($file_root));
+// ZDebug::my_print(strlen('jw-photos'));
+// ZDebug::my_print($res);
 
-foreach($titles as $title) {
-    echo $title . '<br>';
-    $a = titleToKeywords($title);
-    echo implode(', ', $a) . '<br><br>';
-}
+// $s = strpos($file_root, 'jw-photos') == (strlen($file_root) - strlen('jw-photos'));
+// ZDebug::my_print($s);
+// exit;
+
+//import('Baidupan');
+
+//$url = 'https://api.amazon.com/auth/o2/token';
+// $res = curl_call($url, 'POST', array(
+//     'grant_type' => 'authorization_code',
+//     'code' => 'ANBzsjhYZmNCTeAszagk',
+//     'client_id' => 'amzn1.application-oa2-client.2578f77971ab45e684923a543b35ec0e',
+//     'client_secret' => '9ce60fd67a7508c3c2b92f5910ba2322a2420aee372e9379664dd6ecef2a1c73',
+//     'redirect_uri' => 'http://localhost',
+// ));
 
 
 
-//ZDebug::my_print($a);
+//--- url to get code: http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=68RLITXDmukTDvCoilKX92S77KNt30iL&scope=basic,netdisk&display=tv&qrcode=1&force_login=1&redirect_uri=https://local.tuzac.com/zzz.php';
+
+
+// $url = 'https://openapi.baidu.com/oauth/2.0/token';
+// $data = [
+//     'code' => '8edb74c95e3218d9da5dd87e0eff6be6',
+//     'grant_type' => 'authorization_code',
+//     'client_id' => '68RLITXDmukTDvCoilKX92S77KNt30iL',
+//     'client_secret' => 'mPHfN1nU7MLZqjPWB7fOSCzO60E28QIa',
+//     'redirect_uri' => 'https://local.tuzac.com/zzz.php.net/'
+// ];
+// $res = curl_call($url, 'POST', $data);
+
+
+//https://openapi.baidu.com/oauth/2.0/token?grant_type=authorization_code&code=1b41607ab6485083cdc577da5915bb5e&client_id=68RLITXDmukTDvCoilKX92S77KNt30iL&client_secret=mPHfN1nU7MLZqjPWB7fOSCzO60E28QIa&redirect_uri=https://local.tuzac.com/zzz.php
+//$url = 'https://openapi.baidu.com/oauth/2.0/token?code=grant_type=client_credentials&client_id=68RLITXDmukTDvCoilKX92S77KNt30iL&client_secret=mPHfN1nU7MLZqjPWB7fOSCzO60E28QIa';
+//$res = curl_call($url);
+
+// $url = 'https://pan.baidu.com/rest/2.0/xpan/file?method=list&dir=/jw-photos/tujigu/秀人网/秀人网_Angela小热巴《性感OL》上部--No.1167-写真集-58P-&order=time&start=0&limit=10&web=web&folder=0&access_token=121.4956aa6fe60d87202068b9e4139913ae.YgnSgDZJqBXmTFoJhC4uYH2fi1WqYlLvLJ2KRgO.tH98Zg&desc=1';
+// $res = curl_call($url);
+
+// $url = 'http://pan.baidu.com/rest/2.0/xpan/multimedia?access_token=121.4956aa6fe60d87202068b9e4139913ae.YgnSgDZJqBXmTFoJhC4uYH2fi1WqYlLvLJ2KRgO.tH98Zg&method=filemetas&fsids=[14051942427175]&thumb=1&dlink=1&extra=1';
+// $res = curl_call($url);
+
+
+// $res = Baidupan::get_file_info(['14051942427175']);
+// apiReturnJson($res);
+
+
+// $res = Baidupan::refresh_token();
+// apiReturnJson($res); 
+
+
+/*--------------working Baidupan ------------------*/
+// $list = Baidupan::get_file_list_by_path('/jw-photos/tujigu/秀人网/秀人网_Angela小热巴《性感OL》上部--No.1167-写真集-58P-');
+// $fsids = [];
+// foreach($list as $f) {
+//     //echo $f->path . "<br>\n";
+//     //echo $f->fs_id . "<br>\n";
+//     $fsids[] = $f->fs_id;
+// }
+// //echo implode(", ", $fsids);
+// //apiReturnJson($list); 
+// //exit;
+
+// //$fsids = [874926608700543, 1083967005730622, 449762028592180, 273126744626889, 424027147616087, 678723398381814, 938418761565592, 187619091654833, 540413263267650, 402211222597349, 256857911032854, 14051942427175, 51135963978172, 1015054744687121, 456126168127699, 517314912532875, 52347566022116, 938880812720127, 643192371273101, 229095050767472, 408689852192296, 98900079333267, 397426841810288, 658528418730636, 434809508894725, 289907171218878, 358675534840978, 2471658539906, 241348658766052, 598471490375393, 557943055601095, 371045984929705, 989988306871251, 338268419306833, 225640354082983, 130129468621750, 649366973651047, 1005646098039434, 376144241921314, 255751352255781, 581324274539011, 183878945579912, 617206038069651, 245731629151317, 440960130169060, 96780237195508, 534559049432667, 534548436338332, 633414761552362, 1013550474663746, 432252948306674, 641811559516546, 990745981219681, 493568443923058, 491372092737747, 261205525957914, 1004365675033863, 1032449046063684, 206973947328266];
+// $fs_id = $fsids[array_rand($fsids)];
+// $fs_id_2 = $fsids[array_rand($fsids)];
+// //$fs_id = 449762028592180;
+// echo 'fs_id = ' . $fs_id . "<br>\n";
+// echo 'fs_id = ' . $fs_id_2 . "<br>\n";
+// ZDebug::my_print(Baidupan::get_file_info([$fs_id]));
+// ZDebug::my_print(Baidupan::get_file_info([$fs_id_2]));
+// echo '<img width=500 src="data:image/jpeg;base64,'. base64_encode(Baidupan::get_photo_content($fs_id)) . '">';
+// echo '<img width=500 src="data:image/jpeg;base64,'. base64_encode(Baidupan::get_photo_content($fs_id_2)) . '">';
+
+
+
+/*------------- one drive testing--------------*/
+// Get code
+// https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e103147-910d-4a7c-816b-3e66d05e6296&scope=files.read offline_access&response_type=code&redirect_uri=https://local.tuzac.com/zzz.php
+
+//-- code = M.R3_BAY.dc274938-574b-d7f8-d2fa-08249083ce87
+
+
+// // Get access_token and refresh_token
+// $code = 'M.R3_BAY.dc274938-574b-d7f8-d2fa-08249083ce87';
+// $url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+// $res = curl_call($url, 'post', [
+//     'code' => $code,
+//     'client_id' => '5e103147-910d-4a7c-816b-3e66d05e6296',
+//     'redirect_uri' => 'https://local.tuzac.com/zzz.php',
+//     'client_secret' => 'QpywYs_N6-W5QEaWe1fYe1~8BmENGN~StX',
+//     'grant_type' => 'authorization_code',
+// ]);
+// apiReturnJson($res); exit;
+
+// // refresh access_token
+import('Onedrive');
+// $res = Onedrive::refresh_token();
+// apiReturnJson($res); exit;
+
+// download file
+// $path = '/jw-photos/tujigu/秀人网/秀人网_Angela小热巴《性感OL》下部-No.1172-写真集-55P-/10.jpg';
+// $result = Onedrive::get_photo_content($path);
+// echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($result).'">';
+
+// $path = '/jw-photos/tujigu/@misty';
+// $folders = explode('/', $path);
+// error_log('--- folders: ' . implode(' --> ', $folders));
+// $res = Onedrive::makeDirectories($folders);
+// ZDebug::my_print($res);
+
+// $path = '/tujigu/爱蜜社/爱蜜社_ALICE梁紫轩《空姐制服诱惑》-Vol.013-写真集-56P-/5.jpg';
+// $res = Onedrive::upload_photo($path, true);
+// ZDebug::my_print($res);
+
+
+$path = '/tujigu/丽柜/丽柜_Model-桃子《空姐制服捆绑绳艺》-美腿玉足写真图片-62P-';
+$res = Onedrive::list_photos_in_folder($path);
+ZDebug::my_print($res);

@@ -36,7 +36,8 @@ $album_processed = 0;
 // Readout db files records which `saved_locally` != 2
 //$query = 'SELECT * FROM '. $pre . 'files where saved_locally != 2 limit 1';
 //$query = 'SELECT * FROM '. $pre . 'files where saved_locally != 2 and source ="tujigu" and title like \'尤果%\' limit 1';
-$query = 'SELECT * FROM '. $pre . 'files where saved_locally != 2 and source ="tujigu" limit 1';
+//$query = 'SELECT * FROM '. $pre . 'files where saved_locally != 2 and source ="tujigu" order by id limit 20';
+$query = 'SELECT * FROM '. $pre . 'files where saved_locally != 2 and source ="qqc" order by id limit 20';
 //$query = 'SELECT * FROM '. $pre . 'files where saved_locally != 2 and source ="tujigu" ORDER BY RAND() limit 1';
 
 // If there is a force_file_id, query that file and re-download no matter what

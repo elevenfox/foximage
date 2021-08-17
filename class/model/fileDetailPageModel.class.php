@@ -109,13 +109,15 @@ Class fileDetailPageModel extends ModelCore {
     $num = $num >= count($images) ? count($images) : $num;
     $cur_image_url = $images[$num-1];
 
+
     /* 2021-08-13 Looks like tujigu blocked our domain name, have to use dev for now */
     // if(!empty($cur_image_url)) {
     //   $referrer = getReferrer($file['source']);
     //   $image_content = curl_call($cur_image_url, 'get', null, ['timeout'=>10, 'referrer'=>$referrer]);
     // }
+
     
-    $image_content = null;
+    // Tr to get relative_fullname first, Onedrive and dev url will both need it
     $relative_fullname = null;
     if(!empty($cur_image_url)) {
       // Try to use Onedrive for photo storage for now
@@ -130,10 +132,15 @@ Class fileDetailPageModel extends ModelCore {
       $relative_path = str_replace($file_root, '', $physical_path);
       
       $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
-      
+    }
+
+    // First try to use Onedrive to get photo
+    $image_content = null;
+    if(!empty($relative_fullname)) {
       $image_content = Onedrive::get_photo_content($relative_fullname);
     }
     
+    // If not found in Onedrive, use dev
     if( empty($image_content) 
          || stripos($image_content, '404 Not Found') !== false 
          || stripos($image_content, 'itemNotFound') !== false ) {

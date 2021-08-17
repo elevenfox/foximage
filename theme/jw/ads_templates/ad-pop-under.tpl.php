@@ -1,5 +1,5 @@
 
-<?php if(empty($data['dev_mode'])): ?>
+<?php if(empty($data['dev_mode']) || 1==0 ): ?>
 <script type="text/javascript" src="https://syndication.exosrv.com/splash.php?idzone=4279892&capping=0"></script>
 <?php endif; ?>
 

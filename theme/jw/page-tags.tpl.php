@@ -14,10 +14,10 @@ include 'header.tpl.php';
         <h1>
             <?php print $data['page_title']; ?>
             <select name="sort_by" id="tags-sort-by">
-                <option value="1" <?= $_GET['sort'] == 1 ? "selected" : ""?>>按字母升序</option>
-                <option value="2" <?= $_GET['sort'] == 2 ? "selected" : ""?>>按字母降序</option>
-                <option value="3" <?= $_GET['sort'] == 3 ? "selected" : ""?>>按图集数量升序</option>
-                <option value="4" <?= $_GET['sort'] == 4 ? "selected" : ""?>>按图集数量降序</option>
+                <option value="1" <?= !empty($_GET['sort']) && $_GET['sort'] == 1 ? "selected" : ""?>>按字母升序</option>
+                <option value="2" <?= !empty($_GET['sort']) && $_GET['sort'] == 2 ? "selected" : ""?>>按字母降序</option>
+                <option value="3" <?= !empty($_GET['sort']) && $_GET['sort'] == 3 ? "selected" : ""?>>按图集数量升序</option>
+                <option value="4" <?= !empty($_GET['sort']) && $_GET['sort'] == 4 ? "selected" : ""?>>按图集数量降序</option>
             </select>
         </h1>
         

@@ -8,7 +8,7 @@ class Onedrive {
     const OAUTH_API_BASE_URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
     const TOKEN_FILE = __DIR__ . '/Onedrive_tokens.json';
 
-    private static $default_refresh_token = 'M.R3_BAY.-CenvZ*pPOfl!ffOxs*k2r*6L309al2hI3iBnWrpGnSQdRrTPgQnEnA!OdGMkFhwqsNv7j9ull!2xV6gokBfz4ThKRSIVJTMdWPhFp5vWNjUgCZOIIeQCvK7zdsY4eDZmV9devxF3uMGjAf*YBThgG6taHZu!vxMlulO!PCChihYAnmYPvSELcHZ5imVQTX1OZKdurXMV6hwbCkeQcAGjVmvahFyTq38YmHkbePZ10Aizrmu0QYvUMjkfc1J5gK5rjdV!sPzbRAn6fWCe0GDHaKPu9jzoKnAQWC66YM65BamY';
+    private static $default_refresh_token = 'M.R3_BAY.-CWzFi2fZ5htedJiTT!fn8!yjw9oF5D*mL7ih8bIDVCGvg9n8L4xl2A*gmw5mtZ2Va4zDUvoF1XNOj8dJXsOqmwvKTWrdnbLjg!rGJkHPRDDPFIwGlvYtcI882o4A0JhIZNK6J4*bXFZrHKJ7GzxfnKJPXNlO5HR*TPZ5gSTHyDuDGehKqs*U5XQIxExH*EF8seppIism!0ibNogRqFfx!g*sWm!2Y2em3G7lIf4rxSg7IRP56AOSvTAxakSdNJrAR!VreYH2!o7B7L7ZqsxaB5M0BKJiHQCXNgUGihort9To24gl98bMx*u4wEnq7DrAYA$$';
 
     /**
      * Get access token from json file, if expired, refresh it
@@ -20,7 +20,8 @@ class Onedrive {
         $result = json_decode($content);
         if($result->expires_timestamp <= time()) {
             // access token has expired, refresh it
-            $res = self::refresh_token($result->refresh_token);
+            $refresh_token = empty($result->refresh_token) ? self::$default_refresh_token : $result->refresh_token;
+            $res = self::refresh_token($refresh_token);
             return $res->access_token;
         }
         else {

@@ -88,11 +88,11 @@ require_once './bootstrap.inc';
 // Get code
 // https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e103147-910d-4a7c-816b-3e66d05e6296&scope=files.read offline_access&response_type=code&redirect_uri=https://local.tuzac.com/zzz.php
 
-//-- code = M.R3_BAY.dc274938-574b-d7f8-d2fa-08249083ce87
+//-- code = M.R3_BAY.d9236c2c-fbac-93cb-bb28-afa6633b5e3a
 
 
 // // Get access_token and refresh_token
-// $code = 'M.R3_BAY.dc274938-574b-d7f8-d2fa-08249083ce87';
+// $code = 'M.R3_BAY.d9236c2c-fbac-93cb-bb28-afa6633b5e3a';
 // $url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
 // $res = curl_call($url, 'post', [
 //     'code' => $code,
@@ -119,7 +119,7 @@ import('Onedrive');
 // $res = Onedrive::makeDirectories($folders);
 // ZDebug::my_print($res);
 
-// $path = '/tujigu/爱蜜社/爱蜜社_ALICE梁紫轩《空姐制服诱惑》-Vol.013-写真集-56P-/5.jpg';
+// $path = '/tujigu/丽柜/丽柜_Model-桃子《空姐制服捆绑绳艺》-美腿玉足写真图片-62P-/5.jpg';
 // $res = Onedrive::upload_photo($path, true);
 // ZDebug::my_print($res);
 

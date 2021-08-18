@@ -62,6 +62,7 @@ function curl_call($url, $method='get', $data=null, $options=[]) {
     $headers = array_merge($options_headers, ['Accept-Encoding: gzip, deflate', "charset=UTF-8"]);
 
     $ch = curl_init(); 
+    $url = str_replace(" ", "%20", $url);
     curl_setopt($ch, CURLOPT_URL, $url); 
     if($use_proxy) {
         curl_setopt($ch, CURLOPT_PROXY, 'socks5://localhost:9050');

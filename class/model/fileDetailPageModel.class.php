@@ -136,9 +136,9 @@ Class fileDetailPageModel extends ModelCore {
 
     // First try to use Onedrive to get photo
     $image_content = null;
-    if(!empty($relative_fullname)) {
-      $image_content = Onedrive::get_photo_content($relative_fullname);
-    }
+    // if(!empty($relative_fullname)) {
+    //   $image_content = Onedrive::get_photo_content($relative_fullname);
+    // }
     
     // If not found in Onedrive, use dev
     if( empty($image_content) 

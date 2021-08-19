@@ -7,6 +7,7 @@ class Onedrive {
     const DRIVE_API_BASE_URL = 'https://graph.microsoft.com/v1.0';
     const OAUTH_API_BASE_URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
     const TOKEN_FILE = __DIR__ . '/Onedrive_tokens.json';
+    const CACHE_KEY = THEME . '_onedrive_tokens';
 
     private static $default_refresh_token = 'M.R3_BAY.-CWzFi2fZ5htedJiTT!fn8!yjw9oF5D*mL7ih8bIDVCGvg9n8L4xl2A*gmw5mtZ2Va4zDUvoF1XNOj8dJXsOqmwvKTWrdnbLjg!rGJkHPRDDPFIwGlvYtcI882o4A0JhIZNK6J4*bXFZrHKJ7GzxfnKJPXNlO5HR*TPZ5gSTHyDuDGehKqs*U5XQIxExH*EF8seppIism!0ibNogRqFfx!g*sWm!2Y2em3G7lIf4rxSg7IRP56AOSvTAxakSdNJrAR!VreYH2!o7B7L7ZqsxaB5M0BKJiHQCXNgUGihort9To24gl98bMx*u4wEnq7DrAYA$$';
 
@@ -16,16 +17,34 @@ class Onedrive {
      * @return void
      */
     public static function get_access_token() {
-        $content = file_get_contents(self::TOKEN_FILE);
-        $result = json_decode($content);
-        if($result->expires_timestamp <= time()) {
+        $tokens = null;
+        // Get tokens from memcache first if available
+        if(APCU) {
+            $res = apcu_fetch(self::CACHE_KEY);
+            if(!empty($res)) {
+                $tokens = $res;
+            }
+        }
+
+        // If empty, then try to get tokens from session
+        if( empty($tokens) && !empty($_SESSION[self::CACHE_KEY]) && !empty($_SESSION[self::CACHE_KEY]['access_token'])) {
+            $tokens = $_SESSION[self::CACHE_KEY];
+        }
+
+        // If still empty, get from file
+        if( empty($tokens) ) {
+            $content = file_get_contents(self::TOKEN_FILE);
+            $tokens = (array)json_decode($content);
+        }
+
+        if(empty($tokens['expires_timestamp']) || $tokens['expires_timestamp'] <= time()) {
             // access token has expired, refresh it
-            $refresh_token = empty($result->refresh_token) ? self::$default_refresh_token : $result->refresh_token;
+            $refresh_token = empty($tokens['refresh_token']) ? self::$default_refresh_token : $tokens['refresh_token'];
             $res = self::refresh_token($refresh_token);
             return $res->access_token;
         }
         else {
-            return $result->access_token;
+            return $tokens['access_token'];
         }
     }
 
@@ -61,6 +80,12 @@ class Onedrive {
                 'expires_timestamp' => time() + $resObj->expires_in - 300,
             ]; 
             file_put_contents(self::TOKEN_FILE, json_encode($result));
+            // Put to memcaceh too
+            if(APCU) {
+                apcu_store($self::CACHE_KEY, $result, $resObj->expires_in);
+            }
+            // Also put to session
+            $_SESSION[self::CACHE_KEY] = $result;
         }
 
         return $resObj;

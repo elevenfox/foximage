@@ -28,7 +28,8 @@ include 'header.tpl.php';
                     echo $theme->render($file, 'file-teaser');
                     $i++;
 
-                    if($i % 4 === 0 && is_mobile() && $j<= 3) {
+                    //if($i % 4 === 0 && is_mobile() && $j<= 3) {
+                    if($i % 4 === 0 && $j<= 3) {
                         include ('ads_templates/ad-native-'.$j.'.tpl.php');
                         $j++;
                         //$j = $j >3 ? 1 : $j;

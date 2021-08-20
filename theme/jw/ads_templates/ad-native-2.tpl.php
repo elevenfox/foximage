@@ -1,4 +1,4 @@
-<div id="<?=empty($apply_mobile_native_ads) ? 'block-ads-right-sidebar-ad-2' : 'block-ads-right-sidebar-ad-2-mobile'?>">
+<div id="<?=empty($apply_mobile_native_ads) ? 'block-ads-right-sidebar-ad-2' : 'block-ads-right-sidebar-ad-2-mobile'?>"  class="<?=empty($apply_mobile_native_ads) ? '':'mobile-only'?>">
     <script type="application/javascript" data-idzone="4279898" src="https://a.realsrv.com/nativeads-v2.js" ></script>
     <script type="text/javascript">
       (function () {

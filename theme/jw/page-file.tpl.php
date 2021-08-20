@@ -170,7 +170,8 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                   echo $theme->render($rFile, 'file-teaser');
                   $i++;
 
-                  if($i % 4 === 0  && is_mobile() && $j<= 3) {
+                  //if($i % 4 === 0  && is_mobile() && $j<= 3) {
+                  if($i % 4 === 0  && $j<= 3) {
                       include ('ads_templates/ad-native-'.$j.'.tpl.php');
                       $j++;
                       //$j = $j >=3 ? 1 : $j;

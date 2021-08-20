@@ -1,5 +1,5 @@
 <?php
-if(!is_mobile()) {
+//if(!is_mobile()) {
 ?>
 
 <div class="ad-side-right">
@@ -58,4 +58,6 @@ if(!is_mobile()) {
     </div>
 
 </div>
-<?php }?>
+<?php 
+//}
+?>

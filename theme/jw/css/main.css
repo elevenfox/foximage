@@ -180,6 +180,9 @@ form input[type="button"] {
     }
 }
 
+.mobile-only {
+    display: none;
+}
 
 /********* header ************/
 
@@ -1059,6 +1062,9 @@ article.file #fdp-photo .fdp-random-btns span {
 @media only screen and (max-width: 565px) {
     body>img {
         display: none;
+    }
+    .mobile-only {
+        display: block;
     }
     .not-in-mobile {
         display: none;

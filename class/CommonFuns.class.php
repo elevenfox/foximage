@@ -440,7 +440,7 @@ function buildPhysicalPath($file_row, $file_root='') {
             $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
         }
         else {
-            $physical_path = $file_root . $file_row['source'] . '/' . $org . '/'. cleanStringForFilename($file_row['title']);
+            $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($org) . '/'. cleanStringForFilename($file_row['title']);
         }
     }
 

@@ -75,7 +75,9 @@ Class fileDetailPageModel extends ModelCore {
         // if file does not exist locally or force_download, then download it
         if(!file_exists($fullname)) {
           $referrer = getReferrer($row['source']);  
-          $result = curl_call(str_replace('http://', 'https://', $row['thumbnail']), 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
+          $tn_url = str_replace('http://', 'https://', $row['thumbnail']);
+          $tn_url = str_replace('tjg.hywly.com', 'tjg.gzhuibei.com', $tn_url);
+          $result = curl_call($tn_url, 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
           if(!empty($result)) {
               $res = file_put_contents($fullname, $result);
               chmod($fullname, 0755);
@@ -109,6 +111,7 @@ Class fileDetailPageModel extends ModelCore {
     $num = $num >= count($images) ? count($images) : $num;
     $cur_image_url = $images[$num-1];
 
+    $image_content = null;
 
     /* 2021-08-13 Looks like tujigu blocked our domain name, have to use dev for now */
     // if(!empty($cur_image_url)) {
@@ -120,8 +123,6 @@ Class fileDetailPageModel extends ModelCore {
     // Tr to get relative_fullname first, Onedrive and dev url will both need it
     $relative_fullname = null;
     if(!empty($cur_image_url)) {
-      // Try to use Onedrive for photo storage for now
-      import('Onedrive');
       $name_arr = explode('/', $cur_image_url);
       $filename = array_pop($name_arr);
       $physical_path = buildPhysicalPath($file);
@@ -134,33 +135,69 @@ Class fileDetailPageModel extends ModelCore {
       $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
     }
 
+    
+    // test Baidipan class (working!)
+    // import('Baidupan');
+    // $list = Baidupan::get_file_list_by_path('/jw-photos/' . $relative_path);
+    // $fs_id = null;
+    // foreach($list as $f) {
+    //     if($f->path == $relative_fullname) { 
+    //       $fs_id = $f->fs_id;
+    //     }
+    // }
+    // $image_content = Baidupan::get_photo_content($fs_id);
+    // header('Content-type: image/jpeg');
+    // echo $image_content;
+    // exit;
+
+
     // First try to use Onedrive to get photo
-    $image_content = null;
+    if(!empty($relative_fullname)) {
+      // Try to use Onedrive for photo storage for now
+      import('Onedrive');  
+      $image_content = Onedrive::get_photo_content($relative_fullname);
+    }
+
+    // Use Wasabi S3 to serve the photo
     // if(!empty($relative_fullname)) {
-    //   $image_content = Onedrive::get_photo_content($relative_fullname);
+    //   // Use Wasabi S3
+    //   import('Wasabi');
+    //   $w3 = new Wasabi();
+    //   $key = $relative_path . '/' . $filename;
+    //   $res = $w3->get_photo_content($key);
+    //   if(!empty($res['Body'])) {
+    //     $image_content = $res['Body'];
+    //   }
+    // }
+
+    // // Use B2 to serve the photo
+    // if(!empty($relative_fullname)) {
+    //   // Use BackBlaze B2
+    //   $base_b2_url = 'https://jw-photos-2021.s3.us-west-002.backblazeb2.com/';
+    //   $key = $relative_path . '/' . $filename;
+    //   $url = $base_b2_url . $key;
+    //   error_log('---- url: ' . $url);
+    //   $res = curl_call($url);
+    //   if(!empty($res) || stripos($res, 'Key not found') === false) {
+    //     $image_content = $res;
+    //     error_log('---- good, using b2');
+    //   }
     // }
     
-    // If not found in Onedrive, use dev
+    // If not found in cloud, use dev
     if( empty($image_content) 
          || stripos($image_content, '404 Not Found') !== false 
-         || stripos($image_content, 'itemNotFound') !== false ) {
-      $dev_url = 'http://dev.tuzac.com'.$relative_fullname;
+         || stripos($image_content, 'itemNotFound') !== false
+         || stripos($image_content, 'key does not exist') !== false ) 
+    {   
+      error_log('----- using dev image');
+      $dev_url = 'http://dev.tuzac.com' . $relative_fullname; 
       $image_content = curl_call($dev_url, 'get', null, ['timeout'=>10]);
-
-      // test Baidipan class (working!)
-      // import('Baidupan');
-      // $list = Baidupan::get_file_list_by_path('/jw-photos/' . $relative_path);
-      // $fs_id = null;
-      // foreach($list as $f) {
-      //     if($f->path == $relative_fullname) { 
-      //       $fs_id = $f->fs_id;
-      //     }
-      // }
-      // $image_content = Baidupan::get_photo_content($fs_id);
-      // header('Content-type: image/jpeg');
-      // echo $image_content;
-      // exit;
     }
+    else {
+      error_log('----- using Onedrive image');
+    }
+
     header('Content-type: image/jpeg');
     echo $image_content;
     exit;

@@ -235,7 +235,7 @@ Class File {
         }
         else if (!isAdmin()) {
             // If no memory cache available, at least use sesson to cache for current user
-            if($_SESSION['file_id'] == $fileId && !empty($_SESSION[$sessionCacheKey])) {
+            if(!empty($_SESSION['file_id']) && $_SESSION['file_id'] == $fileId && !empty($_SESSION[$sessionCacheKey])) {
                 return $_SESSION[$sessionCacheKey];
             }
         }

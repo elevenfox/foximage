@@ -89,7 +89,7 @@ Class fileDetailPageModel extends ModelCore {
               }
           }
           else {
-              error_log(" ---- failed to download: " . $row['thumbnail'] ); 
+              error_log(" ---- failed to download: " . $tn_url ); 
           }
         }
         else {

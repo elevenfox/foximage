@@ -200,10 +200,10 @@ class Pager {
     $this->currentPage = $this->currentPage > $this->totalPageNum ? 1 : $this->currentPage;  
     $this->subPageLink = $subPageLink;
     $this->subPageLinkAppend = $subPageLinkAppend;
-    $this->firstPageText = '« first';
-    $this->lastPageText = 'last »';
-    $this->nextPageText = 'next ›';
-    $this->prePageText = '‹ previous';
+    $this->firstPageText = '« 首页';
+    $this->lastPageText = '末页 »';
+    $this->nextPageText = '下一页 ›';
+    $this->prePageText = '‹ 前一页';
   }  
  
   public function __destruct(){  
@@ -235,6 +235,18 @@ class Pager {
    * @return string  
    */  
   public function generatePages(){  
+    $params = '';
+    if(!empty($_SERVER['QUERY_STRING'])) {
+      $tmp_arr = explode('&', $_SERVER['QUERY_STRING']);
+      $new_params = array();
+      foreach($tmp_arr as $key => $value) {
+        if(stripos($value, 'q=') === false) {
+          $new_params[] = $value;
+        }
+      }
+      $params = '?' . implode('&', $new_params);
+    }
+
     $subPageCss2Str = '';  
  
     $isShow = false;  
@@ -251,9 +263,9 @@ class Pager {
         $prewPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage-1).$this->subPageLinkAppend;  
         if($this->isShowFirstLast){  
           $firstPageUrl = $this->subPageLink.$this->linkSymbol."1";  
-          $subPageCss2Str .= '<a href="'.$firstPageUrl.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->firstPageText.'</a>';  
+          $subPageCss2Str .= '<a href="'.$firstPageUrl.$params.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->firstPageText.'</a>';  
         }  
-        $subPageCss2Str .= '<a href="'.$prewPageUrl.'" class="'.$this->pageCss.' page-pre" style="'.$this->pageStyle.'">'.$this->prePageText.'</a>';
+        $subPageCss2Str .= '<a href="'.$prewPageUrl.$params.'" class="'.$this->pageCss.' page-pre" style="'.$this->pageStyle.'">'.$this->prePageText.'</a>';
       }  
  
       $a=$this->construct_num_Page();  
@@ -263,15 +275,15 @@ class Pager {
           $subPageCss2Str .= '<a href="#" class="'.$this->curPageCss.'" style="'.$this->curPageStyle.'">'.$s.'</a>';  
         }else{  
           $url = $this->subPageLink.$this->linkSymbol.$s.$this->subPageLinkAppend;  
-          $subPageCss2Str .= '<a href="'.$url.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$s.'</a>';  
+          $subPageCss2Str .= '<a href="'.$url.$params.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$s.'</a>';  
         }  
       }  
       if($this->currentPage < $this->totalPageNum){  
         $nextPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage+1).$this->subPageLinkAppend;  
-        $subPageCss2Str .= '<a href="'.$nextPageUrl.'" class="'.$this->pageCss.' page-next" style="'.$this->pageStyle.'">'.$this->nextPageText.'</a>';
+        $subPageCss2Str .= '<a href="'.$nextPageUrl.$params.'" class="'.$this->pageCss.' page-next" style="'.$this->pageStyle.'">'.$this->nextPageText.'</a>';
         if($this->isShowFirstLast){  
           $lastPageUrl = $this->subPageLink.$this->linkSymbol.$this->totalPageNum.$this->subPageLinkAppend;  
-          $subPageCss2Str .= '<a href="'.$lastPageUrl.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->lastPageText.'</a> ';  
+          $subPageCss2Str .= '<a href="'.$lastPageUrl.$params.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->lastPageText.'</a> ';  
         }  
       }  
     }  

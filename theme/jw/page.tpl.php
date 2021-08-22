@@ -9,7 +9,7 @@ include 'header.tpl.php';
 
 ?>
 
-    <div class="content-container newest-File-list-page search-result-list-pages">
+    <div class="content-container newest-File-list-page search-result-list-pages <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
 
         <h1><?php print $data['page_title']; ?></h1>
 
@@ -46,7 +46,7 @@ include 'header.tpl.php';
 
     </div>
 
-    <?=$theme->render(null, 'ads_templates/ad-side-right')?>
+    <?=$theme->render($data, 'ads_templates/ad-side-right')?>
 
 
 <?php include 'footer.tpl.php';?>

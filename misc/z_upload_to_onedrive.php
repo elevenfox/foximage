@@ -97,6 +97,9 @@ if(count($res) >0) {
                     }
                     $photo_uploaded++;
                 }
+                else {
+                    echo date('Y-m-d H:i:s') . ' -------- Not found local file: ' . $fullname . " \n"; 
+                }
             }
 
             // Check files count under this folder again

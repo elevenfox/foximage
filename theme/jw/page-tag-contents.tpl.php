@@ -10,7 +10,7 @@ include 'header.tpl.php';
 
 ?>
 
-    <div class="content-container tag-file-list-page">
+    <div class="content-container tag-file-list-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
         <h1><?php print $data['page_title']; ?>
         <span id="random-play"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</span>
         </h1>
@@ -57,7 +57,7 @@ include 'header.tpl.php';
 
     </div>
 
-    <?=$theme->render(null, 'ads_templates/ad-side-right')?>
+    <?=$theme->render($data, 'ads_templates/ad-side-right')?>
 
 
 <?php include 'footer.tpl.php';?>

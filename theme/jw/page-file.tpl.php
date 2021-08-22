@@ -101,9 +101,22 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                         $cur_image_url = $relative_fullname;
                       }
                       else {
-                        if($file['source'] == 'tujigu') {
-                          $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
-                        }
+                        // // Try to see if the file exists in B2
+                        // //$base_b2_url = 'https://photo.tuzac.com/';
+                        // $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+                        // $key = $relative_path . '/' . $filename;
+                        // $url = $base_b2_url . urlencode($key);
+                        // $file_headers = @get_headers($url);
+                        // if(!empty($file_headers) && strpos($file_headers[0], '200') !== false) 
+                        // {
+                        //   $cur_image_url = $url;
+                        // }
+                        // else {
+                        //     // If file not exists in B2, try to use own api
+                            if($file['source'] == 'tujigu') {
+                              $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+                            }
+                        // }
                       }
 
                   ?>
@@ -185,7 +198,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 </div>
 
 
-<?=$theme->render(null, 'ads_templates/ad-side-right')?>
+<?=$theme->render($data, 'ads_templates/ad-side-right')?>
 
 
 <?php if(empty($data['not-found'])) : ?>

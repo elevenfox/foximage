@@ -1,5 +1,6 @@
 <?php
 //if(!is_mobile()) {
+  if( empty($data['dev_mode']) ) {
 ?>
 
 <div class="ad-side-right">
@@ -59,5 +60,5 @@
 
 </div>
 <?php 
-//}
+}
 ?>

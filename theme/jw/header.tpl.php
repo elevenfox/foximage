@@ -41,6 +41,7 @@ $domainUrl = getDomainUrl();
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
 
+    <?php if(empty($data['dev_mode'])) : ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-197042779-1"></script>
     <script>
@@ -50,6 +51,7 @@ $domainUrl = getDomainUrl();
 
       gtag('config', 'UA-197042779-1');
     </script>
+    <?php endif; ?>
 
     <?php print $data['metas']; ?>
     <?php print $data['styles']; ?>

@@ -3,14 +3,14 @@
 /* @var Theme $theme */
 
 include 'header.tpl.php';
-
+$dev_mode = Config::get('dev_mode');
 ?>
 
 <?php
 
 ?>
 
-    <div class="content-container all-tags-page">
+    <div class="content-container all-tags-page <?=empty($dev_mode) ? '' : 'dev-mode'?>">
         <h1>
             <?php print $data['page_title']; ?>
             <select name="sort_by" id="tags-sort-by">
@@ -45,7 +45,7 @@ include 'header.tpl.php';
 
     </div>
 
-    <?=$theme->render(null, 'ads_templates/ad-side-right')?>
+    <?=$theme->render(['dev_mode' => $dev_mode], 'ads_templates/ad-side-right')?>
 
 
 <?php include 'footer.tpl.php';?>

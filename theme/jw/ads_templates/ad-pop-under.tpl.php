@@ -3,6 +3,7 @@
 <script type="text/javascript" src="https://syndication.exosrv.com/splash.php?idzone=4279892&capping=0"></script>
 <?php endif; ?>
 
+<?php if( empty($data['dev_mode']) ) : ?>
 <script type="application/javascript">
   (function() {
 
@@ -42,3 +43,5 @@
     //ExoLoader.addZone({"idzone":"111", "sub": "1"});
   })();
 </script>
+
+<?php endif;?>

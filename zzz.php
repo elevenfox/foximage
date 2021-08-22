@@ -1,17 +1,13 @@
 <?php
+echo phpinfo(); exit;
 
 require_once './bootstrap.inc';
 
-// $file_root = '/var/www/html/jw-photos';
-// $res = strpos($file_root, 'jw-photos');
 
-// ZDebug::my_print(strlen($file_root));
-// ZDebug::my_print(strlen('jw-photos'));
-// ZDebug::my_print($res);
+$s = empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING'];
 
-// $s = strpos($file_root, 'jw-photos') == (strlen($file_root) - strlen('jw-photos'));
-// ZDebug::my_print($s);
-// exit;
+ZDebug::my_print($s);
+exit;
 
 //import('Baidupan');
 
@@ -124,6 +120,80 @@ import('Onedrive');
 // ZDebug::my_print($res);
 
 
-$path = '/tujigu/丽柜/丽柜_Model-桃子《空姐制服捆绑绳艺》-美腿玉足写真图片-62P-';
+$path = '/tujigu/DDY\ Pantyhose/DDY-Pantyhose_美昕-amp-amp-张茜茹《公路外拍》高叉舍宾亮丝-NO.009-\ 写真集-58P-';
 $res = Onedrive::list_photos_in_folder($path);
-ZDebug::my_print($res);
+$num_files = count($res);
+
+// $files = Onedrive::list_photos_in_folder('/' . $relative_path);
+// $num_files = count($files);
+echo date('Y-m-d H:i:s') . ' -- found '. $num_files . ' in ' . $path . ' on Onedrive.' . " \n";
+
+//ZDebug::my_print($res);
+exit;
+
+
+
+// require './class/aws/aws-autoloader.php';
+// use Aws\S3\S3Client;
+// use Aws\S3\Exception\S3Exception;
+
+// $raw_credentials = array(
+//    'credentials' => [
+//        'key' => 'EYU1GVUSEFYLJESH9PXR',
+//        'secret' => 'h8KdCwErSBkNbjBVWaXzwhyTDzZgDVUeKJ9GfecW'
+//    ],
+//    'endpoint' => 'https://s3.us-west-1.wasabisys.com', // please refer to service end points for buckets in different regions
+//    'region' => 'us-west-1', // please refer to service end points for buckets in different regions
+//    'version' => 'latest',
+//    'use_path_style_endpoint' => true
+// );
+// $s3 = S3Client::factory($raw_credentials);
+
+// // Set parameters to be used in CRUD operations
+// $bucket = "jw-photos";
+// $key = "tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/18.jpg";
+// try {
+//     // read object
+//     $res = $s3->getObject([
+//         'Bucket' => $bucket,
+//         'Key' => $key]
+//     );
+//     //ZDebug::my_print($res);
+//     //echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($res['body']).'">';
+//     header("Content-Type: {$res['ContentType']}");
+//     echo $res['Body'];
+// } 
+// catch (S3Exception $e) {
+//     ZDebug::my_print($e->getMessage());
+//     //echo '------- ' . $e->getMessage() . PHP_EOL;
+// }
+
+// import('Wasabi');
+// $w3 = new Wasabi();
+// $key = "tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/28.jpg";
+// $res = $w3->get_photo_content($key);
+// //ZDebug::my_print($res); exit;
+// if($res !== false) {
+//     header("Content-Type: {$res['ContentType']}");
+//     echo $res['Body'];
+// }
+// exit;
+
+// $url = 'https://s3.us-west-1.wasabisys.com/jw-photos/tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg';
+// $options = [ 'headers' => [
+//     "Authorization: AWS EYU1GVUSEFYLJESH9PXR:h8KdCwErSBkNbjBVWaXzwhyTDzZgDVUeKJ9GfecW",
+//     "x-amz-date: " . gmdate("D, d M Y H:i:s T", time()),
+// ] ];
+// $res = curl_call($url,'get', null, $options);
+// ZDebug::my_print($res);
+// echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($res).'">';
+
+$url = 'https://jw-photos-2021.s3.us-west-002.backblazeb2.com/';
+$url = 'https://f002.backblazeb2.com/file/jw-photos-2021/';
+$key = urlencode('tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg');
+//$key = 'tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg';
+$url = $url . $key;
+echo $url;
+$file_headers = @get_headers($url);
+
+ZDebug::my_print($file_headers);

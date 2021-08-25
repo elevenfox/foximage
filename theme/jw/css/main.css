@@ -828,7 +828,7 @@ article.file #fdp-photo .fdp-random-btns {
     /* IE6-9 */
 }
 
-article.file #fdp-photo .fdp-random-btns span {
+article.file #fdp-photo .fdp-random-btns a {
     display: inline-block;
     padding: 0 5px;
     cursor: pointer;
@@ -967,7 +967,7 @@ article.file #fdp-photo .fdp-random-btns span {
 
 #fdp-photo .fdp-random-pause {
     width: 0;
-    margin: 0 10px 3px 10px;
+    margin: 0 0 3px 10px;
 }
 
 /**** dev-mode ****/

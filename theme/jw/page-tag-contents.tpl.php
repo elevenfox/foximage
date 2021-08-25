@@ -12,7 +12,7 @@ include 'header.tpl.php';
 
     <div class="content-container tag-file-list-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
         <h1><?php print $data['page_title']; ?>
-        <span id="random-play"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</span>
+        <a id="random-play" href="#"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</a>
         </h1>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
@@ -64,7 +64,9 @@ include 'header.tpl.php';
 
 <script type="text/javascript">
 $(function () {
-    $('#random-play').on('click', function () {
+    $('#random-play').on('click', function (e) {
+        e.preventDefault();
+        
         let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$data['tagName']?>';
         $.get(api_endpoint, function(data) {
             if(data.url) {

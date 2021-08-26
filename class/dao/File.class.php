@@ -210,10 +210,10 @@ Class File {
         self::setTables();
 
         $term = DB::sanitizeInput($term);
-        $query = "select count(*) from ".self::$table_files." where title like '%" . $term . "%'";
+        $query = "select count(*) as total from ".self::$table_files." where title like '%" . $term . "%'";
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
-            return $res;
+            return $res[0]['total'];
         }
         else {
             return null;

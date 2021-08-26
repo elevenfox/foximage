@@ -17,12 +17,22 @@ Class homePageView extends ViewCore {
 
     if(!empty($this->data['files'])) {
       $currentPage = empty($this->data['page']) ? 1 : $this->data['page'];
+
+      if(!empty($this->request->getSysRequest()['search_term'])) {
+        $term = $this->request->getSysRequest()['search_term'];
+        $url = '/search/';
+        $_SERVER['QUERY_STRING'] = 'search_term=' . $term;
+      }
+      else {
+        $url = '/newest';
+      }
+
       import('Pager');
       $pager = new Pager(
               $this->listPerPage,
               (int)$this->data['files_total'],
               $currentPage,
-              '/newest/');
+              $url);
       $pagerHtml = $pager->generatePages();
 
       $this->data['filesPager'] = $pagerHtml;

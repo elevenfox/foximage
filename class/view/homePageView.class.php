@@ -21,10 +21,11 @@ Class homePageView extends ViewCore {
       if(!empty($this->request->getSysRequest()['search_term'])) {
         $term = $this->request->getSysRequest()['search_term'];
         $url = '/search/';
-        $_SERVER['QUERY_STRING'] = 'search_term=' . $term;
+        $appended = '?search_term=' . $term;
       }
       else {
-        $url = '/newest';
+        $url = '/newest/';
+        $appended = '';
       }
 
       import('Pager');
@@ -32,7 +33,9 @@ Class homePageView extends ViewCore {
               $this->listPerPage,
               (int)$this->data['files_total'],
               $currentPage,
-              $url);
+              $url,
+              $appended
+            );
       $pagerHtml = $pager->generatePages();
 
       $this->data['filesPager'] = $pagerHtml;

@@ -65,6 +65,7 @@ if(count($res) >0) {
         $images = explode(',', $row['filename']);
         echo date('Y-m-d H:i:s') . " ----- found photos: " . count($images) . " \n";
         foreach ($images as $img) {
+            $img = str_replace('tjg.hywly.com', 'tjg.gzhuibei.com', $img);
             // Build local filename
             $name_arr = explode('/', $img);
             $filename = array_pop($name_arr);

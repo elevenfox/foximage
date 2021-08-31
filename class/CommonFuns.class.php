@@ -463,32 +463,45 @@ function getReferrer($source) {
 function processThumbnail($row) {
     // Build physical path: Use <file_root>/source/<file_title>/ as file structure
     $physical_path = buildPhysicalPath($row);
-
-    // If folder not exist, create the folder
-    if(!is_dir($physical_path)) {
-        $res = mkdir($physical_path, 0755, true);
-        if(!$res) {
-            error_log(" ----- failed to create directory: " . $physical_path );
-        }
-    }
-
-    $fullname = $physical_path . '/thumbnail.jpg';
-
-    $name_arr = explode('/jw-photos/', $fullname);
-    $relative_path = '/jw-photos/' . $name_arr[1];    
-
-    $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
-    // if file does not exist locally, then use download url
-    if(!file_exists($fullname)) {
-        if($row['source'] == 'tujigu') {
-            $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
-        }
-        else {
-            $img_src = $row['thumbnail'];
-        }
+    
+    $dev_mode = Config::get('dev_mode');
+    if( empty($dev_mode) ) {
+        // Use B2
+        //$base_b2_url = 'https://photo.tuzac.com/';
+        $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+        $file_root = Config::get('file_root');
+        $relative_path = str_replace($file_root, '', $physical_path);
+        $key = $relative_path . '/thumbnail.jpg';
+        $img_src = $base_b2_url . str_replace('%2F','/', urlencode($key));
     }
     else {
-      $img_src = $relative_path;
+        // Use local filesystem
+        // If folder not exist, create the folder
+        if(!is_dir($physical_path)) {
+            $res = mkdir($physical_path, 0755, true);
+            if(!$res) {
+                error_log(" ----- failed to create directory: " . $physical_path );
+            }
+        }
+
+        $fullname = $physical_path . '/thumbnail.jpg';
+
+        $name_arr = explode('/jw-photos/', $fullname);
+        $relative_path = '/jw-photos/' . $name_arr[1];    
+
+        $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
+        // if file does not exist locally, then use download url
+        if(!file_exists($fullname)) {
+            if($row['source'] == 'tujigu') {
+                $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
+            }
+            else {
+                $img_src = $row['thumbnail'];
+            }
+        }
+        else {
+            $img_src = $relative_path;
+        }
     }
 
     return $img_src;

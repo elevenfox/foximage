@@ -190,12 +190,12 @@ Class fileDetailPageModel extends ModelCore {
          || stripos($image_content, 'itemNotFound') !== false
          || stripos($image_content, 'key does not exist') !== false ) 
     {   
-      error_log('----- using dev image');
+      //error_log('----- using dev image');
       $dev_url = 'http://dev.tuzac.com' . $relative_fullname; 
       $image_content = curl_call($dev_url, 'get', null, ['timeout'=>10]);
     }
     else {
-      error_log('----- using Onedrive image');
+      //error_log('----- using Onedrive image');
     }
 
     header('Content-type: image/jpeg');

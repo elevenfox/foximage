@@ -3,14 +3,14 @@ require __DIR__ . '/aws/aws-autoloader.php';
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
-class Wasabi {
+class B2 {
 
-    const AUTH_KEY = 'EYU1GVUSEFYLJESH9PXR';
-    const AUTH_SECRET = 'h8KdCwErSBkNbjBVWaXzwhyTDzZgDVUeKJ9GfecW';
-    const API_BASE_URL = 'https://s3.us-west-1.wasabisys.com';
-    const BUCKET = 'jw-photos';
+    const AUTH_KEY = '0025de4d4aa3fd80000000001';
+    const AUTH_SECRET = 'K0026ARy2BcpApvC6ziNUnMmpZGZmJQ';
+    const API_BASE_URL = 'https://s3.us-west-002.backblazeb2.com';
+    const BUCKET = 'jw-photos-2021';
 
-    private $w3;
+    private $b2;
 
     public function __construct() {
         $raw_credentials = array(
@@ -24,7 +24,7 @@ class Wasabi {
             'use_path_style_endpoint' => true
          );
          
-         $this->ws = S3Client::factory($raw_credentials);
+         $this->b2 = S3Client::factory($raw_credentials);
     }
     
 
@@ -35,16 +35,30 @@ class Wasabi {
      * @return string $res - image binary data
      */
     public function get_photo_content($relative_path) {
-
         try {
-            $res = $this->ws->getObject([
+            $res = $this->b2->getObject([
                 'Bucket' => self::BUCKET,
-                'Key' => $relative_path,
+                'Key' => $relative_path
             ]);
             return $res;
         } 
         catch (S3Exception $e) {
-            //error_log('-- Failed to get photo: ' . $e->getMessage() . PHP_EOL);
+            error_log('-- Failed to get photo: ' . $e->getMessage() . PHP_EOL);
+            return false;
+        }
+    }
+
+    public function upload_photo($relative_path, $source_file) {
+        try {
+            $res = $this->b2->putObject([
+                'Bucket' => self::BUCKET,
+                'Key' => $relative_path,
+                'SourceFile' => $source_file
+            ]);
+            return $res;
+        } 
+        catch (S3Exception $e) {
+            error_log('-- Failed to upload photo: ' . $e->getMessage() . PHP_EOL);
             return false;
         }
     }

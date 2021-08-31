@@ -1,14 +1,15 @@
 <?php
-echo phpinfo(); exit;
+//echo phpinfo(); exit;
 
 require_once './bootstrap.inc';
 
 
-$s = empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING'];
+// $s = empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING'];
 
-ZDebug::my_print($s);
-exit;
+// ZDebug::my_print($s);
+// exit;
 
+//////////////////////////////////////////////////
 //import('Baidupan');
 
 //$url = 'https://api.amazon.com/auth/o2/token';
@@ -19,7 +20,6 @@ exit;
 //     'client_secret' => '9ce60fd67a7508c3c2b92f5910ba2322a2420aee372e9379664dd6ecef2a1c73',
 //     'redirect_uri' => 'http://localhost',
 // ));
-
 
 
 //--- url to get code: http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=68RLITXDmukTDvCoilKX92S77KNt30iL&scope=basic,netdisk&display=tv&qrcode=1&force_login=1&redirect_uri=https://local.tuzac.com/zzz.php';
@@ -79,7 +79,7 @@ exit;
 // echo '<img width=500 src="data:image/jpeg;base64,'. base64_encode(Baidupan::get_photo_content($fs_id_2)) . '">';
 
 
-
+////////////////////////////////////////////////////////////
 /*------------- one drive testing--------------*/
 // Get code
 // https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e103147-910d-4a7c-816b-3e66d05e6296&scope=files.read offline_access&response_type=code&redirect_uri=https://local.tuzac.com/zzz.php
@@ -100,7 +100,7 @@ exit;
 // apiReturnJson($res); exit;
 
 // // refresh access_token
-import('Onedrive');
+//import('Onedrive');
 // $res = Onedrive::refresh_token();
 // apiReturnJson($res); exit;
 
@@ -120,19 +120,20 @@ import('Onedrive');
 // ZDebug::my_print($res);
 
 
-$path = '/tujigu/DDY\ Pantyhose/DDY-Pantyhose_美昕-amp-amp-张茜茹《公路外拍》高叉舍宾亮丝-NO.009-\ 写真集-58P-';
-$res = Onedrive::list_photos_in_folder($path);
-$num_files = count($res);
+// $path = '/tujigu/DDY\ Pantyhose/DDY-Pantyhose_美昕-amp-amp-张茜茹《公路外拍》高叉舍宾亮丝-NO.009-\ 写真集-58P-';
+// $res = Onedrive::list_photos_in_folder($path);
+// $num_files = count($res);
 
 // $files = Onedrive::list_photos_in_folder('/' . $relative_path);
 // $num_files = count($files);
-echo date('Y-m-d H:i:s') . ' -- found '. $num_files . ' in ' . $path . ' on Onedrive.' . " \n";
+// echo date('Y-m-d H:i:s') . ' -- found '. $num_files . ' in ' . $path . ' on Onedrive.' . " \n";
 
 //ZDebug::my_print($res);
-exit;
+// exit;
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+/*------- Wasabi testing -------*/
 // require './class/aws/aws-autoloader.php';
 // use Aws\S3\S3Client;
 // use Aws\S3\Exception\S3Exception;
@@ -188,12 +189,45 @@ exit;
 // ZDebug::my_print($res);
 // echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($res).'">';
 
-$url = 'https://jw-photos-2021.s3.us-west-002.backblazeb2.com/';
-$url = 'https://f002.backblazeb2.com/file/jw-photos-2021/';
-$key = urlencode('tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg');
-//$key = 'tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg';
-$url = $url . $key;
-echo $url;
-$file_headers = @get_headers($url);
 
-ZDebug::my_print($file_headers);
+
+////////////////////////////////////////////////
+// B2 test
+
+// $url = 'https://jw-photos-2021.s3.us-west-002.backblazeb2.com/';
+// $url = 'https://f002.backblazeb2.com/file/jw-photos-2021/';
+// $key = urlencode('tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg');
+// //$key = 'tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/9.jpg';
+// $url = $url . $key;
+// echo $url;
+// $file_headers = @get_headers($url);
+// ZDebug::my_print($file_headers);
+
+import('B2');
+$b2 = new B2();
+// $key = 'tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/thumbnail.jpg';
+// $res = $b2->get_photo_content($key);
+// // ZDebug::my_print($res); exit;
+// // echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($res['body']).'">';
+// if($res !== false) {
+//         header("Content-Type: {$res['ContentType']}");
+//         echo $res['Body'];
+// }
+
+$pre = Config::get('db_table_prefix');
+$query = 'SELECT * FROM '. $pre . 'files where id = 2231';
+$res = DB::$dbInstance->getRows($query);
+if(count($res) >0) {
+    foreach ($res as $row) {
+        echo date('Y-m-d H:i:s') . ' - ' . ($num+1) . " - processing: id=" . $row['id'] .', '. $row['title'] . " \n";
+        
+        $physical_path = buildPhysicalPath($row);
+        $file_root = Config::get('file_root');
+        $relative_path = str_replace($file_root, '', $physical_path);
+        $key = $relative_path . '/thumbnail.jpg';
+        $full_path = $physical_path . '/thumbnail.jpg';
+        //$file_content = file_get_contents($full_path);
+        $res = $b2->upload_photo($key, $full_path);
+        ZDebug::my_print($res);
+    }
+}

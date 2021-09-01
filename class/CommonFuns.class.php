@@ -470,6 +470,9 @@ function processThumbnail($row) {
         //$base_b2_url = 'https://photo.tuzac.com/';
         $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
         $file_root = Config::get('file_root');
+        if(empty($file_root)) {
+            $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+        }
         $relative_path = str_replace($file_root, '', $physical_path);
         $key = $relative_path . '/thumbnail.jpg';
         $img_src = $base_b2_url . str_replace('%2F','/', urlencode($key));

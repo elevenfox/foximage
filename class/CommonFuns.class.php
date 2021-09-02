@@ -546,12 +546,13 @@ function processPhotoSrc($file) {
 
     // If src is empty, use B2 for some categories, otherwise use api(which is using Onedrive for now)
     if(empty($src)) {
-        if(strpos($file['title'], '头条女神', 0) !== false ) {
-            $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
-            $key = $relative_path . '/' . $filename;
-            $src = $base_b2_url . urlencode($key);
-        }
-        else {
+        // Use B2 url
+        // if(strpos($file['title'], '头条女神', 0) !== false ) {
+        //     $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+        //     $key = $relative_path . '/' . $filename;
+        //     $src = $base_b2_url . urlencode($key);
+        // }
+        // else {
             // If file not exists in B2, try to use own api
             if($file['source'] == 'tujigu') {
                 $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
@@ -560,7 +561,7 @@ function processPhotoSrc($file) {
                 // For qqc photos, just use its internet url
                 $src = $cur_image_url;
             }
-        }
+        // }
     }
 
 

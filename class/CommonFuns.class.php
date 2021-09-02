@@ -511,3 +511,78 @@ function processThumbnail($row) {
   }  
 
 
+function processPhotoSrc($file) {
+    $src = '';
+
+    $images = explode(',', $file['filename']);
+    $num = empty($_GET['at']) ? 1 : $_GET['at'];
+    $num = $num >= count($images) ? count($images) : $num;
+
+    // Step-1, use photo url from source
+    $cur_image_url = $images[$num-1];
+    
+    // Get filename based on photo-url
+    $name_arr = explode('/', $cur_image_url);
+    $filename = array_pop($name_arr);
+
+    // Get physical path based on title
+    $physical_path = buildPhysicalPath($file);
+
+    // Get relative path
+    $file_root = Config::get('file_root');
+    if(empty($file_root)) {
+    $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+    }
+    $relative_path = str_replace($file_root, '', $physical_path);
+
+    // If it's dev mode, try to use local photo first
+    $dev_mode = Config::get('dev_mode');
+    if( !empty($dev_mode) ) {
+        $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
+        if(file_exists($_SERVER['DOCUMENT_ROOT'] . $relative_fullname)) {
+            $src = $relative_fullname;
+        }
+    }
+
+    // If src is empty, use B2 for some categories, otherwise use api(which is using Onedrive for now)
+    if(empty($src)) {
+        if(strpos($file['title'], '头条女神', 0) !== false ) {
+            $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+            $key = $relative_path . '/' . $filename;
+            $src = $base_b2_url . urlencode($key);
+        }
+        else {
+            // If file not exists in B2, try to use own api
+            if($file['source'] == 'tujigu') {
+                $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+            }
+            else {
+                // For qqc photos, just use its internet url
+                $src = $cur_image_url;
+            }
+        }
+    }
+
+
+    
+    // else {
+    //     // Try to see if the file exists in B2
+    //     //$base_b2_url = 'https://photo.tuzac.com/';
+    //     $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+    //     $key = $relative_path . '/' . $filename;
+    //     $url = $base_b2_url . urlencode($key);
+    //     $file_headers = @get_headers($url);
+    //     if(!empty($file_headers) && strpos($file_headers[0], '200') !== false) 
+    //     {
+    //         $cur_image_url = $url;
+    //     }
+    //     else {
+    //         // If file not exists in B2, try to use own api
+    //         if($file['source'] == 'tujigu') {
+    //             $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+    //         }
+    //     }
+    // }
+
+    return $src;
+}

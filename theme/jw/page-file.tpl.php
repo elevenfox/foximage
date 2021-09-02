@@ -6,51 +6,17 @@
 include 'header.tpl.php';
 
 $file = $data['file'];
+$images = explode(',', $file['filename']);
+$num = empty($_GET['at']) ? 1 : $_GET['at'];
+$num = $num >= count($images) ? count($images) : $num;
 
 $api_server = Config::get('api_server');
 $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 ?>
 
-<script>
-  function orientation() {
-    let currentOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+<script type="text/javascript">window.devMode = <?= empty($data['dev_mode']) ? 0 : 1 ?></script>
+<script type="text/javascript" src="/theme/jw/js/file_page.js"></script>
 
-    let devMode = <?= empty($data['dev_mode']) ? 0 : 1 ?>;
-    
-    let autoRotate = devMode || (window.innerWidth < 1000 && currentOrientation == 'portrait');
-    
-    if(autoRotate) {
-      let image = $('#the-photo'); 
-      
-      let originImageWidth = image.width();
-      let originImageHeight = image.height();
-      let aspectRatio = originImageWidth/originImageHeight;
-      image.data("aspect-ratio", aspectRatio);
-
-      if( aspectRatio > 1 && currentOrientation === 'portrait' ) {
-          // Image is landscape, so rotate it
-          image.addClass('rotate');
-          $('#the-photo-link').width(originImageHeight * aspectRatio);
-          $('#the-photo-link').height(originImageWidth * aspectRatio);
-          image.width(originImageWidth * aspectRatio);
-          image.height(originImageHeight * aspectRatio);
-          image.css('top', (originImageWidth * (aspectRatio - 1))/2 );
-          image.css('left', (originImageWidth * (1 - aspectRatio))/2 );
-          
-      } 
-      if (aspectRatio < 1 && currentOrientation === 'landscape') {
-          // Image is portrait, rotate it to landscape and scale it
-          image.addClass('rotate');
-          $('#the-photo-link').height(originImageWidth * aspectRatio);
-          image.width(originImageWidth * aspectRatio);
-          image.height(originImageHeight * aspectRatio);
-          image.css('top', (originImageWidth * (aspectRatio-1))/2 );
-      }
-    }
-
-    document.getElementById('the-photo').scrollIntoView();
-  }
-</script>
 <div class="content-container file-detail-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
 
     <article class="file content" itemscope itemtype="http://schema.org/fileObject">
@@ -84,45 +50,9 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
           <div class="task" id="task">
             <div class="file-detail">
               <div>
-                  <?php
-                      $images = explode(',', $file['filename']);
-                      $num = empty($_GET['at']) ? 1 : $_GET['at'];
-                      $num = $num >= count($images) ? count($images) : $num;
-
-                      $cur_image_url = $images[$num-1];
-                      
-                      $name_arr = explode('/', $cur_image_url);
-                      $filename = array_pop($name_arr);
-                      $physical_path = buildPhysicalPath($file);
-                      $file_root = Config::get('file_root');
-                      $relative_path = str_replace($file_root, '', $physical_path);
-                      $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
-                      if(file_exists($_SERVER['DOCUMENT_ROOT'] . $relative_fullname)) {
-                        $cur_image_url = $relative_fullname;
-                      }
-                      else {
-                        // // Try to see if the file exists in B2
-                        // //$base_b2_url = 'https://photo.tuzac.com/';
-                        // $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
-                        // $key = $relative_path . '/' . $filename;
-                        // $url = $base_b2_url . urlencode($key);
-                        // $file_headers = @get_headers($url);
-                        // if(!empty($file_headers) && strpos($file_headers[0], '200') !== false) 
-                        // {
-                        //   $cur_image_url = $url;
-                        // }
-                        // else {
-                        //     // If file not exists in B2, try to use own api
-                            if($file['source'] == 'tujigu') {
-                              $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
-                            }
-                        // }
-                      }
-
-                  ?>
                   <div id="fdp-photo">
                     <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">
-                      <img id="the-photo" src="<?=$cur_image_url?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
+                      <img id="the-photo" src="<?=processPhotoSrc($file)?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
                     </a>
                     <div class="fdp-click-area">
                       <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>
@@ -204,58 +134,55 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 <?php if(empty($data['not-found'])) : ?>
 <script>
 (function($) {
-
-      <?php if( !empty($_REQUEST['ppt']) ):?>
-        let seconds = 20;
-        let timeoutCallback = function() {
-          let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$_REQUEST['tag']?>';
-          $.get(api_endpoint, function(data) {
-              if(data.url) {
-                  window.location.href = data.url;
-              }
-          });
-        };
-        let intervalCallback = function() {
-          seconds = seconds - 1;
-          $('.fdp-random-count-down').text(seconds);
-          if(seconds < -5) {
-            timeoutCallback();
+  <?php if( !empty($_REQUEST['ppt']) ):?>
+    let seconds = 20;
+    let timeoutCallback = function() {
+      let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$_REQUEST['tag']?>';
+      $.get(api_endpoint, function(data) {
+          if(data.url) {
+              window.location.href = data.url;
           }
-        };
+      });
+    };
+    let intervalCallback = function() {
+      seconds = seconds - 1;
+      $('.fdp-random-count-down').text(seconds);
+      if(seconds < -5) {
+        timeoutCallback();
+      }
+    };
 
-        let to = setTimeout(timeoutCallback, seconds * 1000);
+    let to = setTimeout(timeoutCallback, seconds * 1000);
 
-        let itv = setInterval(intervalCallback, 1000);
+    let itv = setInterval(intervalCallback, 1000);
 
-        $('.fdp-random-pause').on('click', function(e) {
-          e.preventDefault();
+    $('.fdp-random-pause').on('click', function(e) {
+      e.preventDefault();
 
-          if($('.fdp-random-pause').hasClass('glyphicon-pause')) {
-            window.clearInterval(itv);
-            window.clearTimeout(to);
-            $('.fdp-random-pause').removeClass('glyphicon-pause');
-            $('.fdp-random-pause').addClass('glyphicon-play');
-          }
-          else {
-            $('.fdp-random-pause').removeClass('glyphicon-play');
-            $('.fdp-random-pause').addClass('glyphicon-pause');
-            to = setTimeout(timeoutCallback, seconds * 1000);
-            itv = setInterval(intervalCallback, 1000);
-          }
-        });
+      if($('.fdp-random-pause').hasClass('glyphicon-pause')) {
+        window.clearInterval(itv);
+        window.clearTimeout(to);
+        $('.fdp-random-pause').removeClass('glyphicon-pause');
+        $('.fdp-random-pause').addClass('glyphicon-play');
+      }
+      else {
+        $('.fdp-random-pause').removeClass('glyphicon-play');
+        $('.fdp-random-pause').addClass('glyphicon-pause');
+        to = setTimeout(timeoutCallback, seconds * 1000);
+        itv = setInterval(intervalCallback, 1000);
+      }
+    });
 
-        $('.fdp-random-previous').on('click', function(e){
-          e.preventDefault();
-          window.history.go(-1);
-        });
+    $('.fdp-random-previous').on('click', function(e){
+      e.preventDefault();
+      window.history.go(-1);
+    });
 
-        $('.fdp-random-next').on('click', function(e){
-          e.preventDefault();
-          timeoutCallback();
-        });
-
-
-      <?php endif; ?>
+    $('.fdp-random-next').on('click', function(e){
+      e.preventDefault();
+      timeoutCallback();
+    });
+  <?php endif; ?>
 })(jQuery);
 </script>
 <?php endif;?>

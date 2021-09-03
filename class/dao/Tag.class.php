@@ -17,7 +17,7 @@ Class Tag {
         self::$table_files = Config::get('db_table_prefix') . 'files';
     }
 
-    public static function getFilesByTag($tagName, $page=1, $limit=20) {
+    public static function getFilesByTag($tagName, $page=1, $limit=24) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);

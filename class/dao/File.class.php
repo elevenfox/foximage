@@ -108,7 +108,7 @@ Class File {
         return false;
     }
 
-    public static function getFiles($page=1, $limit=20, $sort='desc') {
+    public static function getFiles($page=1, $limit=24, $sort='desc') {
         self::setTables();
 
         $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
@@ -135,7 +135,7 @@ Class File {
         }
     }
 
-    public static function getFilesRand($page=1, $limit=20, $sort='desc') {
+    public static function getFilesRand($page=1, $limit=24, $sort='desc') {
         self::setTables();
         
         $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
@@ -191,7 +191,7 @@ Class File {
         }
     }
 
-    public static function searchFile($term, $page=1, $limit=20) {
+    public static function searchFile($term, $page=1, $limit=24) {
         self::setTables();
 
         $term = DB::sanitizeInput($term);
@@ -245,7 +245,7 @@ Class File {
 
         $totalFile = $res[0]['total'];
 
-        $limit = random_int(1, $totalFile-8) .',' . 8;
+        $limit = random_int(1, $totalFile-12) .',' . 12;
         $query = 'select * from '.self::$table_files.' order by rand_id desc  limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {

@@ -116,8 +116,11 @@ AddType application/octet-stream .csv
   # RewriteBase /
 
 
-  # Rewrite http to https for youfreex.com
-  #RewriteCond %{HTTP_HOST} ^www.youfreex.com [NC]
+  # Rewrite http to https
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^tuzac.com [NC]
+  RewriteRule ^(.*)$ https://www.tuzac.com/$1 [L,R=301]
+  #RewriteCond %{HTTP_HOST} ^www.tuzac.com [NC]
   #RewriteCond %{SERVER_PORT} 80
   #RewriteRule ^(.*)$ https://www.youfreex.com/$1 [R,L]
 

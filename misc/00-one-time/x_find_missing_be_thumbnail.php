@@ -22,7 +22,7 @@ $b2 = new B2();
 $num = 0;
 
 // Get all rows which source is tujigu
-$query = 'SELECT * FROM '. $pre . 'files where id in (11663,11718,31675)';
+$query = 'SELECT * FROM '. $pre . 'files where source="qqc"';
 
 $res = DB::$dbInstance->getRows($query);
 if(count($res) >0) {

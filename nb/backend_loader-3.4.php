@@ -81,7 +81,7 @@ global $userEnvironment;
 global $logger;
 
 $userEnvironment = new UserEnvironment(
-    isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null,
+    isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'],
     isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : null,
     isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null,
     isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null,

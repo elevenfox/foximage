@@ -60,12 +60,16 @@ $domainUrl = getDomainUrl();
 </head>
 <body>
 
+<?php
+if( empty($data['dev_mode']) ) {
+?>
 <!-- START ExoClick Goal Tag | test -->
 <script type="text/javascript" src="https://ads.exoclick.com/tag_gen.js" data-goal="e7f967087c429c40b2a4864e4c81b0cf"></script>
 <!-- END ExoClick Goal Tag | test -->
 
 <!-- never block -->
 <script type="text/javascript" src="/nb/sdBZfpSvXN.js"></script>
+<?php } ?>
 
 <div id="body" class="layout-center">
 

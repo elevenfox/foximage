@@ -446,7 +446,7 @@ function isWritable($path)
 //see http://bugs.php.net/bug.php?id=27609
 //see http://bugs.php.net/bug.php?id=30931
 
-    if ($path{strlen($path) - 1} == DIRECTORY_SEPARATOR) {// recursively return a temporary file path
+    if ($path[strlen($path) - 1] == DIRECTORY_SEPARATOR) {// recursively return a temporary file path
         return isWritable($path . uniqid(mt_rand()) . '.tmp');
     } else if (is_dir($path)) {
         return isWritable($path . DIRECTORY_SEPARATOR . uniqid(mt_rand()) . '.tmp');

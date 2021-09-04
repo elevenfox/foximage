@@ -1,3 +1,7 @@
+<?php
+if( empty($data['dev_mode']) ) {
+?>
+
 <div id="block-ads-jp-footer-banner-ad">
     <div class="ad-container">
         <script type="application/javascript">
@@ -17,3 +21,5 @@
       })();
     </script>
 </div>
+
+<?php } ?>

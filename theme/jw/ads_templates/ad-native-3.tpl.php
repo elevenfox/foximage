@@ -1,3 +1,6 @@
+<?php
+if( empty($data['dev_mode']) ) {
+?>
 <div id="<?=empty($apply_mobile_native_ads) ? 'block-ads-right-sidebar-ad-3' : 'block-ads-right-sidebar-ad-3-mobile'?>"  class="<?=empty($apply_mobile_native_ads) ? '':'mobile-only'?>">
     <script type="application/javascript" data-idzone="4279900" src="https://a.realsrv.com/nativeads-v2.js" ></script>
     <script type="text/javascript">
@@ -7,3 +10,4 @@
       })();
     </script>
 </div>
+<?php } ?>

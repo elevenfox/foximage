@@ -5,7 +5,7 @@
  * @author: Elevenfox
  */
 Class tagContentsView extends ViewCore {
-  private $listPerPage = 20;
+  private $listPerPage = 24;
   private $listTagsPerPage = 120;
   
   public function preDisplay() {

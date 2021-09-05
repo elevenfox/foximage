@@ -5,7 +5,7 @@
  * @author: Elevenfox
  */
 Class homePageView extends ViewCore {
-  private $listPerPage = 20;
+  private $listPerPage = 24;
   
   public function preDisplay() {
     parent::preDisplay();

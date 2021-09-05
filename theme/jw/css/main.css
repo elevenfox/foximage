@@ -548,12 +548,12 @@ footer .the-tag {
 
 .content-container {
     width: 100%;
-    margin-right: -350px;
+    margin-right: -340px;
     float: left
 }
 
 .content-container .content {
-    margin-right: 350px;
+    margin-right: 340px;
     /* padding: 0 0 0 10px; */
 }
 .content-container.all-tags-page .content {
@@ -567,7 +567,7 @@ footer .the-tag {
 .content-container>h1 {
     text-align: left;
     margin: 30px 20px;
-    margin-right: 350px;
+    margin-right: 340px;
 }
 
 .content-container #random-play {
@@ -597,10 +597,10 @@ footer .the-tag {
 /***** File teaser *******/
 
 .node-teaser {
-    width: 250px;
+    width: 238px;
     display: inline-block;
     min-width: 100px;
-    max-width: 250px;
+    max-width: 238px;
     margin-bottom: 20px;
 }
 
@@ -688,7 +688,7 @@ div.stretchy-wrapper {
     position: relative;
     background: black;
     /* overflow: hidden; */
-    height: 375px;
+    height: 357px;
 }
 
 div.stretchy-wrapper::before {

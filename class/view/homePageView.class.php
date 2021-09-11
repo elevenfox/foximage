@@ -18,10 +18,10 @@ Class homePageView extends ViewCore {
     if(!empty($this->data['files'])) {
       $currentPage = empty($this->data['page']) ? 1 : $this->data['page'];
 
-      if(!empty($this->request->getSysRequest()['search_term'])) {
-        $term = $this->request->getSysRequest()['search_term'];
+      if(!empty($this->request->getSysRequest()['term'])) {
+        $term = $this->request->getSysRequest()['term'];
         $url = '/search/';
-        $appended = '?search_term=' . $term;
+        $appended = '?term=' . $term;
       }
       else {
         $url = '/newest/';

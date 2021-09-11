@@ -69,6 +69,17 @@
               <a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com</a>
             </span>
        </div>
+       <div class="hot-searches">
+         <div>热门搜索</div>
+         <?php
+          $hot_models = get_random_hot_searches(100);
+          if(is_array($hot_models)) {
+            foreach ($hot_models as $model) {
+              echo '<a class="hot-modal" href="/search?term=' . $model . '">' . $model . '</a>';
+            }
+          }
+         ?>
+       </div>
        <div class="footer-links">
            <span class="footer-link"><a href="/terms-conditions">Terms &amp; Conditions</a></span>
            <span class="footer-link"><a href="/dmca-notice">DMCA</a></span>

@@ -587,3 +587,20 @@ function processPhotoSrc($file) {
 
     return $src;
 }
+
+
+function get_random_hot_searches($count = 0) {
+    if(!empty($_SESSION['hot_searches'])) {
+        return $_SESSION['hot_searches'];
+    }
+    else {
+        $hot_models_list = Config::get('model_highlighted');
+        $hot_models = json_decode(str_replace("'", '"', $hot_models_list));
+
+        if(!empty($count)) {
+            $hot_models = array_rand(array_flip($hot_models), $count);
+        }
+        $_SESSION['hot_searches'] = $hot_models;
+        return $hot_models;
+    }
+}

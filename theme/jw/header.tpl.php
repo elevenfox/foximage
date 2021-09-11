@@ -110,11 +110,11 @@ if( empty($data['dev_mode']) ) {
 
         <div id="h-middle">
             <div class="header__region region region-header">
-                <form action="/search" method="post" id="search-block-form" accept-charset="UTF-8">
+                <form action="/search" method="get" id="search-block-form" accept-charset="UTF-8">
                     <div>
                         <div class="container-inline">
                             <div class="form-item form-type-textfield form-item-search-block-form">
-                                <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form--2" name="search_term" value="" size="15" maxlength="128" class="form-text">
+                                <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="128" class="form-text">
                             </div>
                             <div class="form-actions form-wrapper" id="edit-actions">
                                 <input type="submit" id="edit-submit" name="op" value="" class="form-submit">

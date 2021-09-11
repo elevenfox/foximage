@@ -49,11 +49,11 @@ Class homePageModel extends ModelCore {
   }
 
   public function getSearchResult() {
-      if(empty($this->request->getSysRequest()['search_term'])) {
+      if(empty($this->request->getSysRequest()['term'])) {
           $this->getNewest();
       }
       else {
-          $term = $this->request->getSysRequest()['search_term'];
+          $term = $this->request->getSysRequest()['term'];
 
           $this->data['pageTitle'] = 'Search for: ' . $term;
 

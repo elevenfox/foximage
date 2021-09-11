@@ -416,7 +416,7 @@ form input[type="button"] {
     height: 15px;
 }
 
-#search-block-form input[name='search_term'] {
+#search-block-form input[name='term'] {
     width: 90%;
     padding-right: 30px;
     height: 25px;
@@ -446,6 +446,18 @@ footer {
 
 footer .the-tag {
     padding: 5px 10px;
+    display: inline-block;
+}
+footer .hot-searches {
+    background-color: #f1f1f1;
+    padding: 10px 10px 20px 10px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+footer .hot-searches a {
+    margin: 5px 5px 0 8px;
+    white-space: nowrap;
     display: inline-block;
 }
 
@@ -1134,7 +1146,7 @@ article.file #fdp-photo .fdp-random-btns a {
         padding: 20px 5px;
         box-sizing: border-box;
     }
-    .layout-center #h-middle .container-inline .form-item-search-block-form input[name='search_term'] {
+    .layout-center #h-middle .container-inline .form-item-search-block-form input[name='term'] {
         padding: 5px;
         width: 100%;
         box-sizing: border-box;

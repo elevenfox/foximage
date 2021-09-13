@@ -135,7 +135,7 @@ Class File {
         }
     }
 
-    public static function getFilesRand($page=1, $limit=24, $sort='desc') {
+    public static function getFilesRand($page=1, $limit=24, $sort='asc') {
         self::setTables();
         
         $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
@@ -292,19 +292,21 @@ Class File {
             try {
                 $user_name = empty($user_name) ? User::getRandomUserName() : $user_name;
 
-                $res = DB::$dbInstance->query("insert into ".self::$table_files." set 
-                        `title` = '" . DB::sanitizeInput($fileObj->title) . "',
-                        `source` = '". $fileObj->source . "',
-                        `source_url` = '". str_replace("'", "\'", $fileObj->source_url) . "',
-                        `source_url_md5` = '". md5(str_replace("'", "\'", $fileObj->source_url)) . "',
-                        `description` = '". $fileObj->description . "',
-                        `filename` = '". implode(",", $fileObj->images) . "',
-                        `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
-                        `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',
-                        `created` = '".  date('Y-m-d H:i:s', time()) . "',
-                        `user_name` = '" . $user_name . "',
-                        `view_count` = 0
-                      ");
+                $sql = "insert into ".self::$table_files." set 
+                    `title` = '" . DB::sanitizeInput($fileObj->title) . "',
+                    `source` = '". $fileObj->source . "',
+                    `source_url` = '". str_replace("'", "\'", $fileObj->source_url) . "',
+                    `source_url_md5` = '". md5(str_replace("'", "\'", $fileObj->source_url)) . "',
+                    `description` = '". $fileObj->description . "',
+                    `filename` = '". implode(",", $fileObj->images) . "',
+                    `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
+                    `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',
+                    `created` = '".  date('Y-m-d H:i:s', time()) . "',
+                    `user_name` = '" . $user_name . "',
+                    `view_count` = 0
+                ";
+
+                $res = DB::$dbInstance->query($sql);
 
                 if($res) {
                     self::saveFileTags($fileObj);

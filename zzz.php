@@ -3,11 +3,13 @@
 
 require_once './bootstrap.inc';
 
+import('parser/xchina');
+$res = xchina::parse_html('https://xchina.co/photo/id-61054fc7ab92e/1.html');
+//$res = xchina::parse_html('https://www.tuzac.com/');
 
-// $s = empty($_SERVER['QUERY_STRING']) ? '' : '?'.$_SERVER['QUERY_STRING'];
+ZDebug::my_print($res);
 
-// ZDebug::my_print($s);
-// exit;
+exit;
 
 //////////////////////////////////////////////////
 //import('Baidupan');
@@ -203,8 +205,8 @@ require_once './bootstrap.inc';
 // $file_headers = @get_headers($url);
 // ZDebug::my_print($file_headers);
 
-import('B2');
-$b2 = new B2();
+// import('B2');
+// $b2 = new B2();
 // $key = 'tujigu/模特联盟/模特联盟_李梓熙《最真实的捆绑、情趣SM》-Vol.003-写真集-47P-/thumbnail.jpg';
 // $res = $b2->get_photo_content($key);
 // // ZDebug::my_print($res); exit;
@@ -214,20 +216,20 @@ $b2 = new B2();
 //         echo $res['Body'];
 // }
 
-$pre = Config::get('db_table_prefix');
-$query = 'SELECT * FROM '. $pre . 'files where id = 2231';
-$res = DB::$dbInstance->getRows($query);
-if(count($res) >0) {
-    foreach ($res as $row) {
-        echo date('Y-m-d H:i:s') . ' - ' . ($num+1) . " - processing: id=" . $row['id'] .', '. $row['title'] . " \n";
+// $pre = Config::get('db_table_prefix');
+// $query = 'SELECT * FROM '. $pre . 'files where id = 2231';
+// $res = DB::$dbInstance->getRows($query);
+// if(count($res) >0) {
+//     foreach ($res as $row) {
+//         echo date('Y-m-d H:i:s') . ' - ' . ($num+1) . " - processing: id=" . $row['id'] .', '. $row['title'] . " \n";
         
-        $physical_path = buildPhysicalPath($row);
-        $file_root = Config::get('file_root');
-        $relative_path = str_replace($file_root, '', $physical_path);
-        $key = $relative_path . '/thumbnail.jpg';
-        $full_path = $physical_path . '/thumbnail.jpg';
-        //$file_content = file_get_contents($full_path);
-        $res = $b2->upload_photo($key, $full_path);
-        ZDebug::my_print($res);
-    }
-}
+//         $physical_path = buildPhysicalPath($row);
+//         $file_root = Config::get('file_root');
+//         $relative_path = str_replace($file_root, '', $physical_path);
+//         $key = $relative_path . '/thumbnail.jpg';
+//         $full_path = $physical_path . '/thumbnail.jpg';
+//         //$file_content = file_get_contents($full_path);
+//         $res = $b2->upload_photo($key, $full_path);
+//         ZDebug::my_print($res);
+//     }
+// }

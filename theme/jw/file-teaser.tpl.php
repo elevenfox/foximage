@@ -6,7 +6,7 @@ $thumbnail = processThumbnail($data);
 ?>
 <article class="clearfix node-teaser" itemscope itemtype="http://schema.org/FileObject">
     <div class="task" id="task" style="position: relative">
-        <div class="thumbnail-container">
+        <div class="thumbnail-container" title="<?=$data['title']?>">
             <div class="teaser-thumbnail" itemprop="thumbnail">
                 <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url">
                     <div class="stretchy-wrapper" data-bg-text="Loading...">
@@ -14,13 +14,14 @@ $thumbnail = processThumbnail($data);
                               data-src="<?=$thumbnail?>"
                               alt="<?=$data['title']?>"
                               src="<?=$thumbnail?>"
+                              title="<?=$data['title']?>"
                         >
                     </div>
                 </a>
             </div>
         </div>
         <div class="teaser-file-detail">
-            <div class="teaser-file-title" itemprop="name">
+            <div class="teaser-file-title" itemprop="name" title="<?=$data['title']?>">
                 <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url"><?=$data['title']?></a>
             </div>
             <div class="teaser-file-info">

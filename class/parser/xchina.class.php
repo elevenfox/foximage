@@ -17,8 +17,19 @@ class xchina {
         if(empty($data['thumbnail'])) {
             $thumb_arr = find_between($page_content, '<meta property="og:image" content="', '">');
             $thumbnail = $thumb_arr[0];
-            $thumbnail = str_replace('http://xchina.co', 'https://img.xchina.xyz', $thumbnail);
-            $thumbnail = str_replace('.jpg', '_400x570.jpg', $thumbnail);
+            $file_headers = @get_headers($thumbnail);
+            foreach($file_headers as $h) {
+                if(strpos($h, 'Content-Length') !== false) {
+                    $tmp_arr = explode(':', $h);
+                    $length = empty($tmp_arr[1]) ? 0 : intval($tmp_arr[1]);
+                    break;
+                }
+            }
+            if(empty($length)) {
+                $thumbnail = str_replace('http://xchina.co', 'https://img.xchina.xyz', $thumbnail);
+                $thumbnail = str_replace('.jpg', '_400x570.jpg', $thumbnail);
+                $thumbnail = substr( $thumbnail, 0, 4 ) === "http" ? $thumbnail : 'https://xchina.co' . $thumbnail;
+            }
             $data['thumbnail'] = $thumbnail;
         }
 
@@ -33,7 +44,10 @@ class xchina {
         
         if(empty($data['images']))  $data['images'] = [];
         $image_finder = find_between($article_html, '<div class="item" src="', '"');
-        $data['images'] = array_merge($data['images'], $image_finder);
+        foreach ($image_finder as $img) {
+            $img = substr( $img, 0, 4 ) === "http" ? $img : 'https://xchina.co' . $img;
+            $data['images'][] = $img;    
+        }
         
         $next_url = '';
         $pager_finder = find_between($page_content, '<div class="pager">', '<div class="tips">');

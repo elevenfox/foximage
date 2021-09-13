@@ -82,13 +82,12 @@ if(!empty($url)) {
             $res = DB::$dbInstance->getRows($sql);
             foreach ($res as $fileObj) {
                 $i++;
-                $res2 = curl_call($prod_api.'?ac=save_file_data_and_node', 'post', array('obj'=>json_encode($fileObj)));
+                $fileObj['images'] = explode(',', $fileObj['filename']);
+                $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
                 $res2 == '1' ? $success++ : $failed++;
                 $result = $res2?'1':'0';
 
-                $m = date('Y-m-d H:i:s') . ' - ' . "$i - sync to prod: ".$fileObj['source_url']." -- $result\n";
-                echo $m;
-                $mailMsg .= $m;
+                echo date('Y-m-d H:i:s') . ' - ' . "$i - sync to prod: ".$fileObj['source_url']." -- $result\n";
             }
         }
         

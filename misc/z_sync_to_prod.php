@@ -36,9 +36,7 @@ if($max_file_id_prod < $max_file_id_local) {
         $res2 == '1' ? $success++ : $failed++;
         $result = $res2?'1':'0';
 
-        $m = date('Y-m-d H:i:s') . ' - ' . "$i - sync to prod: ".$fileObj['source_url']." -- $result\n";
-        echo $m;
-        $mailMsg .= $m;
+        echo date('Y-m-d H:i:s') . ' - ' . "$i - sync to prod: ".$fileObj['source_url']." -- $result\n";
     }
 }
 

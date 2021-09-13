@@ -54,49 +54,16 @@ Class fileDetailPageModel extends ModelCore {
   }
 
   public function getFileThumbnail() {
-      $fileId = empty($this->request->arg[1]) ? '' : $this->request->arg[1];
+      $file_full_path_enc = empty($this->request->arg[2]) ? '' : $this->request->arg[2];
+      $fullname = urldecode(base64_decode($file_full_path_enc));
 
       $img_data = null;
-      $res = File::getFileByMd5($fileId); // file/<md5>/th.jpg
-      if(!empty($res)) {
-        $row = $res;
-        // Build physical path: Use <file_root>/source/<file_title>/ as file structure
-        $physical_path = buildPhysicalPath($row);
-
-        // If folder not exist, create the folder
-        if(!is_dir($physical_path)) {
-            $res = mkdir($physical_path, 0755, true);
-            if(!$res) {
-                error_log(" ----- failed to create directory: " . $physical_path );
-            }
-        }
-
-        $fullname = $physical_path . '/thumbnail.jpg';
-        // if file does not exist locally or force_download, then download it
-        if(!file_exists($fullname)) {
-          $referrer = getReferrer($row['source']);  
-          $tn_url = str_replace('http://', 'https://', $row['thumbnail']);
-          $tn_url = str_replace('tjg.hywly.com', 'tjg.gzhuibei.com', $tn_url);
-          $result = curl_call($tn_url, 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
-          if(!empty($result)) {
-              $res = file_put_contents($fullname, $result);
-              chmod($fullname, 0755);
-              if(!$res) {
-                  error_log(" ----- failed to save thumbnail: " . $fullname);    
-              }
-              else {
-                $img_data = $result;
-              }
-          }
-          else {
-              error_log(" ---- failed to download: " . $tn_url ); 
-          }
-        }
-        else {
-          $img_data = file_get_contents($fullname);
-        }
+      
+      // if file does not exist locally or force_download, then download it
+      if(file_exists($fullname)) {
+        $img_data = file_get_contents($fullname);
       }
-
+      
       header('Content-type: image/jpeg');
       echo $img_data;
       exit;

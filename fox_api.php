@@ -12,6 +12,7 @@ $supported_sources = [
     'qqc962.com' => 'qqc',
     'v8.qqv13.vip' => 'qqc',
     'tujigu.com' => 'tujigu',
+    'tujigu.net' => 'tujigu',
     'xchina.co' => 'xchina',
     'xchina.xyz' => 'xchina',
 ];

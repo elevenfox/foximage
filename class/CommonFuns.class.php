@@ -492,9 +492,6 @@ function processThumbnail($row, $force_download = false) {
 
         $fullname = $physical_path . '/thumbnail.jpg';
 
-        $name_arr = explode('/jw-photos/', $fullname);
-        $relative_path = '/jw-photos/' . $name_arr[1];    
-
         // if file does not exist locally, then download it
         if(!file_exists($fullname)) {
             $referrer = getReferrer($row['source']);  
@@ -521,16 +518,14 @@ function processThumbnail($row, $force_download = false) {
                     $sql = "update ". $pre . "files set thumbnail=1 where source_url = '" . $row['source_url'] . "'";
                     DB::$dbInstance->query($sql);
 
-                    $img_src = $relative_path;
                 }
             }
             else {
                 error_log(" ---- failed to download: " . $tn_url ); 
             }
         }
-        else {
-            $img_src = $relative_path;
-        }
+        
+        $img_src = '/jw-photos/file_thumbnail/'. base64_encode(urlencode( $fullname));
     }
 
     return $img_src;

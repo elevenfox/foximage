@@ -460,21 +460,24 @@ function getReferrer($source) {
 }
 
 
-function processThumbnail($row) {
+function processThumbnail($row, $force_download = false) {
+    $img_src = '';
+
     // Build physical path: Use <file_root>/source/<file_title>/ as file structure
     $physical_path = buildPhysicalPath($row);
     
+    $file_root = Config::get('file_root');
+    if(empty($file_root)) {
+        $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+    }
+    $relative_path = str_replace($file_root, '', $physical_path);
+    $key = $relative_path . '/thumbnail.jpg';
+
     $dev_mode = Config::get('dev_mode');
-    if( empty($dev_mode) ) {
+    if( empty($dev_mode) && $force_download === false) {
         // Use B2
         //$base_b2_url = 'https://photo.tuzac.com/';
         $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
-        $file_root = Config::get('file_root');
-        if(empty($file_root)) {
-            $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
-        }
-        $relative_path = str_replace($file_root, '', $physical_path);
-        $key = $relative_path . '/thumbnail.jpg';
         $img_src = $base_b2_url . str_replace('%2F','/', urlencode($key));
     }
     else {
@@ -492,14 +495,37 @@ function processThumbnail($row) {
         $name_arr = explode('/jw-photos/', $fullname);
         $relative_path = '/jw-photos/' . $name_arr[1];    
 
-        $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
-        // if file does not exist locally, then use download url
+        // if file does not exist locally, then download it
         if(!file_exists($fullname)) {
-            if($row['source'] == 'tujigu') {
-                $img_src = '/file_thumbnail/' . $row['source_url_md5'] . '/th.jpg';
+            $referrer = getReferrer($row['source']);  
+            $tn_url = str_replace('http://', 'https://', $row['thumbnail']);
+            $tn_url = str_replace('tjg.hywly.com', 'tjg.gzhuibei.com', $tn_url);
+            $result = curl_call($tn_url, 'get', null, ['timeout'=>10,'referrer'=>$referrer]);
+            if(!empty($result)) {
+                $res = file_put_contents($fullname, $result);
+                chmod($fullname, 0755);
+                if(!$res) {
+                    error_log(" ----- failed to save thumbnail: " . $fullname);    
+                }
+                else {
+                    // Upload to B2
+                    import('B2');
+                    $b2 = new B2();
+                    $res = $b2->get_photo_content($key);
+                    if(empty($res)) {
+                        $res = $b2->upload_photo($key, $fullname);
+                    }
+
+                    // Update db to set thumbnail field to 1
+                    $pre = Config::get('db_table_prefix');
+                    $sql = "update ". $pre . "files set thumbnail=1 where source_url = '" . $row['source_url'] . "'";
+                    DB::$dbInstance->query($sql);
+
+                    $img_src = $relative_path;
+                }
             }
             else {
-                $img_src = $row['thumbnail'];
+                error_log(" ---- failed to download: " . $tn_url ); 
             }
         }
         else {

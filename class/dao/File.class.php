@@ -147,7 +147,7 @@ Class File {
         }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = 'select * from '.self::$table_files.' order by rand_id ' . $sort . ' limit ' . $limit;
+        $query = 'select * from '.self::$table_files.' order by rand_id ' . $sort . ', created desc limit ' . $limit;
  
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {

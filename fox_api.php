@@ -71,6 +71,8 @@ switch($action) {
 
                     $res = File::save($file_obj);
                     if($res) {
+                        // Process thumbnail
+                        processThumbnail((array)$file_obj, true);
                         $status = 1;
                     }
                     else {
@@ -86,14 +88,17 @@ switch($action) {
         break;
 
     case 'save_file_data':
-        $FileObj = json_decode($_POST['obj']);
-        if(empty($FileObj)) {
+        $fileObj = json_decode($_POST['obj']);
+        if(empty($fileObj)) {
             $post = json_decode(file_get_contents("php://input"));
-            $FileObj = $post->obj;
+            $fileObj = $post->obj;
         }
 
         // Save all info to Files table
-        $res = File::save($FileObj);
+        $res = File::save($fileObj);
+
+        // Process thumbnail
+        processThumbnail($file_obj, true);
 
         echo $res ? 1 : 0;
         break;

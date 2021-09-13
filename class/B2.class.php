@@ -43,7 +43,7 @@ class B2 {
             return $res;
         } 
         catch (S3Exception $e) {
-            error_log('-- Failed to get photo: ' . $e->getMessage() . PHP_EOL);
+            //error_log('-- Failed to get photo: ' . $e->getMessage() . PHP_EOL);
             return false;
         }
     }

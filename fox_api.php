@@ -19,11 +19,11 @@ $supported_sources = [
 
 $action = empty($_REQUEST['ac']) ? 'default' : $_REQUEST['ac'];
 switch($action) {
-    case 'get_max_File_id':
+    case 'get_max_file_id':
         echo File::getMaxFileId();
         break;
 
-    case 'File_exist':
+    case 'file_exist':
         $url = $_GET['url'];
         $res = File::getFileBySourceUrl($url);
         echo empty($res) ? null : $res['id'];
@@ -85,7 +85,7 @@ switch($action) {
 
         break;
 
-    case 'save_File_data':
+    case 'save_file_data':
         $FileObj = json_decode($_POST['obj']);
         if(empty($FileObj)) {
             $post = json_decode(file_get_contents("php://input"));
@@ -132,7 +132,7 @@ switch($action) {
         apiReturnJson($res);
         break;
 
-    case 'upload_File_by_user':
+    case 'upload_file_by_user':
         $res = false;
 
         $FileUrl = $_POST['FileUrl'];

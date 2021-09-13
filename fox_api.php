@@ -92,12 +92,6 @@ switch($action) {
             $FileObj = $post->obj;
         }
 
-        if($FileObj->duration < 90) {
-            error_log("Do not save File which has duration less than 90 seconds.");
-            echo 0;
-            return false;
-        }
-
         // Save all info to Files table
         $res = File::save($FileObj);
 

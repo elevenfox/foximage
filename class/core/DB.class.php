@@ -565,7 +565,7 @@ abstract class DB {
 	public static function sanitizeInput($var) {
         $var = stripslashes($var);
 
-        $var = str_replace(array("'", ","), " ", $var);
+        $var = str_replace(array("'", ",", "&", "@"), " ", $var);
 
         //$var = strip_tags($var);
 

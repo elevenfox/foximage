@@ -26,22 +26,22 @@ Class fileDetailPageModel extends ModelCore {
     $fileId = empty($this->request->arg[2]) ? '' : $this->request->arg[2];
 
     $res = null;
+    
     // If displaying different photos in the same album, no need to do db query, use session
-    if(!empty($_SESSION['current_file'])) {
-      $res = $_SESSION['current_file'];
+    if(ctype_digit($fileAlias)) {
+      // @TODO Will disable this to normal users later 
+      $res = $_SESSION['current_file']['id'] == $fileAlias ? $_SESSION['current_file'] 
+              : File::getFileByID($fileAlias);  // file/123/<title>
     }
-    if(empty($res)) {
-      if(ctype_digit($fileAlias)) {
-        // @TODO Will disable this to normal users later
-        $res = File::getFileByID($fileAlias);  // file/123/<title>
+    else {
+      if (ctype_digit($fileId)) {
+          $res = $_SESSION['current_file']['id'] == $fileId ? $_SESSION['current_file'] 
+                  : File::getFileByID($fileId); // video/<title>/123
       }
       else {
-        if (ctype_digit($fileId)) {
-            $res = File::getFileByID($fileId); // video/<title>/123
-        }
-        else {
-            $res = File::getFileByMd5($fileId); // video/<title>/<md5>
-        }
+        var_dump($_SESSION['current_file']);
+          $res = $_SESSION['current_file']['source_url_md5'] == $fileId ? $_SESSION['current_file'] 
+                : File::getFileByMd5($fileId); // video/<title>/<md5>
       }
     }
 

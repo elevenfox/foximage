@@ -26,21 +26,28 @@ Class fileDetailPageModel extends ModelCore {
     $fileId = empty($this->request->arg[2]) ? '' : $this->request->arg[2];
 
     $res = null;
-    if(ctype_digit($fileAlias)) {
-       // @TODO Will disable this to normal users later
-       $res = File::getFileByID($fileAlias);  // file/123/<title>
+    // If displaying different photos in the same album, no need to do db query, use session
+    if(!empty($_SESSION['current_file'])) {
+      $res = $_SESSION['current_file'];
     }
-    else {
-      if (ctype_digit($fileId)) {
-          $res = File::getFileByID($fileId); // video/<title>/123
+    if(empty($res)) {
+      if(ctype_digit($fileAlias)) {
+        // @TODO Will disable this to normal users later
+        $res = File::getFileByID($fileAlias);  // file/123/<title>
       }
       else {
-          $res = File::getFileByMd5($fileId); // video/<title>/<md5>
+        if (ctype_digit($fileId)) {
+            $res = File::getFileByID($fileId); // video/<title>/123
+        }
+        else {
+            $res = File::getFileByMd5($fileId); // video/<title>/<md5>
+        }
       }
     }
 
     // increase view count here since this is for sure a file-view
     if(!empty($res)) {
+        $_SESSION['current_file'] = $res;
         File::updateViewCount($res['id']);
     }
 

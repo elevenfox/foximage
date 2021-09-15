@@ -39,7 +39,6 @@ Class fileDetailPageModel extends ModelCore {
                   : File::getFileByID($fileId); // video/<title>/123
       }
       else {
-        var_dump($_SESSION['current_file']);
           $res = $_SESSION['current_file']['source_url_md5'] == $fileId ? $_SESSION['current_file'] 
                 : File::getFileByMd5($fileId); // video/<title>/<md5>
       }

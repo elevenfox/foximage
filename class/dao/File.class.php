@@ -135,7 +135,7 @@ Class File {
         }
     }
 
-    public static function getFilesRand($page=1, $limit=24, $sort='asc') {
+    public static function getFilesRand($page=1, $limit=24, $sort='desc') {
         self::setTables();
         
         $cacheKey = THEME . '_all_files_' . $page . '_' . $limit . "_" . $sort;
@@ -310,6 +310,7 @@ Class File {
 
                 if($res) {
                     self::saveFileTags($fileObj);
+                    DB::$dbInstance->query("UPDATE ".self::$table_files." AS t CROSS JOIN (SELECT MAX(rand_id) AS max_rand_id FROM ".self::$table_files.") AS m SET t.rand_id = m.max_rand_id + 1 WHERE t.source_url='{$fileObj->source_url}'");
                 }
                 
                 return true;

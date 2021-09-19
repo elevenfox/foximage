@@ -13,7 +13,7 @@ $pre = Config::get('db_table_prefix');
 echo date('Y-m-d H:i:s') . ' - ' . " Start shuffling photos ... \n\n";
 $start_time = time();
 
-$new_items = rand(15,30);
+$new_items = rand(10,15);
 
 //$res = DB::$dbInstance->query('UPDATE ' . $pre . 'files set rand_id = FLOOR( (RAND() * 1000000) + 1 )');
 

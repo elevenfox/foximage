@@ -69,17 +69,6 @@ if(count($res) >0) {
                     else {
                         echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
                     }
-                    
-                    // upload it to onedrive
-                    echo date('Y-m-d H:i:s') . ' --------  uploading file: ' . $fullname . " \n"; 
-                    $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
-                    $res = Onedrive::upload_photo($relative_fullname);
-                    if(!$res) {
-                        echo date('Y-m-d H:i:s') . " ------------------ failed!!! \n";    
-                    }
-                    else {
-                        echo date('Y-m-d H:i:s') . " ------------------ succes \n";    
-                    }
                 }
             }
         }

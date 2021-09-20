@@ -63,6 +63,10 @@ $domainUrl = getDomainUrl();
 <?php
 if( empty($data['dev_mode']) ) {
 ?>
+<!-- JuicyAds PopUnders v3 Start -->
+<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284x2d444&u=https%3A%2F%2Fwww.tuzac.com"></script>
+<!-- JuicyAds PopUnders v3 End -->
+
 <!-- START ExoClick Goal Tag | test -->
 <script type="text/javascript" src="https://ads.exoclick.com/tag_gen.js" data-goal="e7f967087c429c40b2a4864e4c81b0cf"></script>
 <!-- END ExoClick Goal Tag | test -->

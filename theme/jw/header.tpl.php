@@ -143,3 +143,10 @@ if( empty($data['dev_mode']) ) {
         </ul>
     </div>
 
+<!-- JuicyAds v3.0 -->
+<div class="mobile-only mobile-banner" style="width:100%; padding: 15px 0 0 0; text-align: center">
+  <script type="text/javascript" data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js"></script>
+  <ins id="946411" data-width="300" data-height="50"></ins>
+  <script type="text/javascript" data-cfasync="false" async>(adsbyjuicy = window.adsbyjuicy || []).push({'adzone':946411});</script>
+</div>
+<!--JuicyAds END-->

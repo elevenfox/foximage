@@ -35,11 +35,11 @@ Class fileDetailPageModel extends ModelCore {
     }
     else {
       if (ctype_digit($fileId)) {
-          $res = $_SESSION['current_file']['id'] == $fileId ? $_SESSION['current_file'] 
+          $res = !empty($_SESSION['current_file']['id']) && $_SESSION['current_file']['id'] == $fileId ? $_SESSION['current_file'] 
                   : File::getFileByID($fileId); // video/<title>/123
       }
       else {
-          $res = $_SESSION['current_file']['source_url_md5'] == $fileId ? $_SESSION['current_file'] 
+          $res = !empty($_SESSION['current_file']['source_url_md5']) && $_SESSION['current_file']['source_url_md5'] == $fileId ? $_SESSION['current_file'] 
                 : File::getFileByMd5($fileId); // video/<title>/<md5>
       }
     }

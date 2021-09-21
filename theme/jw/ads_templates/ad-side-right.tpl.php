@@ -1,5 +1,5 @@
 <?php
-//if(!is_mobile()) {
+// if(!is_mobile()) {
   if( empty($data['dev_mode']) ) {
 ?>
 
@@ -11,7 +11,7 @@
 
     <?php include ('ad-native-3.tpl.php')?>
 
-    <div id="block-ads-jp-right-sidebar-ad-v">
+    <div id="block-ads-right-sidebar-ad-v">
         <div>
             <div class="ad-container">
                 <script type="application/javascript">
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div id="block-ads-jp-right-sidebar-ad-v-2">
+    <div id="block-ads-right-sidebar-ad-v-2">
         <div>
             <div class="ad-container">
 
@@ -61,4 +61,5 @@
 </div>
 <?php 
 }
+//}
 ?>

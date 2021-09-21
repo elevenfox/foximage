@@ -38,4 +38,14 @@ jQuery(function() {
 
     jQuery('.lazy').lazy();
 
+    jQuery(window).resize(function () {
+        var winW = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        if (winW > mobileWidth) {
+            jQuery('.main-menu').show();
+        }
+        else {
+            jQuery('.main-menu').hide();
+        }
+    });
+
 });

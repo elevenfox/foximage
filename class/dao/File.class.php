@@ -287,6 +287,11 @@ Class File {
         $fileObj->tags = implode(',', self::handle_tag_array($tag_array));
 
         $file = empty($fileObj->id) ? self::getFileBySourceUrl($fileObj->source_url) : self::getFileByID($fileObj->id);
+
+        if(!empty($fileObj->filename) && empty($fileObj->images)) {
+            $fileObj->images = explode(',', $fileObj->filename);
+        }
+
         if(empty($file)) {
             // insert
             try {

@@ -127,9 +127,9 @@ if( empty($data['dev_mode']) ) {
         <div id="h-right">
             <?php if(!empty($_SESSION['user'])):?>
                 <span>Hello <a href="/user"><?=$_SESSION['user']['name']?></a></span>|
-                <span><a href="/user/logout">Log out</a></span>
+                <span><a href="/user/logout">退出</a></span>
             <?php else:?>
-                <span><a href="/user/login">Log In</a></span><span><a href="/user/register">Sign Up</a></span>
+                <span><a href="/user/login">登录</a></span><span><a href="/user/register">注册</a></span>
             <?php endif;?>
         </div>
 
@@ -140,7 +140,7 @@ if( empty($data['dev_mode']) ) {
                     <div>
                         <div class="container-inline">
                             <div class="form-item form-type-textfield form-item-search-block-form">
-                                <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="128" class="form-text">
+                                <input title="Enter the terms you wish to search for." placeholder="搜索..." type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="128" class="form-text">
                             </div>
                             <div class="form-actions form-wrapper" id="edit-actions">
                                 <input type="submit" id="edit-submit" name="op" value="" class="form-submit">

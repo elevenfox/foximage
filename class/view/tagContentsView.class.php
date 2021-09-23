@@ -15,7 +15,7 @@ Class tagContentsView extends ViewCore {
 
     // Set header if needed
     if(empty($this->data['tagName'])) {
-          $this->setHeader("All Tags", 'title');
+          $this->setHeader("全部美女写真图片分类", 'title');
     }
     else {
         $this->setHeader(ucwords($this->data['tagName']), 'title');

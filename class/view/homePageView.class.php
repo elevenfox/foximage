@@ -11,7 +11,7 @@ Class homePageView extends ViewCore {
     parent::preDisplay();
 
     // Set header if needed
-    $title = $this->data['pageTitle'] ? $this->data['pageTitle'] : 'Newest';
+    $title = '最新美女写真图片推荐';
     $this->setHeader($title, 'title');
     
 

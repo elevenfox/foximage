@@ -756,6 +756,11 @@ article.file .file-tags .tag {
     margin: 5px 8px;
     display: inline-block;
 }
+article.file .file-tags .tag h2 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: normal;
+}
 
 article.file .file-tags.ft-bottom {
     text-align: center;

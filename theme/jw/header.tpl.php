@@ -33,7 +33,7 @@ $domainUrl = getDomainUrl();
     
 
     <meta name="referrer" content="no-referrer" />
-    <meta name="robots" content="follow, index" />
+    <meta name="robots" content="<?=empty($data['meta_robots']) ? 'follow, index': $data['meta_robots']?>" />
 
     <meta http-equiv="cache-control" content="max-age=864000" />
 

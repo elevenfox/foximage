@@ -4,11 +4,16 @@
 
 $domainUrl = getDomainUrl();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6 language-cn" lang="cn"> <![endif]-->
+<!--[if IE 7 ]>	<html class="ie7 language-cn" lang="cn"> <![endif]-->
+<!--[if IE 8 ]>	<html class="ie8 language-cn" lang="cn"> <![endif]-->
+<!--[if IE 9 ]>	<html class="ie9 language-cn" lang="cn"> <![endif]-->
+<!--[if !(IE)]><!--> <html class="language-cn" lang="cn"> <!--<![endif]-->
 
 <head<?php print $data['header_attrs'];?>>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <link rel="dns-prefetch" href="//img.tuzac.com">
     <link rel="preconnect" href="//img.tuzac.com">

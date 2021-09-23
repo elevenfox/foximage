@@ -5,11 +5,11 @@
 $domainUrl = getDomainUrl();
 ?>
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="ie6 language-cn" lang="cn"> <![endif]-->
-<!--[if IE 7 ]>	<html class="ie7 language-cn" lang="cn"> <![endif]-->
-<!--[if IE 8 ]>	<html class="ie8 language-cn" lang="cn"> <![endif]-->
-<!--[if IE 9 ]>	<html class="ie9 language-cn" lang="cn"> <![endif]-->
-<!--[if !(IE)]><!--> <html class="language-cn" lang="cn"> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html class="ie6 language-cn" lang="zh-CN"> <![endif]-->
+<!--[if IE 7 ]>	<html class="ie7 language-cn" lang="zh-CN"> <![endif]-->
+<!--[if IE 8 ]>	<html class="ie8 language-cn" lang="zh-CN"> <![endif]-->
+<!--[if IE 9 ]>	<html class="ie9 language-cn" lang="zh-CN"> <![endif]-->
+<!--[if !(IE)]><!--> <html class="language-cn" lang="zh-CN"> <!--<![endif]-->
 
 <head<?php print $data['header_attrs'];?>>
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />

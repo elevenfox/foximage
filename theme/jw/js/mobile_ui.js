@@ -42,9 +42,15 @@ jQuery(function() {
         var winW = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         if (winW > mobileWidth) {
             jQuery('.main-menu').show();
+            jQuery(document).on('scroll', function (e) {
+              jQuery('.main-menu').show();
+            });
         }
         else {
             jQuery('.main-menu').hide();
+            jQuery(document).on('scroll', function (e) {
+              jQuery('.main-menu').hide();
+            });
         }
     });
 

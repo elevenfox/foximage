@@ -218,6 +218,7 @@ form input[type="button"] {
     padding: 0 0 0 5px;
     line-height: 50px;
     color: #f27bab;
+    font-weight: bold;
 }
 
 .header #h-left {

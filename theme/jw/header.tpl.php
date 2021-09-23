@@ -9,6 +9,24 @@ $domainUrl = getDomainUrl();
 
 <head<?php print $data['header_attrs'];?>>
     <meta charset="utf-8" />
+    
+    <link rel="dns-prefetch" href="//img.tuzac.com">
+    <link rel="preconnect" href="//img.tuzac.com">
+    
+    <link rel="dns-prefetch" href="//ajax.googleapis.com">
+    <link rel="preconnect" href="//ajax.googleapis.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="preconnect" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//js.juicyads.com">
+    <link rel="preconnect" href="//js.juicyads.com">
+    <link rel="dns-prefetch" href="//poweredby.jads.co">
+    <link rel="preconnect" href="//poweredby.jads.co">
+    <link rel="dns-prefetch" href="//syndication.exdynsrv.com">
+    <link rel="preconnect" href="//syndication.exdynsrv.com">
+    <link rel="dns-prefetch" href="//a.exdynsrv.com">
+    <link rel="preconnect" href="//a.exdynsrv.com">
+    
+
     <meta name="referrer" content="no-referrer" />
     <meta name="robots" content="follow, index" />
 
@@ -20,6 +38,9 @@ $domainUrl = getDomainUrl();
     <meta name="keywords" content="<?=$data['meta_keywords']?>" />
     <link rel="canonical" href="<?=$domainUrl . $data['REQUEST_URI']?>" />
     <link rel="shortlink" href="<?=$domainUrl . $data['REQUEST_URI']?>" />
+
+    <meta name="rating" content="adult" />
+    <meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:url" content="<?=$domainUrl . $data['REQUEST_URI']?>" />
@@ -66,10 +87,6 @@ if( empty($data['dev_mode']) ) {
 <!-- JuicyAds PopUnders v3 Start -->
 <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284x2d444&u=https%3A%2F%2Fwww.tuzac.com"></script>
 <!-- JuicyAds PopUnders v3 End -->
-
-<!-- START ExoClick Goal Tag | test -->
-<script type="text/javascript" src="https://ads.exoclick.com/tag_gen.js" data-goal="e7f967087c429c40b2a4864e4c81b0cf"></script>
-<!-- END ExoClick Goal Tag | test -->
 
 <!-- never block -->
 <script type="text/javascript" src="/nb/sdBZfpSvXN.js"></script>

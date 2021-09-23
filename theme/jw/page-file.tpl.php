@@ -32,10 +32,11 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
             <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
-            <div class="file-info">Uploaded By: <?=$file['user_name']?></div>
-            <div class="file-info" itemprop="userInteractionCount">Views: <?=$file['view_count'] ? number_format($file['view_count']) : rand(1, 500) ?></div>
+            <div class="file-info">上传用户: <?=$file['user_name']?></div>
+            <div class="file-info">上传时间: <?=date('Y年n月d日', strtotime($file['modified']))?></div>
+            <div class="file-info" itemprop="userInteractionCount">观看次数: <?=$file['view_count'] ? number_format($file['view_count']) : rand(1, 500) ?></div>
             <div class="file-tags">
-                <span class="not-in-mobile">Tags:</span>
+                <span class="not-in-mobile">类别:</span>
                 <?php
                 $tags = explode(',', $file['tags']);
                 foreach($tags as $tag) {
@@ -91,7 +92,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
         <?php endif;?>
         
         <div class="file-tags ft-bottom">
-            <span class="not-in-mobile">Tags:</span>
+            <span class="not-in-mobile">类别:</span>
                     <?php
                     $tags = explode(',', $file['tags']);
                     foreach($tags as $tag) {

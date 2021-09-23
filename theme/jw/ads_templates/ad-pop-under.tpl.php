@@ -1,6 +1,6 @@
 
 <?php if(empty($data['dev_mode']) && 1==0 ): ?>
-<script type="text/javascript" src="https://syndication.exosrv.com/splash.php?idzone=4279892&capping=0"></script>
+  <script type="application/javascript" src="https://syndication.exdynsrv.com/splash.php?idzone=4279892&capping=0"></script>
 <?php endif; ?>
 
 <?php if( empty($data['dev_mode']) ) : ?>

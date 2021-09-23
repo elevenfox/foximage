@@ -48,8 +48,10 @@ jQuery(function () {
           }
           else {
             ads.forEach((ad) => {
-              ad.removeClass('mobile-only');
-              ad.detach().insertBefore(jQuery("#block-ads-right-sidebar-ad-v"));
+              if(ad.hasClass('mobile-only')) {
+                ad.removeClass('mobile-only');
+                ad.detach().insertBefore(jQuery("#block-ads-right-sidebar-ad-v"));
+              }
             });
           }
       }
@@ -61,11 +63,11 @@ jQuery(function () {
 
   // if(window.matchMedia('(max-device-width: 565px)').matches) {
   if (winW <= 565) {
-    setTimeout(()=>{moveAds(true)}, 1000);
+    setTimeout(()=>{moveAds(true)}, 500);
     ;
   }
   else {
-    setTimeout(()=>{moveAds(false)}, 1000);
+    setTimeout(()=>{moveAds(false)}, 500);
   }
 
   jQuery(window).resize(function () {

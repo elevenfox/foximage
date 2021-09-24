@@ -477,7 +477,8 @@ function processThumbnail($row, $force_download = false) {
     if( empty($dev_mode) && $force_download === false) {
         // Use B2
         //$base_b2_url = 'https://photo.tuzac.com/';
-        $base_b2_url = 'https://img.kkc3.com/file/jw-photos-2021/';
+        $cdn_domain = Config::get('cdn_domain');
+        $base_b2_url = 'https://'.$cdn_domain.'/file/jw-photos-2021/';
         $img_src = $base_b2_url . str_replace('%2F','/', urlencode($key));
     }
     else {

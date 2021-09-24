@@ -62,13 +62,13 @@ $domainUrl = getDomainUrl();
 
     <?php if(empty($data['dev_mode'])) : ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9JHHT80DE"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-208517918-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-H9JHHT80DE');
+        gtag('config', 'UA-208517918-1');
     </script>
     <?php endif; ?>
 

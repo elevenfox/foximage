@@ -61,16 +61,21 @@
             </span>
            <span class="the-tag">
               <a href="/tags/蕾丝诱惑">蕾丝</a>
-            </span>
-            <span class="the-tag">
-              <a href="https://www.pornabcd.com" title="" target="_blank">PornABCD.com</a>
-            </span>
-            <span class="the-tag">
-              <a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com</a>
-            </span>
-            <span class="the-tag">
-              <a href="https://www.javwall.com" title="" target="_blank">JAVWall.com</a>
-            </span>
+           </span>
+           <div>  
+              <span class="the-tag">
+                <a href="https://www.pornabcd.com" title="" target="_blank">PornABCD.com&nbsp;<img src="/images/external-link.svg" width=15 height=15 alt="exteral" title="Exteral"></a>
+              </span>
+              <span class="the-tag">
+                <a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com&nbsp;<img src="/images/external-link.svg" width=15 height=15  alt="exteral" title="Exteral"></a>
+              </span>
+              <span class="the-tag">
+                <a href="https://www.javwall.com" title="" target="_blank">JAVWall.com&nbsp;<img src="/images/external-link.svg" width=15 height=15  alt="exteral" title="Exteral"></a>
+              </span>
+              <span class="the-tag">
+                <a href="https://www.kkc3.com" title="" target="_blank">KKC3.com&nbsp;<img src="/images/external-link.svg" width=15 height=15  alt="exteral" title="Exteral"></a>
+              </span>
+           </div>
        </div>
        <div class="hot-searches">
          <div>热门搜索</div>

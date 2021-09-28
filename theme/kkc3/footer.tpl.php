@@ -79,7 +79,7 @@
            <span class="footer-link"><a href="/privacy-policy">Privacy Policy</a></span>
        </div>
        <div style="margin: 15px 0;">
-           © KKC3 <?=Config::get('site_abbr')?> 2020 - <?=date('Y', time())?>
+           © KKC3 <?=Config::get('site_abbr')?> 2021 - <?=date('Y', time())?>
        </div>
        <?php print $data['scripts_footer']; ?>
 

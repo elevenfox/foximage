@@ -127,29 +127,15 @@ EOF;
         $txt = <<<EOF
 User-agent: *
 Crawl-delay: 10
-# CSS, JS, Images
-Allow: /libraries/*.css$
-Allow: /libraries/*.css?
-Allow: /libraries/*.js$
-Allow: /libraries/*.js?
-Allow: /libraries/*.gif
-Allow: /libraries/*.jpg
-Allow: /libraries/*.jpeg
-Allow: /libraries/*.png
-Allow: /themes/*.css$
-Allow: /themes/*.css?
-Allow: /themes/*.js$
-Allow: /themes/*.js?
-Allow: /themes/*.gif
-Allow: /themes/*.jpg
-Allow: /themes/*.jpeg
-Allow: /themes/*.png
 # Directories
-Disallow: /libraries/
-Disallow: /themes/
+Disallow: /cache/
 Disallow: /class/
 Disallow: /conf/
+Disallow: /css/
+Disallow: /images/
 Disallow: /misc/
+Disallow: /nb/
+Disallow: /theme/
 # Files
 Disallow: /CHANGELOG.txt
 # Paths (clean URLs)
@@ -157,6 +143,7 @@ Disallow: /api/
 Disallow: /user/register/
 Disallow: /user/login/
 Disallow: /user/logout/
+Disallow: /*?at=*
 # Paths (no clean URLs)
 Disallow: /?q=api/
 Disallow: /?q=user/register/

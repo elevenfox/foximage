@@ -89,9 +89,12 @@ $domainUrl = getDomainUrl();
 <?php
 if( empty($data['dev_mode']) ) {
 ?>
-<!-- JuicyAds PopUnders v3 Start -->
-<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284x2d444&u=https%3A%2F%2Fwww.tuzac.com"></script>
-<!-- JuicyAds PopUnders v3 End -->
+<!-- JuicyAds v3.2P Start -->
+<script type="text/javascript">
+var juicy_tags = ['a', 'img'];
+</script>
+<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284039484&u=http%3A%2F%2Fwww.juicyads.rocks"></script>
+<!-- JuicyAds v3.2P End -->
 
 <!-- never block -->
 <script type="text/javascript" src="/nb/sdBZfpSvXN.js"></script>

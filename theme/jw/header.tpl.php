@@ -93,7 +93,7 @@ if( empty($data['dev_mode']) ) {
 <script type="text/javascript">
 var juicy_tags = ['a', 'img'];
 </script>
-<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284039484&u=http%3A%2F%2Fwww.juicyads.rocks"></script>
+<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284x2d444&u=http%3A%2F%2Fwww.juicyads.rocks"></script>
 <!-- JuicyAds v3.2P End -->
 
 <!-- never block -->

@@ -52,6 +52,9 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
             <div class="file-detail">
               <div>
                   <div id="fdp-photo">
+                    <?php if(empty($_COOKIE['closeHint'])):?>
+                    <div id="action-hint">小提示：<span>点击图片左右可前后翻页</span>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="#">关闭提示</a>]</div>
+                    <?php endif; ?>
                     <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">
                       <img id="the-photo" src="<?=processPhotoSrc($file)?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
                     </a>
@@ -184,6 +187,15 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
       timeoutCallback();
     });
   <?php endif; ?>
+
+  $('#fdp-photo #action-hint a').on('click', function(e){
+    e.preventDefault();
+    const d = new Date();
+    d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = "closeHint=yes;" + expires + ";path=/";
+    $('#fdp-photo #action-hint').hide();
+  });
 })(jQuery);
 </script>
 <?php endif;?>

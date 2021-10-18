@@ -526,7 +526,7 @@ function processThumbnail($row, $force_download = false) {
             }
         }
         
-        $img_src = '/jw-photos/file_thumbnail/'. base64_encode(urlencode( $fullname));
+        $img_src = '/jw-photos/' . $key;
     }
 
     return $img_src;
@@ -553,16 +553,16 @@ function processPhotoSrc($file) {
     // Get relative path
     $file_root = Config::get('file_root');
     if(empty($file_root)) {
-    $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+        $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
     }
     $relative_path = str_replace($file_root, '', $physical_path);
 
     // If it's dev mode, try to use local photo first
     $dev_mode = Config::get('dev_mode');
     if( !empty($dev_mode) ) {
-        $relative_fullname = '/jw-photos/' . $relative_path . '/' . $filename;
-        if(file_exists($_SERVER['DOCUMENT_ROOT'] . $relative_fullname)) {
-            $src = $relative_fullname;
+        $relative_fullname = $relative_path . '/' . $filename;
+        if(file_exists($file_root . $relative_fullname)) {
+            $src = '/jw-photos/' . $relative_fullname;
         }
     }
 

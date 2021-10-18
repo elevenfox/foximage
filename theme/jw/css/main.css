@@ -859,6 +859,7 @@ article.file #fdp-photo .fdp-random-btns {
     left: 0;
     font-size: 16px;
     background-color: rgba(255, 255, 255, 0.4);
+    color: black;
     padding: 5px 10px;
     /* background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
     /* FF3.6-15 */
@@ -877,7 +878,16 @@ article.file #fdp-photo .fdp-random-btns a {
     color: #333;
     width: 25px;
 }
-
+article.file #auto-play {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255,255,255, 0.5);
+    color: black;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
 
 /********** Page user **********/
 

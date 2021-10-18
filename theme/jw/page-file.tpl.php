@@ -10,6 +10,9 @@ $images = explode(',', $file['filename']);
 $num = empty($_GET['at']) ? 1 : $_GET['at'];
 $num = $num >= count($images) ? count($images) : $num;
 
+$at = $num >= count($images) ? 1 : $num + 1;
+$next_url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?ppt=1&at='.$at."#fdp-photo";
+
 $api_server = Config::get('api_server');
 $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 ?>
@@ -74,11 +77,12 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       </a>
                     </div>
                     <?php endif;?>
+
+                    <div id="auto-play">自动播放</div>
                   </div>
               </div>
             </div>
           </div>
-
           <?php
             import('Pager');
             $pager = new Pager(
@@ -141,21 +145,16 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
   <?php if( !empty($_REQUEST['ppt']) ):?>
     let seconds = 20;
     let timeoutCallback = function() {
-      <?php if(!empty($_REQUEST['tag'])) {?>
+      <?php if(!empty($_REQUEST['tag'])) : ?>
       let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$_REQUEST['tag']?>';
       $.get(api_endpoint, function(data) {
           if(data.url) {
               window.location.href = data.url;
           }
       });
-      <?php 
-        } 
-        else { 
-          $at = $_REQUEST['at'] >= count($images) ? 1 : $_REQUEST['at'] + 1;
-          $next_url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?ppt=1&at='.$at."#fdp-photo";
-          echo 'window.location.href = "' . $next_url . '"';
-        } 
-      ?>
+      <?php  else : ?> 
+          window.location.href = "<?=$next_url?>";
+      <?php endif; ?>
     };
     let intervalCallback = function() {
       seconds = seconds - 1;
@@ -208,6 +207,10 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
     let expires = "expires=" + d.toUTCString();
     document.cookie = "closeHint=yes;" + expires + ";path=/";
     $('#fdp-photo #action-hint').hide();
+  });
+
+  $('#fdp-photo #auto-play').on('click', function() {
+    window.location.href = "<?=$next_url?>";
   });
 })(jQuery);
 </script>

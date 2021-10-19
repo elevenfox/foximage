@@ -77,8 +77,8 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       </a>
                     </div>
                     <?php endif;?>
-
-                    <div id="auto-play">自动播放</div>
+                    
+                    <div id="auto-play" style="display: <?= !empty($_REQUEST['ppt']) ? 'none' : 'block'?>">自动播放</div>
                   </div>
               </div>
             </div>

@@ -576,13 +576,13 @@ function processPhotoSrc($file) {
         // }
         // else {
             // If file not exists in B2, try to use own api
-            if($file['source'] == 'tujigu') {
+            //if($file['source'] == 'tujigu') {
                 $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
-            }
-            else {
+            //}
+            //else {
                 // For qqc photos, just use its internet url
-                $src = $cur_image_url;
-            }
+            //    $src = $cur_image_url;
+            //}
         // }
     }
 

@@ -82,7 +82,7 @@ class Onedrive {
             file_put_contents(self::TOKEN_FILE, json_encode($result));
             // Put to memcaceh too
             if(APCU) {
-                apcu_store($self::CACHE_KEY, $result, $resObj->expires_in);
+                apcu_store(self::CACHE_KEY, $result, $resObj->expires_in);
             }
             // Also put to session
             $_SESSION[self::CACHE_KEY] = $result;

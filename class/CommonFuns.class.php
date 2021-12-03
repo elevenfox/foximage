@@ -556,11 +556,11 @@ function processPhotoSrc($file) {
         $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
     }
     $relative_path = str_replace($file_root, '', $physical_path);
+    $relative_fullname = $relative_path . '/' . $filename;
 
     // If it's dev mode, try to use local photo first
     $dev_mode = Config::get('dev_mode');
     if( !empty($dev_mode) ) {
-        $relative_fullname = $relative_path . '/' . $filename;
         if(file_exists($file_root . $relative_fullname)) {
             $src = '/jw-photos/' . $relative_fullname;
         }
@@ -576,13 +576,18 @@ function processPhotoSrc($file) {
         // }
         // else {
             // If file not exists in B2, try to use own api
-            //if($file['source'] == 'tujigu') {
-                $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
-            //}
-            //else {
-                // For qqc photos, just use its internet url
-            //    $src = $cur_image_url;
-            //}
+
+            // if($file['source'] == 'tujigu') {
+            //     $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+            // }
+            // else {
+            //     // For qqc photos, just use its internet url
+            //     $src = $cur_image_url;
+            // }
+
+            // Use home's dev server (RPI4) to serve photos for now
+            $src = 'https://image.tuzac.com/jw-photos/' . $relative_fullname;
+            
         // }
     }
 

@@ -8,7 +8,7 @@ require_once './bootstrap.inc';
 //$res = xchina::parse_html('https://www.tuzac.com/');
 
 
-$img = 'https://t1.xiublog.com:85/gallery/27999/37677/052.jpg';
+$img = 'https://t1.xiublog.com:85/gallery/27999/37677/003.jpg';
 $result = curl_call($img, 'get', null, ['timeout' => 15, 'referrer'=>'https://www.fnvshen.com/']);
 if(!empty($result)) {
     echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($result).'">';

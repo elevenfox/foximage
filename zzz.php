@@ -8,20 +8,29 @@ require_once './bootstrap.inc';
 //$res = xchina::parse_html('https://www.tuzac.com/');
 
 
-$img = 'https://t1.xiublog.com:85/gallery/27999/37677/003.jpg';
-$result = curl_call($img, 'get', null, ['timeout' => 15, 'referrer'=>'https://www.fnvshen.com/']);
-if(!empty($result)) {
-    echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($result).'">';
-}
-else {
-    echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
-}
+// $img = 'https://t1.xiublog.com:85/gallery/27999/37677/003.jpg';
+// $result = curl_call($img, 'get', null, ['timeout' => 15, 'referrer'=>'https://www.fnvshen.com/']);
+// if(!empty($result)) {
+//     echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($result).'">';
+// }
+// else {
+//     echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
+// }
 
 
 // import('parser/fnvshen');
 // $res = fnvshen::parse_html('https://www.fnvshen.com/g/37677');
 
 // ZDebug::my_print($res);
+
+$query = 'SELECT * FROM jw_files where source="fnvshen" limit 1';
+$res = DB::$dbInstance->getRows($query);
+if(count($res) >0) {
+    foreach ($res as $row) {
+        $physical_path = buildPhysicalPath($row);
+        var_dump($physical_path);
+    }
+}
 
 exit;
 

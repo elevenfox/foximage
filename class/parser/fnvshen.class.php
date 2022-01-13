@@ -3,6 +3,11 @@
 class fnvshen {
     public static $site_base_url = 'https://www.fnvshen.com/';
 
+    public static $orgs = [
+        '秀人网',
+
+    ];
+
     public static function parse_html($target_url, $data = []) {
         $page_content = curl_call($target_url);
         $page_content = mb_convert_encoding($page_content, 'utf-8','UTF-8,GBK,GB2312,BIG5');
@@ -75,5 +80,23 @@ class fnvshen {
         }
 
         return $data;
+    }
+
+    /**
+     * Get the organization which the image belongs to
+     *
+     * @param array $row
+     * @return string
+     */  
+    public static function getOrganizationFromTag(array $row) : string
+    {
+        foreach(self::$orgs as $org) {
+            $tags = explode(',', $row['tags']);
+            if(in_array($org, $tags)) {
+                return $org;
+            }
+        }
+
+        return '';
     }
 }

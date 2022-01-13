@@ -430,10 +430,7 @@ function buildPhysicalPath($file_row, $file_root='') {
         $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
     }
     
-    if($file_row['source'] != 'tujigu') {
-        $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
-    }
-    else {
+    if($file_row['source'] == 'tujigu') {
         import('parser.tujigu');
         $org = tujigu::getOrganizationFromTitle($file_row['title']);
         if(empty($org)) {
@@ -443,7 +440,20 @@ function buildPhysicalPath($file_row, $file_root='') {
             $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($org) . '/'. cleanStringForFilename($file_row['title']);
         }
     }
-
+    elseif ($file_row['source'] == 'fnvshen') {
+        import('parser.fnvshen');
+        $org = fnvshen::getOrganizationFromTag($file_row);
+        if(empty($org)) {
+            $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
+        }
+        else {
+            $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($org) . '/'. cleanStringForFilename($file_row['title']);
+        }
+    }
+    else {
+        $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
+    }
+    
     return $physical_path;
 }
 

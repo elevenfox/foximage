@@ -3,11 +3,25 @@
 
 require_once './bootstrap.inc';
 
-import('parser/xchina');
-$res = xchina::parse_html('https://xchina.co/photo/id-61054fc7ab92e/1.html');
+//import('parser/xchina');
+//$res = xchina::parse_html('https://xchina.co/photo/id-61054fc7ab92e/1.html');
 //$res = xchina::parse_html('https://www.tuzac.com/');
 
-ZDebug::my_print($res);
+
+$img = 'https://t1.xiublog.com:85/gallery/27999/37677/052.jpg';
+$result = curl_call($img, 'get', null, ['timeout' => 15, 'referrer'=>'https://www.fnvshen.com/']);
+if(!empty($result)) {
+    echo '<img width="500" src="data:image/jpeg;base64,'. base64_encode($result).'">';
+}
+else {
+    echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
+}
+
+
+// import('parser/fnvshen');
+// $res = fnvshen::parse_html('https://www.fnvshen.com/g/37677');
+
+// ZDebug::my_print($res);
 
 exit;
 

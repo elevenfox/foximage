@@ -15,6 +15,7 @@ $supported_sources = [
     'tujigu.net' => 'tujigu',
     'xchina.co' => 'xchina',
     'xchina.xyz' => 'xchina',
+    'fnvshen.com' => 'fnvshen',
 ];
 
 

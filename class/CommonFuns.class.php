@@ -455,6 +455,9 @@ function getReferrer($source) {
     if($source == 'qqc') {
         $referrer = 'https://qqc962.com/';
     }
+    if($source == 'fnvshen') {
+        $referrer = 'https://www.fnvshen.com/';
+    }
 
     return $referrer;
 }

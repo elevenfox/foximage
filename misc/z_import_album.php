@@ -71,26 +71,26 @@ if(!empty($url)) {
         echo date('Y-m-d H:i:s') . ' - ' . "---- status: ".$res->status.", msg: ".$res->msg." \n\n";
 
         // Sync to prod files table
-        echo date('Y-m-d H:i:s') . ' - ' . "Start to sync new files to prod...\n";
-        $max_file_id_local = File::getMaxFileId();
-        $max_file_id_prod = curl_call($prod_api . '?ac=get_max_file_id');
-        echo date('Y-m-d H:i:s') . ' - ' . "Local max file id = $max_file_id_local, prod max file id = $max_file_id_prod\n";
-        $i = 0;
-        $success = 0;
-        $failed = 0;
-        if($max_file_id_prod < $max_file_id_local) {
-            $sql = 'select * from '.Config::get('db_table_prefix').'files where id > ' . $max_file_id_prod;
-            $res = DB::$dbInstance->getRows($sql);
-            foreach ($res as $fileObj) {
-                $i++;
-                $fileObj['images'] = explode(',', $fileObj['filename']);
-                $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
-                $res2 == '1' ? $success++ : $failed++;
-                $result = $res2?'1':'0';
+        // echo date('Y-m-d H:i:s') . ' - ' . "Start to sync new files to prod...\n";
+        // $max_file_id_local = File::getMaxFileId();
+        // $max_file_id_prod = curl_call($prod_api . '?ac=get_max_file_id');
+        // echo date('Y-m-d H:i:s') . ' - ' . "Local max file id = $max_file_id_local, prod max file id = $max_file_id_prod\n";
+        // $i = 0;
+        // $success = 0;
+        // $failed = 0;
+        // if($max_file_id_prod < $max_file_id_local) {
+        //     $sql = 'select * from '.Config::get('db_table_prefix').'files where id > ' . $max_file_id_prod;
+        //     $res = DB::$dbInstance->getRows($sql);
+        //     foreach ($res as $fileObj) {
+        //         $i++;
+        //         $fileObj['images'] = explode(',', $fileObj['filename']);
+        //         $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
+        //         $res2 == '1' ? $success++ : $failed++;
+        //         $result = $res2?'1':'0';
 
-                echo date('Y-m-d H:i:s') . ' - ' . "$i - sync to prod: ".$fileObj['source_url']." -- $result\n";
-            }
-        }
+        //         echo date('Y-m-d H:i:s') . ' - ' . "$i - sync to prod: ".$fileObj['source_url']." -- $result\n";
+        //     }
+        // }
         
         echo '</pre>';
     }

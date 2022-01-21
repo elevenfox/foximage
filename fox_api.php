@@ -268,6 +268,24 @@ switch($action) {
         apiReturnJson(['status'=>1, 'url'=>$url]);
         break;
 
+    case 'get_random_file_by_search':
+        $url = '';
+        $keywords = empty($_REQUEST['keywords'])? '' : $_REQUEST['keywords'];
+        
+        $query = !empty($keywords) ? 'select * from '.$pre.'files where title like "%'.$keywords.'%" ORDER BY RAND() LIMIT 1'
+                    : 'select * from '.$pre.'files ORDER BY RAND() LIMIT 1';
+
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res)) {
+            $file = $res[0];
+            $images = explode(',',$file['filename']);
+            $num = rand(1, count($images));
+
+            $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.$num.'&ppt=1&keywords='.$keywords.'#fdp-photo';
+        }
+        apiReturnJson(['status'=>1, 'url'=>$url]);
+        break;
+
     case 'default':
         echo 'File api';
         break;

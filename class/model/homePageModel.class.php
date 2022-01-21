@@ -54,6 +54,7 @@ Class homePageModel extends ModelCore {
       }
       else {
           $term = $this->request->getSysRequest()['term'];
+          $this->data['keywords'] = $term;
 
           $this->data['pageTitle'] = 'Search for: ' . $term;
 
@@ -66,6 +67,7 @@ Class homePageModel extends ModelCore {
 
           $count = File::searchFileCount($term);
           $this->data['files_total'] = $count;
+
       }
   }
 }

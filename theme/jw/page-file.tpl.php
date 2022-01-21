@@ -152,6 +152,13 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
               window.location.href = data.url;
           }
       });
+      <?php  elseif(!empty($_REQUEST['keywords'])) : ?> 
+        let api_endpoint = '/api/?ac=get_random_file_by_search&keywords=<?=$_REQUEST['keywords']?>';
+        $.get(api_endpoint, function(data) {
+            if(data.url) {
+                window.location.href = data.url;
+            }
+        });
       <?php  else : ?> 
           window.location.href = "<?=$next_url?>";
       <?php endif; ?>

@@ -569,7 +569,7 @@ abstract class DB {
 
         //$var = strip_tags($var);
 
-        $var = htmlentities($var);
+        //$var = htmlentities($var);
 
         $var = trim($var);
         //$var = mysqli_real_escape_string(self::$dbInstance, $var);

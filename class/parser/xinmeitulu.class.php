@@ -71,6 +71,13 @@ class xinmeitulu {
             }
             $fullname = $physical_path . '/thumbnail.jpg';
 
+            $file_root = Config::get('file_root');
+            if(empty($file_root)) {
+                $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+            }
+            $relative_path = str_replace($file_root, '', $physical_path);
+            $key = $relative_path . '/thumbnail.jpg';
+
             // if file does not exist locally, then download and process
             if(!file_exists($fullname)) {
                 $referrer = getReferrer($data['source']); 
@@ -135,7 +142,7 @@ class xinmeitulu {
                 $b2 = new B2();
                 $res = $b2->get_photo_content($key);
                 if(empty($res)) {
-                    $res = $b2->upload_photo($key, $fullname);
+                    $res = $b2->upload_photo($key, $thumbnail_filename);
                 }
 
                 $data['thumbnail'] = 1;

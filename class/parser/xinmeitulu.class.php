@@ -51,12 +51,15 @@ class xinmeitulu {
         
         if(empty($data['images']))  $data['images'] = [];
         $image_finder = find_between($article_html, '<img data-original="', '" src');
-        $image_url_org = $image_finder[0];
+        //$image_url_org = $image_finder[0];
         foreach($image_finder as $img) {
             $data['images'][] = $img;
         }
 
-        if(empty($data['thumbnail']) && !empty($image_url_org)) {
+        //////////////////////////// 
+        // Handle thumbnail
+        ////////////////////////////
+        if(empty($data['thumbnail']) && !empty($data['images'])) {
             /* Resize first image as thumbnail */
             $physical_path = buildPhysicalPath($data);
             // If folder not exist, create the folder
@@ -68,25 +71,74 @@ class xinmeitulu {
             }
             $fullname = $physical_path . '/thumbnail.jpg';
 
-            // if file does not exist locally or force_download, then download it
+            // if file does not exist locally, then download and process
             if(!file_exists($fullname)) {
-                $referrer = getReferrer($data['source']);  
-                $result = curl_call($image_url_org, 'get', null, ['timeout' => 15, 'referrer'=>$referrer]);
-                if(!empty($result)) {
-                    $res = file_put_contents($fullname, $result);
-                    if(!$res) {
-                        error_log(date('Y-m-d H:i:s') . " ------------------ failed!!!");    
-                    } 
+                $referrer = getReferrer($data['source']); 
+                
+                // Get first portrait photo, if not found, use first landscape photo
+                foreach ($data['source'] as $f) {
+                    $result = curl_call($f, 'get', null, ['timeout' => 15, 'referrer'=>$referrer]);
+                    if(!empty($result)) {
+                        $res = file_put_contents($fullname, $result);
+                        if(!$res) {
+                            error_log(date('Y-m-d H:i:s') . " ------------------ failed!!!");    
+                        } 
+                        else {
+                            list($width, $height, $type) = getimagesize($fullname);
+                            if($width < $height) {
+                                // Portrait photo
+                                break;
+                            }
+                        }                   
+                    }
                     else {
-                        // resize the image to thumbnail size
-                        $image = imagecreatefromjpeg($fullname);
-                        $imgResized = imagescale($image , 500, 400); // width=500 and height = 400
-                        imagejpeg($imgResized, $fullname);
-                    }                   
+                        error_log(date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m"); 
+                    }
                 }
-                else {
-                    error_log(date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m"); 
+                
+                // Crop and create the thumbnail
+                $thumbnail_filename = $fullname;
+                $thumb_width = 250;
+                $thumb_height = 375;
+
+                $original_aspect = $width / $height;
+                $thumb_aspect = $thumb_width / $thumb_height;
+
+                if ( $original_aspect >= $thumb_aspect )
+                {
+                    // If image is wider than thumbnail (in aspect ratio sense)
+                    $new_height = $thumb_height;
+                    $new_width = $width / ($height / $thumb_height);
                 }
+                else
+                {
+                    // If the thumbnail is wider than the image
+                    $new_width = $thumb_width;
+                    $new_height = $height / ($width / $thumb_width);
+                }
+
+                $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
+
+                // Resize and crop
+                $image = imagecreatefromjpeg($fullname);
+                imagecopyresampled($thumb,
+                                $image,
+                                0 - ($new_width - $thumb_width) / 2, // Center the image horizontally
+                                0 - ($new_height - $thumb_height) / 2, // Center the image vertically
+                                0, 0,
+                                $new_width, $new_height,
+                                $width, $height);
+                imagejpeg($thumb, $thumbnail_filename, 80);
+
+                // Upload to B2
+                import('B2');
+                $b2 = new B2();
+                $res = $b2->get_photo_content($key);
+                if(empty($res)) {
+                    $res = $b2->upload_photo($key, $fullname);
+                }
+
+                $data['thumbnail'] = 1;
             }
         }
 

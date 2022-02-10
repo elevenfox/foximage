@@ -76,7 +76,7 @@ class xinmeitulu {
                 $referrer = getReferrer($data['source']); 
                 
                 // Get first portrait photo, if not found, use first landscape photo
-                foreach ($data['source'] as $f) {
+                foreach ($data['images'] as $f) {
                     $result = curl_call($f, 'get', null, ['timeout' => 15, 'referrer'=>$referrer]);
                     if(!empty($result)) {
                         $res = file_put_contents($fullname, $result);

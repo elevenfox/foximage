@@ -562,6 +562,10 @@ function processPhotoSrc($file) {
     // Get filename based on photo-url
     $name_arr = explode('/', $cur_image_url);
     $filename = array_pop($name_arr);
+    // if filename has no extention name, use leading-zero-number.jpg
+    if(strpos($filename, '.jpg') === false) {
+        $filename = sprintf('%03d', $num-1) . '.jpg';
+    }
 
     // Get physical path based on title
     $physical_path = buildPhysicalPath($file);

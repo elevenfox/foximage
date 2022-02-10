@@ -22,7 +22,7 @@ class xinmeitulu {
         if(empty($data['title'])) {
             $title_arr = find_between($page_content, '<title>', '高清大图在线浏览 - 新美图录</title>');
             $title = $title_arr[0];
-            $data['title'] = $title;
+            $data['title'] = DB::sanitizeInput($title);
         }
 
         if(empty($data['description'])) {

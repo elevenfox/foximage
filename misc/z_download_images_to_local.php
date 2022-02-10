@@ -64,11 +64,16 @@ if(count($res) >0) {
         $photo_downloaded = 0;
         $images = explode(',', $row['filename']);
         echo date('Y-m-d H:i:s') . " ----- found photos: " . count($images) . " \n";
+        $i = 0;
         foreach ($images as $img) {
             $img = str_replace('tjg.hywly.com', 'tjg.gzhuibei.com', $img);
             // Build local filename
             $name_arr = explode('/', $img);
             $filename = array_pop($name_arr);
+            // if filename has no extention name, use leading-zero-number.jpg
+            if(strpos($filename, '.jpg') === false) {
+                $filename = sprintf('%03d', $i) . '.jpg';
+            }
             $fullname = $physical_path . '/' . $filename;
 
             // if file does not exist locally or force_download, then download it
@@ -92,6 +97,8 @@ if(count($res) >0) {
                     echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
                 }
             }
+
+            $i++;
         }
 
         // Get files count under this folder

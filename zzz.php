@@ -18,19 +18,10 @@ require_once './bootstrap.inc';
 // }
 
 
-// import('parser/fnvshen');
-// $res = fnvshen::parse_html('https://www.fnvshen.com/g/37677');
+import('parser/xinmeitulu');
+$res = xinmeitulu::parse_html('https://www.xinmeitulu.com/photo/%e7%a7%80%e4%ba%baxiuren-no-3003-lucky%e6%b2%88%e6%ac%a2%e6%ac%a3%e5%b0%8f%e5%a7%90%e5%a6%b9-%e6%8b%89%e6%8b%89%e5%90%88%e9%9b%86');
 
-// ZDebug::my_print($res);
-
-$query = 'SELECT * FROM jw_files where source="fnvshen" limit 1';
-$res = DB::$dbInstance->getRows($query);
-if(count($res) >0) {
-    foreach ($res as $row) {
-        $physical_path = buildPhysicalPath($row);
-        var_dump($physical_path);
-    }
-}
+ZDebug::my_print($res);
 
 exit;
 

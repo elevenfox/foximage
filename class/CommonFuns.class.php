@@ -440,9 +440,12 @@ function buildPhysicalPath($file_row, $file_root='') {
             $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($org) . '/'. cleanStringForFilename($file_row['title']);
         }
     }
-    elseif ($file_row['source'] == 'fnvshen') {
+    elseif ($file_row['source'] == 'fnvshen' || $file_row['source'] == 'xinmeitulu') {
         import('parser.fnvshen');
-        $org = fnvshen::getOrganizationFromTag($file_row);
+        import('parser.xinmeitulu');
+        $org = $file_row['source'] == 'fnvshen' 
+                ? fnvshen::getOrganizationFromTag($file_row)
+                : xinmeitulu::getOrganizationFromTag($file_row);
         if(empty($org)) {
             $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
         }

@@ -8,7 +8,7 @@ $sources = array(
             'https://www.fnvshen.com/gallery/xiuren/#page.html', // xiuren No.3000+ till 4280
 
         ),
-		'start_page_num' => 2,
+		'start_page_num' => 1,
     ),
 );
 
@@ -49,6 +49,9 @@ function file_db_exist($url) {
 function get_file_links_in_page($link, $page_number, $key_class_name, $keywords_of_file_link, $file_urls) {
 	global $max_urls_per_source, $existed_files, $total_parsed_urls;
 	$link = str_replace('#page', $page_number, $link);
+	if($page_number == 1) {
+		$link = str_replace('1.html', '', $link);
+	}
 	echo "... processing page: $link ... \n";
 	$url_info = parse_url($link);
 	$content = curl_call($link);

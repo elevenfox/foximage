@@ -188,8 +188,10 @@ switch($action) {
             $token = $data->d_token;
         }
 
-        if( !empty($token) && $token == Config::get('db_driver') ) {
-            $res = File::markForDeleting($source_url);
+        if(isAdmin()) {
+            if( !empty($token) && $token == Config::get('db_driver') ) {
+                $res = File::markForDeleting($source_url);
+            }
         }
 
         apiReturnJson($res);
@@ -284,6 +286,20 @@ switch($action) {
 
             $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.$num.'&ppt=1&keywords='.$keywords.'#fdp-photo';
         }
+        apiReturnJson(['status'=>1, 'url'=>$url]);
+        break;
+
+    case 'save_tags':
+        $tags = $_POST['tags'];
+        $id = $_POST['id'];
+
+        if(isAdmin()) {
+            // Call method to save/update tags for that album
+            $fileObj = (object)File::getFileByID($id);
+            $fileObj->tags = $tags;
+            File::save($fileObj);
+        }
+
         apiReturnJson(['status'=>1, 'url'=>$url]);
         break;
 

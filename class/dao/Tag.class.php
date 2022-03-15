@@ -129,20 +129,27 @@ Class Tag {
         }
     }
 
+    public static function getTagsFromTagFileByFileId($fileId) {
+        self::setTables();
+
+        $tags = [];
+        $query = "select tid, term_name from " . self::$table_tag_file . " where file_id ='" . $fileId . "'";
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res)) {
+            $tags = $res;
+        }
+        return $tags;
+    }
+
     public static function upsertTag($tagName) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
+
+        // If not exist, insert; otherwise do nothing
         $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where name='". $tagName ."'");
         if($res && count($res) > 0) {
-            $res = DB::$dbInstance->query("update ".self::$table_tags." set `vid`=`vid`+1 where name='" . $tagName . "' ");
-            if($res) {
-                $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where name='". $tagName ."'");
-                if($res && count($res) > 0) {
-                    return $res[0];
-                }
-            }
-            return $res;
+            return $res[0];
         }
         else {
             $res = DB::$dbInstance->query("insert into ".self::$table_tags." set `vid`=1, `name`= '" . $tagName . "' ");
@@ -168,45 +175,55 @@ Class Tag {
             $res = DB::$dbInstance->query("insert into ".self::$table_tag_file." set 
                     `tid`=" . $tid . ", 
                     `term_name`= '" . $tagName . "',
-                    file_id = ". $file_id
+                    `file_id` = ". $file_id
             );
 
+            if($res) {
+                self::updateTagCount($tagName);
+            }
+
             return $res;
+        }
+    }
+
+    public static function updateTagCount($tagName) {
+        self::setTables();
+
+        // Get the count for the tagName
+        $sql = "select count(file_id) as num from " . self::$table_tag_file . " where term_name = '" . $tagName . "'";
+        $res = DB::$dbInstance->getRows($sql);
+        if(count($res) >0) {
+            $num = $res[0]['num'];
+            // If it's bigger than 0, update tags table, otherwise delete it from tags table
+            if($num) {
+                $sql = 'update ' . self::$table_tags. ' set vid=' . $num . ' where name="'.$tagName.'"';
+            }
+            else {
+                $sql = 'delete from ' . self::$table_tags. ' where name="'.$tagName.'"';
+            }
+            $res = DB::$dbInstance->query($sql);
+            return $res;
+        }
+        else {
+            return false;
         }
     }
 
     public static function deleteFileTagsByFileId($fileId) {
         self::setTables();
 
+        // Delete all tag_file records for this file first
         $fileId = DB::sanitizeInput($fileId);
         $sql = "delete from " . self::$table_tag_file . " where file_id='" . $fileId . "'";
-        return DB::$dbInstance->query($sql);
-    }
+        $res = DB::$dbInstance->query($sql);
 
-    public static function getTagsFromTagFileByFileId($fileId) {
-        self::setTables();
-
-        $tags = [];
-        $query = "select tid, term_name from " . self::$table_tag_file . " where file_id ='" . $fileId . "'";
-        $res = DB::$dbInstance->getRows($query);
-        if(count($res)) {
-            $tags = $res;
+        // Re-count tag-count for all tags for this file
+        $file = File::getFileByID($fileId);
+        $curTags = explode(',', $file['tags']);
+        foreach ($curTags as $tag) {
+            self::updateTagCount($tag);
         }
-        return $tags;
-    }
 
-    public static function decreaseTagVidCount($tid) {
-        self::setTables();
-
-        $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where tid='". $tid ."'");
-        if($res && count($res) > 0) {
-            if(!empty($res[0]['vid']) && $res[0]['vid'] == 1) {
-                $sql = "delete from " . self::$table_tags . " where tid='" . $tid . "'";
-                DB::$dbInstance->query($sql);
-            }
-            else {
-                DB::$dbInstance->query("update ".self::$table_tags." set `vid`=`vid`-1 where tid='" . $tid . "' ");
-            }
-        }
+        return $res;
     }
 }

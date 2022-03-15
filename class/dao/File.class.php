@@ -94,12 +94,6 @@ Class File {
 
         $fileId = DB::sanitizeInput($fileId);
 
-        // Delete tag_video records, count down tag vid
-        $tags = Tag::getTagsFromTagFileByFileId($fileId);
-        foreach ($tags as $tag) {
-            Tag::decreaseTagVidCount($tag['tid']);
-        }
-
         $res = Tag::deleteFileTagsByFileId($fileId);
         if($res) {
             $sql = "delete from " . self::$table_files . " where id = '" . $fileId . "'";
@@ -326,7 +320,9 @@ Class File {
         }
         else {
             try {
-                $sql = "update ".self::$table_files." set 
+                self::saveFileTags($fileObj);
+
+                $sql = "update ".self::$table_files." set
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
                         `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
@@ -336,9 +332,8 @@ Class File {
                 //echo '-------'.$sql.'--------';
                 $res = DB::$dbInstance->query($sql);
 
-                if($res) {
-                    self::saveFileTags($fileObj);
-                }
+                //clear session cache
+                $_SESSION['current_file']['source_url_md5'] = null;
 
                 return true;
             }
@@ -419,9 +414,12 @@ Class File {
     private static function saveFileTags($fileObj) {
         $file = self::getFileBySourceUrl($fileObj->source_url);
         if($file) {
+            // First, delete all tag_file records for this file
+            Tag::deleteFileTagsByFileId($file['id']);
+
+            // Then upsert tags and tag_file again
             $tags = empty(trim($fileObj->tags)) ? [] : explode(',', $fileObj->tags);
             $tags = self::handle_tag_array($tags);
-
             foreach ($tags as $tag) {
                 $tagObj = Tag::upsertTag($tag);
                 Tag::upsertFileTag($tagObj['tid'], $tagObj['name'], $file['id']);

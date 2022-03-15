@@ -40,12 +40,23 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
             <div class="file-info" itemprop="userInteractionCount">观看次数: <?=$file['view_count'] ? number_format($file['view_count']) : rand(1, 500) ?></div>
             <div class="file-tags">
                 <span class="not-in-mobile">类别:</span>
+                <span id="tags_box_links">
+                    <?php
+                    $tags = explode(',', $file['tags']);
+                    foreach($tags as $tag) {
+                        $tag_flat = str_replace(' ','-',strtolower($tag));
+                        echo '<a class="tag" href="/tags/'.$tag_flat.'"><h2>'.$tag.'</h2></a>';
+                    }
+                    ?>
+                </span>
+                <div id="tags_box_text" style="display: none">
+                    <input id="tags-string" type="text" value="<?= $file['tags']?>" style="width:100%"/>
+                    <button id="tags-cancel">Cancel</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tags-save">Save</button>
+                </div>
                 <?php
-                $tags = explode(',', $file['tags']);
-                foreach($tags as $tag) {
-                    $tag_flat = str_replace(' ','-',strtolower($tag));
-                    echo '<a class="tag" href="/tags/'.$tag_flat.'"><h2>'.$tag.'</h2></a>';
-                }
+                    if(isAdmin()) {
+                        echo '<a href="#" id="edit-tags" style="font-style: italic; margin: 0 8px; display: inline-block; cursor: pointer; font-size: 12px;">Edit</a>';
+                    }
                 ?>
             </div>
             <div class="file-description"><?= nl2br($file['description'])?></div>
@@ -219,6 +230,36 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
   $('#fdp-photo #auto-play').on('click', function() {
     window.location.href = "<?=$next_url?>";
   });
+
+  $('#edit-tags').on('click', function(e) {
+    e.preventDefault();
+    $('#tags_box_links').hide();
+    $('#tags_box_text').show();
+    $('#edit-tags').hide();
+  });
+  $('#tags-cancel').on('click', function() {
+      $('#tags_box_links').show();
+      $('#tags_box_text').hide();
+      $('#edit-tags').show();
+  });
+  $('#tags-save').on('click', function() {
+      let newTags = $('#tags-string').val();
+      // Call api to save tags for this album
+      let api_endpoint = '/api/?ac=save_tags';
+      let data = {
+        'tags': newTags,
+        'id' : <?=$file['id']?>
+      };
+      $.post(api_endpoint, data, function(res) {
+          if(res.status) {
+              window.location.reload();
+          }
+          else {
+            alert('Failed to save tags');
+          }
+      });
+  });
+
 })(jQuery);
 </script>
 <?php endif;?>

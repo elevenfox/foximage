@@ -188,10 +188,11 @@ Class File {
     public static function searchFile($term, $page=1, $limit=24) {
         self::setTables();
 
+        $term = str_replace('，', ',', $term);
         $allKeywords = explode(',', $term);
         $cond = [];
         foreach($allKeywords as $key) {
-            $cond[] = " title like '%$key%' ";
+            $cond[] = " title like '%" . trim($key) . "%' ";
         }
         $where = implode(' or ', $cond);
 
@@ -210,10 +211,11 @@ Class File {
     public static function searchFileCount($term) {
         self::setTables();
 
+        $term = str_replace('，', ',', $term);
         $allKeywords = explode(',', $term);
         $cond = [];
         foreach($allKeywords as $key) {
-            $cond[] = " title like '%$key%' ";
+            $cond[] = " title like '%" . trim($key) . "%' ";
         }
         $where = implode(' or ', $cond);
 

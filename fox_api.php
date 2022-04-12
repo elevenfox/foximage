@@ -274,8 +274,15 @@ switch($action) {
     case 'get_random_file_by_search':
         $url = '';
         $keywords = empty($_REQUEST['keywords'])? '' : $_REQUEST['keywords'];
-        
-        $query = !empty($keywords) ? 'select * from '.$pre.'files where title like "%'.$keywords.'%" ORDER BY RAND() LIMIT 1'
+
+        $keywords = str_replace('，', ',', $keywords);
+        $allKeywords = explode(',', $keywords);
+        $cond = [];
+        foreach($allKeywords as $key) {
+            $cond[] = " title like '%" . trim($key) . "%' ";
+        }
+        $where = implode(' or ', $cond);
+        $query = !empty($keywords) ? 'select * from '.$pre.'files where ' . $where . ' ORDER BY RAND() LIMIT 1'
                     : 'select * from '.$pre.'files ORDER BY RAND() LIMIT 1';
 
         $res = DB::$dbInstance->getRows($query);

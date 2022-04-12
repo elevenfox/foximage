@@ -188,9 +188,16 @@ Class File {
     public static function searchFile($term, $page=1, $limit=24) {
         self::setTables();
 
+        $allKeywords = explode(',', $term);
+        $cond = [];
+        foreach($allKeywords as $key) {
+            $cond[] = " title like '%$key%' ";
+        }
+        $where = implode(' or ', $cond);
+
         $term = DB::sanitizeInput($term);
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = "select * from ".self::$table_files." where title like '%" . $term . "%' limit " . $limit;
+        $query = "select * from ".self::$table_files." where " . $where . " limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             return $res;
@@ -203,8 +210,15 @@ Class File {
     public static function searchFileCount($term) {
         self::setTables();
 
+        $allKeywords = explode(',', $term);
+        $cond = [];
+        foreach($allKeywords as $key) {
+            $cond[] = " title like '%$key%' ";
+        }
+        $where = implode(' or ', $cond);
+
         $term = DB::sanitizeInput($term);
-        $query = "select count(*) as total from ".self::$table_files." where title like '%" . $term . "%'";
+        $query = "select count(*) as total from ".self::$table_files." where " . $where;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             return $res[0]['total'];

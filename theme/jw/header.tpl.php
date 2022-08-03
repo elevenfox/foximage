@@ -143,7 +143,7 @@ var juicy_tags = ['a', 'img'];
                     <div>
                         <div class="container-inline">
                             <div class="form-item form-type-textfield form-item-search-block-form">
-                                <input title="Enter the terms you wish to search for." placeholder="搜索... 逗号分隔关键字" type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="128" class="form-text">
+                                <input title="Enter the terms you wish to search for." placeholder="搜索... 逗号分隔关键字" type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="1024" class="form-text">
                             </div>
                             <div class="form-actions form-wrapper" id="edit-actions">
                                 <input type="submit" id="edit-submit" name="op" value="" class="form-submit">

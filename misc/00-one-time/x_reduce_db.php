@@ -51,9 +51,9 @@ if(count($res) >0) {
         }
         
         // Update the row in the database
-        $query = 'update '. $pre . 'files set filename="'.implode(',', $new_filename_arr).'" where id='.$row['id'];
+        $query = 'update '. $pre . 'files set filename="'.implode(',', $new_filename_arr).'",full_path=2  where id='.$row['id'];
         DB::$dbInstance->getRows($query);
-        echo $query; exit;
+        //echo $query; exit;
         
         $num++;
         if ($num % 100 == 0) { 

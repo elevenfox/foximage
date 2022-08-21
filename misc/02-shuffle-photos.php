@@ -18,16 +18,20 @@ $new_items = rand(10,15);
 //$res = DB::$dbInstance->query('UPDATE ' . $pre . 'files set rand_id = FLOOR( (RAND() * 1000000) + 1 )');
 
 // The approach is get max_rand_id, then get random numbers of items as newer, append them rand_id to max_rand_id
-$res = DB::$dbInstance->getRows('select MAX(rand_id) as max_rand_id from ' . $pre . 'files');
-if(!empty($res[0]['max_rand_id'])) {
+$res = DB::$dbInstance->getRows('select MAX(rand_id) as max_rand_id, MIN(rand_id) as min_rand_id from ' . $pre . 'files');
+if(!empty($res[0]['max_rand_id']) && !empty($res[0]['min_rand_id'])) {
     $max_rand_id = $res[0]['max_rand_id'];
+    $min_rand_id = $res[0]['min_rand_id'];
+    $middle = $min_rand_id + ($max_rand_id - $min_rand_id)/2;
 
-    $res = DB::$dbInstance->query('UPDATE ' . $pre . 'files set rand_id = '.$max_rand_id.' + FLOOR( (RAND() * '.$new_items.') + 1 )  
-                                    where 
-                                    rand_id < '. $max_rand_id/2 . ' 
-                                    order by rand_id desc 
-                                    limit '.$new_items.';
-    ');
+    $q = 'UPDATE ' . $pre . 'files set rand_id = '.$max_rand_id.' + FLOOR( (RAND() * '.$new_items.') + 1 )  
+        where 
+        rand_id < '. $middle . ' 
+        order by rand_id desc 
+        limit '.$new_items.';
+    ';
+ 
+    $res = DB::$dbInstance->query($q);
 
     if(!empty($res)) {
         echo "---- Done adding {$new_items} albums. \n\n";

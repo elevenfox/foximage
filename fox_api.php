@@ -17,6 +17,7 @@ $supported_sources = [
     'xchina.xyz' => 'xchina',
     'fnvshen.com' => 'fnvshen',
     'xinmeitulu.com' => 'xinmeitulu',
+    'ladylap.com' => 'ladylap',
 ];
 
 
@@ -52,7 +53,7 @@ switch($action) {
                 $decoder_class = $val;
             }
         }
-        
+
         if(!empty($decoder_class)) {
             import('parser.' . $decoder_class);
             

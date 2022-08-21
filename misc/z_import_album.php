@@ -6,6 +6,7 @@ $sources = array(
     'xchina.xyz' => 'xchina',
     'fnvshen.com' => 'fnvshen',
     'xinmeitulu.com' => 'xinmeitulu',
+    'ladylap.com' => 'ladylap',
 );
 
 

@@ -65,7 +65,7 @@ function curl_call($url, $method='get', $data=null, $options=[]) {
     $url = str_replace(" ", "%20", $url);
     curl_setopt($ch, CURLOPT_URL, $url); 
     if($use_proxy) {
-        curl_setopt($ch, CURLOPT_PROXY, 'socks5://localhost:9050');
+        curl_setopt($ch, CURLOPT_PROXY, 'socks5://rand_user_'.time().':foo@localhost:9050');
     }
     // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查，0表示阻止对证书的合法性的检查。
     // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
@@ -105,6 +105,27 @@ function curl_call($url, $method='get', $data=null, $options=[]) {
     curl_close($ch); // 关闭CURL会话
 
     return $result;
+}
+
+function tor_new_identity($tor_ip='127.0.0.1', $control_port='9051', $auth_code=''){
+    $fp = fsockopen($tor_ip, $control_port, $errno, $errstr, 30);
+    var_dump($fp);
+    if (!$fp) return false; //can't connect to the control port
+     
+    // fputs($fp, "AUTHENTICATE $auth_code\r\n");
+    // $response = fread($fp, 1024);
+    // list($code, $text) = explode(' ', $response, 2);
+    // if ($code != '250') return false; //authentication failed
+     
+    //send the request to for new identity
+    fputs($fp, "signal NEWNYM\r\n");
+    $response = fread($fp, 1024);
+    var_dump($response);
+    list($code, $text) = explode(' ', $response, 2);
+    if ($code != '250') return false; //signal failed
+     
+    fclose($fp);
+    return true;
 }
 
 function isAdmin() {

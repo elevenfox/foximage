@@ -18,7 +18,7 @@ echo "#####################################\n";
 
 $num = 0;
 
-// Get all rows which source is tujigu
+// Get all rows which full_path is null
 $query = 'SELECT * FROM '. $pre . 'files where full_path  is null  order by id';
 
 $res = DB::$dbInstance->getRows($query);

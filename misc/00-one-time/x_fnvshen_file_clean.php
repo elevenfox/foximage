@@ -56,21 +56,34 @@ if(count($res) >0) {
             echo date('Y-m-d H:i:s') . " -----  \033[31m missing ".$missing." images \033[39m \n";
         }
 
-        // Rename all images by 000 -> 999 number file names
+        // Rename all images by 000 -> 999 number file name with a postfix to avoid override
         $i = 1;
         $new_file_name_arr = [];
+        $postfix = time();
         foreach ($phy_images as $f) {
-            $new_file_name = sprintf('%03d',$i) . '.jpg';
+            $new_file_name = sprintf('%03d',$i) . '-'.$postfix.'.jpg';
             echo date('Y-m-d H:i:s') .  '----- change '.$f." to ".$new_file_name;
             $res = rename($physical_path.'/'.$f, $physical_path.'/'.$new_file_name);
             echo $res ? " 1 \n" : " 0 \n";
             $new_file_name_arr[] = $new_file_name;
             $i++;
         }
+        // remove postfix
+        $i = 1;
+        $new_file_name_arr2 = [];
+        foreach ($new_file_name_arr as $nf) {
+            $new_file_name = sprintf('%03d',$i) . '.jpg';
+            echo date('Y-m-d H:i:s') .  '----- change '.$nf." to ".$new_file_name;
+            $res = rename($physical_path.'/'.$nf, $physical_path.'/'.$new_file_name);
+            echo $res ? " 1 \n" : " 0 \n";
+            $new_file_name_arr2[] = $new_file_name;
+            $i++;
+        }
+
 
         // Update the row in the database
         echo date('Y-m-d H:i:s') . "----- Update db row ...... \n";
-        $query = 'update '. $pre . 'files set filename="'.implode(',', $new_file_name_arr).'",saved_locally=5  where id='.$row['id'];
+        $query = 'update '. $pre . 'files set filename="'.implode(',', $new_file_name_arr2).'",saved_locally=5  where id='.$row['id'];
         DB::$dbInstance->getRows($query);
         //echo $query; 
 
@@ -79,13 +92,13 @@ if(count($res) >0) {
             'source' => $row['source'],
             'source_url' => $row['source_url'],
             'title' => $row['title'],
-            'images' => $new_file_name_arr,
+            'images' => $new_file_name_arr2,
             'thumbnail' => 1,
             'tags' => $row['tags'],
         ];
         echo date('Y-m-d H:i:s') . '----- sync this to prod ...... ';
         $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
-        echo date('Y-m-d H:i:s') . $res2 . "\n";
+        echo $res2 . "\n";
 
         exit;
         

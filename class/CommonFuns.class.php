@@ -4,6 +4,21 @@
  * Some common functions
  */
 
+function get_supported_sources() {
+    return array(
+        'qqc962.com' => 'qqc',
+        'v8.qqv13.vip' => 'qqc',
+        'tujigu.com' => 'tujigu',
+        'tujigu.net' => 'tujigu',
+        'xchina.co' => 'xchina',
+        'xchina.xyz' => 'xchina',
+        'fnvshen.com' => 'fnvshen',
+        'gnvshen.com' => 'fnvshen',
+        'xinmeitulu.com' => 'xinmeitulu',
+        'xie69.com' => 'xindong',
+    );
+}
+
 function find_between($str, $startDelimiter, $endDelimiter) {
     $contents = array();
     $startDelimiterLength = strlen($startDelimiter);
@@ -539,6 +554,8 @@ function processThumbnail($row, $force_download = false) {
             if(!empty($result)) {
                 $res = file_put_contents($fullname, $result);
                 chmod($fullname, 0755);
+                // If thumbnail_url shows it's a webp file, convert it to jpg
+                convert_webp_to_jpg($tn_url, $fullname);
                 if(!$res) {
                     error_log(" ----- failed to save thumbnail: " . $fullname);    
                 }
@@ -670,5 +687,20 @@ function get_random_hot_searches($count = 0) {
         }
         $_SESSION['hot_searches'] = $hot_models;
         return $hot_models;
+    }
+}
+
+
+function convert_webp_to_jpg($url, $fullname) {
+    // remove all parameters from url, then check the file extension
+    $path = parse_url($url, PHP_URL_PATH);
+    if(substr($path, -strlen('.webp')) === '.webp') {
+        // Load the WebP file
+        $im = imagecreatefromwebp($fullname);
+
+        // Convert it to a jpeg file with 100% quality
+        $new_file_name = str_replace('.webp', '.jpg', $fullname);
+        imagejpeg($im, $new_file_name, 100);
+        imagedestroy($im);
     }
 }

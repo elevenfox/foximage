@@ -2,7 +2,7 @@
 //echo phpinfo(); exit;
 
 require_once './bootstrap.inc';
-
+$a = get_supported_sources();
 //import('parser/xchina');
 //$res = xchina::parse_html('https://xchina.co/photo/id-61054fc7ab92e/1.html');
 //$res = xchina::parse_html('https://www.tuzac.com/');
@@ -17,7 +17,7 @@ require_once './bootstrap.inc';
 //     echo date('Y-m-d H:i:s') . " --------- \033[31m failed to download: " . $img . "\033[39m \n"; 
 // }
 
-$a = curl_call('http://httpbin.org/ip','get',null,['user_proxy'=>1]);
+//$a = curl_call('http://httpbin.org/ip','get',null,['user_proxy'=>1]);
 var_dump($a);
 exit;
 

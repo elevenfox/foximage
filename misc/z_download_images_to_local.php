@@ -105,7 +105,18 @@ if(count($res) >0) {
 
         // Get files count under this folder
         $files = scandir($physical_path);
-        $num_files = count($files)-2;
+        $num_files = 0;
+        $phy_images = [];
+        foreach ($files as $f) {
+            if($f != '.' && $f != '..' && $f != 'thumbnail.jpg') {
+                $extension = pathinfo($physical_path. '/' .$f, PATHINFO_EXTENSION);
+                if($extension == 'jpg') {
+                    $phy_images[] = $f;
+                    $num_files++;
+                }
+            }
+        }
+
         // If files count >= images count in db, we are good to set saved-local to 1
         if($num_files >= count($images)) {
             $sql = "update ". $pre . "files set saved_locally=1 where id = '" . $row['id'] . "'";

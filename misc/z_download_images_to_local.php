@@ -84,6 +84,8 @@ if(count($res) >0) {
                 if(!empty($result)) {
                     echo date('Y-m-d H:i:s') . " ------------ saving file: " . $fullname . " \n";    
                     $res = file_put_contents($fullname, $result);
+                    // If thumbnail_url shows it's a webp file, convert it to jpg
+                    convert_webp_to_jpg($img, $fullname);
                     if(!$res) {
                         echo date('Y-m-d H:i:s') . " ------------------ failed!!! \n";    
                     }

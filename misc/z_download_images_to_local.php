@@ -119,7 +119,33 @@ if(count($res) >0) {
 
         // If files count >= images count in db, we are good to set saved-local to 1
         if($num_files >= count($images)) {
-            $sql = "update ". $pre . "files set saved_locally=1 where id = '" . $row['id'] . "'";
+            // No matter what are the photo file names, make them starts with 001.jpg to max number
+            // Rename all images by 000 -> 999 number file name with a postfix to avoid override
+            $i = 1;
+            $new_file_name_arr = [];
+            $postfix = time();
+            foreach ($phy_images as $f) {
+                $new_file_name = sprintf('%03d',$i) . '-'.$postfix.'.jpg';
+                //echo date('Y-m-d H:i:s') .  '----- change '.$f." to ".$new_file_name;
+                $res = rename($physical_path.'/'.$f, $physical_path.'/'.$new_file_name);
+                //echo $res ? " 1 \n" : " 0 \n";
+                $new_file_name_arr[] = $new_file_name;
+                $i++;
+            }
+            // remove postfix
+            $i = 1;
+            $new_file_name_arr2 = [];
+            foreach ($new_file_name_arr as $nf) {
+                $new_file_name = sprintf('%03d',$i) . '.jpg';
+                //echo date('Y-m-d H:i:s') .  '----- change '.$nf." to ".$new_file_name;
+                $res = rename($physical_path.'/'.$nf, $physical_path.'/'.$new_file_name);
+                //echo $res ? " 1 \n" : " 0 \n";
+                $new_file_name_arr2[] = $new_file_name;
+                $i++;
+            }
+
+            // Update db to set filenames to short one and saved_local to 1
+            $sql = 'update '. $pre . 'files set filename="'.implode(',', $new_file_name_arr2).'",saved_locally=5,full_path=2 where id = ' . $row['id'];
             $res = DB::$dbInstance->query($sql);
             if(!$res) {
                 echo date('Y-m-d H:i:s') . ' - ' . "---- \033[31m failed to update db record. \033[39m \n";        

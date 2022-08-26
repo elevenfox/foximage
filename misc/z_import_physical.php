@@ -101,7 +101,7 @@ $fileObj->thumbnail = 1;
 $res = File::save($fileObj);
 if($res) {
 	// Process thumbnail
-	processThumbnail((array)$fileObj);
+	processThumbnail((array)$fileObj, false, true);
 	$status = 1;
 }
 

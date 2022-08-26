@@ -56,7 +56,8 @@ $fileObj->description = file_get_contents($folder_full_path.'/desc.txt');
 $fileObj->tags = file_get_contents($folder_full_path.'/tags.txt');
 
 // images
-$files = scandir($folder_full_path);
+$physical_path = $folder_full_path;
+$files = scandir($physical_path);
 $num_images = 0;
 $phy_images = [];
 foreach ($files as $f) {

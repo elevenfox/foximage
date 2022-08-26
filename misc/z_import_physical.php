@@ -98,7 +98,12 @@ foreach ($new_file_name_arr as $nf) {
 $fileObj->images = $new_file_name_arr2;
 $fileObj->thumbnail = 1;
 
-File::save($fileObj);
+$res = File::save($fileObj);
+if($res) {
+	// Process thumbnail
+	processThumbnail((array)$fileObj);
+	$status = 1;
+}
 
 $fileRowDB = file_db_exist($relative_path);
 if($fileRowDB) {

@@ -8,7 +8,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 $prod_api = Config::get('prod_api_url');
 
-$folder_full_path = isset($argv[1]) ? (int)$argv[1] : null;
+$folder_full_path = isset($argv[1]) ? $argv[1] : null;
 if(empty($folder_full_path)) {
     echo "---- Must have a full folder path as the param! \n";
     exit;

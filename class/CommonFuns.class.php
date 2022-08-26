@@ -559,26 +559,24 @@ function processThumbnail($row, $force_download = false) {
                 if(!$res) {
                     error_log(" ----- failed to save thumbnail: " . $fullname);    
                 }
-                else {
-                    // Upload to B2
-                    import('B2');
-                    $b2 = new B2();
-                    $res = $b2->get_photo_content($key);
-                    if(empty($res)) {
-                        $res = $b2->upload_photo($key, $fullname);
-                    }
-
-                    // Update db to set thumbnail field to 1
-                    $pre = Config::get('db_table_prefix');
-                    $sql = "update ". $pre . "files set thumbnail=1 where source_url = '" . $row['source_url'] . "'";
-                    DB::$dbInstance->query($sql);
-
-                }
             }
             else {
                 error_log(" ---- failed to download: " . $tn_url ); 
             }
         }
+
+        // Upload to B2 if key is empty in B2
+        import('B2');
+        $b2 = new B2();
+        $res = $b2->get_photo_content($key);
+        if(empty($res)) {
+            $res = $b2->upload_photo($key, $fullname);
+        }
+
+        // Update db to set thumbnail field to 1
+        $pre = Config::get('db_table_prefix');
+        $sql = "update ". $pre . "files set thumbnail=1 where source_url = '" . $row['source_url'] . "'";
+        DB::$dbInstance->query($sql);
         
         $img_src = '/jw-photos/' . $key;
     }

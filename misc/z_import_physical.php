@@ -9,6 +9,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 ###################### Define variables ################
 
 $file_root = Config::get('file_root');
+$pre = Config::get('db_table_prefix');
 
 $folder_full_path = isset($argv[1]) ? $argv[1] : null;
 if(empty($folder_full_path)) {
@@ -94,7 +95,7 @@ foreach ($new_file_name_arr as $nf) {
     $i++;
 }
 
-$fileObj->images = implode(',', $new_file_name_arr2);
+$fileObj->images = $new_file_name_arr2;
 $fileObj->thumbnail = 1;
 
 File::save($fileObj);

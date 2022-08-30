@@ -35,7 +35,7 @@ for fname in *.*; do
             POINT=40
         fi
         echo "watermarking $fname with pointsize ${POINT}"
-        convert $fname -font Liberation-Sans-Bold -pointsize $POINT -draw "gravity southeast fill black text 0,12 'TUZAC.com  ' fill white text 1,11 'TUZAC.com  '" $fname
+        convert $fname -font Liberation-Sans-Bold -pointsize $POINT -draw "gravity northeast fill black text 0,12 'TUZAC.com  ' fill white text 1,11 'TUZAC.com  '" $fname
     fi
   fi
 done

@@ -21,11 +21,10 @@ for fname in *.*; do
     
     if [ $MAX_SIZE -gt 2400 ]; then
         PERCENTAGE=$((200*2400/$MAX_SIZE % 2 + 100*2400/$MAX_SIZE))
-        TO_PERC=$((100-$PERCENTAGE))
-
+        
         # resize and set quality to 80% to make smaller file
-        echo "resizing $fname by $TO_PERC% ..."
-        mogrify -resize ${TO_PERC}%  -quality 80 "$fname"
+        echo "resizing $fname to $PERCENTAGE% ..."
+        mogrify -resize ${PERCENTAGE}%  -quality 80 "$fname"
     fi
 
     # this is the watermarking part

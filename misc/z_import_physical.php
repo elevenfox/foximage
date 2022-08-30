@@ -61,7 +61,7 @@ $files = scandir($physical_path);
 $num_images = 0;
 $phy_images = [];
 foreach ($files as $f) {
-    if($f != '.' && $f != '..' && $f != 'thumbnail.jpg') {
+    if($f != '.' && $f != '..' && $f != 'thumbnail.jpg' && substr($f, 0, 1) != ".") {
         $extension = pathinfo($physical_path. '/' .$f, PATHINFO_EXTENSION);
         if($extension == 'jpg') {
             $phy_images[] = $f;

@@ -31,9 +31,9 @@ for fname in *.*; do
     # this is the watermarking part
     if [ $MAX_SIZE -gt 1024 ]; then
         
-        POINT=20
+        POINT=30
         if [ $MAX_SIZE -ge 1800 ]; then
-            POINT=30
+            POINT=40
         fi
         echo "watermarking $fname with pointsize ${POINT}"
         convert $fname -font Liberation-Sans-Bold -pointsize $POINT -draw "gravity southeast fill black text 0,12 'TUZAC.com  ' fill white text 1,11 'TUZAC.com  '" $fname

@@ -51,9 +51,23 @@ $fileObj->title = basename($folder_full_path);
 
 // description
 $fileObj->description = file_get_contents($folder_full_path.'/desc.txt');
+if(empty($fileObj->description)) {
+    echo date('Y-m-d H:i:s') . " - Must have a desc.txt file! \n";
+    exit;
+}
 
 // tags
 $fileObj->tags = file_get_contents($folder_full_path.'/tags.txt');
+if(empty($fileObj->tags)) {
+    echo date('Y-m-d H:i:s') . " - Must have a tags.txt file! \n";
+    exit;
+}
+
+// check thumbnail
+if(!file_exists($folder_full_path.'/thumbnail.jpg')) {
+    echo date('Y-m-d H:i:s') . " - Must have a thumbnail.jpg file! \n";
+    exit;
+}
 
 // images
 $physical_path = $folder_full_path;
@@ -71,6 +85,10 @@ foreach ($files as $f) {
 }
 
 echo date('Y-m-d H:i:s') . '----- physical image count = ' . $num_images . "\n";
+if($num_images <=5) {
+    echo date('Y-m-d H:i:s') . " - Must have more than 5 images to create an album! \n";
+    exit;
+}
 
 // Rename all images by 000 -> 999 number file name with a postfix to avoid override
 $i = 1;

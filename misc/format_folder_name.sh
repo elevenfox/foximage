@@ -21,18 +21,22 @@ format_folder_name () {
 
 new_cur_folder_name=`format_folder_name "${cur_folder}"`
 
-echo " ----> ${new_cur_folder_name}"
-mv "${cur_folder}" "${new_cur_folder_name}"
-echo ''
+if [ "${new_cur_folder_name}" != "${cur_folder}" ]; then
+  echo " ----> ${new_cur_folder_name}"
+  mv "${cur_folder}" "${new_cur_folder_name}"
+  echo ''
+fi
 
 cd "${new_cur_folder_name}"
 
 # look up files with extensions
 for d in */; do
   new_d=`format_folder_name "${d}"`
-  echo "---- ${d}"
-  echo "  ----> ${new_d}"
-  mv "${d}" "${new_d}"
+  if [ "${new_d}" != "${d}" ]; then
+    echo "---- ${d}"
+    echo "  ----> ${new_d}"
+    mv "${d}" "${new_d}"
+  fi
 done
 
 echo ''

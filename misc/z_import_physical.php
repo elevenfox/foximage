@@ -77,7 +77,7 @@ $phy_images = [];
 foreach ($files as $f) {
     if($f != '.' && $f != '..' && $f != 'thumbnail.jpg' && substr($f, 0, 1) != ".") {
         $extension = pathinfo($physical_path. '/' .$f, PATHINFO_EXTENSION);
-        if($extension == 'jpg') {
+        if($extension == 'jpg' || $extension == 'JPG') {
             $phy_images[] = $f;
             $num_images++;
         }

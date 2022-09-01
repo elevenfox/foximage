@@ -1,0 +1,12 @@
+#!/bin/bash
+
+folder_path=$1
+
+echo "Target folder is: ${folder_path}"
+
+cd "${folder_path}"
+cd ..
+
+folder_name=`basename ${folder_path}`
+
+rar a -r -m0 -hp"tuzac" -x*.txt ${folder_name}.rar ${folder_name}

@@ -35,9 +35,28 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
             <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
+            <?php
+              if(!empty($file['download_url'])) {
+                if(empty($file['short_url'])) {
+                  // Call ouo.io to get short URL, then update db
+                  $su_service = 'https://ouo.io';
+                  $res = curl_call('https://ouo.io/api/dVxF4lIm?s=' . $file['download_url']);
+                  if(!empty($res) && substr($res, 0, strlen($su_service)) === $su_service) {
+                    File::updateShortUrl($file['id'], $res);
+                    // Update sesstion
+                    $file['short_url'] = $res;
+                    $_SESSION['current_file'] = $file;
+                  }
+                }
+
+                echo '<div class="file-album-download">下载高清无水印图集: <a href="' . $file['short_url'] . '" target="_blank">TerraBox网盘</a></div>';
+                echo '<div>解压密码: tuzac</div><br>';
+              }
+            ?>
             <div class="file-info">上传用户: <?=$file['user_name']?></div>
             <div class="file-info">上传时间: <?=date('Y年n月d日', strtotime($file['modified']))?></div>
             <div class="file-info" itemprop="userInteractionCount">观看次数: <?=$file['view_count'] ? number_format($file['view_count']) : rand(1, 500) ?></div>
+            
             <div class="file-tags">
                 <span class="not-in-mobile">类别:</span>
                 <span id="tags_box_links">

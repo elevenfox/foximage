@@ -367,6 +367,13 @@ Class File {
         return DB::$dbInstance->query($sql);
     }
 
+    public static function updateShortUrl($file_id, $short_url) {
+        self::setTables();
+
+        $sql = 'update ' . self::$table_files . ' set short_url = "'.$short_url.'" where id = \'' . $file_id . '\'';
+        return DB::$dbInstance->query($sql);
+    }
+
     public static function markForDeleting($source_url) {
         self::setTables();
 

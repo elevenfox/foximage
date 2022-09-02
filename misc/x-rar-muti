@@ -1,0 +1,15 @@
+#!/bin/bash
+
+folder_path=$1
+
+echo "Target parent folder is: ${folder_path}"
+
+cd "${folder_path}"
+
+# look up sub folders
+for d in */; do
+  if [ $d != "*/" ]; then
+    # rar-tuzac each sub folder
+    rar-tuzac "${d}"
+  fi  
+done

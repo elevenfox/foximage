@@ -740,6 +740,19 @@ article.file .file-info {
     line-height: 2em;
 }
 
+article.file .file-album-download {
+    margin: 10px 0 0 0;
+}
+article.file .file-album-download a {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 0 0 0 10px;
+    background-color: #00ad62;
+    color: #eee
+}
+
 article.file .file-tags {
     margin: 1em 0;
     font-size: 20px;

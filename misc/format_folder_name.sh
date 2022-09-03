@@ -28,6 +28,9 @@ format_folder_name () {
 reorg_files () {
   full_dir_path=$1
   
+  OIFS="$IFS"
+  IFS=$'\n'
+
   # loop folder, exclude ., .., thumbnail.jpg, non-jpg files
   echo "--- reorg files in folder: ${full_dir_path}"
   cd "${full_dir_path}"
@@ -37,7 +40,7 @@ reorg_files () {
   timestamp=$(date +%s)
   filelist=$(ls | grep -i '.jpg')
   for f in $filelist; do
-    if [ $f != "thumbnail.jpg" ]; then
+    if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`
       echo "---- mv ${f} --> ${num}-${timestamp}.jpg"
       mv "${f}" ${num}-${timestamp}.jpg
@@ -49,13 +52,15 @@ reorg_files () {
   i=1
   filelist=$(ls | grep -i '.jpg')
   for f in $filelist; do
-    if [ $f != "thumbnail.jpg" ]; then
+    if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`
       echo "---- mv ${f} --> ${num}.jpg"
       mv "${f}" ${num}.jpg
       i=$((i+1))
     fi  
   done
+
+  IFS="$OIFS"
 }
 #######################################
 # End of functions
@@ -74,7 +79,7 @@ reorg_files "${new_cur_folder_name}"
 
 # look up sub folders
 for d in */; do
-  if [ $d != "*/" ]; then
+  if [ "$d" != "*/" ]; then
     new_d=`format_folder_name "${d}"`
     if [ "${new_d}" != "${d}" ]; then
       echo "-- ${d}"

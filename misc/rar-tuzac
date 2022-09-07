@@ -9,4 +9,4 @@ cd ..
 
 folder_name=`basename ${folder_path}`
 
-rar a -r -m0 -hp"tuzac" -x*.txt ${folder_name}.rar ${folder_name}
+rar a -r -m0 -hp"tuzac" -x*.txt -x*.db ${folder_name}.rar ${folder_name}

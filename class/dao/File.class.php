@@ -198,7 +198,7 @@ Class File {
 
         $term = DB::sanitizeInput($term);
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = "select * from ".self::$table_files." where " . $where . " limit " . $limit;
+        $query = "select * from ".self::$table_files." where " . $where . " order by id desc limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             return $res;

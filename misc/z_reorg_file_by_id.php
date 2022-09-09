@@ -82,17 +82,17 @@ if(count($res) >0) {
         //echo $query; 
 
         // Build fileObj, then call api to update prod db too
-        // $fileObj = [
-        //     'source' => $row['source'],
-        //     'source_url' => $row['source_url'],
-        //     'title' => $row['title'],
-        //     'images' => $new_file_name_arr2,
-        //     'thumbnail' => 1,
-        //     'tags' => $row['tags'],
-        // ];
-        // echo date('Y-m-d H:i:s') . '----- sync this to prod ...... ';
-        // $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
-        // echo $res2 . "\n";
+        $fileObj = [
+            'source' => $row['source'],
+            'source_url' => $row['source_url'],
+            'title' => $row['title'],
+            'images' => $new_file_name_arr2,
+            'thumbnail' => 1,
+            'tags' => $row['tags'],
+        ];
+        echo date('Y-m-d H:i:s') . '----- sync this to prod ...... ';
+        $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
+        echo $res2 . "\n";
 
         exit;
         

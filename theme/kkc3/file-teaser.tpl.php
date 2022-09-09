@@ -25,8 +25,8 @@ $thumbnail = processThumbnail($data);
                 <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url"><?=$data['title']?></a>
             </div>
             <div class="teaser-file-info">
-            <span><img src="/theme/jw/images/upload-icon.svg" width="12" height="12" alt="views" loading="lazy"></span>  
-              By: <?=$data['user_name'] ? $data['user_name'] : 'Anonymous' ?>
+              <span><img src="/theme/jw/images/upload-icon.svg" width="12" height="12" alt="views" loading="lazy"></span>  
+                By: <?=$data['user_name'] ? $data['user_name'] : 'Anonymous' ?>
             </div>
             <div class="teaser-file-info right" itemprop="userInteractionCount">
                 <span><img src="/theme/jw/images/eye-open.svg" width="12" height="12" alt="views" loading="lazy"></span> <?=$data['view_count'] ? number_format($data['view_count']) : rand(1, 500) ?>

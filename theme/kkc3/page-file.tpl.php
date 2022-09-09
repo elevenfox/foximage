@@ -10,6 +10,9 @@ $images = explode(',', $file['filename']);
 $num = empty($_GET['at']) ? 1 : $_GET['at'];
 $num = $num >= count($images) ? count($images) : $num;
 
+$at = $num >= count($images) ? 1 : $num + 1;
+$next_url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?ppt=1&at='.$at."#fdp-photo";
+
 $api_server = Config::get('api_server');
 $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 ?>
@@ -32,17 +35,47 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 
             <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
+            <?php
+              if(!empty($file['download_url'])) {
+                if(empty($file['short_url'])) {
+                  // Call ouo.io to get short URL, then update db
+                  $su_service = 'https://ouo.io';
+                  $res = curl_call('https://ouo.io/api/dVxF4lIm?s=' . $file['download_url']);
+                  if(!empty($res) && substr($res, 0, strlen($su_service)) === $su_service) {
+                    File::updateShortUrl($file['id'], $res);
+                    // Update sesstion
+                    $file['short_url'] = $res;
+                    $_SESSION['current_file'] = $file;
+                  }
+                }
+
+                echo '<div class="file-album-download">下载高清无水印图集: <a href="' . $file['short_url'] . '" target="_blank">TerraBox网盘</a></div>';
+                echo '<div>解压密码: tuzac</div><br>';
+              }
+            ?>
             <div class="file-info">上传用户: <?=$file['user_name']?></div>
             <div class="file-info">上传时间: <?=date('Y年n月d日', strtotime($file['modified']))?></div>
             <div class="file-info" itemprop="userInteractionCount">观看次数: <?=$file['view_count'] ? number_format($file['view_count']) : rand(1, 500) ?></div>
+            
             <div class="file-tags">
                 <span class="not-in-mobile">类别:</span>
+                <span id="tags_box_links">
+                    <?php
+                    $tags = explode(',', $file['tags']);
+                    foreach($tags as $tag) {
+                        $tag_flat = str_replace(' ','-',strtolower($tag));
+                        echo '<a class="tag" href="/tags/'.$tag_flat.'"><h2>'.$tag.'</h2></a>';
+                    }
+                    ?>
+                </span>
+                <div id="tags_box_text" style="display: none">
+                    <input id="tags-string" type="text" value="<?= $file['tags']?>" style="width:100%"/>
+                    <button id="tags-cancel">Cancel</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="tags-save">Save</button>
+                </div>
                 <?php
-                $tags = explode(',', $file['tags']);
-                foreach($tags as $tag) {
-                    $tag_flat = str_replace(' ','-',strtolower($tag));
-                    echo '<a class="tag" href="/tags/'.$tag_flat.'"><h2>'.$tag.'</h2></a>';
-                }
+                    if(isAdmin()) {
+                        echo '<a href="#" id="edit-tags" style="font-style: italic; margin: 0 8px; display: inline-block; cursor: pointer; font-size: 12px;">Edit</a>';
+                    }
                 ?>
             </div>
             <div class="file-description"><?= nl2br($file['description'])?></div>
@@ -74,11 +107,12 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                       </a>
                     </div>
                     <?php endif;?>
+
+                    <div id="auto-play" style="display: <?= !empty($_REQUEST['ppt']) ? 'none' : 'block'?>">自动播放</div>
                   </div>
               </div>
             </div>
           </div>
-
           <?php
             import('Pager');
             $pager = new Pager(
@@ -141,12 +175,23 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
   <?php if( !empty($_REQUEST['ppt']) ):?>
     let seconds = 20;
     let timeoutCallback = function() {
+      <?php if(!empty($_REQUEST['tag'])) : ?>
       let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$_REQUEST['tag']?>';
       $.get(api_endpoint, function(data) {
           if(data.url) {
               window.location.href = data.url;
           }
       });
+      <?php  elseif(!empty($_REQUEST['keywords'])) : ?> 
+        let api_endpoint = '/api/?ac=get_random_file_by_search&keywords=<?=$_REQUEST['keywords']?>';
+        $.get(api_endpoint, function(data) {
+            if(data.url) {
+                window.location.href = data.url;
+            }
+        });
+      <?php  else : ?> 
+          window.location.href = "<?=$next_url?>";
+      <?php endif; ?>
     };
     let intervalCallback = function() {
       seconds = seconds - 1;
@@ -195,6 +240,39 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
     let expires = "expires=" + d.toUTCString();
     document.cookie = "closeHint=yes;" + expires + ";path=/";
     $('#fdp-photo #action-hint').hide();
+  });
+
+  $('#fdp-photo #auto-play').on('click', function() {
+    window.location.href = "<?=$next_url?>";
+  });
+
+  $('#edit-tags').on('click', function(e) {
+    e.preventDefault();
+    $('#tags_box_links').hide();
+    $('#tags_box_text').show();
+    $('#edit-tags').hide();
+  });
+  $('#tags-cancel').on('click', function() {
+      $('#tags_box_links').show();
+      $('#tags_box_text').hide();
+      $('#edit-tags').show();
+  });
+  $('#tags-save').on('click', function() {
+      let newTags = $('#tags-string').val();
+      // Call api to save tags for this album
+      let api_endpoint = '/api/?ac=save_tags';
+      let data = {
+        'tags': newTags,
+        'id' : <?=$file['id']?>
+      };
+      $.post(api_endpoint, data, function(res) {
+          if(res.status) {
+              window.location.reload();
+          }
+          else {
+            alert('Failed to save tags');
+          }
+      });
   });
 })(jQuery);
 </script>

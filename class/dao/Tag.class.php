@@ -34,7 +34,7 @@ Class Tag {
 
         $where = "WHERE term_name = '$tagName'";
 
-        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on tv.file_id=v.id $where order by v.rand_id desc limit " . $limit;
+        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on tv.file_id=v.id $where order by v.id desc limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             if(APCU && !isAdmin()) {

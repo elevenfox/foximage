@@ -317,7 +317,7 @@ Class File {
                     `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
                     `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',
                     `created` = '".  date('Y-m-d H:i:s', time()) . "',
-                    `user_name` = '" . $user_name . "',
+                    `user_name` = \"" . $user_name . "\",
                     `view_count` = 0
                 ";
 

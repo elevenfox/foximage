@@ -64,9 +64,21 @@ if(empty($fileObj->tags)) {
 }
 
 // check thumbnail
-if(!file_exists($folder_full_path.'/thumbnail.jpg')) {
+$thumbnail_full_path = $folder_full_path.'/thumbnail.jpg';
+if(!file_exists($thumbnail_full_path)) {
     echo date('Y-m-d H:i:s') . " - Must have a thumbnail.jpg file! \n";
     exit;
+}
+else {
+    // Check thumbnail size, if height bigger than 500px, then resize it
+    list($t_width, $t_height) = getimagesize($thumbnail_full_path);
+    echo "width: " . $t_width . "<br />";
+    echo "height: " .  $t_height;
+    if($t_height > 500) {
+        $t_image = imagecreatefromjpeg($thumbnail_full_path);
+        $imgResized = imagescale($t_image , 333, 500);
+        imagejpeg($imgResized, $thumbnail_full_path, 90); 
+    }
 }
 
 // images

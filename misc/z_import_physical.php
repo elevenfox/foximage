@@ -126,7 +126,7 @@ foreach ($phy_images as $f) {
 //     $i++;
 // }
 
-$fileObj->images = $new_file_name_arr2;
+$fileObj->images = $new_file_name_arr;
 $fileObj->thumbnail = 1;
 
 $res = File::save($fileObj);

@@ -37,28 +37,30 @@ reorg_files () {
 
   # rename files to 000-->999 with postfix to avoid override
   i=1
-  timestamp=$(date +%s)
+  # timestamp=$(date +%s)
   filelist=$(ls | grep -i '.jpg')
   for f in $filelist; do
     if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`
-      echo "---- mv ${f} --> ${num}-${timestamp}.jpg"
-      mv "${f}" ${num}-${timestamp}.jpg
+      rand_s=`tr -dc A-Za-z0-9 </dev/urandom | head -c 5`
+      echo "---- mv ${f} --> ${num}-${rand_s}.jpg"
+      mv "${f}" ${num}-${rand_s}.jpg
       i=$((i+1))
     fi  
   done
 
   # remove postfix
-  i=1
-  filelist=$(ls | grep -i '.jpg')
-  for f in $filelist; do
-    if [ "$f" != "thumbnail.jpg" ]; then
-      num=`printf "%03d" ${i}`
-      echo "---- mv ${f} --> ${num}.jpg"
-      mv "${f}" ${num}.jpg
-      i=$((i+1))
-    fi  
-  done
+  # i=1
+  # filelist=$(ls | grep -i '.jpg')
+  # for f in $filelist; do
+  #   if [ "$f" != "thumbnail.jpg" ]; then
+  #     num=`printf "%03d" ${i}`
+  #     rand_s=`tr -dc A-Za-z0-9 </dev/urandom | head -c 5`
+  #     echo "---- mv ${f} --> ${num}-${rand_s}.jpg"
+  #     mv "${f}" ${num}-${rand_s}.jpg
+  #     i=$((i+1))
+  #   fi  
+  # done
 
   IFS="$OIFS"
 }

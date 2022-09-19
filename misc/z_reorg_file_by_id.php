@@ -66,7 +66,7 @@ if(count($res) >0) {
 
         // Update the row in the database
         echo date('Y-m-d H:i:s') . "----- Update db row ...... \n";
-        $query = 'update '. $pre . 'files set filename="'.implode(',', $new_file_name_arr2).'",saved_locally=5  where id='.$row['id'];
+        $query = 'update '. $pre . 'files set filename="'.implode(',', $new_file_name_arr).'",saved_locally=5  where id='.$row['id'];
         DB::$dbInstance->getRows($query);
         //echo $query; 
 
@@ -75,7 +75,7 @@ if(count($res) >0) {
             'source' => $row['source'],
             'source_url' => $row['source_url'],
             'title' => $row['title'],
-            'images' => $new_file_name_arr2,
+            'images' => $new_file_name_arr,
             'thumbnail' => 1,
             'tags' => $row['tags'],
         ];

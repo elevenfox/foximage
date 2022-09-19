@@ -40,12 +40,23 @@ echo date('Y-m-d H:i:s') . '----- physical image count = ' . $num_images . "\n";
 // Rename all images by 000 -> 999 number file name with a postfix to avoid override
 $i = 1;
 $new_file_name_arr = [];
+$postfix = time();
 foreach ($phy_images as $f) {
-    $postfix = substr(md5(microtime()),rand(0,26),5);
     $new_file_name = sprintf('%03d',$i) . '-'.$postfix.'.jpg';
     echo date('Y-m-d H:i:s') .  '----- change '.$f." to ".$new_file_name;
     $res = rename($physical_path.'/'.$f, $physical_path.'/'.$new_file_name);
     echo $res ? " 1 \n" : " 0 \n";
     $new_file_name_arr[] = $new_file_name;
+    $i++;
+}
+// remove postfix
+$i = 1;
+$new_file_name_arr2 = [];
+foreach ($new_file_name_arr as $nf) {
+    $new_file_name = sprintf('%03d',$i) . '.jpg';
+    echo date('Y-m-d H:i:s') .  '----- change '.$nf." to ".$new_file_name;
+    $res = rename($physical_path.'/'.$nf, $physical_path.'/'.$new_file_name);
+    echo $res ? " 1 \n" : " 0 \n";
+    $new_file_name_arr2[] = $new_file_name;
     $i++;
 }

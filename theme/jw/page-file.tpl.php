@@ -280,20 +280,20 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
   });
 
   // Implement swipe left and right to change photo
-  let touchstartX = 0
-  let touchendX = 0     
-  document.addEventListener('touchstart', e => {touchstartX = e.changedTouches[0].screenX})
-  document.addEventListener('touchend', e => {touchendX = e.changedTouches[0].screenX; checkDirection()})
-  function checkDirection() {
-    if (touchendX < touchstartX) {
-      // swiped left
-      window.location.href = "<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>";
-    }
-    if (touchendX > touchstartX) {
-      //swiped right
-      window.location.href = "<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"; 
-    }
-  }
+  // let touchstartX = 0
+  // let touchendX = 0     
+  // document.addEventListener('touchstart', e => {touchstartX = e.changedTouches[0].screenX})
+  // document.addEventListener('touchend', e => {touchendX = e.changedTouches[0].screenX; checkDirection()})
+  // function checkDirection() {
+  //   if (touchendX < touchstartX) {
+  //     // swiped left
+  //     window.location.href = "<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>";
+  //   }
+  //   if (touchendX > touchstartX) {
+  //     //swiped right
+  //     window.location.href = "<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"; 
+  //   }
+  // }
 
 })(jQuery);
 </script>

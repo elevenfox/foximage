@@ -2,7 +2,7 @@
 //echo phpinfo(); exit;
 
 require_once './bootstrap.inc';
-$a = get_supported_sources();
+
 //import('parser/xchina');
 //$res = xchina::parse_html('https://xchina.co/photo/id-61054fc7ab92e/1.html');
 //$res = xchina::parse_html('https://www.tuzac.com/');
@@ -22,18 +22,8 @@ $a = get_supported_sources();
 // import('parser/xinmeitulu');
 // $res = xinmeitulu::parse_html('https://www.xinmeitulu.com/photo/%e7%a7%80%e4%ba%baxiuren-no-3003-lucky%e6%b2%88%e6%ac%a2%e6%ac%a3%e5%b0%8f%e5%a7%90%e5%a6%b9-%e6%8b%89%e6%8b%89%e5%90%88%e9%9b%86');
 
-// ZDebug::my_print($res);
-
-// Check thumbnail size, if height bigger than 500px, then resize it
-$thumbnail_full_path = '/home/eric/work/thumbnail.jpg';
-list($t_width, $t_height) = getimagesize($thumbnail_full_path);
-echo "width: " . $t_width . "<br />";
-echo "height: " .  $t_height;
-if($t_height > 500) {
-    $t_image = imagecreatefromjpeg($thumbnail_full_path);
-    $imgResized = imagescale($t_image , 333, 500);
-    imagejpeg($imgResized, $thumbnail_full_path, 90); 
-}
+$a = cleanStringForUrl('Byoru-Yor-Forger');
+ZDebug::my_print($a);
 
 exit;
 

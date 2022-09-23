@@ -253,7 +253,7 @@ function cleanStringForUrl($string, $separator = '-') {
         );
 
         // Generate and cache the punctuation replacements for strtr().
-        $punctuations = ['"', '\'', '`', ',', '.', '-', '_', ':', ';', '|', '{', '}', '[', ']', '+', '-', '=', '*', '&', '%', '^', '$', '#', '@', '!', '~', '(', ')', '?', '<', '>', '/', '\\'];
+        $punctuations = ['"', '\'', '`', ',', '.', '_', ':', ';', '|', '{', '}', '[', ']', '+', '=', '*', '&', '%', '^', '$', '#', '@', '!', '~', '(', ')', '?', '<', '>', '/', '\\'];
         foreach ($punctuations as $p) {
             $cache['punctuation'][$p] = '';
         }

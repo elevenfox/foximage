@@ -11,7 +11,13 @@ echo "Current folder is: ${cur_folder}"
 #######################################
 format_folder_name () {
   old_name=$1
-  new_name=${old_name//\'/-}
+  
+  new_name=${old_name//XIUREN/XiuRen}
+  new_name=${new_name//xiuren/XiuRen}
+  new_name=${new_name//Xiuren/XiuRen}
+  new_name=${new_name//NO./No.}
+  new_name=${new_name//N0./No.}
+  new_name=${new_name//\'/-}
   new_name=${new_name//\"/-}
   new_name=${new_name// - /-}
   new_name=${new_name// (/-}

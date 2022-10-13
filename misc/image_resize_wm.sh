@@ -19,7 +19,7 @@ for fname in *.*; do
     fi
     echo "-- image width: $WIDTH, height: ${HEIGHT}...max_size: ${MAX_SIZE}"
     
-    if [ $MAX_SIZE -gt 2400 ]; then
+    if [ $MAX_SIZE -gt 2700 ]; then
         PERCENTAGE=$((200*2400/$MAX_SIZE % 2 + 100*2400/$MAX_SIZE))
         
         # resize and set quality to 80% to make smaller file

@@ -15,7 +15,7 @@ $start_time = time();
 
 // truncate tags and tag_File
 DB::$dbInstance->query('truncate table ' . $pre . 'tags');
-DB::$dbInstance->query('truncate table ' . $pre . 'tag_File');
+DB::$dbInstance->query('truncate table ' . $pre . 'tag_file');
 
 // read from Files
 $total = File::getAllFilescount();

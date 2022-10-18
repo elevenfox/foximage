@@ -43,13 +43,20 @@ Class tagContentsView extends ViewCore {
     }
 
     if(!empty($this->data['tags'])) {
+          $url = '/all-tags/';
+          if(!empty($this->request->getSysRequest()['sort'])) {
+            $sort = $this->request->getSysRequest()['sort'];
+            $appended = '?sort=' . $sort;
+          }
+
           $currentPage = empty($this->data['page']) ? 1 : $this->data['page'];
           import('Pager');
           $pager = new Pager(
               $this->listTagsPerPage,
               (int)$this->data['tags_total'],
               $currentPage,
-              '/all-tags/'
+              $url,
+              $appended
           );
           $pagerHtml = $pager->generatePages();
 

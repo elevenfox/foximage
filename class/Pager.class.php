@@ -250,7 +250,7 @@ class Pager {
       if($this->currentPage > 1){  
         $prewPageUrl = $this->subPageLink.$this->linkSymbol.($this->currentPage-1).$this->subPageLinkAppend;  
         if($this->isShowFirstLast){  
-          $firstPageUrl = $this->subPageLink.$this->linkSymbol."1";  
+          $firstPageUrl = $this->subPageLink.$this->linkSymbol."1".$this->subPageLinkAppend;  
           $subPageCss2Str .= '<a href="'.$firstPageUrl.'" class="'.$this->pageCss.'" style="'.$this->pageStyle.'">'.$this->firstPageText.'</a>';  
         }  
         $subPageCss2Str .= '<a href="'.$prewPageUrl.'" class="'.$this->pageCss.' page-pre" style="'.$this->pageStyle.'">'.$this->prePageText.'</a>';

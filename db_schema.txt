@@ -1,0 +1,58 @@
+/****************************************** 
+* Main table with all albums information
+******************************************/
+CREATE TABLE `jw_files` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rand_id` int(11) NOT NULL DEFAULT '1',
+  `title` mediumtext NOT NULL,
+  `source` varchar(255) NOT NULL DEFAULT '',
+  `source_url` varchar(255) NOT NULL,
+  `source_url_md5` varchar(40) NOT NULL,
+  `description` text NOT NULL,
+  `full_path` mediumtext,
+  `filename` mediumtext,
+  `thumbnail` varchar(255) NOT NULL,
+  `tags` longtext,
+  `created` timestamp NULL DEFAULT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `file_size` bigint(20) DEFAULT NULL,
+  `user_name` varchar(60) DEFAULT NULL,
+  `view_count` bigint(20) DEFAULT NULL,
+  `saved_locally` int(1) DEFAULT NULL,
+  `download_url` varchar(2048) DEFAULT NULL,
+  `short_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `source_url` (`source_url`),
+  UNIQUE KEY `source_url_md5` (`source_url_md5`),
+  KEY `rand_id` (`rand_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+/****************************************** 
+* Tags table to save all tags
+******************************************/
+CREATE TABLE `jw_tags` (
+  `term` varchar(255) NOT NULL,
+  PRIMARY KEY (`term`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+/****************************************** 
+* Tag_files table for all tag<->file mapping
+******************************************/
+CREATE TABLE `jw_tag_file` (
+  `term_name` varchar(255) NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `term_name` (`term_name`),
+  KEY `file_id` (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
+/****************************************** 
+* Tag_view has count of items for each tag
+******************************************/
+CREATE VIEW `jw_tag_view` AS 
+    select `jt`.`term` AS `term`,count(`jtf`.`file_id`) AS `num` 
+    from (`jw_tags` `jt` left join `jw_tag_file` `jtf` on((`jt`.`term` = `jtf`.`term_name`))) 
+    group by `jt`.`term`

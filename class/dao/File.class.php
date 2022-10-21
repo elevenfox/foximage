@@ -445,7 +445,7 @@ Class File {
             $tags = self::handle_tag_array($tags);
             foreach ($tags as $tag) {
                 $tagObj = Tag::upsertTag($tag);
-                Tag::upsertFileTag($tagObj['tid'], $tagObj['name'], $file['id']);
+                Tag::upsertFileTag($tagObj['term'], $file['id']);
             }
         }
     }

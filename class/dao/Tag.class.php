@@ -10,12 +10,15 @@ Class Tag {
     protected static $table_tag_file;
     protected static $table_tags;
     protected static $table_files;
+    protected static $table_tag_view;
 
     private static function setTables() {
         self::$table_tag_file = Config::get('db_table_prefix') . 'tag_file';
         self::$table_tags = Config::get('db_table_prefix') . 'tags';
         self::$table_files = Config::get('db_table_prefix') . 'files';
+        self::$table_tag_view = Config::get('db_table_prefix') . 'tag_view';
     }
+
 
     public static function getFilesByTag($tagName, $page=1, $limit=24) {
         self::setTables();
@@ -88,22 +91,22 @@ Class Tag {
         $limit = ($page - 1) * $limit . ',' . $limit;
         switch($sort_by) {
             case 1:
-                $order_by = 'order by convert(name using gbk) collate gbk_chinese_ci asc';
+                $order_by = 'order by convert(term using gbk) collate gbk_chinese_ci asc';
                 break;
             case 2:
-                $order_by = 'order by convert(name using gbk) collate gbk_chinese_ci desc';
+                $order_by = 'order by convert(term using gbk) collate gbk_chinese_ci desc';
                 break;
             case 3:
-                $order_by = 'order by vid asc';
+                $order_by = 'order by num asc';
                 break;
             case 4:
-                $order_by = 'order by vid desc';
+                $order_by = 'order by num desc';
                 break;
             default:  
-                $order_by = 'order by convert(name using gbk) collate gbk_chinese_ci asc';
+                $order_by = 'order by convert(term using gbk) collate gbk_chinese_ci asc';
                 break;   
         }
-        $query = "select * from ".self::$table_tags." where vid > 5 " . $order_by . ' limit ' . $limit;
+        $query = "select * from ".self::$table_tag_view." where num > 5 " . $order_by . ' limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
@@ -119,7 +122,7 @@ Class Tag {
     public static function getAllTagsCount() {
         self::setTables();
 
-        $query = "select count(*) as total from ".self::$table_tags . "  where vid > 5";
+        $query = "select count(*) as total from ".self::$table_tag_view . "  where num > 5";
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             return $res[0]['total'];
@@ -147,14 +150,14 @@ Class Tag {
         $tagName = DB::sanitizeInput($tagName);
 
         // If not exist, insert; otherwise do nothing
-        $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where name='". $tagName ."'");
+        $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where term='". $tagName ."'");
         if($res && count($res) > 0) {
             return $res[0];
         }
         else {
-            $res = DB::$dbInstance->query("insert into ".self::$table_tags." set `vid`=1, `name`= '" . $tagName . "' ");
+            $res = DB::$dbInstance->query("insert into ".self::$table_tags." set `term`= '" . $tagName . "' ");
             if($res) {
-                $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where name='". $tagName ."'");
+                $res = DB::$dbInstance->getRows("select * from ".self::$table_tags." where term='". $tagName ."'");
                 if($res && count($res) > 0) {
                     return $res[0];
                 }
@@ -163,7 +166,7 @@ Class Tag {
         }
     }
 
-    public static function upsertFileTag($tid, $tagName, $file_id) {
+    public static function upsertFileTag($tagName, $file_id) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
@@ -172,40 +175,12 @@ Class Tag {
             return $res[0];
         }
         else {
-            $res = DB::$dbInstance->query("insert into ".self::$table_tag_file." set 
-                    `tid`=" . $tid . ", 
+            $res = DB::$dbInstance->query("insert into ".self::$table_tag_file." set  
                     `term_name`= '" . $tagName . "',
                     `file_id` = ". $file_id
             );
 
-            if($res) {
-                self::updateTagCount($tagName);
-            }
-
             return $res;
-        }
-    }
-
-    public static function updateTagCount($tagName) {
-        self::setTables();
-
-        // Get the count for the tagName
-        $sql = "select count(file_id) as num from " . self::$table_tag_file . " where term_name = '" . $tagName . "'";
-        $res = DB::$dbInstance->getRows($sql);
-        if(count($res) >0) {
-            $num = $res[0]['num'];
-            // If it's bigger than 0, update tags table, otherwise delete it from tags table
-            if($num) {
-                $sql = 'update ' . self::$table_tags. ' set vid=' . $num . ' where name="'.$tagName.'"';
-            }
-            else {
-                $sql = 'delete from ' . self::$table_tags. ' where name="'.$tagName.'"';
-            }
-            $res = DB::$dbInstance->query($sql);
-            return $res;
-        }
-        else {
-            return false;
         }
     }
 
@@ -216,13 +191,6 @@ Class Tag {
         $fileId = DB::sanitizeInput($fileId);
         $sql = "delete from " . self::$table_tag_file . " where file_id='" . $fileId . "'";
         $res = DB::$dbInstance->query($sql);
-
-        // Re-count tag-count for all tags for this file
-        $file = File::getFileByID($fileId);
-        $curTags = explode(',', $file['tags']);
-        foreach ($curTags as $tag) {
-            self::updateTagCount($tag);
-        }
 
         return $res;
     }

@@ -44,6 +44,7 @@ Class tagContentsView extends ViewCore {
 
     if(!empty($this->data['tags'])) {
           $url = '/all-tags/';
+          $appended = '';
           if(!empty($this->request->getSysRequest()['sort'])) {
             $sort = $this->request->getSysRequest()['sort'];
             $appended = '?sort=' . $sort;

@@ -30,8 +30,8 @@ $dev_mode = Config::get('dev_mode');
                     <div class="task" id="task" style="position: relative">
                         <div class="thumbnail-container">
                             <div class="teaser-thumbnail">
-                                <a href="/tags/<?=$tag['name']?>">
-                                    <?=ucwords($tag['name'])?> (<?=$tag['vid']?>)
+                                <a href="/tags/<?=$tag['term']?>">
+                                    <?=ucwords($tag['term'])?> (<?=$tag['num']?>)
                                 </a>
                             </div>
                         </div>

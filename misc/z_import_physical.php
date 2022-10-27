@@ -43,8 +43,11 @@ echo date('Y-m-d H:i:s') . ' - ' . "-- importing: $folder_full_path \n";
 $relative_path = str_replace($file_root, '', $folder_full_path);
 
 $fileObj = new stdClass();
-$fileObj->source = 'manual';
+//$fileObj->source = 'manual';
 $fileObj->source_url = $relative_path;
+
+// Use first folder name of relative_path as the source
+$fileObj->source = current(array_filter(explode('/', $relative_path)));
 
 // title
 $fileObj->title = basename($folder_full_path);
@@ -75,9 +78,10 @@ else {
     echo "width: " . $t_width . "<br />";
     echo "height: " .  $t_height;
     if($t_height > 500) {
-        $t_image = imagecreatefromjpeg($thumbnail_full_path);
-        $imgResized = imagescale($t_image , 333, 500);
-        imagejpeg($imgResized, $thumbnail_full_path, 90); 
+        // $t_image = imagecreatefromjpeg($thumbnail_full_path);
+        // $imgResized = imagescale($t_image , 333, -1);
+        // imagejpeg($imgResized, $thumbnail_full_path, 90); 
+        smartResizeThumbnail($thumbnail_full_path);
     }
 }
 

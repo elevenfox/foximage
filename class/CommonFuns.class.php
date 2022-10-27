@@ -592,8 +592,43 @@ function processThumbnail($row, $force_download = false, $b2_upload = false) {
     }
 
     return $img_src;
-  }  
+}  
 
+function uploadB2Thumbnail($file_id, $logging=false) {
+    $row = File::getFileByID($file_id);
+    
+    // Build physical path: Use <file_root>/source/<file_title>/ as file structure
+    $physical_path = buildPhysicalPath($row);
+    // If folder not exist, create the folder
+    if(!is_dir($physical_path)) {
+        $res = mkdir($physical_path, 0755, true);
+        if(!$res) {
+            error_log(" ----- failed to create directory: " . $physical_path );
+        }
+    }
+    $fullname = $physical_path . '/thumbnail.jpg';
+    
+    $file_root = Config::get('file_root');
+    if(empty($file_root)) {
+        $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+    }
+    $relative_path = str_replace($file_root, '', $physical_path);
+    $key = $relative_path . '/thumbnail.jpg';
+
+    if($logging) {
+        echo '--- fullname = ' . $fullname . "\n";
+        echo '--- b2 key = ' . $key . "\n";
+    }
+    // Upload to B2 with the key
+    import('B2');
+    $b2 = new B2();
+    try {
+        $res = $b2->upload_photo($key, $fullname);
+    }
+    catch(Exception $e) {
+        var_dump($e->getMessage());
+    }
+}
 
 function processPhotoSrc($file) {
     $src = '';
@@ -711,4 +746,42 @@ function convert_webp_to_jpg($url, $fullname) {
         imagejpeg($im, $new_file_name, 100);
         imagedestroy($im);
     }
+}
+
+function smartResizeThumbnail($thumbnail_origin) {
+    list($width, $height, $type) = getimagesize($thumbnail_origin);
+
+    // Crop and create the thumbnail
+    $thumbnail_filename = $thumbnail_origin;
+    $thumb_width = 333;
+    $thumb_height = 500;
+
+    $original_aspect = $width / $height;
+    $thumb_aspect = $thumb_width / $thumb_height;
+
+    if ( $original_aspect >= $thumb_aspect )
+    {
+        // If image is wider than thumbnail (in aspect ratio sense)
+        $new_height = $thumb_height;
+        $new_width = $width / ($height / $thumb_height);
+    }
+    else
+    {
+        // If the thumbnail is wider than the image
+        $new_width = $thumb_width;
+        $new_height = $height / ($width / $thumb_width);
+    }
+
+    $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
+
+    // Resize and crop
+    $image = imagecreatefromjpeg($thumbnail_origin);
+    imagecopyresampled($thumb,
+                    $image,
+                    0 - ($new_width - $thumb_width) / 2, // Center the image horizontally
+                    0 - ($new_height - $thumb_height) / 2, // Center the image vertically
+                    0, 0,
+                    $new_width, $new_height,
+                    $width, $height);
+    imagejpeg($thumb, $thumbnail_filename, 90);
 }

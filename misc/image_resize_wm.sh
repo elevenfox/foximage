@@ -28,17 +28,22 @@ for fname in *.*; do
     fi
 
     # this is the watermarking part
-    if [ $MAX_SIZE -gt 1024 ]; then       
-        POINT=30
-        if [ $MAX_SIZE -ge 1800 ]; then
-            POINT=40
-        fi
-        echo "watermarking $fname with pointsize ${POINT}"
-        if [ $MAX_SIZE -gt 2700 ]; then
-          sleep 1
-        fi  
-        convert $fname -font Liberation-Sans-Bold -pointsize $POINT -draw "gravity northeast fill rgba(0,0,0,1.0) text 30,32 'TUZAC.com' fill rgba(255,255,255,1.0) text 30,31 'TUZAC.com'" $fname
-    fi
+    # -- do not wm thumbnail.jpg
+    # -- do not wm images smaller than 1024
+    # -- sleep 1 second if an image just be resized above
+    if [ ${fname} != 'thumbnail.jpg' ];then
+      if [ $MAX_SIZE -gt 1024 ]; then       
+          POINT=30
+          if [ $MAX_SIZE -ge 1800 ]; then
+              POINT=40
+          fi
+          echo "watermarking $fname with pointsize ${POINT}"
+          if [ $MAX_SIZE -gt 2700 ]; then
+            sleep 1
+          fi  
+          convert $fname -font Liberation-Sans-Bold -pointsize $POINT -draw "gravity northeast fill rgba(0,0,0,1.0) text 30,32 'TUZAC.com' fill rgba(255,255,255,1.0) text 30,31 'TUZAC.com'" $fname
+      fi
+    fi  
   fi
 done
 

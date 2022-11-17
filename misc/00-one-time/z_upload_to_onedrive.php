@@ -4,7 +4,7 @@ $fp = fopen("/tmp/z_upload.lock", "r+");
 if (flock($fp, LOCK_EX | LOCK_NB)) {  // 进行排它型锁定
 // Runing job under a lock
 
-require_once '../bootstrap.inc';
+require_once '../bootstrap.inc.php';
 
 set_time_limit(0);
 ini_set('memory_limit','2048M');

@@ -1,5 +1,5 @@
 <?php
-require_once '../bootstrap.inc';
+require_once '../bootstrap.inc.php';
 
 set_time_limit(0);
 ini_set('memory_limit','2048M');

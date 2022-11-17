@@ -89,12 +89,13 @@ Class Tag {
         }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
+        $db_driver = Config::get('db_driver');
         switch($sort_by) {
             case 1:
-                $order_by = 'order by convert(term using gbk) collate gbk_chinese_ci asc';
+                $order_by = $db_driver == 'foxSqlite3' ? 'order by term asc' : 'order by convert(term using gbk) collate gbk_chinese_ci asc';
                 break;
             case 2:
-                $order_by = 'order by convert(term using gbk) collate gbk_chinese_ci desc';
+                $order_by = $db_driver == 'foxSqlite3' ? 'order by term desc' : 'order by convert(term using gbk) collate gbk_chinese_ci desc';
                 break;
             case 3:
                 $order_by = 'order by num asc';

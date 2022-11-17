@@ -1,5 +1,5 @@
 <?php
-require_once './bootstrap.inc';
+require_once './bootstrap.inc.php';
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 

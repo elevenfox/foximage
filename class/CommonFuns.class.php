@@ -457,6 +457,21 @@ function stringToKeywords($string) {
     return $res;
 }
 
+function getBeautyInfoFromTags($fileObj) {
+    $beauty_info ='';
+    if(in_array($fileObj['source'], ['xiuren5000'])){
+        $tag_arr = explode(',', $fileObj['tags']);
+        foreach($tag_arr as $t) {
+            $t = trim($t);
+            if(in_array($t, ALL_BEAUTY)) {
+                if(file_exists(BEAUTY_PATH . $t . '.txt')) {
+                    $beauty_info = file_get_contents(BEAUTY_PATH . $t . '.txt');
+                }
+            }        
+        }
+    }
+    return $beauty_info;
+}
 
 function buildPhysicalPath($file_row, $file_root='') {
     if(empty($file_root)) {

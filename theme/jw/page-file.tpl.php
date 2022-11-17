@@ -14,7 +14,8 @@ $at = $num >= count($images) ? 1 : $num + 1;
 $next_url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?ppt=1&at='.$at."#fdp-photo";
 
 $api_server = Config::get('api_server');
-$api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
+//$api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
+$beauty_info = getBeautyInfoFromTags($file);
 ?>
 
 <script type="text/javascript">window.devMode = <?= empty($data['dev_mode']) ? 0 : 1 ?></script>
@@ -31,7 +32,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
           </div>
         <?php else:?>
           <div class="fc-text-content">
-            <h1 itemprop="name"><?= $file['title'] ?></h1>
+            <h1 itemprop="name"><?= $file['title'] ?> <span>(<?=count($images)?>P)</span></h1>
 
             <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
@@ -79,6 +80,7 @@ $api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
                 ?>
             </div>
             <div class="file-description"><?= nl2br($file['description'])?></div>
+            <div class="file-description"><?= nl2br($beauty_info)?></div>
           </div>
 
           <div class="task" id="task">

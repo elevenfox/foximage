@@ -55,8 +55,10 @@ $fileObj->title = basename($folder_full_path);
 // description
 $fileObj->description = file_get_contents($folder_full_path.'/desc.txt');
 if(empty($fileObj->description)) {
-    echo date('Y-m-d H:i:s') . " - Must have a desc.txt file! \n";
-    exit;
+    // echo date('Y-m-d H:i:s') . " - Must have a desc.txt file! \n";
+    // exit;
+    echo date('Y-m-d H:i:s') . " - Not found a desc.txt file, use title as desc. \n";
+    $fileObj->description = str_replace('-', ' ',$fileObj->title);
 }
 
 // tags

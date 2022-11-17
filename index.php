@@ -6,7 +6,7 @@
  * @copyright Bluefox Inc.
  */
 
-require'./bootstrap.inc';
+require'./bootstrap.inc.php';
 
 $router = new Router();
 $router->gotoController(); 

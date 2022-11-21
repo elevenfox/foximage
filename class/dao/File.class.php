@@ -292,7 +292,8 @@ Class File {
             $tag_array = $fileObj->tags;
         }
         else {
-            $tag_array = empty(trim($fileObj->tags)) ? [] : explode(',', $fileObj->tags);
+            $tags_str = trim(str_replace("，", ",", $fileObj->tags));
+            $tag_array = empty($tags_str) ? [] : explode(',', $tags_str);
         }
         $fileObj->tags = implode(',', self::handle_tag_array($tag_array));
 
@@ -405,8 +406,8 @@ Class File {
      * @return array
      */
     public static function handle_tag_array($tag_array) {
-        $default_terms = ['美胸', '大尺度', '美女写真', '尤物'];
-        $default_jp_terms = ['美胸', '大尺度', '美女写真', '尤物'];
+        $default_terms = ['美胸', '大尺度', '美女写真', '尤物', '性感美女', '嫩模'];
+        $default_jp_terms = ['美胸', '大尺度', '美女写真', '尤物', '性感美女', '嫩模'];
 
         $tag_array = empty($tag_array) || count($tag_array) == 0 ? [$default_terms[array_rand($default_terms)]] : $tag_array;
 

@@ -62,11 +62,14 @@ if(empty($fileObj->description)) {
 }
 
 // tags
-$fileObj->tags = file_get_contents($folder_full_path.'/tags.txt');
+$tags_str = file_get_contents($folder_full_path.'/tags.txt');
 if(empty($fileObj->tags)) {
     echo date('Y-m-d H:i:s') . " - Must have a tags.txt file! \n";
     exit;
 }
+$tags_str = str_replace("，", ",", $tags_str);
+$fileObj->tags = $tags_str;
+
 
 // check thumbnail
 $thumbnail_full_path = $folder_full_path.'/thumbnail.jpg';

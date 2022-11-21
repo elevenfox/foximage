@@ -85,6 +85,6 @@ if(count($res) >0) {
 
         exit;
         
-        $num++;
+        //$num++;
     }
 }

@@ -63,7 +63,7 @@ if(empty($fileObj->description)) {
 
 // tags
 $tags_str = file_get_contents($folder_full_path.'/tags.txt');
-if(empty($fileObj->tags)) {
+if(empty($tags_str)) {
     echo date('Y-m-d H:i:s') . " - Must have a tags.txt file! \n";
     exit;
 }

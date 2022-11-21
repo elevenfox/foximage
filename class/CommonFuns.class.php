@@ -459,7 +459,7 @@ function stringToKeywords($string) {
 
 function getBeautyInfoFromTags($fileObj) {
     $beauty_info ='';
-    if(in_array($fileObj['source'], ['xiuren5000'])){
+    if(in_array($fileObj['source'], ['xiuren5000', 'korea'])){
         $tag_arr = explode(',', $fileObj['tags']);
         foreach($tag_arr as $t) {
             $t = trim($t);

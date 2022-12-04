@@ -14,7 +14,6 @@ $at = $num >= count($images) ? 1 : $num + 1;
 $next_url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?ppt=1&at='.$at."#fdp-photo";
 
 $api_server = Config::get('api_server');
-$api_server = empty($api_server) ? get_default_file_api_url() : $api_server;
 ?>
 
 <script type="text/javascript">window.devMode = <?= empty($data['dev_mode']) ? 0 : 1 ?></script>

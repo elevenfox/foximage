@@ -3,8 +3,19 @@
 # change directory to the desired one
 cur_folder=$1
 
-echo "Current folder is: ${cur_folder}"
+if [ -z "$cur_folder" ]; then
+  read -p "Use '/mnt/wd8t/jw-hd-no-watermark/02-processing/'? (y/n)" CHOICE
+  CHOICE=${CHOICE:-y}
+  if [ ${CHOICE} == "y" ]; then
+    cur_folder="/mnt/wd8t/jw-hd-no-watermark/02-processing/"
+  else
+    echo "Must set a full path folder!!!"
+    echo ""
+    exit 1
+  fi 
+fi   
 
+echo "Current folder is: ${cur_folder}"
 
 #######################################
 # Define functions
@@ -53,6 +64,7 @@ reorg_files () {
       # rand_s=`tr -dc A-Za-z0-9 </dev/urandom | head -c 5`
       echo "---- mv ${f} --> ${num}-${timestamp}.jpg"
       mv "${f}" "${num}-${timestamp}.jpg"
+      #exiftool -overwrite_original -all= "${num}-${timestamp}.jpg"
       i=$((i+1))
     fi  
   done

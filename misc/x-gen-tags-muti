@@ -12,16 +12,20 @@ if [ -z "$folder_path" ]; then
     echo ""
     exit 1
   fi 
-fi   
+fi
+
+tags=$2
+full_script_path=$(pwd)
 
 echo "Target parent folder is: ${folder_path}"
+echo "Common tags are: ${tags}"
 
 cd "${folder_path}"
 
 # look up sub folders
 for d in */; do
   if [ $d != "*/" ]; then
-    # rar-tuzac each sub folder
-    rar-tuzac "${d}"
+    # gen desc and tags in each sub folder
+    php "${full_script_path}/z_gen_desc_tags.php" "${d}" "${tags}"
   fi  
 done

@@ -10,7 +10,6 @@ error_reporting(E_ERROR);
 
 ###################### Define variables ################
 
-$file_root = Config::get('file_root');
 $pre = Config::get('db_table_prefix');
 
 $file_ids = isset($argv[1]) ? $argv[1] : null;

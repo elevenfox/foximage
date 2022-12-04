@@ -1,6 +1,7 @@
 <?php
 if(false) {
 /* m-top is deprecated */
+/*
 ?>
 <div class="block-ads" id="block-ads-jp-m-top">
     <div class="ad-container">
@@ -13,4 +14,7 @@ if(false) {
       })();
     </script>
 </div>
-<?php } ?>
+<?php 
+*/
+} 
+?>

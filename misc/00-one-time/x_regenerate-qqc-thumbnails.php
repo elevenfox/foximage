@@ -46,7 +46,7 @@ if(count($res) >0) {
                 }
             }
             if(empty($thumbnail_origin)) {
-                $thumbnail_origin = $physical_path . '/' . array_pop(array_reverse($files));
+                //$thumbnail_origin = $physical_path . '/' . array_pop(array_reverse($files));
             }
             echo date('Y-m-d H:i:s') . ' ------- ' . " using {$width}x{$height} " . $thumbnail_origin . "\n";
             

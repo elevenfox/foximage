@@ -15,16 +15,16 @@
    <footer id="fixed-footer">
        <div>
             <span class="the-tag">
-              <a href="/tags/无圣光">无圣光</a>
-            </span>
-            <span class="the-tag">
               <a href="/tags/性感美女">性感美女</a>
             </span>
            <span class="the-tag">
-              <a href="/tags/丝袜美腿">丝袜美腿</a>
+              <a href="/tags/美腿">美腿</a>
             </span>
             <span class="the-tag">
               <a href="/tags/cosplay">cosplay</a>
+            </span>
+            <span class="the-tag">
+              <a href="/tags/情趣内衣">情趣内衣</a>
             </span>
             <span class="the-tag">
               <a href="/tags/诱惑">诱惑</a>

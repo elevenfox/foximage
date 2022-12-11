@@ -35,6 +35,7 @@ if(empty($desc)) {
     $desc = str_replace('-', ' ', $folder_name);
     // 特殊处理 xiuren
     $desc = str_replace('XiuRen', 'XiuRen秀人网', $desc);
+
     $desc .= '。欢迎下载高清无水印套图。';
 }
 echo date('Y-m-d H:i:s') . ' - ' . "-- desc: $desc \n";
@@ -49,6 +50,9 @@ if(empty($tags_str)) {
     // 特殊处理 xiuren
     if(substr( strtolower($folder_name), 0, 6 ) === "xiuren") {
         $tags_str = 'XiuRen,秀人网,' . $terms[2];
+    }
+    elseif(substr( strtolower($folder_name), 0, 5 ) === "youmi") {
+        $tags_str = 'YouMi,尤蜜荟,' . $terms[2];
     }
     else {
         $tags_str = $terms[0];

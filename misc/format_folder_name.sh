@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# For adding prefix or suffix for files(directories), you could use the simple and powerful way by xargs:
+# ls | xargs -I {} mv {} PRE_{}
+# ls | xargs -I {} mv {} {}_SUF
+# ls *.old | xargs -I {} mv {} PRE_{}
+
 # change directory to the desired one
 cur_folder=$1
 

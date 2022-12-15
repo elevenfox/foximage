@@ -63,4 +63,5 @@ $tags_str = implode(',', $tag_arr);
 echo date('Y-m-d H:i:s') . ' - ' . "-- tags: $tags_str \n";
 file_put_contents($folder_full_path.'/tags.txt', $tags_str);
 
-
+// Create an empty dl.txt file for download_url
+file_put_contents($folder_full_path.'/dl.txt', '');

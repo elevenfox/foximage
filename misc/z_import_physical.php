@@ -71,6 +71,10 @@ $tags_str = str_replace("，", ",", $tags_str);
 $fileObj->tags = $tags_str;
 
 
+// Get download url if there is one
+$download_url = file_get_contents($folder_full_path.'/dl.txt');
+$fileObj->download_url = $download_url;
+
 // check thumbnail
 $thumbnail_full_path = $folder_full_path.'/thumbnail.jpg';
 if(!file_exists($thumbnail_full_path)) {

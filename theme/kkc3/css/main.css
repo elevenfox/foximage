@@ -808,6 +808,7 @@ article.file .file-detail #the-photo.rotate {
 article.file #fdp-photo {
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 article.file #fdp-photo #action-hint {
     position: absolute;

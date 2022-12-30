@@ -24,6 +24,7 @@ body {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    overflow: overlay;
 }
 
 body,
@@ -259,6 +260,7 @@ form input[type="button"] {
     float: right;
     padding: 5px 0;
     text-align: right;
+    margin-right: 15px;
 }
 
 .header #h-right span {
@@ -895,7 +897,7 @@ article.file #fdp-photo .fdp-random-btns a {
 article.file #auto-play {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px;
     background-color: rgba(255,255,255, 0.5);
     color: black;
     font-size: 12px;

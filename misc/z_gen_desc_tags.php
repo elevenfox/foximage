@@ -46,13 +46,16 @@ $tags_str = file_get_contents($folder_full_path.'/tags.txt');
 if(empty($tags_str)) {
     // Split folder name
     $terms = explode('-', $folder_name);
-    
+    echo substr(strtolower($folder_name), 0, 7) . "\n";
     // 特殊处理 xiuren
     if(substr( strtolower($folder_name), 0, 6 ) === "xiuren") {
         $tags_str = 'XiuRen,秀人网,' . $terms[2];
     }
     elseif(substr( strtolower($folder_name), 0, 5 ) === "youmi") {
         $tags_str = 'YouMi,尤蜜荟,' . $terms[2];
+    }
+    elseif(substr( strtolower($folder_name), 0, 7 ) === "xingyan") {
+        $tags_str = 'XingYan,星颜社,' . $terms[2];
     }
     else {
         $tags_str = $terms[0];

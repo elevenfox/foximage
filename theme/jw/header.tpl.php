@@ -76,7 +76,17 @@ $domainUrl = getDomainUrl();
       gtag('js', new Date());
 
       gtag('config', 'UA-197042779-1');
+    </script>    
+    <!-- GA universal -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-55PR14SFEJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-55PR14SFEJ');
     </script>
+
     <?php endif; ?>
 
     <?php print $data['metas']; ?>

@@ -58,18 +58,18 @@ reorg_files () {
   cd "${full_dir_path}"
 
   # rename jpeg files to jpg if this is the case
-  #rename 's/\.jpeg/\.jpg/' *
+  #------ rename 's/\.jpeg/\.jpg/' *
   # rename files to 000-->999 with postfix to avoid override
   i=1
   timestamp=$(date +%s)
   filelist=$(ls | grep -i '.jpg')
   for f in $filelist; do
+    exiftool -overwrite_original -all= "${f}"
     if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`
       # rand_s=`tr -dc A-Za-z0-9 </dev/urandom | head -c 5`
       echo "---- mv ${f} --> ${num}-${timestamp}.jpg"
       mv "${f}" "${num}-${timestamp}.jpg"
-      #exiftool -overwrite_original -all= "${num}-${timestamp}.jpg"
       i=$((i+1))
     fi  
   done

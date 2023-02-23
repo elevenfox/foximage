@@ -346,7 +346,8 @@ Class File {
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
                         `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
-                        `tags` = '". str_replace("'", "\'", $fileObj->tags) . "'
+                        `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',
+                        `download_url` = '" . $fileObj->download_url . "'
                         where id = " . $file['id'] . "
                       ";
                 //echo '-------'.$sql.'--------';

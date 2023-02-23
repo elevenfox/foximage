@@ -10,6 +10,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 $file_root = Config::get('file_root');
 $pre = Config::get('db_table_prefix');
+$prod_api = Config::get('prod_api_url');
 
 $folder_full_path = isset($argv[1]) ? $argv[1] : null;
 $file_id = isset($argv[2]) ? (int)$argv[2] : 0;
@@ -46,7 +47,7 @@ if(empty($file_id)) {
 }
 else {
     echo date('Y-m-d H:i:s') . ' - ' . "-- updating file_id = $file_id with folder: $folder_full_path \n";
-    $fileObj = File::getFileByID($file_id);
+    $fileObj = (object)File::getFileByID($file_id);
 }
 
 $relative_path = str_replace($file_root, '', $folder_full_path);

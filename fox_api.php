@@ -92,7 +92,7 @@ switch($action) {
         $res = File::save($fileObj);
 
         // Process thumbnail
-        processThumbnail($file_obj, true);
+        processThumbnail((array)$file_obj, true);
 
         echo $res ? 1 : 0;
         break;

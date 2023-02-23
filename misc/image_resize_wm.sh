@@ -32,7 +32,7 @@ for fname in *.*; do
     # -- do not wm images smaller than 1024
     # -- sleep 1 second if an image just be resized above
     if [ ${fname} != 'thumbnail.jpg' ];then
-      if [ $MAX_SIZE -gt 1024 ]; then       
+      if [ $MAX_SIZE -gt 1020 ]; then       
           POINT=30
           if [ $MAX_SIZE -ge 1800 ]; then
               POINT=40

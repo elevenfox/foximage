@@ -12,6 +12,8 @@ $file_root = Config::get('file_root');
 $pre = Config::get('db_table_prefix');
 
 $folder_full_path = isset($argv[1]) ? $argv[1] : null;
+$file_id = isset($argv[2]) ? (int)$argv[2] : 0;
+
 if(empty($folder_full_path)) {
     echo "---- Must have a full folder path as the param! \n";
     exit;
@@ -37,12 +39,19 @@ echo  date('Y-m-d H:i:s') . ' - ' . "-- on " . Config::get('theme') . " \n";
 echo  date('Y-m-d H:i:s') . ' - ' . "-- for folder: " . $folder_full_path . " \n";
 echo  "#####################################\n";
 
-// Start importing to current (dev) site: build fileObj from physical files
-echo date('Y-m-d H:i:s') . ' - ' . "-- importing: $folder_full_path \n";
+if(empty($file_id)) {
+    // Start importing to current (dev) site: build fileObj from physical files
+    echo date('Y-m-d H:i:s') . ' - ' . "-- importing: $folder_full_path \n";
+    $fileObj = new stdClass();
+}
+else {
+    echo date('Y-m-d H:i:s') . ' - ' . "-- updating file_id = $file_id with folder: $folder_full_path \n";
+    $fileObj = File::getFileByID($file_id);
+}
 
 $relative_path = str_replace($file_root, '', $folder_full_path);
 
-$fileObj = new stdClass();
+
 //$fileObj->source = 'manual';
 $fileObj->source_url = $relative_path;
 
@@ -142,6 +151,8 @@ foreach ($phy_images as $f) {
 $fileObj->images = $new_file_name_arr;
 $fileObj->thumbnail = 1;
 
+echo "\n" . print_r($fileObj) . "\n";
+
 $res = File::save($fileObj);
 if($res) {
 	// Process thumbnail
@@ -156,3 +167,11 @@ if($fileRowDB) {
 	$query = 'update '. $pre . 'files set full_path=2, saved_locally=5  where id='.$fileRowDB['id'];
 	DB::$dbInstance->getRows($query);
 }
+
+// If file_id is not empty, call prod api to save to prod db too.
+if(!empty($file_id)) {
+    echo date('Y-m-d H:i:s') . '----- sync this to prod ...... ';
+    $res2 = curl_call($prod_api.'?ac=save_file_data', 'post', array('obj'=>json_encode($fileObj)));
+    echo $res2 . "\n";
+}
+

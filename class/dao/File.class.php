@@ -341,6 +341,8 @@ Class File {
                 self::saveFileTags($fileObj);
 
                 $sql = "update ".self::$table_files." set
+                        `source` = '" . $fileObj->source . "',
+                        `source_url` = '" . $fileObj->source_url . "',
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
                         `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',

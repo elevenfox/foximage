@@ -25,9 +25,9 @@ if(empty($folder_full_path)) {
 function file_db_exist($relative_path) {
 	$res = File::getFileBySourceUrl($relative_path);
 
-	if(!$res) {
-		$res = File::getIgnoredFileBySourceUrl($relative_path);
-	}
+	// if(!$res) {
+	// 	$res = File::getIgnoredFileBySourceUrl($relative_path);
+	// }
 
 	return $res;
 }
@@ -156,6 +156,7 @@ echo "\n" . print_r($fileObj) . "\n";
 $res = File::save($fileObj);
 if($res) {
 	// Process thumbnail
+    echo date('Y-m-d H:i:s') .  '----- processing thumbnail... ' . "\n";
 	processThumbnail((array)$fileObj, false, true);
 	$status = 1;
 }

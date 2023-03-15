@@ -2,17 +2,18 @@
 
 folder_path=$1
 
+defaultFolder="/home/eric/work/002-processing/"
 if [ -z "$folder_path" ]; then
-  read -p "Use '/mnt/wd8t/jw-hd-no-watermark/02-processing/'? (y/n)" CHOICE
+  read -p "Use '${defaultFolder}'? (y/n)" CHOICE
   CHOICE=${CHOICE:-y}
   if [ ${CHOICE} == "y" ]; then
-    folder_path="/mnt/wd8t/jw-hd-no-watermark/02-processing/"
+    folder_path=${defaultFolder}
   else
     echo "Must set a full path folder!!!"
     echo ""
     exit 1
   fi 
-fi
+fi    
 
 echo "Target parent folder is: ${folder_path}"
 

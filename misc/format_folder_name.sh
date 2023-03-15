@@ -8,11 +8,13 @@
 # change directory to the desired one
 cur_folder=$1
 
+# defaultFolder="/mnt/wd8t/jw-hd-no-watermark/02-processing/"
+defaultFolder="/home/eric/work/002-processing/"
 if [ -z "$cur_folder" ]; then
-  read -p "Use '/mnt/wd8t/jw-hd-no-watermark/02-processing/'? (y/n)" CHOICE
+  read -p "Use '${defaultFolder}'? (y/n)" CHOICE
   CHOICE=${CHOICE:-y}
   if [ ${CHOICE} == "y" ]; then
-    cur_folder="/mnt/wd8t/jw-hd-no-watermark/02-processing/"
+    cur_folder=${defaultFolder}
   else
     echo "Must set a full path folder!!!"
     echo ""

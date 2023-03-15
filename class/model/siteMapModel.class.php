@@ -70,11 +70,11 @@ EOF;
 <priority>0.9</priority>
 </url>';
 
-            $tags = Tag::getAllTags(1, $totalTagCount);
+            $tags = Tag::getAllTags(1, $totalTagCount, 4);
 
             foreach ($tags as $tag) {
-                if(!empty($tag['name'])) {
-                    $url = cleanStringForUrl($tag['name']);
+                if(!empty($tag['term'])) {
+                    $url = cleanStringForUrl($tag['term']);
                     if(!empty($url)) {
                         $xml .= '<url><loc>' . $domain . '/tags/' . $url . '</loc><changefreq>daily</changefreq><priority>0.7</priority></url>';
                     }

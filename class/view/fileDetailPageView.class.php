@@ -28,7 +28,7 @@ Class fileDetailPageView extends ViewCore {
     $extraKeywords = $isHighlighted ? ', 无圣光, 大尺度' : '';
     $this->data['meta_keywords'] = implode(', ', titleToKeywords($this->data['file']['title'])) . $extraKeywords . ', ' . $this->data['file']['tags'] . ',' . $this->data['meta_keywords'];
 
-    $this->data['meta_robots'] = empty($_GET['at']) || $_GET['at'] == 1 ? '' : 'noindex, nofollow';
+    $this->data['meta_robots'] = empty($_GET['at']) || $_GET['at'] <= 10 ? '' : 'noindex, nofollow';
     
   }
 

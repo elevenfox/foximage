@@ -75,7 +75,7 @@ Class Tag {
      * @param integer $page
      * @param integer $limit
      * @param integer $sort_by 1: alphabic asc, 2: alphabic desc, 3: vid asc, 4: vid desc
-     * @return void
+     * @return array $res
      */
     public static function getAllTags($page=1, $limit=120, $sort_by = 1) {
         self::setTables();

@@ -143,7 +143,7 @@ Disallow: /api/
 Disallow: /user/register/
 Disallow: /user/login/
 Disallow: /user/logout/
-Disallow: /*?at=*
+#Disallow: /*?at=*
 # Paths (no clean URLs)
 Disallow: /?q=api/
 Disallow: /?q=user/register/

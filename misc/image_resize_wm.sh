@@ -27,6 +27,10 @@ for fname in *.*; do
         mogrify -resize ${PERCENTAGE}%  -quality 80 "$fname"
     fi
 
+    # Convert *.png to jpg
+    # -- mogrify -format jpg -quality 100 *.png
+    # -- mogrify -resize 100% -quality 80 *.jpg
+
     # this is the watermarking part
     # -- do not wm thumbnail.jpg
     # -- do not wm images smaller than 1024

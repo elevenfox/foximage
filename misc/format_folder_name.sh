@@ -64,7 +64,7 @@ reorg_files () {
   cd "${full_dir_path}"
 
   # rename jpeg files to jpg if this is the case
-  #------ rename 's/\.jpeg/\.jpg/' *
+  rename 's/\.jpeg/\.jpg/' *
   # rename files to 000-->999 with postfix to avoid override
   i=1
   timestamp=$(date +%s)

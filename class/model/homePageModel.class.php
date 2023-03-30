@@ -21,7 +21,8 @@ Class homePageModel extends ModelCore {
     $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
     $this->data['page'] = $page;
 
-    $res = File::getFilesRand($page);
+    //$res = File::getFilesRand($page);
+    $res = File::getFiles($page);
     $this->data['files'] = $res;
 
     $count = File::getAllFilescount();

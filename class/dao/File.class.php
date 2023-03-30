@@ -9,19 +9,28 @@
 Class File {
 
     protected static $table_files;
+    protected static $table_base_files;
     protected static $table_files_ignored;
     protected static $table_tag_file;
 
     private static function setTables() {
         self::$table_files = Config::get('db_table_prefix') . 'files';
-        self::$table_tag_file = Config::get('db_table_prefix') . 'tag_file';
-        self::$table_files_ignored = Config::get('db_table_prefix') . 'files_ignored';
+        self::$table_base_files = Config::get('db_table_base_prefix') . 'files';
+        self::$table_tag_file = Config::get('db_table_base_prefix') . 'tag_file';
+        self::$table_files_ignored = Config::get('db_table_base_prefix') . 'files_ignored';
     }
 
     public static function getMaxFileId() {
         self::setTables();
 
         $res = DB::$dbInstance->getRows('select max(id) as maxId from ' . self::$table_files);
+        return $res[0]['maxId'];
+    }
+
+    public static function getMaxBaseFileId() {
+        self::setTables();
+
+        $res = DB::$dbInstance->getRows('select max(id) as maxId from ' . self::$table_base_files);
         return $res[0]['maxId'];
     }
 
@@ -141,7 +150,7 @@ Class File {
         }
 
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = 'select * from '.self::$table_files.' order by rand_id ' . $sort . ', created desc limit ' . $limit;
+        $query = 'select * from '.self::$table_files.' order by id ' . $sort . ', created desc limit ' . $limit;
  
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
@@ -256,7 +265,7 @@ Class File {
         $totalFile = $res[0]['total'];
 
         $limit = random_int(1, $totalFile-12) .',' . 12;
-        $query = 'select * from '.self::$table_files.' order by rand_id desc  limit ' . $limit;
+        $query = 'select * from '.self::$table_files.' order by id desc  limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
@@ -325,10 +334,10 @@ Class File {
 
                 $res = DB::$dbInstance->query($sql);
 
-                if($res) {
-                    self::saveFileTags($fileObj);
-                    DB::$dbInstance->query("UPDATE ".self::$table_files." AS t CROSS JOIN (SELECT MAX(rand_id) AS max_rand_id FROM ".self::$table_files.") AS m SET t.rand_id = m.max_rand_id + 1 WHERE t.source_url='{$fileObj->source_url}'");
-                }
+                // if($res) {
+                //     self::saveFileTags($fileObj);
+                //     DB::$dbInstance->query("UPDATE ".self::$table_files." AS t CROSS JOIN (SELECT MAX(rand_id) AS max_rand_id FROM ".self::$table_files.") AS m SET t.rand_id = m.max_rand_id + 1 WHERE t.source_url='{$fileObj->source_url}'");
+                // }
                 
                 return true;
             }

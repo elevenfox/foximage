@@ -56,3 +56,9 @@ CREATE VIEW `jw_tag_view` AS
     select `jt`.`term` AS `term`,count(`jtf`.`file_id`) AS `num` 
     from (`jw_tags` `jt` left join `jw_tag_file` `jtf` on((`jt`.`term` = `jtf`.`term_name`))) 
     group by `jt`.`term`
+
+CREATE VIEW `kkc3_files` AS 
+    select `kkc3`.`id` AS `id`,jtf.title, jtf.source, jtf.source_url, jtf.source_url_md5, 
+            jtf.description, jtf.full_path, jtf.filename, jtf.file_size,jtf.thumbnail,jtf.tags,
+            jtf.download_url,jtf.short_url,kkc3.view_count, `kkc3`.`user_name` AS `user_name`
+    from (`kkc3` left join `jw_files` `jtf` on((`kkc3`.`file_id` = `jtf`.`id`))) 

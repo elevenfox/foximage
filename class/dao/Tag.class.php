@@ -13,10 +13,10 @@ Class Tag {
     protected static $table_tag_view;
 
     private static function setTables() {
-        self::$table_tag_file = Config::get('db_table_prefix') . 'tag_file';
-        self::$table_tags = Config::get('db_table_prefix') . 'tags';
         self::$table_files = Config::get('db_table_prefix') . 'files';
-        self::$table_tag_view = Config::get('db_table_prefix') . 'tag_view';
+        self::$table_tag_file = Config::get('db_table_base_prefix') . 'tag_file';
+        self::$table_tags = Config::get('db_table_base_prefix') . 'tags';
+        self::$table_tag_view = Config::get('db_table_base_prefix') . 'tag_view';
     }
 
 

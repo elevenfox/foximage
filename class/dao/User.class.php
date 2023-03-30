@@ -11,7 +11,7 @@ Class User {
 
 
     private static function setTables() {
-        self::$table_users = Config::get('db_table_prefix') . 'users';
+        self::$table_users = Config::get('db_table_base_prefix') . 'users';
     }
 
     public static function getMaxUserId() {

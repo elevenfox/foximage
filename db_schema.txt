@@ -57,6 +57,25 @@ CREATE VIEW `jw_tag_view` AS
     from (`jw_tags` `jt` left join `jw_tag_file` `jtf` on((`jt`.`term` = `jtf`.`term_name`))) 
     group by `jt`.`term`
 
+
+
+/****************************************** 
+* KKC3 table 
+******************************************/
+CREATE TABLE `kkc3` (
+  `id` int(11) NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  `view_count` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ALTER TABLE `kkc3`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fileId` (`file_id`);
+ALTER TABLE `kkc3`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+/****************************************** 
+* KKC3_files view
+******************************************/  
 CREATE VIEW `kkc3_files` AS 
     select `kkc3`.`id` AS `id`,jtf.title, jtf.source, jtf.source_url, jtf.source_url_md5, 
             jtf.description, jtf.full_path, jtf.filename, jtf.file_size,jtf.thumbnail,jtf.tags,

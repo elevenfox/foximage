@@ -377,7 +377,7 @@ Class File {
     public static function updateViewCount($file_id) {
         self::setTables();
 
-        $sql = 'update ' . self::$table_files . ' set view_count = view_count + 10, modified=modified where id = \'' . $file_id . '\'';
+        $sql = 'update ' . self::$table_files . ' set view_count = view_count + 10 where id = \'' . $file_id . '\'';
         return DB::$dbInstance->query($sql);
     }
 

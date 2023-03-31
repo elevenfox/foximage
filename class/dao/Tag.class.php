@@ -10,10 +10,12 @@ Class Tag {
     protected static $table_tag_file;
     protected static $table_tags;
     protected static $table_files;
+    protected static $table_base_files;
     protected static $table_tag_view;
 
     private static function setTables() {
         self::$table_files = Config::get('db_table_prefix') . 'files';
+        self::$table_base_files = Config::get('db_table_base_prefix') . 'files';
         self::$table_tag_file = Config::get('db_table_base_prefix') . 'tag_file';
         self::$table_tags = Config::get('db_table_base_prefix') . 'tags';
         self::$table_tag_view = Config::get('db_table_base_prefix') . 'tag_view';
@@ -37,7 +39,9 @@ Class Tag {
 
         $where = "WHERE term_name = '$tagName'";
 
-        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on tv.file_id=v.id $where order by v.id desc limit " . $limit;
+        $onFileId = self::$table_files == self::$table_base_files ? 'tv.file_id=v.id' : 'tv.file_id=v.file_id';
+
+        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on $onFileId $where order by v.id desc limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             if(APCU && !isAdmin()) {

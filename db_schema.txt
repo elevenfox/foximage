@@ -77,7 +77,8 @@ ALTER TABLE `kkc3`
 * KKC3_files view
 ******************************************/  
 CREATE VIEW `kkc3_files` AS 
-    select `kkc3`.`id` AS `id`,jtf.title, jtf.source, jtf.source_url, jtf.source_url_md5, 
-            jtf.description, jtf.full_path, jtf.filename, jtf.file_size,jtf.thumbnail,jtf.tags,
+    select `kkc3`.`id` AS `id`, jtf.id as file_id, jtf.title, jtf.source, jtf.source_url, jtf.source_url_md5, 
+            jtf.description, jtf.full_path, jtf.filename, jtf.file_size,jtf.thumbnail,jtf.tags, jtf.created, jtf.modified,
             jtf.download_url,jtf.short_url,kkc3.view_count, `kkc3`.`user_name` AS `user_name`
-    from (`kkc3` left join `jw_files` `jtf` on((`kkc3`.`file_id` = `jtf`.`id`))) 
+    from (`kkc3` inner join `jw_files` `jtf` on((`kkc3`.`file_id` = `jtf`.`id`))) 
+

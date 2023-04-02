@@ -6,7 +6,7 @@ $domainUrl = getDomainUrl();
 $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang');
 ?>
 <!DOCTYPE html>
- <html lang="<?=$site_lang?>" >s
+ <html lang="<?=$site_lang?>" >
 
 <head<?php print $data['header_attrs'];?>>
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -74,7 +74,7 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
     <?php print $data['scripts_header']; ?>
 
 </head>
-<body>
+<body class="body <?=isAdmin()?'admin':''?>">
 
 <?php
 if( empty($data['dev_mode']) ) {

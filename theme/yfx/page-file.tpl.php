@@ -85,9 +85,9 @@ $api_server = Config::get('api_server');
               <div>
                   <div id="fdp-photo">
                     <?php if(empty($_COOKIE['closeHint'])):?>
-                    <div id="action-hint">小提示：<span>点击图片左右可前后翻页</span>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="#">关闭提示</a>]</div>
+                    <div id="action-hint">Tip：<span>Click image left or right to go next or previous</span>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="#">Close</a>]</div>
                     <?php endif; ?>
-                    <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">
+                    <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="Loading HD piture...">
                       <img id="the-photo" src="<?=processPhotoSrc($file)?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
                     </a>
                     <div class="fdp-click-area">
@@ -107,7 +107,7 @@ $api_server = Config::get('api_server');
                     </div>
                     <?php endif;?>
 
-                    <div id="auto-play" style="display: <?= !empty($_REQUEST['ppt']) ? 'none' : 'block'?>">自动播放</div>
+                    <div id="auto-play" style="display: <?= !empty($_REQUEST['ppt']) ? 'none' : 'block'?>">Slideshow</div>
                   </div>
               </div>
             </div>
@@ -128,7 +128,7 @@ $api_server = Config::get('api_server');
         <?php endif;?>
         
         <div class="file-tags ft-bottom">
-            <span class="not-in-mobile">类别:</span>
+            <span class="not-in-mobile">Tags:</span>
                     <?php
                     $tags = explode(',', $file['tags']);
                     foreach($tags as $tag) {

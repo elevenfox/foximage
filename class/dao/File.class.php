@@ -259,13 +259,14 @@ Class File {
             }
         }
 
-        $query = 'select count(id) as total from ' . self::$table_files;
-        $res = DB::$dbInstance->getRows($query);
+        // $query = 'select count(id) as total from ' . self::$table_files;
+        // $res = DB::$dbInstance->getRows($query);
 
-        $totalFile = $res[0]['total'];
+        // $totalFile = $res[0]['total'];
 
-        $limit = random_int(1, $totalFile-12) .',' . 12;
-        $query = 'select * from '.self::$table_files.' order by id desc  limit ' . $limit;
+        // $limit = random_int(1, $totalFile-12) .',' . 12;
+        $limit = 12;
+        $query = 'select * from '.self::$table_files.' order BY RAND() limit ' . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {

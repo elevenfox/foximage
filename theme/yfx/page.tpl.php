@@ -7,13 +7,11 @@ include 'header.tpl.php';
 
 <?php
 
-$title = $data['pageTitle'] == 'Newest' ? '最新美女写真图片推荐' : $data['pageTitle'];
-
 ?>
 
     <div class="content-container newest-File-list-page search-result-list-pages <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
 
-        <h1><?php print $title; ?></h1>
+        <h1><?php print $data['page_title']; ?></h1>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 

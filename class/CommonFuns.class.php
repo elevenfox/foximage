@@ -58,6 +58,14 @@ function l($link, $text) {
   return '<a href="' . $link . '">' . $text . '</a>';
 }
 
+function t($text) {
+    $to_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang');
+    if(empty($to_lang)) return $text;
+
+    if( !array_key_exists($text, TRANSLATION) || empty(TRANSLATION[$text]) ) return $text;
+    else return TRANSLATION[$text];
+}
+
 function apiReturnJson($str) {
   header('Content-Type: application/json; charset=utf-8');
   echo json_encode($str);
@@ -146,96 +154,6 @@ function tor_new_identity($tor_ip='127.0.0.1', $control_port='9051', $auth_code=
 function isAdmin() {
     return !empty($_SESSION['user']) && $_SESSION['user']['uid'] == 1;
 }
-
-function is_hd_video($video) {
-  return !empty($video['quality_1080p']) || !empty($video['quality_720p']);
-}
-
-function seconds_to_duration($seconds) {
-    $t = round($seconds);
-    return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);
-}
-
-function get_default_video_api_url() {
-    $http_host = $_SERVER['HTTP_HOST'];
-    $arr = explode('.', $http_host);
-    if(count($arr) == 2 || count($arr) == 3 ) {
-        $arr[0] = 'api';
-    }
-    $new_url = 'http://' . implode('.', $arr) . ':3000/api';
-    return $new_url;
-}
-
-function get_gif_preview($source, $video) {
-    if(!empty($source)) {
-        $needle = 'gif-preview=';
-        if(substr($video['gif_preview'], 0, strlen($needle)) == $needle) {
-            return $video['gif_preview'];
-        }
-        else {
-            switch ($source) {
-                case 'pornhub':
-                    if(empty($video['gif_preview'])) {
-                        $ext = '.jpg';
-                        $preivews = array();
-                        $thumbnail = $video['thumbnail'];
-                        if( (strlen($thumbnail) - 4) == stripos($thumbnail, $ext) ) {
-                            $res = explode(')', str_ireplace($ext, '', $thumbnail));
-                            array_pop($res);
-                            for($i = 1; $i <=16; $i++) {
-                                $url = implode(')', $res);
-                                $url = $url . ')' . $i . $ext;
-                                $preivews[] = $url;
-                            }
-                        }
-                        return 'gif-preview="'. implode(',', $preivews) .'"';
-                    }
-                    else {
-                        $thumb_info = json_decode('{'.$video['gif_preview'].'}');
-                        if(empty($thumb_info)) {
-                            $thumb_info = json_decode($video['gif_preview']);
-                        }
-                        $res = explode('/',$thumb_info->urlPattern);
-                        $last = array_pop($res);
-                        $n = explode('.', $last);
-                        $name_extra = explode('S', $n[0]);
-                        $file_name = 'S0.'.$n[1];
-                        $url = implode('/', $res) . '/' . $name_extra[0] .$file_name;
-                        return 'gif-preview="'. $url .'" gif-format="5x5"';
-                    }
-                    break;
-                case 'youjizz':
-                    $ext = '.jpg';
-                    $preivews = array();
-                    $thumbnail = $video['thumbnail'];
-                    if( (strlen($thumbnail) - 4) == stripos($thumbnail, $ext) ) {
-                        $res = explode('-', str_ireplace($ext, '', $thumbnail));
-                        array_pop($res);
-                        for($i = 1; $i <=8; $i++) {
-                            $url = implode('-', $res);
-                            $url = $url . '-' . $i . $ext;
-                            $preivews[] = $url;
-                        }
-                    }
-                    return 'gif-preview="'. implode(',', $preivews) .'"';
-                    break;
-                case 'redtube':
-                    $thumb_info = json_decode($video['gif_preview']);
-                    if(!empty($thumb_info)) {
-                        $res = explode('/', $thumb_info->urlPattern);
-                        $last = array_pop($res);
-                        $n = explode('.', $last);
-                        $url = implode('/', $res) . '/0.' . $n[1];
-                        return 'gif-preview="' . $url . '" gif-format="5x5"';
-                    }
-                    return '';
-                    break;
-            }
-        }
-    }
-}
-
-
 
 function cleanStringForUrl($string, $separator = '-') {
 

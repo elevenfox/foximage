@@ -21,6 +21,18 @@ if(empty($pre)) {
 }
 
 
+// Remove deleted files first
+echo date('Y-m-d H:i:s') . ' - ' . "Start to remove deleted files in $pre ...\n";
+$sql = "SELECT p.id FROM `$pre` as p left join ".$base."files jf on jf.id=p.file_id where jf.id is null";
+$res = DB::$dbInstance->getRows($sql);
+if(count($res)) {
+    foreach($res as $r) {
+        $query = "delete from $pre where id=" . $r['id'];
+        DB::$dbInstance->query($query);
+    }
+}
+
+
 echo date('Y-m-d H:i:s') . ' - ' . "Start to sync new files to $pre ...\n";
 
 // Get $max_base_file_id

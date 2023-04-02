@@ -200,10 +200,10 @@ class Pager {
     $this->currentPage = $this->currentPage > $this->totalPageNum ? 1 : $this->currentPage;  
     $this->subPageLink = $subPageLink;
     $this->subPageLinkAppend = $subPageLinkAppend;
-    $this->firstPageText = '« 首页';
-    $this->lastPageText = '末页 »';
-    $this->nextPageText = '下一页 ›';
-    $this->prePageText = '‹ 前一页';
+    $this->firstPageText = t('« 首页');
+    $this->lastPageText = t('末页 »');
+    $this->nextPageText = t('下一页 ›');
+    $this->prePageText = t('‹ 前一页');
   }  
  
   public function __destruct(){  

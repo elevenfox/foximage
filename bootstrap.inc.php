@@ -15,20 +15,43 @@ define('VIEW_PATH',       APP_PATH.'class/view' . DIRECTORY_SEPARATOR);
 define('DOC_ROOT',     APP_PATH . DIRECTORY_SEPARATOR);
 define('THEME_PATH',   DOC_ROOT.'theme' . DIRECTORY_SEPARATOR);
 define('BEAUTY_PATH',   APP_PATH.'000_models' . DIRECTORY_SEPARATOR);
+define('DATA_PATH',   APP_PATH.'data' . DIRECTORY_SEPARATOR);
 
 // Will turn on display and set to E_ALL here, then we can set this in settings file
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
-
-// Load some class
-import('CommonFuns');
-import('ZDebug');
 
 // Load all settings
 import("Config");
 Config::load();
 
 define('FILE_ROOT', Config::get('file_root') . DIRECTORY_SEPARATOR);
+
+// init apcu cache if enabled
+$apcu = function_exists('apcu_enabled') && apcu_enabled();
+define('APCU', $apcu);
+
+// Define theme/site-name as a global const
+$themeName = Config::get('theme');
+define('THEME', $themeName);
+
+// Load all popular beauty models who have txt profile
+$all_beauty = [];
+if(file_exists( BEAUTY_PATH . '000_models.json')) {
+  $all_beauty = json_decode(file_get_contents(BEAUTY_PATH . '000_models.json'));
+}
+define('ALL_BEAUTY', $all_beauty);
+
+// Load translation data
+$translationData = [];
+if(file_exists( DATA_PATH . 'translation.json')) {
+  $translationData = (array)json_decode(file_get_contents(DATA_PATH . 'translation.json'));
+}
+define('TRANSLATION', $translationData);
+
+// Load some class
+import('CommonFuns');
+import('ZDebug');
 
 // set time zone
 $timeZone = Config::get('time_zone');  
@@ -72,20 +95,7 @@ if (!isset(DB::$dbInstance)) {
 // init image cache
 //imageCache::init();
 
-// init apcu cache if enabled
-$apcu = function_exists('apcu_enabled') && apcu_enabled();
-define('APCU', $apcu);
 
-// Define theme/site-name as a global const
-$themeName = Config::get('theme');
-define('THEME', $themeName);
-
-// Load all popular beauty models who have txt profile
-$all_beauty = [];
-if(file_exists( BEAUTY_PATH . '000_models.json')) {
-  $all_beauty = json_decode(file_get_contents(BEAUTY_PATH . '000_models.json'));
-}
-define('ALL_BEAUTY', $all_beauty);
 
 ///////////////////////////////////////////////////
 /*

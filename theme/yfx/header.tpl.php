@@ -59,13 +59,13 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
 
     <?php if(empty($data['dev_mode'])) : ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-208517918-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146802304-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-208517918-1');
+        gtag('config', 'UA-178022644-1');
     </script>
     <?php endif; ?>
 

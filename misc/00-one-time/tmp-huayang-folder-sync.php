@@ -37,8 +37,8 @@ foreach($scan as $folder_name) {
         $the_full_path = "$folder_full_path/$folder_name";
         echo "-- Current folder: $folder_name \n";
         // Get cuurent folder vol number
-        $v_arr = find_between($folder_name, 'HuaYang Vol.', ' ');
-        $vol = $v_arr[0];
+        $v_arr = explode('-',$folder_name);
+        $vol = $v_arr[1];
 
         // Go to origin path to get folder name with the same vol num
         $origin = getOriginFolderByVol($vol);
@@ -52,8 +52,8 @@ foreach($scan as $folder_name) {
             // Gen new tags
             $tags_str = file_get_contents($origin['full_path'] . "/tags.txt");
             $tags = explode(',', $tags_str);
-            if(! in_array('HuaYang', $tags)) {
-                $tags[] = 'HuaYang';
+            if(! in_array('HuaYan', $tags)) {
+                $tags[] = 'HuaYan';
             }
             if(! in_array( $origin['model'], $tags ) ) {
                 $tags[] = $origin['model'];
@@ -81,8 +81,8 @@ foreach($scan as $folder_name) {
             rename($the_full_path . '/' . $images[count($images) - 1] , $the_full_path . '/thumbnail.jpg');    
 
             // rename current folder to the origin folder name
-            echo "rename $the_full_path to $folder_full_path/".$origin['name'] . "\n";
-            rename($the_full_path, $folder_full_path . '/' . $origin['name']);
+            echo "rename $the_full_path to $folder_full_path/HuaYan花の颜-". $vol. '-'. $origin['main'] . "\n";
+            rename($the_full_path, $folder_full_path . '/HuaYan花の颜-' . $vol. '-'. $origin['main']);
         }
    }
 }
@@ -90,20 +90,21 @@ foreach($scan as $folder_name) {
 
 
 function getOriginFolderByVol($vol_num) {
-    $origin_folders = '/mnt/nas/000-pending/花漾/';
+    $origin_folders = '/mnt/nas/jw-photos/tujigu/花の颜/';
     $scan = scandir($origin_folders);
     $folder_info = [];
     foreach($scan as $folder_name) {
         if (is_dir("$origin_folders/$folder_name") && $folder_name!='.' && $folder_name!='..') {
-            $v_arr = find_between($folder_name, 'HuaYang花漾-', '-');
-            $vol = $v_arr[0];
-
-            if($vol == $vol_num) {
+            $folder_name = strtolower($folder_name);
+            if(strpos($folder_name, 'vol.'.$vol_num) !== false) {
                 $folder_info['name'] = $folder_name;
                 $folder_info['full_path'] = $origin_folders  . '/' . $folder_name;
 
-                $tt = explode('-', $folder_name);
-                $folder_info['model'] = $tt[2];
+                $tt = explode('_', $folder_name);
+                $folder_info['model'] = $tt[1];
+
+                $yy = find_between($folder_name, '花の颜_', '-vol');
+                $folder_info['main'] = $yy[0];
             }
         }
     }

@@ -335,10 +335,10 @@ Class File {
 
                 $res = DB::$dbInstance->query($sql);
 
-                // if($res) {
-                //     self::saveFileTags($fileObj);
-                //     DB::$dbInstance->query("UPDATE ".self::$table_files." AS t CROSS JOIN (SELECT MAX(rand_id) AS max_rand_id FROM ".self::$table_files.") AS m SET t.rand_id = m.max_rand_id + 1 WHERE t.source_url='{$fileObj->source_url}'");
-                // }
+                if($res) {
+                    self::saveFileTags($fileObj);
+                    // DB::$dbInstance->query("UPDATE ".self::$table_files." AS t CROSS JOIN (SELECT MAX(rand_id) AS max_rand_id FROM ".self::$table_files.") AS m SET t.rand_id = m.max_rand_id + 1 WHERE t.source_url='{$fileObj->source_url}'");
+                }
                 
                 return true;
             }

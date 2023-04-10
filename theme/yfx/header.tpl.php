@@ -67,6 +67,15 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
 
         gtag('config', 'UA-178022644-1');
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82GCRWGNJ1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-82GCRWGNJ1');
+    </script>
     <?php endif; ?>
 
     <?php print $data['metas']; ?>

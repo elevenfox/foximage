@@ -35,9 +35,11 @@ $scan = scandir($folder_full_path);
 foreach($scan as $folder_name) {
    if (is_dir("$folder_full_path/$folder_name") && $folder_name!='.' && $folder_name!='..') {
         $the_full_path = "$folder_full_path/$folder_name";
+        echo "------------------------- \n";
         echo "-- Current folder: $folder_name \n";
         // Get cuurent folder vol number
-        $v_arr = explode('-',$folder_name);
+        $l_folder_name = strtolower($folder_name);
+        $v_arr = explode(' ',$l_folder_name);
         $vol = $v_arr[1];
 
         // Go to origin path to get folder name with the same vol num
@@ -48,12 +50,13 @@ foreach($scan as $folder_name) {
             // copy desc.txt and tags.txt from origin folder
             echo "copy " . $origin['full_path'] . "/desc.txt " . $the_full_path . "/\n";
             copy($origin['full_path'] . "/desc.txt", $the_full_path . "/desc.txt");
+            // copy($origin['full_path'] . "/tags.txt", $the_full_path . "/tags.txt");
 
             // Gen new tags
             $tags_str = file_get_contents($origin['full_path'] . "/tags.txt");
             $tags = explode(',', $tags_str);
-            if(! in_array('HuaYan', $tags)) {
-                $tags[] = 'HuaYan';
+            if(! in_array('BoLoli', $tags)) {
+                $tags[] = 'BoLoli';
             }
             if(! in_array( $origin['model'], $tags ) ) {
                 $tags[] = $origin['model'];
@@ -69,20 +72,20 @@ foreach($scan as $folder_name) {
             file_put_contents($the_full_path.'/dl.txt', '');
 
             // If no thumbnail.jpg, rename last image to thumbnail.jpg
-            $scan2 = scandir($the_full_path);
-            $images = [];
-            foreach($scan2 as $file) {
-                $origin_file_full = $the_full_path . '/' . $file;
-                if ( is_file($origin_file_full) && @is_array(getimagesize($origin_file_full)) ) {
-                    $images[] = $file;
-                }
-            }
-            echo 'rename('. $the_full_path . '/' . $images[count($images) - 1] . ', ' . $the_full_path . '/thumbnail.jpg' .  "\n\n";
-            rename($the_full_path . '/' . $images[count($images) - 1] , $the_full_path . '/thumbnail.jpg');    
+            // $scan2 = scandir($the_full_path);
+            // $images = [];
+            // foreach($scan2 as $file) {
+            //     $origin_file_full = $the_full_path . '/' . $file;
+            //     if ( is_file($origin_file_full) && @is_array(getimagesize($origin_file_full)) ) {
+            //         $images[] = $file;
+            //     }
+            // }
+            // echo 'rename('. $the_full_path . '/' . $images[0] . ', ' . $the_full_path . '/thumbnail.jpg' .  "\n\n";
+            // rename($the_full_path . '/' . $images[count($images) - 1] , $the_full_path . '/thumbnail.jpg');    
 
             // rename current folder to the origin folder name
-            echo "rename $the_full_path to $folder_full_path/HuaYan花の颜-". $vol. '-'. $origin['main'] . "\n";
-            rename($the_full_path, $folder_full_path . '/HuaYan花の颜-' . $vol. '-'. $origin['main']);
+            echo "rename $the_full_path to $folder_full_path/BoLoli波萝社-". $vol. '-'. $origin['main'] . "\n\n";
+            rename($the_full_path, $folder_full_path . '/BoLoli波萝社-' . $vol. '-'. $origin['main']);
         }
    }
 }
@@ -90,20 +93,23 @@ foreach($scan as $folder_name) {
 
 
 function getOriginFolderByVol($vol_num) {
-    $origin_folders = '/mnt/nas/jw-photos/tujigu/花の颜/';
+    $origin_folders = '/mnt/nas/jw-photos/tujigu/波萝社/';
     $scan = scandir($origin_folders);
     $folder_info = [];
     foreach($scan as $folder_name) {
         if (is_dir("$origin_folders/$folder_name") && $folder_name!='.' && $folder_name!='..') {
-            $folder_name = strtolower($folder_name);
-            if(strpos($folder_name, 'vol.'.$vol_num) !== false) {
-                $folder_info['name'] = $folder_name;
+            $l_folder_name = strtolower($folder_name);
+            if(strpos($l_folder_name, $vol_num) !== false) {
+                $l_folder_name = str_replace('---','-',$l_folder_name);
+                $l_folder_name = str_replace('《','-',$l_folder_name);
+                $l_folder_name = str_replace('》','',$l_folder_name);
+                $folder_info['name'] = $l_folder_name;
                 $folder_info['full_path'] = $origin_folders  . '/' . $folder_name;
 
-                $tt = explode('_', $folder_name);
-                $folder_info['model'] = $tt[1];
+                $tt = find_between($l_folder_name, '_', '-');
+                $folder_info['model'] = $tt[0];
 
-                $yy = find_between($folder_name, '花の颜_', '-vol');
+                $yy = find_between($l_folder_name, '波萝社_', '-bol');
                 $folder_info['main'] = $yy[0];
             }
         }

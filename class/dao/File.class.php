@@ -354,6 +354,7 @@ Class File {
                         `source` = '" . $fileObj->source . "',
                         `source_url` = '" . $fileObj->source_url . "',
                         `title` = '" . DB::sanitizeInput($fileObj->title) . "',
+                        `description` = '". $fileObj->description . "',
                         `filename` = '". implode(",", $fileObj->images) . "',
                         `thumbnail` = '". str_replace("'", "\'", $fileObj->thumbnail) . "',
                         `tags` = '". str_replace("'", "\'", $fileObj->tags) . "',

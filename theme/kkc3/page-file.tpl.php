@@ -63,7 +63,7 @@ $api_server = Config::get('api_server');
                     $tags = explode(',', $file['tags']);
                     foreach($tags as $tag) {
                         $tag_flat = str_replace(' ','-',strtolower($tag));
-                        echo '<a class="tag" href="/tags/'.$tag_flat.'"><h2>'.$tag.'</h2></a>';
+                        echo '<a class="tag" href="/tags/'.urlencode($tag_flat).'"><h2>'.$tag.'</h2></a>';
                     }
                     ?>
                 </span>
@@ -133,7 +133,7 @@ $api_server = Config::get('api_server');
                     $tags = explode(',', $file['tags']);
                     foreach($tags as $tag) {
                         $tag_flat = str_replace(' ','-',strtolower($tag));
-                        echo '<a class="tag" href="/tags/'.$tag_flat.'"><h2>'.$tag.'</h2></a>';
+                        echo '<a class="tag" href="/tags/'.urlencode($tag_flat).'"><h2>'.$tag.'</h2></a>';
                     }
                     ?>
         </div>

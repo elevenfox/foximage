@@ -460,6 +460,7 @@ function processThumbnail($row, $force_download = false, $b2_upload = false) {
     }
     $relative_path = str_replace($file_root, '', $physical_path);
     $key = $relative_path . '/thumbnail.jpg';
+    $key = str_replace('//','/',$key);
 
     $dev_mode = Config::get('dev_mode');
     if( empty($dev_mode) && $force_download === false) {
@@ -480,6 +481,7 @@ function processThumbnail($row, $force_download = false, $b2_upload = false) {
         }
 
         $fullname = $physical_path . '/thumbnail.jpg';
+        $fullname = str_replace('//','/',$fullname);
 
         // if file does not exist locally, then download it
         if(!file_exists($fullname)) {
@@ -594,6 +596,7 @@ function processPhotoSrc($file) {
     }
     $relative_path = str_replace($file_root, '', $physical_path);
     $relative_fullname = $relative_path . '/' . $filename;
+    $relative_fullname = str_replace('//','/',$relative_fullname);
 
     // If it's dev mode, try to use local photo first
     $dev_mode = Config::get('dev_mode');

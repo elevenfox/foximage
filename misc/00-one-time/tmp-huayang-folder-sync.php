@@ -50,6 +50,7 @@ foreach($scan as $folder_name) {
             // copy desc.txt and tags.txt from origin folder
             echo "copy " . $origin['full_path'] . "/desc.txt " . $the_full_path . "/\n";
             copy($origin['full_path'] . "/desc.txt", $the_full_path . "/desc.txt");
+            
             // copy($origin['full_path'] . "/tags.txt", $the_full_path . "/tags.txt");
 
             // Gen new tags
@@ -109,7 +110,7 @@ function getOriginFolderByVol($vol_num) {
                 $tt = find_between($l_folder_name, '_', '-');
                 $folder_info['model'] = $tt[0];
 
-                $yy = find_between($l_folder_name, '波萝社_', '-bol');
+                $yy = find_between($l_folder_name, '波萝社_', '-vol');
                 $folder_info['main'] = $yy[0];
             }
         }

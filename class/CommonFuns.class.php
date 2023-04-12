@@ -422,6 +422,9 @@ function buildPhysicalPath($file_row, $file_root='') {
             $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($org) . '/'. cleanStringForFilename($file_row['title']);
         }
     }
+    elseif ($file_row['source'] == 'zac') {
+        $physical_path = $file_root . $file_row['source_url'];
+    } 
     else {
         $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($file_row['title']);
     }

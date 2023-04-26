@@ -152,7 +152,7 @@ foreach ($phy_images as $f) {
 $fileObj->images = $new_file_name_arr;
 $fileObj->thumbnail = 1;
 
-echo "\n" . print_r($fileObj) . "\n";
+//echo "\n" . print_r($fileObj) . "\n";
 
 $res = File::save($fileObj);
 if($res) {

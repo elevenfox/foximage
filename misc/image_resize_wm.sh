@@ -25,6 +25,7 @@ for fname in *.*; do
         # resize and set quality to 80% to make smaller file
         echo "resizing $fname to $PERCENTAGE% ..."
         mogrify -resize ${PERCENTAGE}%  -quality 80 "$fname"
+        # convert -strip -interlace Plane -gaussian-blur 0.05 -quality 80% -resize ${PERCENTAGE}% "$fname" "$fname"
     fi
 
     # Convert *.png to jpg

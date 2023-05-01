@@ -161,6 +161,9 @@ if($res) {
 	processThumbnail((array)$fileObj, false, true);
 	$status = 1;
 }
+else {
+    echo date('Y-m-d H:i:s') .  '----- Failed to import album!' . "\n";
+}
 
 $fileRowDB = file_db_exist($relative_path);
 if($fileRowDB) {

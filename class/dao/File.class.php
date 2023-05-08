@@ -202,6 +202,8 @@ Class File {
         $cond = [];
         foreach($allKeywords as $key) {
             $cond[] = " title like '%" . trim($key) . "%' ";
+            $cond[] = " tags like '%" . trim($key) . "%' ";
+            $cond[] = " description like '%" . trim($key) . "%' ";
         }
         $where = implode(' or ', $cond);
 

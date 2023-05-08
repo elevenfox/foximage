@@ -65,11 +65,18 @@ reorg_files () {
   cd "${full_dir_path}"
 
   # rename jpeg files to jpg if this is the case
+  echo "--- rename jpeg files to jpg"
   rename 's/\.jpeg/\.jpg/' *
+
+  # Convert *.png to jpg
+  echo "--- Convert *.png to jpg"
+  mogrify -format jpg -quality 100 *.png
+  rm -f *.png
+
   # rename files to 000-->999 with postfix to avoid override
   i=1
   timestamp=$(date +%s)
-  filelist=$(ls | grep -i '.jpg')
+  filelist=$(ls -v | grep -i '.jpg')
   for f in $filelist; do
     exiftool -overwrite_original -all= "${f}"
     if [ "$f" != "thumbnail.jpg" ]; then
@@ -83,7 +90,7 @@ reorg_files () {
 
   # remove postfix
   i=1
-  filelist=$(ls | grep -i '.jpg')
+  filelist=$(ls -v | grep -i '.jpg')
   for f in $filelist; do
     if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`

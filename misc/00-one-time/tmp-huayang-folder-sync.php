@@ -1,337 +1,168 @@
 <?php
 
 $dirs = <<<EOF
-MFStar-模范学院第100期佳佳JiaJia大尺度套图-50P-
-MFStar-模范学院第101期唐琪儿-51P-
-MFStar-模范学院第102期傲娇萌萌大尺度套图-50P-
-MFStar-模范学院第103期悦爷妖精-45P-
-MFStar-模范学院第104期Hana妹-52P-
-MFStar-模范学院第105期傲娇萌萌大尺度套图-45P-
-MFStar-模范学院第106期唐琪儿-53P-
-MFStar-模范学院第107期Sugar梁莹-50P-
-MFStar-模范学院第108期姗姗-51P-
-MFStar-模范学院第109期Hana妹-40P-
-MFStar-模范学院第10期夏小秋-51P-
-MFStar-模范学院第110期悦爷妖精-52P-
-MFStar-模范学院第111期唐琪儿-50P-
-MFStar-模范学院第112期Hana妹-56P-
-MFStar-模范学院第113期璐璐-41P-
-MFStar-模范学院第114期傲娇萌萌-51P-
-MFStar-模范学院第115期昆熙Quincey-40P-
-MFStar-模范学院第116期宅兔兔-42P-
-MFStar-模范学院第117期栗子Riz-43P-
-MFStar-模范学院第118期宅兔兔-41P-
-MFStar-模范学院第119期宅兔兔-31P-
-MFStar-模范学院第11期佘贝拉bella-60P-
-MFStar-模范学院第120期静静tobey大尺度套图-42P-
-MFStar-模范学院第121期李可可-42P-
-MFStar-模范学院第123期宅兔兔-31P-
-MFStar-模范学院第124期Jennanni_Jen大尺度套图-45P-
-MFStar-模范学院第125期Evelyn艾莉-52P-
-MFStar-模范学院第126期卤蛋luna-72P-
-MFStar-模范学院第127期李可可大尺度套图-42P-
-MFStar-模范学院第128期佟蔓baby-45P-
-MFStar-模范学院第129期佳佳JiaJia-45P-
-MFStar-模范学院第12期徐cake-50P-
-MFStar-模范学院第13期徐cake-50P-
-MFStar-模范学院第140期黄楽然大尺度套图-46P-
-MFStar-模范学院第148期李可可-34P-
-MFStar-模范学院第149期冷不丁大尺度套图-51P-
-MFStar-模范学院第14期佘贝拉bella-50P-
-MFStar-模范学院第150期静静tobey大尺度套图-39P-
-MFStar-模范学院第157期温心怡大尺度套图-31P-
-MFStar-模范学院第158期SOLO-尹菲-44P-
-MFStar-模范学院第159期冯木木-32P-
-MFStar-模范学院第15期夏瑶baby大尺度套图-50P-
-MFStar-模范学院第160期佳佳JiaJia-42P-
-MFStar-模范学院第161期韩秀冉-36P-
-MFStar-模范学院第16期佘贝拉bella-50P-
-MFStar-模范学院第171期黄楽然套图-38P-
-MFStar-模范学院第172期小姿2002套图-51P-
-MFStar-模范学院第173期李可可套图-50P-
-MFStar-模范学院第174期佳佳JiaJia套图-40P-
-MFStar-模范学院第175期仓井优香大尺度套图-40P-
-MFStar-模范学院第176期徐微微套图-41P-
-MFStar-模范学院第177期徐cake套图-30P-
-MFStar-模范学院第178期小姿2002套图-42P-
-MFStar-模范学院第179期Sugar梁莹套图-39P-
-MFStar-模范学院第17期夏小秋秋秋大尺度套图-52P-
-MFStar-模范学院第180期徐微微套图-32P-
-MFStar-模范学院第181期Manuela玛鲁娜套图-41P-
-MFStar-模范学院第182期Evelyn艾莉套图-40P-
-MFStar-模范学院第183期blueblue77套图-40P-
-MFStar-模范学院第184期janny套图-45P-
-MFStar-模范学院第185期胡润曦大尺度套图-40P-
-MFStar-模范学院第186期李可可大尺度套图-43P-
-MFStar-模范学院第187期徐微微Mia套图-40P-
-MFStar-模范学院第188期夏笑笑套图-40P-
-MFStar-模范学院第189期草莓兔兔大尺度套图-31P-
-MFStar-模范学院第18期Milk楚楚-42P-
-MFStar-模范学院第190期程程CC大尺度套图-32P-
-MFStar-模范学院第191期任莹樱大尺度套图-41P-
-MFStar-模范学院第192期仓井优香大尺度套图-40P-
-MFStar-模范学院第193期徐微微Mia套图-40P-
-MFStar-模范学院第194期Flower朱可儿套图-40P-
-MFStar-模范学院第195期张雨萌套图-33P-
-MFStar-模范学院第196期宝儿fox大尺度套图-42P-
-MFStar-模范学院第197期顾奈奈套图-49P-
-MFStar-模范学院第198期仓井优香套图-41P-
-MFStar-模范学院第199期宝儿fox套图-41P-
-MFStar-模范学院第19期熊吖BOBO-50P-
-MFStar-模范学院第1期许诺Sabrina-48P-
-MFStar-模范学院第200期妞妞koko大尺度套图-30P-
-MFStar-模范学院第201期模特合集套图-43P-
-MFStar-模范学院第202期佳佳JiaJia套图-42P-
-MFStar-模范学院第203期Baileys香儿套图-66P-
-MFStar-模范学院第204期Flower朱可儿套图-55P-
-MFStar-模范学院第205期奈美nana套图-50P-
-MFStar-模范学院第206期Flower朱可儿套图-50P-
-MFStar-模范学院第207期Flower朱可儿套图-58P-
-MFStar-模范学院第208期Betty林子欣套图-43P-
-MFStar-模范学院第209期Flower朱可儿大尺度套图-52P-
-MFStar-模范学院第20期徐cake-52P-
-MFStar-模范学院第210期仓井优香大尺度套图-57P-
-MFStar-模范学院第211期林子欣大尺度套图-40P-
-MFStar-模范学院第212期林子欣套图-51P-
-MFStar-模范学院第213期糯美子Mini套图-61P-
-MFStar-模范学院第214期仓井优香套图-65P-
-MFStar-模范学院第215期林子欣大尺度套图-64P-
-MFStar-模范学院第216期糯美子Mini大尺度套图-52P-
-MFStar-模范学院第217期Flower朱可儿大尺度套图-90P-
-MFStar-模范学院第218期糯美子Mini大尺度套图-66P-
-MFStar-模范学院第219期Betty林子欣套图-53P-
-MFStar-模范学院第21期夏茉GIGI-51P-
-MFStar-模范学院第220期糯美子Mini大尺度套图-52P-
-MFStar-模范学院第221期小牛奶套图-44P-
-MFStar-模范学院第222期林子欣套图-53P-
-MFStar-模范学院第223期糯美子Mini套图-50P-
-MFStar-模范学院第224期Flower朱可儿套图-50P-
-MFStar-模范学院第225期糯美子Mini套图-44P-
-MFStar-模范学院第226期林子欣套图-45P-
-MFStar-模范学院第227期鲍妮boonie套图-35P-
-MFStar-模范学院第228期林子欣大尺度套图-57P-
-MFStar-模范学院第229期仓井优香套图-36P-
-MFStar-模范学院第22期Moa小姐-53P-
-MFStar-模范学院第230期Betty林子欣套图-62P-
-MFStar-模范学院第231期小牛奶大尺度套图-51P-
-MFStar-模范学院第232期糯美子Mini大尺度套图-50P-
-MFStar-模范学院第233期Flower朱可儿大尺度套图-77P-
-MFStar-模范学院第234期任莹樱大尺度套图-58P-
-MFStar-模范学院第235期蓝夏Akasha大尺度套图-60P-
-MFStar-模范学院第236期多香子大尺度套图-40P-
-MFStar-模范学院第237期徐cake大尺度套图-52P-
-MFStar-模范学院第238期林子欣套图-51P-
-MFStar-模范学院第239期糯美子套图-66P-
-MFStar-模范学院第23期佘贝拉bella-56P-
-MFStar-模范学院第240期胡润曦大尺度套图-40P-
-MFStar-模范学院第241期韩子萱套图-40P-
-MFStar-模范学院第242期蓝夏Akasha大尺度套图-55P-
-MFStar-模范学院第243期程程CC大尺度套图-50P-
-MFStar-模范学院第244期模特合集大尺度套图-60P-
-MFStar-模范学院第245期Betty林子欣大尺度套图-52P-
-MFStar-模范学院第246期徐微微套图-61P-
-MFStar-模范学院第247期恩率大尺度套图-51P-
-MFStar-模范学院第248期Dreamy小乔大尺度套图-44P-
-MFStar-模范学院第249期朱可儿大尺度套图-60P-
-MFStar-模范学院第24期徐cake-50P-
-MFStar-模范学院第250期徐微微大尺度套图-54P-
-MFStar-模范学院第251期玉兔miki大尺度套图-51P-
-MFStar-模范学院第252期小姿大尺度套图-50P-
-MFStar-模范学院第253期Dreamy小乔大尺度套图-39P-
-MFStar-模范学院第254期朱可儿Flower大尺度套图-75P-
-MFStar-模范学院第255期徐微微大尺度套图-52P-
-MFStar-模范学院第256期模特合集套图-70P-
-MFStar-模范学院第257期Evelyn艾莉大尺度套图-70P-
-MFStar-模范学院第257期Evelyn艾莉套图-52P-
-MFStar-模范学院第258期李可可大尺度套图-52P-
-MFStar-模范学院第259期朱可儿Flower大尺度套图-73P-
-MFStar-模范学院第25期伊小七MoMo-52P-
-MFStar-模范学院第260期徐微微大尺度套图-50P-
-MFStar-模范学院第261期玉兔miki大尺度套图-61P-
-MFStar-模范学院第262期恩率babe套图-50P-
-MFStar-模范学院第263期朱可儿Flower大尺度套图-61P-
-MFStar-模范学院第264期玉兔miki大尺度套图-65P-
-MFStar-模范学院第265期玉兔miki大尺度套图-65P-
-MFStar-模范学院第266期徐微微mia大尺度套图-50P-
-MFStar-模范学院第267期朱可儿Flower大尺度套图-70P-
-MFStar-模范学院第268期徐微微大尺度套图-36P-
-MFStar-模范学院第269期恩率大尺度套图-40P-
-MFStar-模范学院第26期Milk楚楚大尺度套图-50P-
-MFStar-模范学院第270期郭忆然大尺度套图-42P-
-MFStar-模范学院第271期朱可儿Flower大尺度套图-54P-
-MFStar-模范学院第272期玉兔大尺度套图-70P-
-MFStar-模范学院第273期徐微微套图-64P-
-MFStar-模范学院第274期玉兔miki套图-62P-
-MFStar-模范学院第275期糯美子大尺度套图-70P-
-MFStar-模范学院第276期Evelyn艾莉套图-48P-
-MFStar-模范学院第277期玉兔miki大尺度套图-60P-
-MFStar-模范学院第278期朱可儿Flower大尺度套图-80P-
-MFStar-模范学院第278期李可可大尺度套图-41P-
-MFStar-模范学院第27期熊吖BOBO-54P-
-MFStar-模范学院第280期玉兔miki大尺度套图-69P-
-MFStar-模范学院第286期徐微微大尺度套图-61P-
-MFStar-模范学院第286期黄楽然大尺度套图-53P-
-MFStar-模范学院第288期糯美子Mini大尺度套图-66P-
-MFStar-模范学院第289期诗诗kiki大尺度套图-55P-
-MFStar-模范学院第28期徐cake大尺度套图-52P-
-MFStar-模范学院第290期徐微微大尺度套图-63P-
-MFStar-模范学院第291期蓝夏Akasha大尺度套图-69P-
-MFStar-模范学院第292期玉兔miki大尺度套图-80P-
-MFStar-模范学院第293期糯美子Mini大尺度套图-56P-
-MFStar-模范学院第294期诗诗kiki大尺度套图-41P-
-MFStar-模范学院第295期玉兔miki大尺度套图-57P-
-MFStar-模范学院第296期dodo大尺度套图-39P-
-MFStar-模范学院第297期徐微微大尺度套图-56P-
-MFStar-模范学院第298期玉兔miki大尺度套图-46P-
-MFStar-模范学院第299期软软酱大尺度套图-48P-
-MFStar-模范学院第29期伊小七MoMo大尺度套图-51P-
-MFStar-模范学院第2期柳侑绮-51P-
-MFStar-模范学院第300期果儿Victoria大尺度套图-50P-
-MFStar-模范学院第301期白茹雪大尺度套图-40P-
-MFStar-模范学院第302期糯美子Mini大尺度套图-67P-
-MFStar-模范学院第303期方子萱大尺度套图-49P-
-MFStar-模范学院第304期夏天Sienna大尺度套图-50P-
-MFStar-模范学院第305期蛋糕Cake大尺度套图-40P-
-MFStar-模范学院第306期糯美子Mini大尺度套图-68P-
-MFStar-模范学院第307期小宣fancy大尺度套图-38P-
-MFStar-模范学院第307期方子萱大尺度套图-45P-
-MFStar-模范学院第309期软软Roro大尺度套图-46P-
-MFStar-模范学院第30期熊吖BOBO-51P-
-MFStar-模范学院第310期玉兔miki大尺度套图-52P-
-MFStar-模范学院第311期朱可儿Flower大尺度套图-56P-
-MFStar-模范学院第312期yoo优优套图-49P-
-MFStar-模范学院第313期诗诗kiki大尺度套图-38P-
-MFStar-模范学院第314期蛋糕Cake大尺度套图-40P-
-MFStar-模范学院第315期言沫大尺度套图-51P-
-MFStar-模范学院第316期徐微微大尺度套图-48P-
-MFStar-模范学院第317期yoo优优套图-47P-
-MFStar-模范学院第318期久久Aimee大尺度套图-53-
-MFStar-模范学院第319期夏天Sienna大尺度套图-58P-
-MFStar-模范学院第31期佘贝拉bella-51P-
-MFStar-模范学院第320期璀灿大尺度套图-60P-
-MFStar-模范学院第321期张小妮大尺度套图-58P-
-MFStar-模范学院第322期模特合集大尺度套图-50P-
-MFStar-模范学院第323期yoo优优大尺度套图-44P-
-MFStar-模范学院第324期良人非爱人大尺度套图-39P-
-MFStar-模范学院第325期言沫套图-61P-
-MFStar-模范学院第326期yoo优优大尺度套图-48P-
-MFStar-模范学院第327期苏雨彤大尺度套图-55P-
-MFStar-模范学院第328期方子萱大尺度套图-57P-
-MFStar-模范学院第329期夏天Sienna大尺度套图-47P-
-MFStar-模范学院第32期兜豆靓Youlina大尺度套图-42P-
-MFStar-模范学院第330期久久Aimee大尺度套图-54P-
-MFStar-模范学院第331期薛琪琪大尺度套图-49P-
-MFStar-模范学院第332期方子萱套图-71-
-MFStar-模范学院第333期yoo优优套图-59P-
-MFStar-模范学院第334期苏雨彤套图-55P-
-MFStar-模范学院第335期白茹雪大尺度套图-49P-
-MFStar-模范学院第336期久久Aimee大尺度套图-46P-
-MFStar-模范学院第337期yoo优优套图-55P-
-MFStar-模范学院第338期蛋糕Cake套图-45P-
-MFStar-模范学院第339期薛琪琪大尺度套图-78P-
-MFStar-模范学院第33期Evelyn艾莉大尺度套图-52P-
-MFStar-模范学院第340期方子萱套图-61P-
-MFStar-模范学院第341期陈一涵套图-40P-
-MFStar-模范学院第342期陈小诺大尺度套图-37P-
-MFStar-模范学院第343期Riri大尺度套图-50P-
-MFStar-模范学院第344期薛琪琪套图-59P-
-MFStar-模范学院第345期林小艺大尺度套图-54P-
-MFStar-模范学院第346期苏雨彤套图-45P-
-MFStar-模范学院第347期美七Mia大尺度套图-41P-
-MFStar-模范学院第348期模特合集大尺度套图-39P-
-MFStar-模范学院第349期yoo优优套图-50P-
-MFStar-模范学院第34期徐cake-50P-
-MFStar-模范学院第350期方子萱套图-66P-
-MFStar-模范学院第351期白茹雪套图-44P-
-MFStar-模范学院第352期韩静安套图-48P-
-MFStar-模范学院第353期美七Mia大尺度套图-45P-
-MFStar-模范学院第354期薛琪琪大尺度套图-47P-
-MFStar-模范学院第355期yoo优优套图-55P-
-MFStar-模范学院第356期苏雨彤大尺度套图-45P-
-MFStar-模范学院第357期陈一涵套图-41P-
-MFStar-模范学院第358期陈小诺大尺度套图-49P-
-MFStar-模范学院第359期薛琪琪大尺度套图-49P-
-MFStar-模范学院第35期李思宁大尺度套图-50P-
-MFStar-模范学院第360期模特合集套图-40P-
-MFStar-模范学院第361言沫大尺度套图-38P-
-MFStar-模范学院第362期梦梵大尺度套图-54P-
-MFStar-模范学院第363期文芮jeninfer大尺度套图-49P-
-MFStar-模范学院第364期yoo优优大尺度套图-56P-
-MFStar-模范学院第365期薛琪琪大尺度套图-46P-
-MFStar-模范学院第366期林小艺大尺度套图-55P-
-MFStar-模范学院第367期苏雨彤大尺度套图-51P-
-MFStar-模范学院第368期韩静安大尺度套图-51P-
-MFStar-模范学院第369期yoo优优套图-64P-
-MFStar-模范学院第36期徐cake-50P-
-MFStar-模范学院第370期仓井优香套图-50P-
-MFStar-模范学院第37期Moa小姐-41P-
-MFStar-模范学院第38期佘贝拉bella-60P-
-MFStar-模范学院第39期夏茉GIGI-51P-
-MFStar-模范学院第3期刘飞儿Faye大尺度套图-46P-
-MFStar-模范学院第40期Evelyn艾莉-51P-
-MFStar-模范学院第41期刘飞儿-52P-
-MFStar-模范学院第42期兜豆靓Youlina-50P-
-MFStar-模范学院第43期黄佳丽-41P-
-MFStar-模范学院第44期熊吖BOBO-50P-
-MFStar-模范学院第45期Cheryl青树-50P-
-MFStar-模范学院第46期松果儿大尺度套图-51P-
-MFStar-模范学院第47期Evelyn艾莉-53P-
-MFStar-模范学院第48期兜豆靓Youlina-51P-
-MFStar-模范学院第49期徐cake大尺度套图-51P-
-MFStar-模范学院第4期Manuela玛鲁娜-48P-
-MFStar-模范学院第50期夏小秋秋秋-52P-
-MFStar-模范学院第51期佘贝拉bella-53P-
-MFStar-模范学院第52期沈佳熹大尺度套图-57P-
-MFStar-模范学院第54期刘飞儿-50P-
-MFStar-模范学院第55期赵小米Kitty-50P-
-MFStar-模范学院第56期徐cake-52P-
-MFStar-模范学院第57期Evelyn艾莉-50P-
-MFStar-模范学院第58期艾栗栗大尺度套图-55P-
-MFStar-模范学院第59期徐cake-50P-
-MFStar-模范学院第5期夏小秋秋秋大尺度套图-45P-
-MFStar-模范学院第60期佳佳JiaJia大尺度套图-56P-
-MFStar-模范学院第61期Evelyn艾莉-55P-
-MFStar-模范学院第62期王梓童Doirs大尺度套图-50P-
-MFStar-模范学院第63期电竞唐嫣大尺度套图-60P-
-MFStar-模范学院第64期思淇Sukiii-52P-
-MFStar-模范学院第65期夏玲蔓大尺度套图-50P-
-MFStar-模范学院第66期陈思雨-50P-
-MFStar-模范学院第67期Evelyn艾莉-50P-
-MFStar-模范学院第68期韩子萱-50P-
-MFStar-模范学院第69期赵小米Kitty-50P-
-MFStar-模范学院第6期模特合集大尺度套图-62P-
-MFStar-模范学院第70期徐cake-51P-
-MFStar-模范学院第71期傲娇萌萌大尺度套图-50P-
-MFStar-模范学院第72期佘贝拉bella大尺度套图-53P-
-MFStar-模范学院第73期Evelyn艾莉-58P-
-MFStar-模范学院第74期猩一大尺度套图-40P-
-MFStar-模范学院第75期佳佳JiaJia大尺度套图-52P-
-MFStar-模范学院第76期慕羽茜-52P-
-MFStar-模范学院第77期佟蔓baby-53P-
-MFStar-模范学院第78期卤蛋luna-51P-
-MFStar-模范学院第79期粉芭比VV-50P-
-MFStar-模范学院第7期Manuela玛鲁娜-46P-
-MFStar-模范学院第80期Wendy智秀-50P-
-MFStar-模范学院第81期姗姗就打奥特曼大尺度套图-50P-
-MFStar-模范学院第82期悦爷妖精-51P-
-MFStar-模范学院第83期草莓兔兔大尺度套图-30P-
-MFStar-模范学院第84期Sugar梁莹-52P-
-MFStar-模范学院第85期程程CC-60P-
-MFStar-模范学院第86期松果儿大尺度套图-50P-
-MFStar-模范学院第87期唐琪儿Beauty-61P-
-MFStar-模范学院第88期萌琪琪大尺度套图-50P-
-MFStar-模范学院第89期冷不丁大尺度套图-52P-
-MFStar-模范学院第8期沈梦瑶-50P-
-MFStar-模范学院第90期伊小七MoMo-51P-
-MFStar-模范学院第91期昆熙Quincey-50P-
-MFStar-模范学院第92期唐琪儿大尺度套图-51P-
-MFStar-模范学院第94期佳佳JiaJia大尺度套图-50P-
-MFStar-模范学院第95期姗姗就打奥特曼-47P-
-MFStar-模范学院第96期伊小七MoMo-60P-
-MFStar-模范学院第97期松果儿-47P-
-MFStar-模范学院第98期伊小七-47P-
-MFStar-模范学院第99期Evelyn艾莉-41P-
-MFStar-模范学院第9期桃小兔-40P-
+爱蜜社_7Seven《制服丝袜美腿》-Vol.079-写真集-57P-
+爱蜜社_ALICE梁紫轩《空姐制服诱惑》-Vol.013-写真集-56P-
+爱蜜社_ALICE梁紫轩---蕾丝内衣-Vol.003-写真集-61P-
+爱蜜社_Angela小热巴《透明的肚兜诱惑》-Vol.285-写真集-40P-
+爱蜜社_Carry《魅惑内衣-丝袜美足》-Vol.397-写真集-54P-
+爱蜜社_ceci《身材高挑曼妙凹凸别致》-Vol.395-写真集-40P-
+爱蜜社_Evon陈赞之《韵味旗袍与朦胧丝袜诱惑》-Vol.403-写真集-41P-
+爱蜜社_LalaBaby啦啦《两套内衣-护士装-OL装》-Vol.116-写真集-75P-
+爱蜜社_LalaBaby啦啦《傲人胸围-修长美腿》-Vol.044-写真集-48P-
+爱蜜社_LalaBaby啦啦《普吉岛旅拍》清新泳装小诱惑-Vol.051-写真集-54P-
+爱蜜社_LalaBaby啦啦《清凉比基尼-牛仔热裤》-Vol.039-写真集-55P-
+爱蜜社_Lavinia-Cccil-《魔鬼的身材，天使的面孔》-Vol.343-写真集-38P-
+爱蜜社_Lavinia《丝袜美腿特辑》-Vol.384-写真集-36P-
+爱蜜社_Lavinia《古典韵味旗袍-丝袜美腿》-Vol.362-写真集-47P-
+爱蜜社_Lavinia《无法抵御的职业装》-Vol.408-写真集-62P-
+爱蜜社_Lavinia《牛仔长腿-丝袜美腿》-Vol.367-写真集-45P-
+爱蜜社_Lavinia肉肉《朦胧丝袜让人心神俱醉》-Vol.433-写真集-39P-
+爱蜜社_Lavinia肉肉《粉色连体裙包裹下的女神》-Vol.439-写真集-57P-
+爱蜜社_Lavinia《魅惑的丝袜美腿极致销魂》-Vol.376-写真集-41P-
+爱蜜社_luvian本能《两套性感服饰》-Vol.385-写真集-54P-
+爱蜜社_Lynn刘奕宁《一朵含苞待放的牡丹花》-Vol.368-写真集-39P-
+爱蜜社_Michi_Ho《比基尼-OL丝袜装》-Vol.050-写真集-55P-
+爱蜜社_Panadol雅《女仆装-OL装》-Vol.099-写真集-65P-
+爱蜜社_Sandy陈天扬《热裤-性感蕾丝-白衬衫》-Vol.072-写真集-53P-
+爱蜜社_Sandy陈天扬《花仙子般比基尼系列》-Vol.087-写真集-50P-
+爱蜜社_SISY思《典雅旗袍-诱惑丝袜-性感内衣》-Vol.117-写真集-54P-
+爱蜜社_SISY思《外拍2套清新泳装》-Vol.065-写真集-53P-
+爱蜜社_SISY思《旗袍-晚礼裙》-Vol.030-写真集-53P-
+爱蜜社_SISY思《黑丝OL》-Vol.027-写真集-51P-
+爱蜜社_sugar小甜心CC《2套丝袜诱惑系列》-Vol.132-写真集-53P-
+爱蜜社_sugar小甜心CC《丝袜美腿-性感美臀》-Vol.129-写真集-49P-
+爱蜜社_sugar小甜心CC《丝袜美腿-浴室惹火诱惑》-Vol.127-写真集-42P-
+爱蜜社_sugar小甜心CC《室拍2套性感内衣》-Vol.125-写真集-53P-
+爱蜜社_sugar小甜心CC《巴厘岛旅拍》两套性感内衣-Vol.121-写真集-58P-
+爱蜜社_sugar小甜心CC《巴厘岛旅拍》美臀诱惑-Vol.118-写真集-45P-
+爱蜜社_sugar小甜心CC《性感比基尼-美艳厨娘装》-Vol.113-写真集-57P-
+爱蜜社_sugar小甜心CC《性感甜美的小护士》-Vol.093-写真集-50P-
+爱蜜社_sugar小甜心CC《甜美诱人的小甜心》-Vol.120-写真集-63P-
+爱蜜社_sugar小甜心CC《空姐制服-厨娘服》-Vol.073-写真集-61P-
+爱蜜社_sugar小甜心CC《粉色丝袜-性感内衣》-Vol.100-写真集-43P-
+爱蜜社_sugar小甜心CC《美女扮野兽-旗袍与丝袜》-Vol.136-写真集-59P-
+爱蜜社_-Vol.060-于姬、朱若慕、徐妍馨、傅诗瑶、小丽莎萌萌哒及其他模特合集-78P-
+爱蜜社_-Vol.068-刘奕宁、夏茉、其他模特合集-49P-
+爱蜜社_-Vol.143-SISY思、Panadol雅、刘奕宁、LalaBaby啦啦等十二位模特合集-53P-
+爱蜜社_-Vol.465-LindaLinda-《性感吊带肉丝袜美腿》-写真集-69P-
+爱蜜社_-Vol.479-Angela小热巴---灰色风格的都市丝袜美腿写真-64P-
+爱蜜社_-Vol.489-Angela小热巴---丝足美腿灵动曼妙-108P-
+爱蜜社_-Vol.494-Lavinia肉肉---丝袜美腿特辑写真-53P-
+爱蜜社_-Vol.496-evon---校服淋雨私房主题系列-65P-
+爱蜜社_-Vol.498-杨紫嫣Cynthia---典雅礼裙与极致魅惑丝袜-54P-
+爱蜜社_-Vol.500-Evon陈赞之---眼镜OL主题系列-43P-
+爱蜜社_-Vol.501-蜜桃cc---丝袜主题极致魅惑-76P-
+爱蜜社_-Vol.502-杨紫嫣Cynthia---典雅礼裙与极致魅惑丝袜-55P-
+爱蜜社_-Vol.503-九月生_---吊带与极致黑丝的视觉体验-95P-
+爱蜜社_-Vol.504--Lavinia肉肉和-蜜桃cc---酒店私房0L系列-66P-
+爱蜜社_-Vol.505-方子萱---条纹的职场秘书OL系列-73P-
+爱蜜社_-Vol.506-九月生_---白衬衫黑短裙职场秘书制服系列-53P-
+爱蜜社_-Vol.507-Lavinia肉肉---职场OL风格丝袜美腿-54P-
+爱蜜社_-Vol.508-杨紫嫣Cynthia---印花衬衫与黑色皮裙系列-60P-
+爱蜜社_-Vol.509-Jermy---少女的娇媚性感动人-37P-
+爱蜜社_-Vol.510-九月生_---轻薄精致的睡衣包裹-44P-
+爱蜜社_-Vol.511-Angela小热巴---典雅吊裙勾勒出完美的曲线-55P-
+爱蜜社_-Vol.512-方子萱---洁白飒爽的职业西服-60P-
+爱蜜社_-Vol.513-Lavinia肉肉---丝袜美腿特辑写真-49P-
+爱蜜社_-Vol.514-Jermy---黑色衬衫与极致丝袜美腿-47P-
+爱蜜社_-Vol.515-九月生_---旗袍与极致魅惑的黑丝-41P-
+爱蜜社_-Vol.516-Evon陈赞之---凹凸有致的丰满身材-53P-
+爱蜜社_-Vol.517-杨紫嫣Cynthia---华丽典雅的礼裙-39P-
+爱蜜社_-Vol.518-Angela小热巴---丝足美腿灵动曼妙-45P-
+爱蜜社_-Vol.519--Lavinia肉肉--Jermy---OL短裙与现代性感丝袜系列-55P-
+爱蜜社_-Vol.520-萌白酱---经典的职场秘书OL制服系列-50P-
+爱蜜社_-Vol.521-Angela小热巴---都市风格的职业OL系列-54P-
+爱蜜社_-Vol.522-Sia---自有一股秀雅的气质-77P-
+爱蜜社_-Vol.523-九月生_---室外泳池系列-64P-
+爱蜜社_-Vol.524-萌白酱---深受男士喜欢的空姐制服系列-60P-
+爱蜜社_-Vol.525-气质美女-Vanessa---丝袜美腿写真-56P-
+爱蜜社_-Vol.526-Angela小热巴---靓丽车拍与极致朦胧美腿系列-42P-
+爱蜜社_-Vol.527-萌白酱---高挑婀娜多姿下的丝足美腿-61P-
+爱蜜社_-Vol.528-Vanessa---经典典雅职场制服-71P-
+爱蜜社_-Vol.529-Lavinia肉肉---朦胧丝袜美腿修长灵动诱人-53P-
+爱蜜社_-Vol.530-杨紫嫣Cynthia---深绿色华丽典雅的吊裙-56P-
+爱蜜社_-Vol.531-Angela小热巴---米色内衣与朦胧丝袜玉足-46P-
+爱蜜社_-Vol.532-Vanessa---浅蓝色的典雅职业装丝袜美腿-48P-
+爱蜜社_-Vol.533-Lavinia肉肉---娇艳俏丽的面容与妩媚得体姿态-49P-
+爱蜜社_-Vol.534-杨紫嫣Cynthia---古典韵味旗袍与现代性感丝袜系列-64P-
+爱蜜社_-Vol.535-Lavinia肉肉---洁白典雅的服饰轻裹娇躯-54P-
+爱蜜社_-Vol.536-Jermy---魅惑黑丝美腿-34P-
+爱蜜社_-Vol.537-Lavinia肉肉---光润玉颜的装束，妩媚得体姿态-48P-
+爱蜜社_-Vol.538-Vanessa---性感OL写真-60P-
+爱蜜社_-Vol.539-九月生_---经典的制服系列-44P-
+爱蜜社_Winki丝姬《街拍丝袜美腿-车内丝袜诱惑》-Vol.094-写真集-34P-
+爱蜜社_七七、张咏儿rainny---合集-Vol.002-写真集-64P-
+爱蜜社_乐薇Vivi《黑丝美腿诱惑》-Vol.293-写真集-44P-
+爱蜜社_九尾ivy-《空乘制服丝袜美腿诱惑》-Vol.276-写真集-47P-
+爱蜜社_九月生_《白衬衫短裙秘书职业装丝袜美足系列》-Vol.435-写真集-60P-
+爱蜜社_于姬Una《白皙的皮肤，呼之欲出的爆乳》-Vol.061-写真集-51P-
+爱蜜社_刘奕宁Lynn《巴厘岛旅拍》2套泳装-Vol.112-写真集-49P-
+爱蜜社_刘奕宁Lynn《美腿短裙-性感内衣》-Vol.088-写真集-43P-
+爱蜜社_夏茉GIGI《家居小清凉-性感猫女装》-Vol.024-写真集-55P-
+爱蜜社_夏茉GIGI《小清新街拍》-Vol.053-写真集-50P-
+爱蜜社_夏茉GIGI《清凉比基尼街拍》-Vol.020-写真集-54P-
+爱蜜社_夏茉GIGI《牛仔热裤街拍》-Vol.049-写真集-47P-
+爱蜜社_女神-Lavinia肉肉《丝袜美腿特辑》-Vol.401-写真集-42P-
+爱蜜社_妍妍Yanyan《同程旅拍》-Vol.008-写真集-76P-
+爱蜜社_孙梦瑶V《丝袜美腿控》-Vol.232-写真集-33P-
+爱蜜社_小九月《软妹控-丝袜控》-Vol.399-写真集-42P-
+爱蜜社_小宝酱《室外车拍白色丝袜诱惑》-Vol.056-写真集-44P-
+爱蜜社_小宝酱《牛仔美少女》-Vol.026-写真集-50P-
+爱蜜社_小狐狸Sica《黑色私房性感美腿》-VOL.194-写真集-51P-
+爱蜜社_張詠兒_rainny《内衣私房》-Vol.022-写真集-55P-
+爱蜜社_心妍小公主《极致诱惑黑丝旗袍内衣系列》-Vol.379-写真集-32P-
+爱蜜社_心妍小公主《魅惑黑丝内衣与极致丝袜系列》-Vol.421-写真集-28P-
+爱蜜社_戴小唯《比基尼-死库水系列》-Vol.085-写真集-49P-
+爱蜜社_李李七七喜喜《3套性感服饰》-Vol.081-写真集-48P-
+爱蜜社_李李七七喜喜《丝袜美腿-大尺度真空锁链》-VOL.203-写真集-48P-
+爱蜜社_李玉洁Daisy《武汉大别山薄刀峰旅拍》-Vol.040-写真集-57P-
+爱蜜社_杨晨晨sugar《丝袜美腿诱惑-完善礼物》-Vol.181-写真集-45P-
+爱蜜社_杨晨晨sugar《甜美的护士女神》-Vol.283-写真集-37P-
+爱蜜社_杨紫嫣Cynthia《正装之下的丝袜美腿》-Vol.428-写真集-40P-
+爱蜜社_极品长腿美女-刘奕宁Lynn-Vol.080-写真集-49P-
+爱蜜社_果儿Victoria《透视肚兜、黑丝捆绑极致诱惑销魂》-Vol.355-写真集-64P-
+爱蜜社_樂樂Mango《3套透视装》-Vol.077-写真集-45P-
+爱蜜社_樂樂Mango《丝袜美腿系列》-VOL.196-写真集-45P-
+爱蜜社_樂樂Mango《海边比基尼系列》-Vol.014-写真集-50P-
+爱蜜社_樂樂Mango《白衬衣-紫色丝袜系列》-Vol.046-写真集-57P-
+爱蜜社_模特Vissa《独特的熟女气质》-Vol.257-写真集-62P-
+爱蜜社_模特-小热巴《最爱的性感腰线》-Vol.241-写真集-51P-
+爱蜜社_沈佳熹《原生态人体诱惑》-Vol.114-写真集-20P-
+爱蜜社_沈佳熹《巴厘岛旅拍》死库水-比基尼-Vol.109-写真集-51P-
+爱蜜社_沈蜜桃miko《日本旅拍》-Vol.244-写真集-42P-
+爱蜜社_王曼妮好Q《性感睡衣-白衬衫系列》-Vol.137-写真集-45P-
+爱蜜社_王曼妮好Q-《街拍-泳池旁小清新系列》-Vol.141-写真集-40P-
+爱蜜社_王曼妮、谭小雅《古典旗袍系列》-Vol.070-写真集-60P-
+爱蜜社_王沫儿SaSa《丝袜美腿-傲人巨乳》-Vol.128-写真集-50P-
+爱蜜社_王沫儿SaSa《巨乳诱惑与别样胶带捆绑》-Vol.130-写真集-45P-
+爱蜜社_程小烦不烦《2套美胸泳装》-Vol.103-写真集-55P-
+爱蜜社_程小烦不烦《3套泳装》-Vol.067-写真集-54P-
+爱蜜社_程小烦不烦《性感比基尼和白衬衫-短裙》-Vol.089-写真集-47P-
+爱蜜社_程小烦不烦《皮卡丘-比基尼》-Vol.057-写真集-53P-
+爱蜜社_程小烦不烦《粉色装扮-白色裙子外拍》-Vol.086-写真集-47P-
+爱蜜社_美蒂Melody-Vol.280-写真集-39P-
+爱蜜社_艾诗iccey《淑女的诱惑》-Vol.036-写真集-49P-
+爱蜜社_芝芝Booty《丁字裤美臀-粉嫩和服》-VOL.155-写真集-50P-
+爱蜜社_芝芝Booty《日系和服-迷你比基尼》-VOL.170-写真集-37P-
+爱蜜社_莉莉Lily《兔女郎、空姐制服-死库水湿身系列》-Vol.082-写真集-49P-
+爱蜜社_萌琪琪Irene《黑丝美腿-街拍OL萌软妹》-VOL.199-写真集-64P-
+爱蜜社_许诺Sabrina《北海道旅拍》-Vol.213-写真集-34P-
+爱蜜社_许诺Sabrina《美得象一首抒情诗》-Vol.262-写真集-42P-
+爱蜜社_赵小米Kitty、sugar小甜心CC《闺蜜》-Vol.133-写真集-31P-
+爱蜜社_赵小米Kitty《比基尼-愤怒的宠物精灵》-Vol.110-写真集-54P-
+爱蜜社_陈思琪Art《凹凸别致的惹火身段》-Vol.345-写真集-37P-
+爱蜜社_陈思琪Art《白色连衣裙和内衣系列》-Vol.052-写真集-50P-
+爱蜜社_陈思琪Art《紧身裤-睡裙》-Vol.035-写真集-57P-
+爱蜜社_陈思琪Art《长腿OL-内衣》-Vol.042-写真集-59P-
+爱蜜社_陈良玲Carry《韵味黑色旗袍与魅惑黑丝》-Vol.358-写真集-42P-
+爱蜜社_雪儿Cier《肉色丝袜与美臀极致销魂》-Vol.325-写真集-35P-
+爱蜜社_香港模特Michi_Ho-《小清新》-Vol.045-写真集-48P-
+爱蜜社_高挑美女SISY思《4套清新服饰》-Vol.041-写真集-61P-
+爱蜜社_黄楽然《美胸翘臀丝袜美腿诱惑》-Vol.303-写真集-47P-
+爱蜜社_黄歆苑《性感内衣-学生装》-Vol.074-写真集-50P-
+爱蜜社_黄歆苑《泳装-蕾丝旗袍-长裙美腿》--Vol.075-写真集-48P-
+爱蜜社_黄歆苑《猫耳-性感内衣-黑丝SM》-Vol.076-写真集-68P-
 EOF;
 
 // 重命名文件夹用tujigu的名字，copy desc 和 tags，重命名thumbnail
@@ -392,14 +223,17 @@ foreach($scan as $folder_name) {
             // Gen new tags
             $tags_str = file_get_contents($origin['full_path'] . "/tags.txt");
             $tags = explode(',', $tags_str);
-            if(! in_array('MFStar', $tags) && ! in_array('mfstar', $tags)) {
-                $tags[] = 'MFStar';
+            if(! in_array('IMiss', $tags) && ! in_array('imiss', $tags)) {
+                $tags[] = 'IMiss';
+            }
+            if(! in_array( '爱蜜社', $tags ) ) {
+                $tags[] = '爱蜜社';
             }
             if(! in_array( $origin['model'], $tags ) ) {
                 $tags[] = $origin['model'];
             }
             $new_tags_str = implode(',', $tags);
-            $new_tags_str = str_replace('mfstar', 'MFStar', $new_tags_str);
+            $new_tags_str = str_replace('imiss', 'IMiss', $new_tags_str);
             echo "---- New tags: $new_tags_str \n";
             // create tags.txt
             echo "file_put_contents($the_full_path/tags.txt, $new_tags_str) \n";
@@ -418,12 +252,18 @@ foreach($scan as $folder_name) {
                     $images[] = $file;
                 }
             }
-            echo 'rename('. $the_full_path . '/' .$images[count($images) - 1] . ', ' . $the_full_path . '/thumbnail.jpg' .  "\n\n";
-            rename($the_full_path . '/' . $images[count($images) - 1] , $the_full_path . '/thumbnail.jpg');    
+            if((int)$vol > 34 && (int)$vol < 282) {
+                $thumb = $images[0];
+            }
+            else {
+                $thumb = $images[count($images) - 1];
+            }
+            echo 'rename('. $the_full_path . '/' . $thumb . ', ' . $the_full_path . '/thumbnail.jpg' .  "\n\n";
+            rename($the_full_path . '/' . $thumb , $the_full_path . '/thumbnail.jpg');    
 
             // rename current folder to the origin folder name
-            echo "rename $the_full_path to $folder_full_path/MFStar模范学院-". $vol. '-'. $origin['main'] . "\n\n";
-            rename($the_full_path, $folder_full_path . '/MFStar模范学院-' . $vol. '-'. $origin['main']);
+            echo "rename $the_full_path to $folder_full_path/IMiss爱蜜社-". $vol. '-'. $origin['main'] . "\n\n";
+            rename($the_full_path, $folder_full_path . '/IMiss爱蜜社-' . $vol. '-'. $origin['main']);
         }
    }
 }
@@ -432,38 +272,44 @@ foreach($scan as $folder_name) {
 
 function getOriginFolderByVol($vol_num) {
     global $dirs;
-    $vol_num = '第' . (int)$vol_num . '期';
-// echo "vol_num = $vol_num \n";
-    $origin_folders = '/mnt/nas/jw-photos/qqc';
+    // $vol_num = '第' . (int)$vol_num . '期';
+    // echo "vol_num = $vol_num \n";
+    $origin_folders = '/mnt/nas/jw-photos/tujigu/爱蜜社';
     // $scan = scandir($origin_folders);
     $scan = explode("\r\n", $dirs);
     $folder_info = [];
     
-    foreach($scan as $folder_name) {        
+    foreach($scan as $folder_name) {      
+        // echo "folder: $folder_name \n";  
         if (is_dir("$origin_folders/$folder_name") && $folder_name!='.' && $folder_name!='..') {
             $l_folder_name = strtolower($folder_name);
             // echo "l_folder: $l_folder_name \n";
             
             if(strpos($l_folder_name, $vol_num) !== false) {
                 $l_folder_name = str_replace('---','-',$l_folder_name);
+                $l_folder_name = str_replace('--','-',$l_folder_name);
                 $l_folder_name = str_replace('《','-',$l_folder_name);
                 $l_folder_name = str_replace('》','-',$l_folder_name);
                 $l_folder_name = str_replace('_-','_',$l_folder_name);
                 $folder_info['name'] = $l_folder_name;
                 $folder_info['full_path'] = $origin_folders  . '/' . $folder_name;
 
-                $tt = find_between($l_folder_name, '期', '-');
-                // if(str_starts_with($tt[0], 'vol.')) {
-                //     $ss = find_between($l_folder_name, '-', '-');
-                //     $folder_info['model'] = $ss[0];
-                //     $yy = find_between($l_folder_name, '-', 'p-');
-                //     $folder_info['main'] = $yy[0].'P';
-                // }
-                // else {
-                    $ss = explode('大尺度套图', $tt[0]);
-                    $folder_info['model'] = $ss[0];
-                    $folder_info['main'] = $tt[0];
-                // }
+                $tt = find_between($l_folder_name, '爱蜜社_', '-');
+                if(str_starts_with($tt[0], 'vol.')) {
+                    $ss = explode('-', $l_folder_name);
+                    $folder_info['model'] = $ss[1];
+                    $yy = find_between($l_folder_name, '-', 'p-');
+                    $main_arr = explode('-', $yy[0]);
+                    array_pop($main_arr);
+                    $main = implode('-', $main_arr);
+                    $folder_info['main'] = $main;
+                }
+                else {
+                    $folder_info['model'] = $tt[0];
+                    $yy = find_between($l_folder_name, '爱蜜社_', '-vol');
+                    $main = trim($yy[0], '-');
+                    $folder_info['main'] = $main;
+                }
             }
         }
     }

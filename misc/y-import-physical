@@ -1,0 +1,14 @@
+#!/bin/bash
+
+wget -O /tmp/zzz_import.txt https://docs.google.com/spreadsheets/d/e/2PACX-1vQUI_jHvJohCwrnu_GA-j-9csTmckpREjkSfSrwgvU7wjQ8sDOd6UT-n6YK555QfLMK3h3g6g4FS9Hx/pub?output=csv
+
+while IFS= read -r line; do
+    find3=","
+    replace3=""
+    cmd=${line//$find3/$replace3}
+    echo '-----------------------------'
+    echo "Running: $cmd"
+    eval "$cmd"
+    echo '-----------------------------'
+    echo ''
+done < /tmp/zzz_import.txt

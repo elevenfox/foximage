@@ -81,5 +81,19 @@ $tags_str = implode(',', $tag_arr);
 echo date('Y-m-d H:i:s') . ' - ' . "-- tags: $tags_str \n";
 file_put_contents($folder_full_path.'/tags.txt', $tags_str);
 
-// Create an empty dl.txt file for download_url
-file_put_contents($folder_full_path.'/dl.txt', '');
+// Create dl.txt file for download_url
+$tbox_file = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTyEtPWDpsqvn4qIEvwmk4__1fTjBTiREPcleN-crVfz4U0PDxBirWx9Vr4gqHlJE9mK5JEyugpbw6S/pub?output=csv';
+$tbox_c = file_get_contents($tbox_file);
+$tbox_list = [];
+$lines = explode("\n", $tbox_c);
+foreach($lines as $l) {
+    $l = str_replace(',', ' ', $l);
+    $l = preg_replace('!\s+!', ' ', $l);
+    $l = str_replace(' ', ',', $l);
+    $l_arr = explode(',', $l);
+    $k = $l_arr[0];
+    $v = empty($l_arr[1])?'':$l_arr[1];
+    $tbox_list[$k] = $v;
+}
+$dl = empty($tbox_list[$folder_name]) ? '' : $tbox_list[$folder_name];
+file_put_contents($folder_full_path.'/dl.txt', $dl);

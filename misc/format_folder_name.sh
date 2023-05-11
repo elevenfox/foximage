@@ -33,6 +33,7 @@ format_folder_name () {
   new_name=${old_name//XIUREN/XiuRen}
   new_name=${new_name//xiuren/XiuRen}
   new_name=${new_name//Xiuren/XiuRen}
+  new_name=${new_name//XiuRen秀人网/XiuRen}
   new_name=${new_name//NO./No.}
   new_name=${new_name//N0./No.}
   new_name=${new_name//YouMi Vol./YouMi尤蜜荟-}

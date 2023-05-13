@@ -96,4 +96,5 @@ foreach($lines as $l) {
     $tbox_list[$k] = $v;
 }
 $dl = empty($tbox_list[$folder_name]) ? '' : $tbox_list[$folder_name];
+echo date('Y-m-d H:i:s') . ' - ' . "-- download: $dl \n";
 file_put_contents($folder_full_path.'/dl.txt', $dl);

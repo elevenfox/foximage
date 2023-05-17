@@ -19,6 +19,7 @@ if(empty($folder_full_path)) {
     echo "---- Must have a full folder path as the param! \n";
     exit;
 }
+$folder_full_path = str_replace(array("\r\n", "\r", "\n", "\t"), '', $folder_full_path);
 ###################### End of define variables ################
 
 

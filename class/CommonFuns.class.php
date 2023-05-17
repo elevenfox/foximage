@@ -422,7 +422,7 @@ function buildPhysicalPath($file_row, $file_root='') {
             $physical_path = $file_root . $file_row['source'] . '/' . cleanStringForFilename($org) . '/'. cleanStringForFilename($file_row['title']);
         }
     }
-    elseif ($file_row['source'] == 'zac') {
+    elseif ($file_row['source'] == 'zac' || $file_row['source'] == 'japan') {
         $physical_path = $file_root . $file_row['source_url'];
     } 
     else {

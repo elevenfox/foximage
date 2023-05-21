@@ -5,8 +5,13 @@ wget -O /tmp/zzz_import.txt https://docs.google.com/spreadsheets/d/e/2PACX-1vQUI
 while IFS= read -r line; do
     ## remove , in the command line
     find3=","
-    replace3=""
+    replace3=" "
     cmd=${line//$find3/$replace3}
+
+    ## Replace "/ " with only / in the command line
+    find5="/ "
+    replace5="/"
+    cmd=${cmd//$find5/$replace5}
 
     ## 3. Trim leading whitespaces 
     cmd="${cmd##*( )}"

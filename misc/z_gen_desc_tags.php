@@ -69,8 +69,8 @@ if(empty($tags_str)) {
     elseif(substr( strtolower($folder_name), 0, 5 ) === "tukmo") {
         $tags_str = 'Tukmo,兔几盟,波萝社,' . $terms[2];
     }
-    elseif(substr( strtolower($folder_name), 0, 4 ) === "aiss") {
-        $tags_str = 'AISS,爱丝,无圣光';
+    elseif(substr( strtolower($folder_name), 0, 6 ) === "mfstar") {
+        $tags_str = 'MFStar,模范学院,' . $terms[2];
     }
     else {
         $tags_str = $terms[0];

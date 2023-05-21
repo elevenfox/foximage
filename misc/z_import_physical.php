@@ -132,9 +132,9 @@ $new_file_name_arr = [];
 foreach ($phy_images as $f) {
     $postfix = substr(md5(microtime()),rand(0,26),5);
     $new_file_name = sprintf('%03d',$i) . '-'.$postfix.'.jpg';
-    echo date('Y-m-d H:i:s') .  '----- change '.$f." to ".$new_file_name;
+    //echo date('Y-m-d H:i:s') .  '----- change '.$f." to ".$new_file_name;
     $res = rename($physical_path.'/'.$f, $physical_path.'/'.$new_file_name);
-    echo $res ? " 1 \n" : " 0 \n";
+    echo $res ? " 1-" : " 0-";
     $new_file_name_arr[] = $new_file_name;
     $i++;
 }

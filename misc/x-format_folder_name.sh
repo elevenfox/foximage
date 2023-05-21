@@ -41,6 +41,8 @@ format_folder_name () {
   new_name=${new_name//MyGirl Vol./MyGirl美媛馆-}
   new_name=${new_name//HuaYang Vol./HuaYang花漾-}
   new_name=${new_name//HuaYan Vol./HuaYan花の颜-}
+  new_name=${new_name//MFStar Vol./MFStar模范学院-}
+  new_name=${new_name//MFStar-Vol./MFStar模范学院-}
   new_name=${new_name//\'/-}
   new_name=${new_name//\"/-}
   new_name=${new_name// - /-}
@@ -50,6 +52,13 @@ format_folder_name () {
   new_name=${new_name//)/-}
   new_name=${new_name//  /-}
   new_name=${new_name// /-}
+  new_name=${new_name//\&/-}
+  new_name=${new_name//!/-}
+  new_name=${new_name//\;/-}
+  new_name=${new_name//\#/-}
+  new_name=${new_name//+/-}
+  new_name=${new_name//\[/-}
+  new_name=${new_name//\]/-}
   new_name=${new_name//--/-}
 
   echo ${new_name}

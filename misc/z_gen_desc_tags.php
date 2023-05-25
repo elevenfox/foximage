@@ -38,6 +38,24 @@ if(empty($desc)) {
 
     $desc .= '。欢迎下载高清无水印套图。';
 }
+else {
+    $desc = str_replace(' 生日','生日', $desc);
+    $pos = strpos($desc, '生日');
+    if($pos !== false) {
+        $c = $desc[$pos-1];
+        if ($c != "\n" && $c != "\rn" && $c != "\r") {
+            $desc = str_replace('生日',"\n生日", $desc);
+        }
+    }
+    $desc = str_replace(' 罩杯','罩杯', $desc);
+    $pos = strpos($desc, '罩杯');
+    if($pos !== false) {
+        $c = $desc[$pos-1];
+        if ($c != "\n" && $c != "\rn" && $c != "\r") {
+            $desc = str_replace('罩杯',"\n罩杯", $desc);
+        }
+    }
+}
 echo date('Y-m-d H:i:s') . ' - ' . "-- desc: $desc \n";
 file_put_contents($folder_full_path . '/desc.txt', $desc);
 
@@ -63,14 +81,14 @@ if(empty($tags_str)) {
     elseif(substr( strtolower($folder_name), 0, 7 ) === "huayang") {
         $tags_str = 'HuaYang,花漾,' . $terms[2];
     }
-    elseif(substr( strtolower($folder_name), 0, 6 ) === "bololi") {
-        $tags_str = 'BoLoli,波萝社,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 5 ) === "tukmo") {
-        $tags_str = 'Tukmo,兔几盟,波萝社,' . $terms[2];
+    elseif(substr( strtolower($folder_name), 0, 5 ) === "youwu") {
+        $tags_str = 'YouWu,尤物馆,' . $terms[2];
     }
     elseif(substr( strtolower($folder_name), 0, 6 ) === "mfstar") {
         $tags_str = 'MFStar,模范学院,' . $terms[2];
+    }
+    elseif(substr( strtolower($folder_name), 0, 5 ) === "imiss") {
+        $tags_str = 'IMiss,爱蜜社,' . $terms[2];
     }
     else {
         $tags_str = $terms[0];

@@ -138,6 +138,7 @@ foreach ($phy_images as $f) {
     $new_file_name_arr[] = $new_file_name;
     $i++;
 }
+echo date('Y-m-d H:i:s') . "------ done renaming images. \n";
 // remove postfix
 // $i = 1;
 // $new_file_name_arr2 = [];

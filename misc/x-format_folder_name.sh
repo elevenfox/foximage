@@ -43,6 +43,7 @@ format_folder_name () {
   new_name=${new_name//HuaYan Vol./HuaYan花の颜-}
   new_name=${new_name//MFStar Vol./MFStar模范学院-}
   new_name=${new_name//MFStar-Vol./MFStar模范学院-}
+  new_name=${new_name//IMiss Vol./IMiss爱蜜社-}
   new_name=${new_name//\'/-}
   new_name=${new_name//\"/-}
   new_name=${new_name// - /-}

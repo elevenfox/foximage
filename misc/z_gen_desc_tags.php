@@ -34,7 +34,7 @@ $desc = file_get_contents($folder_full_path.'/desc.txt');
 if(empty($desc)) {
     $desc = str_replace('-', ' ', $folder_name);
     // 特殊处理 xiuren
-    $desc = str_replace('XiuRen', 'XiuRen秀人网', $desc);
+    if(strpos($desc, 'XiuRen秀人网') === false) $desc = str_replace('XiuRen', 'XiuRen秀人网', $desc);
 
     $desc .= '。欢迎下载高清无水印套图。';
 }
@@ -60,41 +60,58 @@ echo date('Y-m-d H:i:s') . ' - ' . "-- desc: $desc \n";
 file_put_contents($folder_full_path . '/desc.txt', $desc);
 
 // If no tags.txt, generate tags based on path and folder name
-$tags_str = file_get_contents($folder_full_path.'/tags.txt');
-if(empty($tags_str)) {
-    // Split folder name
-    $terms = explode('-', $folder_name);
-    
-    // 特殊处理 xiuren
-    if(substr( strtolower($folder_name), 0, 6 ) === "xiuren") {
-        $tags_str = 'XiuRen,秀人网,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 5 ) === "youmi") {
-        $tags_str = 'YouMi,尤蜜荟,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 7 ) === "xingyan") {
-        $tags_str = 'XingYan,星颜社,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 6 ) === "mygirl") {
-        $tags_str = 'MyGirl,美媛馆,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 7 ) === "huayang") {
-        $tags_str = 'HuaYang,花漾,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 5 ) === "youwu") {
-        $tags_str = 'YouWu,尤物馆,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 6 ) === "mfstar") {
-        $tags_str = 'MFStar,模范学院,' . $terms[2];
-    }
-    elseif(substr( strtolower($folder_name), 0, 5 ) === "imiss") {
-        $tags_str = 'IMiss,爱蜜社,' . $terms[2];
-    }
-    else {
-        $tags_str = $terms[0];
-    }
+$tags_str = file_exists($folder_full_path.'/tags.txt') ? file_get_contents($folder_full_path.'/tags.txt') : '';
+$tags_str = str_replace('，',',',$tags_str);
+// Split folder name
+$terms = explode('-', $folder_name);
+// 特殊处理
+if(substr( strtolower($folder_name), 0, 6 ) === "xiuren") {
+    [$org_name_en, $org_name, $model_name] = ['XiuRen', '秀人网', $terms[2]];
 }
-$tag_arr = array_filter(array_unique(array_merge(explode(',', $tags_str), explode(',', $common_tags))));
+elseif(substr( strtolower($folder_name), 0, 5 ) === "youmi") {
+    [$org_name_en, $org_name, $model_name] = ['YouMi', '尤蜜荟', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 7 ) === "xingyan") {
+    [$org_name_en, $org_name, $model_name] = ['XingYan', '星颜社', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 6 ) === "mygirl") {
+    [$org_name_en, $org_name, $model_name] = ['MyGirl', '美媛馆', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 7 ) === "huayang") {
+    [$org_name_en, $org_name, $model_name] = ['HuaYang', '花漾', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 5 ) === "youwu") {
+    [$org_name_en, $org_name, $model_name] = ['YouWu', '尤物馆', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 6 ) === "mfstar") {
+    [$org_name_en, $org_name, $model_name] = ['MFStar', '模范学院', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 5 ) === "imiss") {
+    [$org_name_en, $org_name, $model_name] = ['IMiss', '爱蜜社', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 6 ) === "miitao") {
+    [$org_name_en, $org_name, $model_name] = ['MiiTao', '蜜桃社', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 5 ) === "girlt") {
+    [$org_name_en, $org_name, $model_name] = ['Girlt', '果团网', $terms[2]];
+}
+elseif(substr( strtolower($folder_name), 0, 6 ) === "qingdo") {
+    [$org_name_en, $org_name, $model_name] = ['Qingdouke', '青豆客', $terms[1]];
+}
+else {
+    [$org_name_en, $org_name, $model_name] = ['', '', $terms[0]];
+}
+$tags = explode(',', $tags_str);
+if(! in_array($org_name_en, $tags) && ! in_array(strtolower($org_name_en), $tags)) {
+    $tags[] = $org_name_en;
+}
+if(! in_array( $org_name, $tags ) ) {
+    $tags[] = $org_name;
+}
+if(! in_array( $model_name, $tags ) ) {
+    $tags[] = $model_name;
+}
+$tag_arr = array_filter(array_unique(array_merge(explode(',', $tags_str), explode(',', $common_tags), $tags)));
 $tags_str = implode(',', $tag_arr);
 echo date('Y-m-d H:i:s') . ' - ' . "-- tags: $tags_str \n";
 file_put_contents($folder_full_path.'/tags.txt', $tags_str);

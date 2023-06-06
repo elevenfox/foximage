@@ -95,8 +95,8 @@ if(!file_exists($thumbnail_full_path)) {
 else {
     // Check thumbnail size, if height bigger than 500px, then resize it
     list($t_width, $t_height) = getimagesize($thumbnail_full_path);
-    echo "width: " . $t_width . "<br />";
-    echo "height: " .  $t_height;
+    // echo "width: " . $t_width . "<br />";
+    // echo "height: " .  $t_height;
     if($t_height > 500) {
         // $t_image = imagecreatefromjpeg($thumbnail_full_path);
         // $imgResized = imagescale($t_image , 333, -1);
@@ -121,7 +121,7 @@ foreach ($files as $f) {
 }
 
 echo date('Y-m-d H:i:s') . '----- physical image count = ' . $num_images . "\n";
-if($num_images <=5) {
+if($num_images <5) {
     echo date('Y-m-d H:i:s') . " - Must have more than 5 images to create an album! \n";
     exit;
 }
@@ -138,6 +138,7 @@ foreach ($phy_images as $f) {
     $new_file_name_arr[] = $new_file_name;
     $i++;
 }
+echo "\n";
 echo date('Y-m-d H:i:s') . "------ done renaming images. \n";
 // remove postfix
 // $i = 1;

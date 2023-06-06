@@ -1,122 +1,99 @@
 <?php
 
 $dirs = <<<EOF
-御女郎_Annie安妮《玲珑美人》-Vol.084-写真集-49P-
-御女郎_Annie安妮《美乳翘臀下修长玉腿异常诱人》-Vol.096-写真集-48P-
-御女郎_Annie安妮《美胸翘臀下的修长玉腿》-Vol.091-写真集-53P-
-御女郎_K8傲娇萌萌Vivian《泳装-高叉-湿身》-Vol.011-写真集-46P-
-御女郎_Meow喵喵哒《圣诞写真特辑》-VOL.008-写真集-50P-
-御女郎_Meow喵喵哒《地铁写真特辑》-VOL.023-写真集-53P-
-御女郎_Sugar梁莹《诱人激凸、情迷红酒诱惑、情趣内衣》-VOL.007-写真集-47P-
-御女郎_Sukki《丰乳肥臀绝美火辣身材》-Vol.053-写真集-52P-
-御女郎_Sukki《丰乳肥臀绝美诱惑》-Vol.042-写真集-46P-
-御女郎_Ting婷婷《172长腿美人，户外大尺度露出》-Vol.038-写真集-31P-
-御女郎_Ting婷婷《美乳美臀美腿魅力诱惑》-Vol.062-写真集-51P-
-御女郎_UU阿文《激凸、湿身精彩尺度诱惑》-VOL.009-写真集-46P-
-御女郎_丁筱南《旗袍-性感礼服-丁字裤》-VOL.004-写真集-49P-
-御女郎_仓井优香《低涌之夏主题》-VOL.051-写真集-57P-
-御女郎_仓井优香《户外露出清新养眼》-Vol.090-写真集-50P-
-御女郎_仓井优香《户外露出狂野》-Vol.076-写真集-61P-
-御女郎_仓井优香《甜美童颜下美乳翘臀》-Vol.085-写真集-49P-
-御女郎_仓井优香《真空演绎湿身诱惑》-VOL.046-写真集-41P-
-御女郎_仓井优香《神似苍老师的日系美女》-VOL.027-写真集-57P-
-御女郎_仓井优香《童颜美乳，日系清纯少女，户外露出》-Vol.039-写真集-49P-
-御女郎_仓井优香《美乳童颜少女》-Vol.066-写真集-52P-
-御女郎_仓井优香《运动特辑》-VOL.033-写真集-50P-
-御女郎_仓井优香《青春无敌气息的美乳童颜少女》-Vol.071-写真集-43P-
-御女郎_仓井优香《青春无敌，美乳美臀》-VOL.029-写真集-47P-
-御女郎_健身美人-媛美人-Vol.043-写真集-49P-
-御女郎_冰冰儿《秀丽美腿与丰乳美臀》-Vol.103-写真集-48P-
-御女郎_冰冰儿《秀丽美腿与美臀》-Vol.089-写真集-52P-
-御女郎_冰冰儿《精致内衣下秀丽美腿与丰乳美臀》-Vol.098-写真集-46P-
-御女郎_厉雯娜《性感轻熟女》-VOL.044-写真集-44P-
-御女郎_啊宝宝《纯情少女，丰乳肥臀》-VOL.025-写真集-53P-
-御女郎_夏妍《巨乳肥臀，风情万种撩人心魄》-Vol.037-写真集-54P-
-御女郎_夏小秋秋秋《黑丝美腿诱惑与真空内衣尺度福利》-VOL.020-写真集-46P-
-御女郎_夏雨涵《熟女知性，巨乳丰臀》-VOL.002-写真集-43P-
-御女郎_夏雨涵、韩恩熙《双人拉拉》-VOL.022-写真集-40P-
-御女郎_婕西儿jessie《巨乳丽人羊城夜景露出》-Vol.059-写真集-49P-
-御女郎_婕西儿jessie《巨乳高挑，性感狂野》-VOL.030-写真集-48P-
-御女郎_婕西儿jessie《浴室比基尼，外景露出和新春主题》-VOL.010-写真集-48P-
-御女郎_媛美人《工装出动性感狂野》-Vol.077-写真集-50P-
-御女郎_媛美人《甜美佳人，丰乳肥臀，真空演绎民国风》-Vol.052-写真集-51P-
-御女郎_媛美人《甜美校服系列-情趣SM内衣》-Vol.061-写真集-48P-
-御女郎_完美美女-蔡乐儿《日韩式性感，青春逼人》-VOL.024-写真集-52P-
-御女郎_小子怡Alice《大胆丝袜外拍》-Vol.114-写真集-47P-
-御女郎_小子怡Alice《室外泳池内衣湿身系列》-Vol.117-写真集-31P-
-御女郎_小子怡Alice《泳池系列》-Vol.119-写真集-22P-
-御女郎_岑雨桥《巨乳童颜，浴室湿身，丝袜美腿诱惑》-VOL.017-写真集-54P-
-御女郎_岑雨桥《混血美人，童颜巨乳》-VOL.031-写真集-53P-
-御女郎_岑雨桥《粉红圣诞主题系列》-VOL.003-写真集-53P-
-御女郎_张花花《皮草网袜熟女》-Vol.118-写真集-40P-
-御女郎_性感尤物-丁筱南《巨乳美腿，风姿绰约妩媚动人》-VOL.015-写真集-41P-
-御女郎_性感御姐-筱慧icon《美乳美腿性感撩人》-Vol.073-写真集-47P-
-御女郎_日系清纯美女-苍井优香《湿身海岸露出》-Vol.058-写真集-49P-
-御女郎_李可可《巨乳美腿，真空演绎》-Vol.063-写真集-51P-
-御女郎_李可可《秘书OL的惹火魅惑》-Vol.080-写真集-49P-
-御女郎_李可可《童颜巨乳，F乳真空演绎》-Vol.070-写真集-46P-
-御女郎_桃子marry《韵味镂空旗袍与诱惑蕾丝内衣》-Vol.093-写真集-46P-
-御女郎_梅哥《真空演绎美乳美臀诱惑》-VOL.047-写真集-53P-
-御女郎_梅哥《真空演绎美颜美乳美腿翘臀》-Vol.056-写真集-50P-
-御女郎_梅哥《美乳美臀美腿的诱惑》-Vol.067-写真集-44P-
-御女郎_梦倩《巨乳风情诱惑》-VOL.050-写真集-39P-
-御女郎_梦倩《美腿巨乳，性感诱人》-VOL.034-写真集-37P-
-御女郎_梦倩《美腿美乳精彩诱惑》-Vol.057-写真集-42P-
-御女郎_模特梅哥《清新可人，美乳美腿，时尚性感》-VOL.026-写真集-58P-
-御女郎_模特红艳《高颜值巨乳丰臀》-VOL.035-写真集-51P-
-御女郎_欧尼anne《性感黑丝美腿，诱惑湿身激凸》-VOL.014-写真集-34P-
-御女郎_欧尼anne《清新秀丽，无敌美腿女神》-VOL.006-写真集-46P-
-御女郎_混血演员-安娜金《巨乳丰臀诱惑无限》-VOL.021-写真集-37P-
-御女郎_潘琳琳ber《丰满巨乳》-Vol.116-写真集-43P-
-御女郎_潘琳琳ber《巨乳毛衣尤物》-Vol.113-写真集-43P-
-御女郎_潘琳琳ber《性感学生装制服诱惑》-Vol.110-写真集-50P-
-御女郎_潘琳琳ber《性感空乘制服诱惑》-Vol.107-写真集-53P-
-御女郎_王婉悠Queen《浴室丰乳肥臀》-Vol.064-写真集-47P-
-御女郎_王沫儿SaSa《圣诞特辑》-VOL.005-写真集-52P-
-御女郎_王沫儿SaSa《激情写真》-VOL.016-写真集-51P-
-御女郎_筱慧cindy《性感枪械COS系列》-Vol.104-写真集-50P-
-御女郎_纯美少女-萌宝儿BoA《COS特辑》-Vol.036-写真集-51P-
-御女郎_《美貌双妹户外露出，拉拉激情视觉诱惑》-VOL.049-写真集-48P-
-御女郎_艾小青《丝袜美腿系列，真空演绎》-Vol.105-写真集-44P-
-御女郎_艾小青《，妖艳白狐外拍系列，真空演绎》-Vol.099-写真集-49P-
-御女郎_艾小青《户外车拍丝袜美腿》-Vol.088-写真集-51P-
-御女郎_艾小青《户外露天拍摄系列，真空演绎》-Vol.108-写真集-48P-
-御女郎_艾小青《浴池高叉尤物》-Vol.115-写真集-48P-
-御女郎_艾小青《真空演绎，狂野妖娆》-Vol.120-写真集-45P-
-御女郎_艾小青《红发女郎COS》-Vol.112-写真集-50P-
-御女郎_艾小青《黑丝美腿外拍系列》-Vol.102-写真集-38P-
-御女郎_艾小青《黑丝美腿，真空户外露出》-Vol.092-写真集-40P-
-御女郎_艾小青《黑丝美腿，真空户外露出》-Vol.097-写真集-10P-
-御女郎_苍井优香《清纯甜美草帽少女》-Vol.055-写真集-53P-
-御女郎_萌宝儿BoA《守望先锋Dva特辑》-Vol.081-写真集-46P-
-御女郎_萌宝儿BoA《巨乳童颜演俏皮性感服饰》-Vol.106-写真集-53P-
-御女郎_萌宝儿BoA《巨乳童颜演绎最萌武装》-Vol.082-写真集-46P-
-御女郎_萌宝儿BoA《浴室黑丝湿身》-VOL.013-写真集-42P-
-御女郎_萌宝儿BoA《海岛户外露出》-Vol.054-写真集-50P-
-御女郎_萌宝儿BoA《真空演绎丰乳肥臀与黑丝美腿诱惑》-Vol.111-写真集-48P-
-御女郎_萌宝儿BoA《纯美高颜值美女》-VOL.045-写真集-55P-
-御女郎_萌宝儿BoA《贴心女仆私房诱惑》-Vol.087-写真集-49P-
-御女郎_萌宝儿BoA《贴心女仆私房诱惑》-Vol.094-写真集-37P-
-御女郎_萌宝儿BoA《销魂酥胸，性感翘臀》-VOL.001-写真集-49P-
-御女郎_萌宝儿BoA《青春纯美与荒野海边户外露出》-Vol.074-写真集-50P-
-御女郎_萌宝儿BoA《黑白不同的诱人内衣美轮美奂》-Vol.100-写真集-50P-
-御女郎_萌汉药baby《巨乳肥臀视觉冲击》-Vol.079-写真集-49P-
-御女郎_萌汉药baby《惹火姿势性感撩人》-Vol.069-写真集-53P-
-御女郎_蔡乐儿《吃鸡特辑》-Vol.065-写真集-49P-
-御女郎_蔡乐儿《美胸美腿，修长丝足》-VOL.018-写真集-57P-
-御女郎_邝凯欣bbbbaby《丰乳肥臀，温柔秀美》-VOL.028-写真集-49P-
-御女郎_雪儿Cier《情趣皮衣制服系列，超诱惑的丰乳肥臀》-Vol.109-写真集-48P-
-御女郎_雪儿Cier《艳艳动人甜美少妇》-Vol.086-写真集-46P-
-御女郎_雪儿Cier《艳艳动人甜美少妇》-Vol.095-写真集-40P-
-御女郎_雪儿Cier《超诱惑的丰乳肥臀》-Vol.101-写真集-47P-
-御女郎_雪千寻-amp-amp-amp-雪千紫《丰乳肥臀姐妹花的诱惑》-Vol.040-写真集-49P-
-御女郎_雪千寻《妖媚熟女，巨乳肥臀》-VOL.048-写真集-47P-
-御女郎_雪千寻《成熟少妇，丰乳肥臀》-Vol.083-写真集-48P-
-御女郎_雪千寻《知性少妇，丰乳肥臀，丝腿SM》-VOL.032-写真集-52P-
-御女郎_雪千寻《风骚少妇，丰乳肥臀》-Vol.075-写真集-54P-
-御女郎_韩恩熙《激凸真空的迷人巨乳》-Vol.012-写真集-45P-
-御女郎_高颜值美女-叶佳颐-VOL.019-写真集-56P-
-御女郎_高颜值美女-啊宝宝《蕾丝内衣-兔女郎》-Vol.041-写真集-54P-
+尤美_M梦baby《一日女友》-Vol.083-写真集-19P-
+尤美_M梦baby《俄罗斯雄起》-Vol.020-写真集-12P-
+尤美_M梦baby《倾城丽人》-Vol.100-写真集-5P-
+尤美_M梦baby《女友の角色扮演》-Vol.043-写真集-18P-
+尤美_M梦baby《情欲浴室》-Vol.090-写真集-5P-
+尤美_M梦baby《蕾丝女神》-Vol.039-写真集-27P-
+尤美_亿美《粉红制服诱惑》-Vol.002-写真集-18P-
+尤美_付艺轩《粉嫩俏佳人》-Vol.007-写真集-25P-
+尤美_何嘉颖《真空诱惑》-Vol.070-写真集-17P-
+尤美_何嘉颖《绝色佳丽》-Vol.055-写真集-18P-
+尤美_十三姨《爆乳娇娘》-NO.097-写真集-5P-
+尤美_卓娅祺《女神の内衣秀》-Vol.081-写真集-19P-
+尤美_卓娅祺《恋与卓娅祺》-Vol.050-写真集-28P-
+尤美_卓娅祺《真空厨娘》-Vol.063-写真集-30P-
+尤美_卓娅祺《精灵尤物》-Vol.088-写真集-5P-
+尤美_叶子《性感猫娘》-Vol.064-写真集-20P-
+尤美_叶子《黑丝御姐》-Vol.072-写真集-5P-
+尤美_咪咪《天生尤物》-Vol.092-写真集-5P-
+尤美_咪咪《玲珑娇妻咪》-Vol.102-写真集-5P-
+尤美_喵星人《可爱の女友》-Vol.040-写真集-25P-
+尤美_喵星人《娇艳の小球迷》-Vol.016-写真集-18P-
+尤美_喵星人《猫系女友》-Vol.032-写真集-17P-
+尤美_团团《居家少妇》-Vol.041-写真集-23P-
+尤美_团团《睡美人》-Vol.031-写真集-24P-
+尤美_团团《雄鹰之恋》-Vol.018-写真集-8P-
+尤美_夏妍《蕾丝惑人心》-Vol.005-写真集-22P-
+尤美_夜夜《闺房私恋》-Vol.003-写真集-22P-
+尤美_大萱萱《球场童话》-Vol.029-写真集-20P-
+尤美_大萱萱《黑丝女仆》-Vol.038-写真集-5P-
+尤美_小KK《绝美人妻》-Vol.076-写真集-29P-
+尤美_小热巴《东欧铁骑》-Vol.022-写真集-12P-
+尤美_小热巴《旗袍少妇》-Vol.036-写真集-16P-
+尤美_小热巴《红粉佳人》-Vol.079-写真集-26P-
+尤美_小热巴《黑丝尤物》-Vol.061-写真集-28P-
+尤美_尹菲《世界杯好球》-Vol.013-写真集-15P-
+尤美_尹菲《夜芳菲》-Vol.085-写真集-22P-
+尤美_尹菲《燃情少妇》-Vol.065-写真集-5P-
+尤美_尹菲《磨人の妖精》-Vol.049-写真集-16P-
+尤美_尹菲《野蛮生长》-Vol.030-写真集-15P-
+尤美_尹菲《随性の诱惑》-Vol.089-写真集-5P-
+尤美_张雨萌《真空御姐》-Vol.101-写真集-5P-
+尤美_易阳《办公室的诱惑》-Vol.010-写真集-5P-
+尤美_易阳《铁血尤物》-Vol.028-写真集-22P-
+尤美_易阳《霸屏乳神》-Vol.054-写真集-28P-
+尤美_林一《御姐风情》-Vol.091-写真集-5P-
+尤美_林一《邻居姐姐》-Vol.001-写真集-30P-
+尤美_柠檬《妖精-amp-amp-花蕊》-Vol.004-写真集-21P-
+尤美_柠檬《水嫩柠檬》-Vol.062-写真集-30P-
+尤美_模特Ada《艳遇桃花源》-Vol.009-写真集-25P-
+尤美_模特MI《叛逆青春期》-Vol.006-写真集-25P-
+尤美_沈蜜桃《吃鸡の蜜桃》-Vol.051-写真集-20P-
+尤美_洛洛-《白玉酥胸》-NO.096-写真集-5P-
+尤美_温心怡《捆绑の诱惑》-Vol.035-写真集-30P-
+尤美_温心怡《激情法兰西》-Vol.015-写真集-30P-
+尤美_温心怡《绑缚の情趣》-Vol.077-写真集-25P-
+尤美_爱丽莎《初夏の小短裙》-Vol.011-写真集-28P-
+尤美_爱丽莎《比利时狂欢》-Vol.014-写真集-8P-
+尤美_王雨纯《美酒雨纯》-Vol.044-写真集-27P-
+尤美_王雨纯《荷尔蒙军团》-Vol.025-写真集-20P-
+尤美_王雨纯《闺房私雨》-Vol.099-写真集-5P-
+尤美_筱慧《佳人如棕》-Vol.024-写真集-21P-
+尤美_筱慧《勾魂女秘书》-Vol.067-写真集-19P-
+尤美_筱慧《清醇尤物》-Vol.021-写真集-13P-
+尤美_筱慧《玉女湿身》-Vol.080-写真集-5P-
+尤美_筱慧《私房尤物》-Vol.037-写真集-22P-
+尤美_绯月樱-Cherry《动情の夏天》-Vol.033-写真集-30P-
+尤美_绯月樱-Cherry《学妹の情窦初开》-Vol.066-写真集-23P-
+尤美_绯月樱-Cherry《巨臀妖精》-Vol.017-写真集-25P-
+尤美_绯月樱-Cherry《情迷万圣节》-Vol.074-写真集-5P-
+尤美_绯月樱-Cherry《浴室俏佳人》-Vol.045-写真集-20P-
+尤美_绯月樱-Cherry《纯白蕾丝》-Vol.027-写真集-30P-
+尤美_绯月樱-Cherry《绝色尤物》-Vol.053-写真集-17P-
+尤美_艺轩-amp-amp-喵星人《女女情深》-Vol.047-写真集-29P-
+尤美_艺轩-amp-amp-喵星人《山中奇遇》-Vol.048-写真集-19P-
+尤美_艺轩-amp-amp-喵星人《洞房花烛》-Vol.046-写真集-27P-
+尤美_艺轩《御姐范蕾丝》-Vol.084-写真集-20P-
+尤美_艺轩《樱花武者》-Vol.023-写真集-23P-
+尤美_艺轩《欲火燃情美少妇》-Vol.068-写真集-26P-
+尤美_艺轩《花仙私语》-Vol.026-写真集-22P-
+尤美_艾小青《倾城佳人》-NO.094-写真集-5P-
+尤美_艾小青《尤物春心》-Vol.059-写真集-5P-
+尤美_苏苏《媚娘进行时》-Vol.056-写真集-25P-
+尤美_陆梓琪《少女多情》-Vol.078-写真集-20P-
+尤美_陈圆圆-amp-amp-何嘉颖《圣诞夜，春意生》-NO.095-写真集-5P-
+尤美_陈圆圆《情迷健身房》-Vol.082-写真集-27P-
+尤美_陈圆圆《美乳佳人》-Vol.073-写真集-28P-
+尤美_陈宇曦《初恋私房》-Vol.060-写真集-26P-
+尤美_露露小喵《风情美人》-Vol.093-写真集-5P-
+尤美_黄依婷《春色挡不住》-Vol.008-写真集-25P-
+尤美_黄依婷《诱惑的艺术》-Vol.052-写真集-25P-
+尤美_黄楽然《皮鞭女王》-Vol.034-写真集-23P-
+尤美_黄楽然《致命の黄玫瑰》-Vol.019-写真集-21P-
+尤美_黄金宝儿《闪光少女》-NO.098-写真集-5P-
 EOF;
 
 // 重命名文件夹用tujigu的名字，copy desc 和 tags，重命名thumbnail
@@ -152,8 +129,8 @@ if(empty($folder_full_path)) {
 }
 
 $dryrun = 0;
-$org_name = '御女郎';
-$org_name_en = 'DKGirl';
+$org_name = '尤美';
+$org_name_en = 'YouMei';
 
 $scan = scandir($folder_full_path);
 foreach($scan as $folder_name) {
@@ -163,11 +140,11 @@ foreach($scan as $folder_name) {
         echo "-- Current folder: $folder_name \n";
         // Get cuurent folder vol number
         $l_folder_name = strtolower($folder_name);
-        //$v_arr = explode(' ',$l_folder_name);
+        // $v_arr = explode(' ',$l_folder_name);
         $v_arr = explode('-',$l_folder_name);
         $vol = $v_arr[1];
 
-        $vol = str_replace('vol.', '', $vol);
+        $vol = str_replace('no.', '', $vol);
         // Go to origin path to get folder name with the same vol num
         $origin = getOriginFolderByVol($vol);
         echo print_r($origin,1) . "\n"; 
@@ -213,7 +190,7 @@ foreach($scan as $folder_name) {
             echo "---- New tags: $new_tags_str \n";
             // create tags.txt
             echo "file_put_contents($the_full_path/tags.txt, $new_tags_str) \n";
-            // if(!$dryrun) file_put_contents($the_full_path.'/tags.txt', $new_tags_str);
+            if(!$dryrun) file_put_contents($the_full_path.'/tags.txt', $new_tags_str);
 
             // create a new empty dl.txt in current folder
             echo "file_put_contents($the_full_path/dl.txt, '') \n";
@@ -230,21 +207,23 @@ foreach($scan as $folder_name) {
                     $images[] = $file;
                 }
             }
-            if((int)$vol < 37) {
-                $thumb = $images[0];
-            }
-            else {
+            // if((int)$vol < 37) {
+            //     $thumb = $images[0];
+            // }
+            // else {
                 $thumb = $images[count($images) - 1];
-            }
+            // }
             if($already_has_thumbnail) {
                 echo "---- Already has a thumbnail.jpg \n\n";
             }
             else {
-                // echo 'rename('. $the_full_path . '/' . $thumb . ', ' . $the_full_path . '/thumbnail.jpg' .  "\n\n";
-                // if(!$dryrun) rename($the_full_path . '/' . $thumb , $the_full_path . '/thumbnail.jpg');    
+                echo 'rename('. $the_full_path . '/' . $thumb . ', ' . $the_full_path . '/thumbnail.jpg' .  "\n\n";
+                if(!$dryrun) rename($the_full_path . '/' . $thumb , $the_full_path . '/thumbnail.jpg');    
             }
 
-            // rename current folder to the origin folder name
+            // // rename current folder to the origin folder name
+            // $vol = str_replace('熊川纪信-no.', '熊川纪信-', $vol);
+            // $origin['main'] = str_replace('-熊川纪信', '',$origin['main']);
             // echo "rename $the_full_path to $folder_full_path/".$org_name_en.$org_name."-". $vol. '-'. $origin['main'] . "\n\n";
             // if(!$dryrun) rename($the_full_path, $folder_full_path . '/'.$org_name_en.$org_name.'-' . $vol. '-'. $origin['main']);
         }
@@ -254,10 +233,11 @@ foreach($scan as $folder_name) {
 
 
 function getOriginFolderByVol($vol_num) {
-    // $vol_num = '第' . (int)$vol_num . '期';
+    global $org_name;
+    
     // echo "vol_num = $vol_num \n";
     
-    $origin_folders = '/mnt/nas/jw-photos/tujigu/御女郎';
+    $origin_folders = '/mnt/nas/jw-photos/tujigu/' . $org_name;
     // $scan = scandir($origin_folders);
     global $dirs;
     $scan = explode("\r\n", $dirs);
@@ -267,20 +247,27 @@ function getOriginFolderByVol($vol_num) {
     foreach($scan as $folder_name) {      
         // echo "folder: $folder_name \n";  
         if (is_dir("$origin_folders/$folder_name") && $folder_name!='.' && $folder_name!='..') {
+
             $l_folder_name = strtolower($folder_name);
+            $l_folder_name = str_replace('vol.', 'no.', $l_folder_name);
             // echo "l_folder: $l_folder_name \n";
             
             if(strpos($l_folder_name, $vol_num) !== false) {
+                $folder_info['full_path'] = $origin_folders  . '/' . $folder_name;
+
                 $l_folder_name = str_replace('《','-',$l_folder_name);
                 $l_folder_name = str_replace('》','-',$l_folder_name);
+                $l_folder_name = str_replace('(','-',$l_folder_name);
+                $l_folder_name = str_replace(')','-',$l_folder_name);
+                $l_folder_name = str_replace('，','-',$l_folder_name);
+                $l_folder_name = str_replace('、','-',$l_folder_name);
                 $l_folder_name = str_replace('_-','_',$l_folder_name);
                 $l_folder_name = str_replace('---','-',$l_folder_name);
                 $l_folder_name = str_replace('--','-',$l_folder_name);
                 $folder_info['name'] = $l_folder_name;
-                $folder_info['full_path'] = $origin_folders  . '/' . $folder_name;
 
-                $tt = find_between($l_folder_name, '御女郎_', '-');
-                if(str_starts_with($tt[0], 'vol.')) {
+                $tt = find_between($l_folder_name, $org_name.'_', '-');
+                if(str_starts_with($tt[0], 'no.')) {
                     $ss = explode('-', $l_folder_name);
                     $folder_info['model'] = $ss[1];
                     $yy = find_between($l_folder_name, '-', 'p-');
@@ -291,7 +278,7 @@ function getOriginFolderByVol($vol_num) {
                 }
                 else {
                     $folder_info['model'] = $tt[0];
-                    $yy = find_between($l_folder_name, '御女郎_', '-vol');
+                    $yy = find_between($l_folder_name, $org_name.'_', '-no');
                     $main = trim($yy[0], '-');
                     $folder_info['main'] = $main;
                 }

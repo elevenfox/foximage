@@ -49,6 +49,7 @@ if(empty($file_id)) {
 else {
     echo date('Y-m-d H:i:s') . ' - ' . "-- updating file_id = $file_id with folder: $folder_full_path \n";
     $fileObj = (object)File::getFileByID($file_id);
+    if(empty($fileObj->id)) $fileObj->id = $file_id;
 }
 
 $relative_path = str_replace($file_root, '', $folder_full_path);

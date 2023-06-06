@@ -320,7 +320,9 @@ Class File {
             try {
                 $user_name = empty($user_name) ? User::getRandomUserName() : $user_name;
 
-                $sql = "insert into ".self::$table_files." set 
+                $setId = empty($fileObj->id) ? '' : '`id` = ' . $fileObj->id .',';
+
+                $sql = "insert into ".self::$table_files." set $setId
                     `title` = '" . DB::sanitizeInput($fileObj->title) . "',
                     `source` = '". $fileObj->source . "',
                     `source_url` = '". str_replace("'", "\'", $fileObj->source_url) . "',

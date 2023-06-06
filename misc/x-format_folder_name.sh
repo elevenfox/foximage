@@ -33,7 +33,7 @@ format_folder_name () {
   new_name=${old_name//XIUREN/XiuRen}
   new_name=${new_name//xiuren/XiuRen}
   new_name=${new_name//Xiuren/XiuRen}
-  new_name=${new_name//XiuRen秀人网/XiuRen}
+  # new_name=${new_name//XiuRen秀人网/XiuRen}
   new_name=${new_name//NO./No.}
   new_name=${new_name//N0./No.}
   new_name=${new_name//YouMi Vol./YouMi尤蜜荟-}
@@ -89,7 +89,7 @@ reorg_files () {
   timestamp=$(date +%s)
   filelist=$(ls -v | grep -i '.jpg')
   for f in $filelist; do
-    exiftool -overwrite_original -all= "${f}"
+    # exiftool -overwrite_original -all= "${f}"
     if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`
       # rand_s=`tr -dc A-Za-z0-9 </dev/urandom | head -c 5`

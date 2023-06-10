@@ -459,7 +459,7 @@ Class File {
 
 
     private static function saveFileTags($fileObj) {
-        $file = self::getFileBySourceUrl($fileObj->id);
+        $file = self::getFileBySourceUrl($fileObj->source_url);
         if($file) {
             // First, delete all tag_file records for this file
             Tag::deleteFileTagsByFileId($file['id']);

@@ -89,7 +89,7 @@ reorg_files () {
   timestamp=$(date +%s)
   filelist=$(ls -v | grep -i '.jpg')
   for f in $filelist; do
-    # exiftool -overwrite_original -all= "${f}"
+    exiftool -overwrite_original -all= "${f}"
     if [ "$f" != "thumbnail.jpg" ]; then
       num=`printf "%03d" ${i}`
       # rand_s=`tr -dc A-Za-z0-9 </dev/urandom | head -c 5`

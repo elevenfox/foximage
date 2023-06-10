@@ -44,7 +44,7 @@ for fname in *.*; do
           fi
           echo "watermarking $fname with pointsize ${POINT}"
           if [ $MAX_SIZE -gt 2700 ]; then
-            sleep 0.5
+            sleep 0.3
           fi  
           convert $fname -font Liberation-Sans-Bold -pointsize $POINT -draw "gravity northeast fill rgba(0,0,0,1.0) text 30,32 'TUZAC.com' fill rgba(255,255,255,1.0) text 30,31 'TUZAC.com'" $fname
       fi

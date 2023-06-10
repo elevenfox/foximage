@@ -354,8 +354,6 @@ Class File {
         }
         else {
             try {
-                self::saveFileTags($fileObj);
-
                 $sql = "update ".self::$table_files." set
                         `source` = '" . $fileObj->source . "',
                         `source_url` = '" . $fileObj->source_url . "',
@@ -369,6 +367,10 @@ Class File {
                       ";
                 //echo '-------'.$sql.'--------';
                 $res = DB::$dbInstance->query($sql);
+
+                if($res) {
+                    self::saveFileTags($fileObj);
+                }
 
                 //clear session cache
                 $_SESSION['current_file']['source_url_md5'] = null;
@@ -457,7 +459,7 @@ Class File {
 
 
     private static function saveFileTags($fileObj) {
-        $file = self::getFileBySourceUrl($fileObj->source_url);
+        $file = self::getFileBySourceUrl($fileObj->id);
         if($file) {
             // First, delete all tag_file records for this file
             Tag::deleteFileTagsByFileId($file['id']);

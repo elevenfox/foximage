@@ -1,6 +1,6 @@
 <?php
 
-require'../bootstrap.inc';
+require'../bootstrap.inc.php';
 
 
 set_time_limit(0);
@@ -25,7 +25,7 @@ $x = 1;
 for($i=1; $i <= $batches; $i++) {
     $Files = File::getFiles($i, $itemsPerBatch);
     foreach ($Files as $File) {
-        echo date('Y-m-d H:i:s') . ' - ' . $x . " Processing for: ".$File['id']." ... \n";
+        echo date('Y-m-d H:i:s') . ' - ' . $x . " of $total Processing for: ".$File['id']." ... \n";
 
         // calling File::save will update File with clean tags also save to tags and tag_File
         $res = File::save((object)$File);

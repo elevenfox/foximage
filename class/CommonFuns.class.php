@@ -730,3 +730,128 @@ function smartResizeThumbnail($thumbnail_origin) {
                     $width, $height);
     imagejpeg($thumb, $thumbnail_filename, 90);
 }
+
+function processDesc($desc_str) {
+    $desc_str = str_replace(' 生日','生日', $desc_str);
+    $pos = strpos($desc_str, '生日');
+    if($pos !== false) {
+        $c = $desc_str[$pos-1];
+        if ($c != "\n" && $c != "\rn" && $c != "\r") {
+            $desc_str = str_replace('生日',"\n生日", $desc_str);
+        }
+    }
+    $desc_str = str_replace(' 罩杯','罩杯', $desc_str);
+    $pos = strpos($desc_str, '罩杯');
+    if($pos !== false) {
+        $c = $desc_str[$pos-1];
+        if ($c != "\n" && $c != "\rn" && $c != "\r") {
+            $desc_str = str_replace('罩杯',"\n罩杯", $desc_str);
+        }
+    }
+
+    return $desc_str;
+}
+
+function downloadFile($url, $path)
+{
+    $newfname = $path;
+    $file = fopen($url, 'rb');
+    if ($file) {
+        $newf = fopen($newfname, 'wb');
+        if ($newf) {
+            while (!feof($file)) {
+                fwrite($newf, fread($file, 1024 * 8), 1024 * 8);
+            }
+        }
+    }
+    if ($file) {
+        fclose($file);
+    }
+    if ($newf) {
+        fclose($newf);
+    }
+}
+
+function mapModelNames($l_folder_name) {
+    $l_folder_name = str_replace('cris_卓娅祺', '卓娅祺', $l_folder_name);
+    $l_folder_name = str_replace('egg_尤妮丝', '尤妮丝', $l_folder_name);
+    $l_folder_name = str_replace('egg-尤妮丝', '尤妮丝', $l_folder_name);
+    $l_folder_name = str_replace('emily顾奈奈', '顾奈奈', $l_folder_name);
+    $l_folder_name = str_replace('lucky沈欢欣', '沈欢欣', $l_folder_name);
+    $l_folder_name = str_replace('yumi-尤美', 'Yumi尤美', $l_folder_name);
+    $l_folder_name = str_replace('柴婉艺averie', '柴婉艺', $l_folder_name);
+    $l_folder_name = str_replace('妲己_toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_replace('葛征model', '葛征', $l_folder_name);
+    $l_folder_name = str_replace('果儿victoria', '果儿', $l_folder_name);
+    $l_folder_name = str_replace('萌汉药baby', '萌汉药', $l_folder_name);
+    $l_folder_name = str_replace('奶瓶土肥圆矮挫丑黑穷', '土肥圆', $l_folder_name);
+    $l_folder_name = str_replace('奶瓶土肥圆', '土肥圆', $l_folder_name);
+    $l_folder_name = str_replace('土肥圆矮挫丑黑穷', '土肥圆', $l_folder_name);
+    $l_folder_name = str_replace('土肥圆矮挫穷', '土肥圆', $l_folder_name);
+    $l_folder_name = str_replace('土肥圆矮挫', '土肥圆', $l_folder_name);
+    $l_folder_name = str_replace('女神yumi-尤美', 'Yumi尤美', $l_folder_name);
+    $l_folder_name = str_replace('女神妲己_toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_replace('潘琳琳ber', '潘琳琳', $l_folder_name);
+    $l_folder_name = str_replace('孙梦瑶v', '孙梦瑶', $l_folder_name);
+    $l_folder_name = str_replace('唐婉儿lucky', '唐婉儿', $l_folder_name);
+    $l_folder_name = str_replace('筱慧icon', '筱慧', $l_folder_name);
+    $l_folder_name = str_replace('易阳silvia', '易阳', $l_folder_name);
+    $l_folder_name = str_replace('樱小白baby', '樱小白', $l_folder_name);
+    $l_folder_name = str_replace('御姐-穆菲菲', '穆菲菲', $l_folder_name);
+    $l_folder_name = str_replace('御姐女神-穆菲菲', '穆菲菲', $l_folder_name);
+    $l_folder_name = str_replace('战姝羽zina', '战姝羽', $l_folder_name);
+    $l_folder_name = str_replace('周琰琳lin', '周琰琳', $l_folder_name);
+    $l_folder_name = str_replace('周于希sandy', '周于希', $l_folder_name);
+    $l_folder_name = str_replace('朱可儿flower', '朱可儿', $l_folder_name);
+    $l_folder_name = str_replace('俏丽少女-思淇sukiiii', '思淇sukiiii', $l_folder_name);
+    $l_folder_name = str_replace('童颜巨乳妹子-思淇sukiiii', '思淇sukiiii', $l_folder_name);
+    $l_folder_name = str_replace('quella-瑰娜', '瑰娜', $l_folder_name);
+    $l_folder_name = str_replace('甜美妹子-不柠bling', '不柠Bling', $l_folder_name);
+    $l_folder_name = str_replace('宋-kiki', '宋Kiki', $l_folder_name);
+    $l_folder_name = str_replace('solo-尹菲', '尹菲', $l_folder_name);
+    $l_folder_name = str_replace('solo_尹菲', '尹菲', $l_folder_name);
+    $l_folder_name = str_replace('奶茶-emily', '奶茶', $l_folder_name);
+    $l_folder_name = str_replace('龚叶轩paris', '龚叶轩', $l_folder_name);
+    $l_folder_name = str_replace('chen美妍', '美妍', $l_folder_name);
+    $l_folder_name = str_replace('cheryl青树', '青树', $l_folder_name);
+    $l_folder_name = str_replace('傅詩瑤siri', '傅詩瑤', $l_folder_name);
+    $l_folder_name = str_replace('晗大大via', '晗大大', $l_folder_name);
+    $l_folder_name = str_replace('abby黎允婷', '黎允婷', $l_folder_name);
+    $l_folder_name = str_replace('K8傲娇萌萌Vivian', 'K8傲娇萌萌', $l_folder_name);
+    $l_folder_name = str_replace('luna张静燕', '张静燕', $l_folder_name);
+    $l_folder_name = str_replace('sibyl李思宁', '李思宁', $l_folder_name);
+    $l_folder_name = str_replace('冯木木lris', '冯木木', $l_folder_name);
+    $l_folder_name = str_replace('鱼子酱fish', '鱼子酱', $l_folder_name);
+    $l_folder_name = str_replace('程慧娴phoebe', '程慧娴', $l_folder_name);
+    $l_folder_name = str_replace('久久aimee', '久久', $l_folder_name);
+    $l_folder_name = str_replace('小蛮妖yummy', '小蛮妖', $l_folder_name);
+    $l_folder_name = str_replace('诗诗kiki', '诗诗', $l_folder_name);
+    $l_folder_name = str_replace('waya小帝姬', '小帝姬', $l_folder_name);
+    $l_folder_name = str_replace('陈雅漫vicky', '陈雅漫', $l_folder_name);
+    $l_folder_name = str_replace('方绮言ayaka', '方绮言', $l_folder_name);
+    $l_folder_name = str_replace('凯竹buibui', '凯竹', $l_folder_name);
+    $l_folder_name = str_replace('李筱乔jo', '李筱乔', $l_folder_name);
+    $l_folder_name = str_replace('陆芷翊lucia', '陆芷翊', $l_folder_name);
+    $l_folder_name = str_replace('模特姗姗就打奥特曼', '姗姗就打奥特曼', $l_folder_name);
+    $l_folder_name = str_replace('青妍celina', '青妍', $l_folder_name);
+    $l_folder_name = str_replace('施忆佳kitty', '施忆佳', $l_folder_name);
+    $l_folder_name = str_replace('史雯swan', '史雯', $l_folder_name);
+    $l_folder_name = str_replace('赵小米kitty', '赵小米', $l_folder_name);
+    $l_folder_name = str_replace('史雯swan', '史雯', $l_folder_name);
+    $l_folder_name = str_replace('萌琪琪irene', '萌琪琪', $l_folder_name);
+    $l_folder_name = str_replace('凯竹vision', '凯竹', $l_folder_name);
+    $l_folder_name = str_replace('foxyini孟狐狸', '孟狐狸', $l_folder_name);
+    $l_folder_name = str_replace('赵欢颜jessica', '赵欢颜', $l_folder_name);
+    $l_folder_name = str_replace('娜露selena', '娜露', $l_folder_name);
+    $l_folder_name = str_replace('杨晨晨sugar', '杨晨晨', $l_folder_name);
+    $l_folder_name = str_replace('陈嘉嘉tiffany', '陈嘉嘉', $l_folder_name);
+    $l_folder_name = str_replace('谢芷馨sindy', '谢芷馨', $l_folder_name);
+    $l_folder_name = str_replace('兜豆靓youlina', '兜豆靓', $l_folder_name);
+    $l_folder_name = str_replace('绯月樱-cherry', '绯月樱', $l_folder_name);
+    $l_folder_name = str_replace('芝芝booty', '芝芝', $l_folder_name);
+    $l_folder_name = str_replace('angela小热巴', '小热巴', $l_folder_name);
+    $l_folder_name = str_replace('manuela玛鲁娜', '玛鲁娜', $l_folder_name);
+    $l_folder_name = str_replace('绮里嘉Ula', '绮里嘉', $l_folder_name);
+
+    return $l_folder_name;
+}

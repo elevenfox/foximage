@@ -61,6 +61,31 @@ format_folder_name () {
   new_name=${new_name//\[/-}
   new_name=${new_name//\]/-}
   new_name=${new_name//--/-}
+  new_name=${new_name//安然anran/安然}
+  new_name=${new_name//夏沫沫tifa/夏沫沫}
+  new_name=${new_name//张思允nice/张思允}
+  new_name=${new_name//小海臀rena/小海臀}
+  new_name=${new_name//严利娅yuliya/严利娅}
+  new_name=${new_name//养乐多dodo/养乐多}
+  new_name=${new_name//顾乔楠cora/顾乔楠}
+  new_name=${new_name//徐莉芝booty/徐莉芝}
+  new_name=${new_name//周于希sally/周于希}
+  new_name=${new_name//鱼子酱fish/鱼子酱}
+  new_name=${new_name//王馨瑶yanni/王馨瑶}
+  new_name=${new_name//郑颖姗bev/郑颖姗}
+  new_name=${new_name//米娜mnal/米娜}
+  new_name=${new_name//冯木木LRIS/冯木木}
+  new_name=${new_name//Emily尹菲/尹菲}
+  new_name=${new_name//果儿Victoria/果儿}
+  new_name=${new_name//小蛮妖Yummy/小蛮妖}
+  new_name=${new_name//文芮jeninfer/文芮}
+  
+  
+
+  firstchar=${new_name:0:1}
+  if [ "$firstchar" == "-" ]; then
+    new_name="${new_name:1}"
+  fi
 
   echo ${new_name}
 }
@@ -78,6 +103,7 @@ reorg_files () {
   # rename jpeg files to jpg if this is the case
   echo "--- rename jpeg files to jpg"
   rename 's/\.jpeg/\.jpg/' *
+  rename 's/\.JPG/\.jpg/' *
 
   # Convert *.png to jpg
   echo "--- Convert *.png to jpg"

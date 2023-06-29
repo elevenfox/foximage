@@ -36,6 +36,7 @@ switch($action) {
 
         $the_url = $_GET['url'];
         $target_url = urldecode($the_url);
+        $dryrun = empty($_GET['dryrun']) ? 0 : 1;
         
         $decoder_class = null;
         foreach($supported_sources as $key => $val) {
@@ -55,22 +56,29 @@ switch($action) {
             else {
                 if(count($file_array['images']) < 5) {
                     $error .= 'Bypass item which has lesson than 5 photos.';
-                    $query = "INSERT INTO `". $pre . "files_ignored` (`source_url`) VALUES ('$target_url')";
-                    DB::$dbInstance->query($query);
+                    // $query = "INSERT INTO `". $pre . "files_ignored` (`source_url`) VALUES ('$target_url')";
+                    // DB::$dbInstance->query($query);
                 }
                 else {
                     $file_obj = (object) $file_array;
                     $file_obj->source = $decoder_class;
                     $file_obj->source_url = $target_url;
 
-                    $res = File::save($file_obj);
-                    if($res) {
-                        // Process thumbnail
-                        processThumbnail((array)$file_obj, true);
-                        $status = 1;
+                    if(empty($dryrun)) {
+                        $res = File::save($file_obj);
+                        if($res) {
+                            // Process thumbnail
+                            processThumbnail((array)$file_obj, true);
+                            $status = 1;
+                        }
+                        else {
+                            $error .= 'Failed to save video data to node. ';
+                        }
                     }
                     else {
-                        $error .= 'Failed to save video data to node. ';
+                        header('Content-Type: application/json');
+                        echo json_encode(array('status'=>1, 'result'=>$file_obj));
+                        break;
                     }
                 }
             }

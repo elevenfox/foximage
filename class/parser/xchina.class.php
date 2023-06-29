@@ -6,7 +6,8 @@ class xchina {
 
         //ZDebug::my_print(__DIR__); exit;
         
-        $page_content = shell_exec("sudo runuser -l pi -c 'DISPLAY=:0.0  /usr/local/bin/node ".__DIR__."/../../z_tools/puppeteer_fetch.js ".$target_url."' 2>&1");
+        $page_content = shell_exec("node ".__DIR__."/../../z_tools/puppeteer_fetch.js ".$target_url."' 2>&1");
+error_log(print_r($page_content,1));        
         
         if(empty($data['title'])) {
             $title_arr = find_between($page_content, '<meta property="og:title" content="', '">');
@@ -48,7 +49,7 @@ class xchina {
             $img = substr( $img, 0, 4 ) === "http" ? $img : 'https://xchina.co' . $img;
             $data['images'][] = $img;    
         }
-        
+error_log(print_r($data, 1));        
         $next_url = '';
         $pager_finder = find_between($page_content, '<div class="pager">', '<div class="tips">');
         $pager_html = $pager_finder[0];

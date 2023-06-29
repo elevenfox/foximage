@@ -26,8 +26,13 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="candy"]');
+    const ishow = await page.waitForSelector('a[title="tgod"]');
     await ishow.click();
+    await delay(2000);
+
+    // Go to second level dir
+    const sub = await page.waitForSelector('a[title="2016"]');
+    await sub.click();
     await delay(2000);
 
     // Order by file name

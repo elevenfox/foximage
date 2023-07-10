@@ -12,7 +12,7 @@ if(empty($folder_full_path)) {
     exit;
 }
 if(empty($term)) {
-    echo "---- Must have a term! \n";
+    echo "---- Must have a search keyword term! \n";
     exit;
 }
 if(empty($start)) {
@@ -32,11 +32,12 @@ $base_url = 'https://nshens.com/search/';
 // $end = 6099;
 $all_sub_folders = scandir($folder_full_path);
 for ($i = $start; $i<=$end; $i++) {
-    $num = (string)$i;
+    $num = $i<100 ? sprintf('%03d', $i) : (string)$i;
     foreach($all_sub_folders as $folder_name) {
         if(strpos($folder_name, $term) !== false && strpos($folder_name, $num) !== false) {
             // echo 'Found match folder:  ' . $folder_name . "\n";
-            $url = $base_url . $term . '%20' . $i;
+            $url = $base_url . $term . '%20' . $num;
+            echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, '__i18n:{langs:{}}}}(' , ',');
             echo $res[0] . "\n";
@@ -48,5 +49,6 @@ for ($i = $start; $i<=$end; $i++) {
             break;
         }
     }
+    
 }
 

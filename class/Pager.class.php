@@ -183,11 +183,9 @@ class Pager {
    *  
    * @param integer $eachDisNums 每页显示的条目数  
    * @param integer $nums 总条目数  
-   * @param integer $current_num 当前被选中的页  
-   * @param integer $showPageNum 每次显示的页数  
+   * @param integer $currentPage 当前被选中的页  
    * @param integer $subPageLink 每个分页的链接
-   * @param integer $subPageLinkAppend 每个分页的链接  
-   * @param integer $subPage_type 显示分页的类型  
+   * @param integer $subPageLinkAppend 每个分页的链接附加的URL参数  
    * @return void  
    */  
   public function __construct($eachDisNums, $nums, $currentPage, $subPageLink, $subPageLinkAppend=''){  

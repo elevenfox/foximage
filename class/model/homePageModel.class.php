@@ -57,7 +57,7 @@ Class homePageModel extends ModelCore {
           $term = $this->request->getSysRequest()['term'];
           $this->data['keywords'] = $term;
 
-          $this->data['pageTitle'] = '搜索: ' . $term;
+          $this->data['pageTitle'] = t('搜索') . ': ' . $term;
 
           $page = empty($this->request->arg[1]) ? 1 : $this->request->arg[1];
           $this->data['page'] = $page;

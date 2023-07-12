@@ -1084,11 +1084,11 @@ article.file .fdp-click-area-right:hover {
 .content-container.dev-mode .content {
     margin-right: 0;
 }
-.content-container.dev-mode .file .file-detail {
+/* .content-container.dev-mode .file .file-detail {
     padding: 0;
     position: relative;
     z-index: 999;
-}
+} */
 /**** end of dev-mode ****/
 
 @media (max-width: 1200px) {

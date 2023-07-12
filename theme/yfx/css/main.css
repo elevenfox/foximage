@@ -807,34 +807,92 @@ article.file .file-detail {
     padding: 0 0 20px 0;
 }
 
-article.file .file-detail img {
+article.file img {
     width: 100%;
     position: relative;
 }
-article.file .file-detail #the-photo.rotate {
-  transform: rotate(90deg);
-  -ms-transform: rotate(90deg); 
-  -moz-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  -o-transform: rotate(90deg); 
+
+
+#auto-play {
+    position: relative;
+    top: 0;
+    right: 10px;
+    background-color: rgba(255,255,255, 0.7);
+    color: #333;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-flex;
+    margin: 0 20px;
+    border-radius: 5px;
+}
+article.file #auto-play {
+    margin-bottom: 20px;
+    background: none;
+    color: #ccc;
+    border: 1px solid #FF87B7;
+    float: right;
 }
 
-
-article.file #fdp-photo {
+#fdp-photo {
     text-align: center;
-    position: relative;
+    position: fixed;
     overflow: hidden;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(011, 011, 011, 0.9);
+    z-index: 888888;
 }
-article.file #fdp-photo #action-hint {
-    position: absolute;
-    z-index: 777;
-    bottom: -20px;
-    font-size: 11px;
-    padding: 3px;
+#fdp-photo #the-photo {
     width: 100%;
+    position: relative;
+} 
+#fdp-photo #the-photo.rotate {
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg); 
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg); 
 }
 
-article.file #fdp-photo>a {
+.fdp-random-btns {
+    display: inline;
+    padding: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 5px 10px;
+    z-index: 888999;
+    /* background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
+    /* FF3.6-15 */
+    /* background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
+    /* Chrome10-25,Safari5.1-6 */
+    /* background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    /* filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0); */
+    /* IE6-9 */
+}
+
+.fdp-random-btns a {
+    display: inline-block;
+    padding: 0 5px;
+    cursor: pointer;
+    color: #333;
+    width: 25px;
+}
+.fdp-random-btns #close_ppt {
+    font-size: 30px;
+    font-weight: bolder;
+    line-height: 12px;
+}
+
+
+/* article.file #fdp-photo>a {
     min-height: 500px;
     background-color: #fff7fe;
     display: block;
@@ -850,7 +908,7 @@ article.file #fdp-photo>a::before {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+} */
 
 article.file .fdp-click-area {
     position: absolute;
@@ -883,40 +941,7 @@ article.file .fdp-click-area-right:hover {
     background-size: 80px 60px;
 }
 
-article.file #fdp-photo .fdp-random-btns {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 16px;
-    background-color: rgba(255, 255, 255, 0.4);
-    padding: 5px 10px;
-    /* background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
-    /* FF3.6-15 */
-    /* background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
-    /* Chrome10-25,Safari5.1-6 */
-    /* background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    /* filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0); */
-    /* IE6-9 */
-}
 
-article.file #fdp-photo .fdp-random-btns a {
-    display: inline-block;
-    padding: 0 5px;
-    cursor: pointer;
-    color: #333;
-    width: 25px;
-}
-article.file #auto-play {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    background-color: rgba(255,255,255, 0.5);
-    color: black;
-    font-size: 12px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
 
 
 /********** Page user **********/
@@ -998,9 +1023,9 @@ article.file #auto-play {
 }
 
 .glyphicon-circle {
-    border: 1px solid #999;
-    width: 14px;
-    height: 14px;
+    border: 1px solid #333;
+    width: 16px;
+    height: 16px;
     border-radius: 20px;
     text-align: center;
     padding: 2px;
@@ -1358,7 +1383,7 @@ article.file #auto-play {
         font-size: 12px;
     }
 
-    article.file .file-detail #the-photo.rotate {
+    #the-photo.rotate {
         position: absolute;
     }
 }

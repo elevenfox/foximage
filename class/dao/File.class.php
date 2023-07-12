@@ -194,7 +194,7 @@ Class File {
         }
     }
 
-    public static function searchFile($term, $page=1, $limit=24) {
+    public static function searchFile($term, $page=1, $limit=24, $random=false) {
         self::setTables();
 
         $term = str_replace('，', ',', $term);
@@ -209,7 +209,8 @@ Class File {
 
         $term = DB::sanitizeInput($term);
         $limit = ($page - 1) * $limit . ',' . $limit;
-        $query = "select * from ".self::$table_files." where " . $where . " order by id desc limit " . $limit;
+        $orderBy = empty($random) ? 'order by id desc' : 'ORDER BY RAND()';
+        $query = "select * from ".self::$table_files." where " . $where . " $orderBy limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             return $res;

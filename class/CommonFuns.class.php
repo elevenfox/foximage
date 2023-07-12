@@ -574,91 +574,100 @@ function uploadB2Thumbnail($file_id, $logging=false) {
     }
 }
 
-function processPhotoSrc($file) {
+function processPhotoSrc($file, $at = 0, $photos_per_page = 1) {
     $src = '';
 
     $images = explode(',', $file['filename']);
-    $num = empty($_GET['at']) ? 1 : $_GET['at'];
-    $num = $num >= count($images) ? count($images) : $num;
+    $total_photos = count($images);
 
-    // Step-1, use photo url from source
-    $cur_image_url = $images[$num-1];
-    
-    // Get filename based on photo-url
-    $name_arr = explode('/', $cur_image_url);
-    $filename = array_pop($name_arr);
-    // if filename has no extention name, use leading-zero-number.jpg
-    if(strpos($filename, '.jpg') === false) {
-        $filename = sprintf('%03d', $num-1) . '.jpg';
-    }
+    $total_pages = ceil($total_photos/$photos_per_page);
 
-    // Get physical path based on title
-    $physical_path = buildPhysicalPath($file);
+    $num = empty($at) ? (empty($_GET['at']) ? 1 : $_GET['at']) : $at;
+    $num = $num >= $total_pages ? $total_pages : $num;
 
-    // Get relative path
-    $file_root = Config::get('file_root');
-    if(empty($file_root)) {
-        $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
-    }
-    $relative_path = str_replace($file_root, '', $physical_path);
-    $relative_fullname = $relative_path . '/' . $filename;
-    $relative_fullname = str_replace('//','/',$relative_fullname);
+    $src = [];
+    for($i = ($num-1)*$photos_per_page; $i<$num*$photos_per_page; $i++) {
+        // Step-1, use photo url from source       
+        $cur_image_url = $images[$i];
+        
+        if(!empty($cur_image_url)) {
+            // Get filename based on photo-url
+            $name_arr = explode('/', $cur_image_url);
+            $filename = array_pop($name_arr);
+            // if filename has no extention name, use leading-zero-number.jpg
+            if(strpos($filename, '.jpg') === false) {
+                $filename = sprintf('%03d', $i) . '.jpg';
+            }
 
-    // If it's dev mode, try to use local photo first
-    $dev_mode = Config::get('dev_mode');
-    if( !empty($dev_mode) ) {
-        if(file_exists($file_root . $relative_fullname)) {
-            $src = '/jw-photos/' . $relative_fullname;
-        }
-    }
+            // Get physical path based on title
+            $physical_path = buildPhysicalPath($file);
 
-    // If src is empty, use B2 for some categories, otherwise use api(which is using Onedrive for now)
-    if(empty($src)) {
-        // Use B2 url
-        // if(strpos($file['title'], '头条女神', 0) !== false ) {
-        //     $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
-        //     $key = $relative_path . '/' . $filename;
-        //     $src = $base_b2_url . urlencode($key);
-        // }
-        // else {
-            // If file not exists in B2, try to use own api
+            // Get relative path
+            $file_root = Config::get('file_root');
+            if(empty($file_root)) {
+                $file_root = $_SERVER['DOCUMENT_ROOT'] . '/jw-photos/';
+            }
+            $relative_path = str_replace($file_root, '', $physical_path);
+            $relative_fullname = $relative_path . '/' . $filename;
+            $relative_fullname = str_replace('//','/',$relative_fullname);
 
-            // if($file['source'] == 'tujigu') {
-            //     $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
-            // }
-            // else {
-            //     // For qqc photos, just use its internet url
-            //     $src = $cur_image_url;
-            // }
+            // If it's dev mode, try to use local photo first
+            $dev_mode = Config::get('dev_mode');
+            if( !empty($dev_mode) ) {
+                if(file_exists($file_root . $relative_fullname)) {
+                    $src[] = '/jw-photos/' . $relative_fullname;
+                }
+            }
+            else {
+                // Use B2 url
+                // if(strpos($file['title'], '头条女神', 0) !== false ) {
+                //     $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+                //     $key = $relative_path . '/' . $filename;
+                //     $src = $base_b2_url . urlencode($key);
+                // }
+                // else {
+                    // If file not exists in B2, try to use own api
 
-            // Use home's dev server (RPI4) to serve photos for now
-            $src = 'https://image.tuzac.com/jw-photos/' . $relative_fullname;
+                    // if($file['source'] == 'tujigu') {
+                    //     $src = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+                    // }
+                    // else {
+                    //     // For qqc photos, just use its internet url
+                    //     $src = $cur_image_url;
+                    // }
+
+                    // Use home's dev server (RPI4) to serve photos for now
+                    
+                    $src[] = 'https://image.tuzac.com/jw-photos/' . $relative_fullname;
+                    
+                // }
+            }
+
+
             
-        // }
+            // else {
+            //     // Try to see if the file exists in B2
+            //     //$base_b2_url = 'https://photo.tuzac.com/';
+            //     $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
+            //     $key = $relative_path . '/' . $filename;
+            //     $url = $base_b2_url . urlencode($key);
+            //     $file_headers = @get_headers($url);
+            //     if(!empty($file_headers) && strpos($file_headers[0], '200') !== false) 
+            //     {
+            //         $cur_image_url = $url;
+            //     }
+            //     else {
+            //         // If file not exists in B2, try to use own api
+            //         if($file['source'] == 'tujigu') {
+            //             $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
+            //         }
+            //     }
+            // }
+        }
+
     }
 
-
-    
-    // else {
-    //     // Try to see if the file exists in B2
-    //     //$base_b2_url = 'https://photo.tuzac.com/';
-    //     $base_b2_url = 'https://img.tuzac.com/file/jw-photos-2021/';
-    //     $key = $relative_path . '/' . $filename;
-    //     $url = $base_b2_url . urlencode($key);
-    //     $file_headers = @get_headers($url);
-    //     if(!empty($file_headers) && strpos($file_headers[0], '200') !== false) 
-    //     {
-    //         $cur_image_url = $url;
-    //     }
-    //     else {
-    //         // If file not exists in B2, try to use own api
-    //         if($file['source'] == 'tujigu') {
-    //             $cur_image_url = '/jw-photos/file_content/' . $file['source_url_md5'] . '/' . $num . '/fc.jpg';
-    //         }
-    //     }
-    // }
-
-    return $src;
+    return count($src)>1 ? $src : $src[0];
 }
 
 
@@ -819,110 +828,114 @@ function my_mb_ucfirst($str) {
 }
 
 function mapModelNames($l_folder_name) {
-    $l_folder_name = str_replace('cris_卓娅祺', '卓娅祺', $l_folder_name);
-    $l_folder_name = str_replace('egg_尤妮丝', '尤妮丝', $l_folder_name);
-    $l_folder_name = str_replace('egg-尤妮丝', '尤妮丝', $l_folder_name);
-    $l_folder_name = str_replace('emily顾奈奈', '顾奈奈', $l_folder_name);
-    $l_folder_name = str_replace('lucky沈欢欣', '沈欢欣', $l_folder_name);
-    $l_folder_name = str_replace('yumi-尤美', 'Yumi尤美', $l_folder_name);
-    $l_folder_name = str_replace('柴婉艺averie', '柴婉艺', $l_folder_name);
-    $l_folder_name = str_replace('妲己_toxic', '妲己', $l_folder_name);
-    $l_folder_name = str_replace('葛征model', '葛征', $l_folder_name);
-    $l_folder_name = str_replace('果儿victoria', '果儿', $l_folder_name);
-    $l_folder_name = str_replace('萌汉药baby', '萌汉药', $l_folder_name);
-    $l_folder_name = str_replace('奶瓶土肥圆矮挫丑黑穷', '土肥圆', $l_folder_name);
-    $l_folder_name = str_replace('奶瓶土肥圆', '土肥圆', $l_folder_name);
-    $l_folder_name = str_replace('土肥圆矮挫丑黑穷', '土肥圆', $l_folder_name);
-    $l_folder_name = str_replace('土肥圆矮挫穷', '土肥圆', $l_folder_name);
-    $l_folder_name = str_replace('土肥圆矮挫', '土肥圆', $l_folder_name);
-    $l_folder_name = str_replace('女神yumi-尤美', 'Yumi尤美', $l_folder_name);
-    $l_folder_name = str_replace('女神妲己_toxic', '妲己', $l_folder_name);
-    $l_folder_name = str_replace('潘琳琳ber', '潘琳琳', $l_folder_name);
-    $l_folder_name = str_replace('孙梦瑶v', '孙梦瑶', $l_folder_name);
-    $l_folder_name = str_replace('唐婉儿lucky', '唐婉儿', $l_folder_name);
-    $l_folder_name = str_replace('筱慧icon', '筱慧', $l_folder_name);
-    $l_folder_name = str_replace('易阳silvia', '易阳', $l_folder_name);
-    $l_folder_name = str_replace('樱小白baby', '樱小白', $l_folder_name);
-    $l_folder_name = str_replace('御姐-穆菲菲', '穆菲菲', $l_folder_name);
-    $l_folder_name = str_replace('御姐女神-穆菲菲', '穆菲菲', $l_folder_name);
-    $l_folder_name = str_replace('战姝羽zina', '战姝羽', $l_folder_name);
-    $l_folder_name = str_replace('周琰琳lin', '周琰琳', $l_folder_name);
-    $l_folder_name = str_replace('周于希sandy', '周于希', $l_folder_name);
-    $l_folder_name = str_replace('朱可儿flower', '朱可儿', $l_folder_name);
-    $l_folder_name = str_replace('俏丽少女-思淇sukiiii', '思淇sukiiii', $l_folder_name);
-    $l_folder_name = str_replace('童颜巨乳妹子-思淇sukiiii', '思淇sukiiii', $l_folder_name);
-    $l_folder_name = str_replace('quella-瑰娜', '瑰娜', $l_folder_name);
-    $l_folder_name = str_replace('甜美妹子-不柠bling', '不柠Bling', $l_folder_name);
-    $l_folder_name = str_replace('宋-kiki', '宋Kiki', $l_folder_name);
-    $l_folder_name = str_replace('solo-尹菲', '尹菲', $l_folder_name);
-    $l_folder_name = str_replace('solo_尹菲', '尹菲', $l_folder_name);
-    $l_folder_name = str_replace('奶茶-emily', '奶茶', $l_folder_name);
-    $l_folder_name = str_replace('龚叶轩paris', '龚叶轩', $l_folder_name);
-    $l_folder_name = str_replace('chen美妍', '美妍', $l_folder_name);
-    $l_folder_name = str_replace('cheryl青树', '青树', $l_folder_name);
-    $l_folder_name = str_replace('傅詩瑤siri', '傅詩瑤', $l_folder_name);
-    $l_folder_name = str_replace('晗大大via', '晗大大', $l_folder_name);
-    $l_folder_name = str_replace('abby黎允婷', '黎允婷', $l_folder_name);
-    $l_folder_name = str_replace('K8傲娇萌萌Vivian', 'K8傲娇萌萌', $l_folder_name);
-    $l_folder_name = str_replace('luna张静燕', '张静燕', $l_folder_name);
-    $l_folder_name = str_replace('sibyl李思宁', '李思宁', $l_folder_name);
-    $l_folder_name = str_replace('冯木木lris', '冯木木', $l_folder_name);
-    $l_folder_name = str_replace('鱼子酱fish', '鱼子酱', $l_folder_name);
-    $l_folder_name = str_replace('程慧娴phoebe', '程慧娴', $l_folder_name);
-    $l_folder_name = str_replace('久久aimee', '久久', $l_folder_name);
-    $l_folder_name = str_replace('小蛮妖yummy', '小蛮妖', $l_folder_name);
-    $l_folder_name = str_replace('诗诗kiki', '诗诗', $l_folder_name);
-    $l_folder_name = str_replace('waya小帝姬', '小帝姬', $l_folder_name);
-    $l_folder_name = str_replace('陈雅漫vicky', '陈雅漫', $l_folder_name);
-    $l_folder_name = str_replace('方绮言ayaka', '方绮言', $l_folder_name);
-    $l_folder_name = str_replace('凯竹buibui', '凯竹', $l_folder_name);
-    $l_folder_name = str_replace('李筱乔jo', '李筱乔', $l_folder_name);
-    $l_folder_name = str_replace('陆芷翊lucia', '陆芷翊', $l_folder_name);
-    $l_folder_name = str_replace('模特姗姗就打奥特曼', '姗姗就打奥特曼', $l_folder_name);
-    $l_folder_name = str_replace('青妍celina', '青妍', $l_folder_name);
-    $l_folder_name = str_replace('施忆佳kitty', '施忆佳', $l_folder_name);
-    $l_folder_name = str_replace('史雯swan', '史雯', $l_folder_name);
-    $l_folder_name = str_replace('赵小米kitty', '赵小米', $l_folder_name);
-    $l_folder_name = str_replace('史雯swan', '史雯', $l_folder_name);
-    $l_folder_name = str_replace('萌琪琪irene', '萌琪琪', $l_folder_name);
-    $l_folder_name = str_replace('凯竹vision', '凯竹', $l_folder_name);
-    $l_folder_name = str_replace('foxyini孟狐狸', '孟狐狸', $l_folder_name);
-    $l_folder_name = str_replace('赵欢颜jessica', '赵欢颜', $l_folder_name);
-    $l_folder_name = str_replace('娜露selena', '娜露', $l_folder_name);
-    $l_folder_name = str_replace('杨晨晨sugar', '杨晨晨', $l_folder_name);
-    $l_folder_name = str_replace('陈嘉嘉tiffany', '陈嘉嘉', $l_folder_name);
-    $l_folder_name = str_replace('谢芷馨sindy', '谢芷馨', $l_folder_name);
-    $l_folder_name = str_replace('兜豆靓youlina', '兜豆靓', $l_folder_name);
-    $l_folder_name = str_replace('绯月樱-cherry', '绯月樱', $l_folder_name);
-    $l_folder_name = str_replace('芝芝booty', '芝芝', $l_folder_name);
-    $l_folder_name = str_replace('angela小热巴', '小热巴', $l_folder_name);
-    $l_folder_name = str_replace('manuela玛鲁娜', '玛鲁娜', $l_folder_name);
-    $l_folder_name = str_replace('玛鲁娜Manuela', '玛鲁娜', $l_folder_name);
-    $l_folder_name = str_replace('绮里嘉Ula', '绮里嘉', $l_folder_name);
-    $l_folder_name = str_replace('evelyn艾莉', '艾莉', $l_folder_name);
-    $l_folder_name = str_replace('flower朱可儿', '朱可儿', $l_folder_name);
-    $l_folder_name = str_replace('love陆瓷', '陆瓷', $l_folder_name);
-    $l_folder_name = str_replace('vetiver嘉宝贝儿', '嘉宝贝儿', $l_folder_name);
-    $l_folder_name = str_replace('绮里嘉ula', '绮里嘉', $l_folder_name);
-    $l_folder_name = str_replace('绮里ula', '绮里嘉', $l_folder_name);
-    $l_folder_name = str_replace('蔡文钰angle', '蔡文钰', $l_folder_name);
-    $l_folder_name = str_replace('李雪婷anna', '李雪婷', $l_folder_name);
-    $l_folder_name = str_replace('刘飞儿faye', '刘飞儿', $l_folder_name);
-    $l_folder_name = str_replace('刘雪妮verna', '刘雪妮', $l_folder_name);
-    $l_folder_name = str_replace('糯美子mini', '糯美子', $l_folder_name);
-    $l_folder_name = str_replace('佘贝拉bella', '佘贝拉', $l_folder_name);
-    $l_folder_name = str_replace('唐琪儿beauty', '唐琪儿', $l_folder_name);
-    $l_folder_name = str_replace('唐琪儿il', '唐琪儿', $l_folder_name);
-    $l_folder_name = str_replace('王馨瑶yanni', '王馨瑶', $l_folder_name);
-    $l_folder_name = str_replace('徐微微mia', '徐微微', $l_folder_name);
-    $l_folder_name = str_replace('许诺sabrina', '许诺', $l_folder_name);
-    $l_folder_name = str_replace('sandy陈天扬', '陈天扬', $l_folder_name);
-    $l_folder_name = str_replace('vetiver嘉宝贝儿', '嘉宝贝儿', $l_folder_name);
-    $l_folder_name = str_replace('夏笑笑summer', '夏笑笑', $l_folder_name);
-    $l_folder_name = str_replace('刘奕宁lynn', '刘奕宁', $l_folder_name);
+    $l_folder_name = str_ireplace('cris_卓娅祺', '卓娅祺', $l_folder_name);
+    $l_folder_name = str_ireplace('egg_尤妮丝', '尤妮丝', $l_folder_name);
+    $l_folder_name = str_ireplace('egg-尤妮丝', '尤妮丝', $l_folder_name);
+    $l_folder_name = str_ireplace('emily顾奈奈', '顾奈奈', $l_folder_name);
+    $l_folder_name = str_ireplace('lucky沈欢欣', '沈欢欣', $l_folder_name);
+    $l_folder_name = str_ireplace('yumi-尤美', 'Yumi尤美', $l_folder_name);
+    $l_folder_name = str_ireplace('柴婉艺averie', '柴婉艺', $l_folder_name);
+    $l_folder_name = str_ireplace('妲己_toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_ireplace('葛征model', '葛征', $l_folder_name);
+    $l_folder_name = str_ireplace('果儿victoria', '果儿', $l_folder_name);
+    $l_folder_name = str_ireplace('萌汉药baby', '萌汉药', $l_folder_name);
+    $l_folder_name = str_ireplace('奶瓶土肥圆矮挫丑黑穷', '土肥圆', $l_folder_name);
+    $l_folder_name = str_ireplace('奶瓶土肥圆', '土肥圆', $l_folder_name);
+    $l_folder_name = str_ireplace('土肥圆矮挫丑黑穷', '土肥圆', $l_folder_name);
+    $l_folder_name = str_ireplace('土肥圆矮挫穷', '土肥圆', $l_folder_name);
+    $l_folder_name = str_ireplace('土肥圆矮挫', '土肥圆', $l_folder_name);
+    $l_folder_name = str_ireplace('女神yumi-尤美', 'Yumi尤美', $l_folder_name);
+    $l_folder_name = str_ireplace('女神妲己_toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_ireplace('潘琳琳ber', '潘琳琳', $l_folder_name);
+    $l_folder_name = str_ireplace('孙梦瑶v', '孙梦瑶', $l_folder_name);
+    $l_folder_name = str_ireplace('唐婉儿lucky', '唐婉儿', $l_folder_name);
+    $l_folder_name = str_ireplace('筱慧icon', '筱慧', $l_folder_name);
+    $l_folder_name = str_ireplace('易阳silvia', '易阳', $l_folder_name);
+    $l_folder_name = str_ireplace('樱小白baby', '樱小白', $l_folder_name);
+    $l_folder_name = str_ireplace('御姐-穆菲菲', '穆菲菲', $l_folder_name);
+    $l_folder_name = str_ireplace('御姐女神-穆菲菲', '穆菲菲', $l_folder_name);
+    $l_folder_name = str_ireplace('战姝羽zina', '战姝羽', $l_folder_name);
+    $l_folder_name = str_ireplace('周琰琳lin', '周琰琳', $l_folder_name);
+    $l_folder_name = str_ireplace('周于希sandy', '周于希', $l_folder_name);
+    $l_folder_name = str_ireplace('朱可儿flower', '朱可儿', $l_folder_name);
+    $l_folder_name = str_ireplace('俏丽少女-思淇sukiiii', '思淇sukiiii', $l_folder_name);
+    $l_folder_name = str_ireplace('童颜巨乳妹子-思淇sukiiii', '思淇sukiiii', $l_folder_name);
+    $l_folder_name = str_ireplace('quella-瑰娜', '瑰娜', $l_folder_name);
+    $l_folder_name = str_ireplace('甜美妹子-不柠bling', '不柠Bling', $l_folder_name);
+    $l_folder_name = str_ireplace('宋-kiki', '宋Kiki', $l_folder_name);
+    $l_folder_name = str_ireplace('solo-尹菲', '尹菲', $l_folder_name);
+    $l_folder_name = str_ireplace('solo_尹菲', '尹菲', $l_folder_name);
+    $l_folder_name = str_ireplace('奶茶-emily', '奶茶', $l_folder_name);
+    $l_folder_name = str_ireplace('龚叶轩paris', '龚叶轩', $l_folder_name);
+    $l_folder_name = str_ireplace('chen美妍', '美妍', $l_folder_name);
+    $l_folder_name = str_ireplace('cheryl青树', '青树', $l_folder_name);
+    $l_folder_name = str_ireplace('傅詩瑤siri', '傅詩瑤', $l_folder_name);
+    $l_folder_name = str_ireplace('晗大大via', '晗大大', $l_folder_name);
+    $l_folder_name = str_ireplace('abby黎允婷', '黎允婷', $l_folder_name);
+    $l_folder_name = str_ireplace('K8傲娇萌萌Vivian', 'K8傲娇萌萌', $l_folder_name);
+    $l_folder_name = str_ireplace('luna张静燕', '张静燕', $l_folder_name);
+    $l_folder_name = str_ireplace('sibyl李思宁', '李思宁', $l_folder_name);
+    $l_folder_name = str_ireplace('冯木木lris', '冯木木', $l_folder_name);
+    $l_folder_name = str_ireplace('鱼子酱fish', '鱼子酱', $l_folder_name);
+    $l_folder_name = str_ireplace('程慧娴phoebe', '程慧娴', $l_folder_name);
+    $l_folder_name = str_ireplace('久久aimee', '久久', $l_folder_name);
+    $l_folder_name = str_ireplace('小蛮妖yummy', '小蛮妖', $l_folder_name);
+    $l_folder_name = str_ireplace('诗诗kiki', '诗诗', $l_folder_name);
+    $l_folder_name = str_ireplace('waya小帝姬', '小帝姬', $l_folder_name);
+    $l_folder_name = str_ireplace('陈雅漫vicky', '陈雅漫', $l_folder_name);
+    $l_folder_name = str_ireplace('方绮言ayaka', '方绮言', $l_folder_name);
+    $l_folder_name = str_ireplace('凯竹buibui', '凯竹', $l_folder_name);
+    $l_folder_name = str_ireplace('李筱乔jo', '李筱乔', $l_folder_name);
+    $l_folder_name = str_ireplace('陆芷翊lucia', '陆芷翊', $l_folder_name);
+    $l_folder_name = str_ireplace('模特姗姗就打奥特曼', '姗姗就打奥特曼', $l_folder_name);
+    $l_folder_name = str_ireplace('青妍celina', '青妍', $l_folder_name);
+    $l_folder_name = str_ireplace('施忆佳kitty', '施忆佳', $l_folder_name);
+    $l_folder_name = str_ireplace('史雯swan', '史雯', $l_folder_name);
+    $l_folder_name = str_ireplace('赵小米kitty', '赵小米', $l_folder_name);
+    $l_folder_name = str_ireplace('史雯swan', '史雯', $l_folder_name);
+    $l_folder_name = str_ireplace('萌琪琪irene', '萌琪琪', $l_folder_name);
+    $l_folder_name = str_ireplace('凯竹vision', '凯竹', $l_folder_name);
+    $l_folder_name = str_ireplace('foxyini孟狐狸', '孟狐狸', $l_folder_name);
+    $l_folder_name = str_ireplace('赵欢颜jessica', '赵欢颜', $l_folder_name);
+    $l_folder_name = str_ireplace('娜露selena', '娜露', $l_folder_name);
+    $l_folder_name = str_ireplace('杨晨晨sugar', '杨晨晨', $l_folder_name);
+    $l_folder_name = str_ireplace('陈嘉嘉tiffany', '陈嘉嘉', $l_folder_name);
+    $l_folder_name = str_ireplace('谢芷馨sindy', '谢芷馨', $l_folder_name);
+    $l_folder_name = str_ireplace('兜豆靓youlina', '兜豆靓', $l_folder_name);
+    $l_folder_name = str_ireplace('绯月樱-cherry', '绯月樱', $l_folder_name);
+    $l_folder_name = str_ireplace('芝芝booty', '芝芝', $l_folder_name);
+    $l_folder_name = str_ireplace('angela小热巴', '小热巴', $l_folder_name);
+    $l_folder_name = str_ireplace('manuela玛鲁娜', '玛鲁娜', $l_folder_name);
+    $l_folder_name = str_ireplace('玛鲁娜Manuela', '玛鲁娜', $l_folder_name);
+    $l_folder_name = str_ireplace('绮里嘉Ula', '绮里嘉', $l_folder_name);
+    $l_folder_name = str_ireplace('evelyn艾莉', '艾莉', $l_folder_name);
+    $l_folder_name = str_ireplace('flower朱可儿', '朱可儿', $l_folder_name);
+    $l_folder_name = str_ireplace('love陆瓷', '陆瓷', $l_folder_name);
+    $l_folder_name = str_ireplace('vetiver嘉宝贝儿', '嘉宝贝儿', $l_folder_name);
+    $l_folder_name = str_ireplace('绮里嘉ula', '绮里嘉', $l_folder_name);
+    $l_folder_name = str_ireplace('绮里ula', '绮里嘉', $l_folder_name);
+    $l_folder_name = str_ireplace('绮里嘉Carina', '绮里嘉', $l_folder_name);
+    $l_folder_name = str_ireplace('蔡文钰angle', '蔡文钰', $l_folder_name);
+    $l_folder_name = str_ireplace('蔡文钰Abby', '蔡文钰', $l_folder_name);
+    $l_folder_name = str_ireplace('李雪婷anna', '李雪婷', $l_folder_name);
+    $l_folder_name = str_ireplace('刘飞儿faye', '刘飞儿', $l_folder_name);
+    $l_folder_name = str_ireplace('刘雪妮verna', '刘雪妮', $l_folder_name);
+    $l_folder_name = str_ireplace('糯美子mini', '糯美子', $l_folder_name);
+    $l_folder_name = str_ireplace('佘贝拉bella', '佘贝拉', $l_folder_name);
+    $l_folder_name = str_ireplace('唐琪儿beauty', '唐琪儿', $l_folder_name);
+    $l_folder_name = str_ireplace('唐琪儿il', '唐琪儿', $l_folder_name);
+    $l_folder_name = str_ireplace('王馨瑶yanni', '王馨瑶', $l_folder_name);
+    $l_folder_name = str_ireplace('徐微微mia', '徐微微', $l_folder_name);
+    $l_folder_name = str_ireplace('许诺sabrina', '许诺', $l_folder_name);
+    $l_folder_name = str_ireplace('sandy陈天扬', '陈天扬', $l_folder_name);
+    $l_folder_name = str_ireplace('vetiver嘉宝贝儿', '嘉宝贝儿', $l_folder_name);
+    $l_folder_name = str_ireplace('夏笑笑summer', '夏笑笑', $l_folder_name);
+    $l_folder_name = str_ireplace('刘奕宁lynn', '刘奕宁', $l_folder_name);
+    $l_folder_name = str_ireplace('lynn刘奕宁', '刘奕宁', $l_folder_name);
+    $l_folder_name = str_ireplace('杨紫嫣cynthia', '杨紫嫣', $l_folder_name);
+    $l_folder_name = str_ireplace('evon陈赞之', '陈赞之', $l_folder_name);
+    $l_folder_name = str_ireplace('张思允nice', '张思允', $l_folder_name);
         
-    
-    
     
     
     

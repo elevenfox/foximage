@@ -258,13 +258,11 @@ switch($action) {
     case 'get_random_file_by_tag':
         $url = '';
         $tagName = $_REQUEST['tag'];
-        $query = 'select f.* from '.$pre.'tag_file tf left join '.$pre.'files f on f.id=tf.file_id where term_name="'.$tagName.'" ORDER BY RAND() LIMIT 1';
-        $res = DB::$dbInstance->getRows($query);
+        $res = Tag::getFilesByTag($tagName, 1, 1, true, false);
         if(count($res)) {
             $file = $res[0];
             $images = explode(',',$file['filename']);
             $num = rand(1, count($images));
-
             $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.$num.'&ppt=1&tag='.$tagName.'#fdp-photo';
         }
         apiReturnJson(['status'=>1, 'url'=>$url]);
@@ -274,26 +272,55 @@ switch($action) {
         $url = '';
         $keywords = empty($_REQUEST['keywords'])? '' : $_REQUEST['keywords'];
 
-        $keywords = str_replace('，', ',', $keywords);
-        $allKeywords = explode(',', $keywords);
-        $cond = [];
-        foreach($allKeywords as $key) {
-            $cond[] = " title like '%" . trim($key) . "%' ";
-        }
-        $where = implode(' or ', $cond);
-        $query = !empty($keywords) ? 'select * from '.$pre.'files where ' . $where . ' ORDER BY RAND() LIMIT 1'
-                    : 'select * from '.$pre.'files ORDER BY RAND() LIMIT 1';
-
-        $res = DB::$dbInstance->getRows($query);
+        $res = File::searchFile($keywords, 1, 1, true);
         if(count($res)) {
             $file = $res[0];
             $images = explode(',',$file['filename']);
             $num = rand(1, count($images));
-
             $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.$num.'&ppt=1&keywords='.$keywords.'#fdp-photo';
         }
         apiReturnJson(['status'=>1, 'url'=>$url]);
         break;
+    
+    case 'get_random_photo_by_tag':
+        $src = '';
+        $tagName = $_REQUEST['tag'];
+        $res = Tag::getFilesByTag($tagName, 1, 1, true, false);
+        if(count($res)) {
+            $file = $res[0];
+            $images = explode(',',$file['filename']);
+            $num = rand(1, count($images));
+            $src = processPhotoSrc($file, $num, 1);
+        }
+        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title']]);
+        break;
+    
+    case 'get_random_photo_by_search':
+        $src = '';
+        $keywords = empty($_REQUEST['keywords'])? '' : $_REQUEST['keywords'];
+
+        $res = File::searchFile($keywords, 1, 1, true);
+        if(count($res)) {
+            $file = $res[0];
+            $images = explode(',',$file['filename']);
+            $num = rand(1, count($images));
+            $src = processPhotoSrc($file, $num, 1);
+        }
+        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title'] ]);
+        break;  
+    case 'get_album_images':
+        $src = '';
+        $fileId = empty($_REQUEST['id'])? '' : $_REQUEST['id'];
+
+        $res = File::getFileByID($fileId);
+        if(count($res)) {
+            $file = $res;
+            $images = explode(',',$file['filename']);
+            $num = rand(1, count($images));
+            $src = processPhotoSrc($file, $num, 1);
+        }
+        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title']]);
+        break;       
 
     case 'save_tags':
         $tags = $_POST['tags'];

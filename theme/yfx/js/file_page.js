@@ -33,6 +33,6 @@
           }
         }
     
-        document.getElementById('the-photo').scrollIntoView();
+        //document.getElementById('the-photo').scrollIntoView();
     }
   

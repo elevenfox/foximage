@@ -22,13 +22,13 @@ Class Tag {
     }
 
 
-    public static function getFilesByTag($tagName, $page=1, $limit=24) {
+    public static function getFilesByTag($tagName, $page=1, $limit=24, $random=false, $cache=true) {
         self::setTables();
 
         $tagName = DB::sanitizeInput($tagName);
 
         $cacheKey = THEME . '_files_of_' . $tagName . '_' . $page . '_' . $limit;
-        if(APCU && !isAdmin()) {
+        if(APCU && !isAdmin() && $cache===true) {
             $res = apcu_fetch($cacheKey);
             if(!empty($res)) {
                 return $res;
@@ -41,7 +41,9 @@ Class Tag {
 
         $onFileId = self::$table_files == self::$table_base_files ? 'tv.file_id=v.id' : 'tv.file_id=v.file_id';
 
-        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on $onFileId $where order by v.id desc limit " . $limit;
+        $orderBy = empty($random) ? 'order by v.id desc' : 'ORDER BY RAND()';
+
+        $query = "SELECT v.* FROM ".self::$table_tag_file." tv join ".self::$table_files." v on $onFileId $where $orderBy limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res)) {
             if(APCU && !isAdmin()) {

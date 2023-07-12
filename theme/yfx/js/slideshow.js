@@ -74,7 +74,9 @@
             $('#fdp-photo').append($('<img/>', {id: 'the-photo'}));
             $('#the-photo').attr('src',src);
             $('#the-photo').attr('title',title);
-            window.history.pushState(null, title, title);
+            if(window.devMode) {
+                window.history.pushState(null, title, title);
+            }
             $('#the-photo').on('load', function(){orientation()});
             seconds = showingSeconds;
         };
@@ -139,7 +141,9 @@
             e.preventDefault();
             pauseItv();
             $('#fdp-photo').remove();
-            window.history.pushState(null, null, originURL);
+            if(window.devMode) {
+                window.history.pushState(null, null, originURL);
+            }
         });
 
     });

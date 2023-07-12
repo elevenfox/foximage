@@ -826,6 +826,13 @@ article.file img {
     margin: 0 20px;
     border-radius: 5px;
 }
+article.file #auto-play {
+    margin-bottom: 20px;
+    background: none;
+    color: #ccc;
+    border: 1px solid #FF87B7;
+    float: right;
+}
 
 #fdp-photo {
     text-align: center;

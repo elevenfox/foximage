@@ -87,6 +87,7 @@
             seconds = seconds - 1;
             $('.fdp-random-count-down').text(seconds);
             if(seconds <= 0) {
+		seconds = showingSeconds;
                 timeoutCallback();
             }
         };

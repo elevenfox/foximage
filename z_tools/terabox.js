@@ -26,12 +26,12 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="imiss"]');
+    const ishow = await page.waitForSelector('a[title="mtcos"]');
     await ishow.click();
     await delay(2000);
 
     // Go to second level dir
-    const sub = await page.waitForSelector('a[title="500"]');
+    const sub = await page.waitForSelector('a[title="300"]');
     await sub.click();
     await delay(2000);
 
@@ -110,6 +110,7 @@ async function processItems(page, rows) {
             console.log('---- share link: ' + shareLink);
             stream.write(shareLink + "\n");
             await delay(1000);
+            //await page.evaluate(() => navigator.clipboard.writeText(''));
         }
 
         await delay(200);

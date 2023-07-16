@@ -110,15 +110,18 @@ $folder_name = basename($folder_full_path);
 // elseif(substr( strtolower($folder_name), 0, 6 ) === "mygirl") {
 //     [$org_name_en, $org_name, $model_name] = ['MyGirl', '美媛馆', $terms[2]];
 // }
+// elseif(substr( strtolower($folder_name), 0, 5 ) === "mtcos") {
+//     [$org_name_en, $org_name, $model_name] = ['MTCos', '喵糖映画', 'Cosplay'];
+// }
 // else {
 //     [$org_name_en, $org_name, $model_name] = ['', '', $terms[0]];
 // }
 // $tags = explode(',', $tags_str);
 // if(! in_array($org_name_en, $tags) && ! in_array(strtolower($org_name_en), $tags)) {
-//     $tags[] = $org_name_en;
+//     if(!empty($org_name_en)) $tags[] = $org_name_en;
 // }
 // if(! in_array( $org_name, $tags ) ) {
-//     $tags[] = $org_name;
+//     if(!empty($org_name)) $tags[] = $org_name;
 // }
 // if(! in_array( $model_name, $tags ) ) {
 //     $tags[] = $model_name;

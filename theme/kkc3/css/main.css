@@ -687,7 +687,7 @@ footer .hot-searches a {
 }
 
 .node-teaser .teaser-thumbnail img {
-    max-height: 100%;
+    /* max-height: 100%; */
     max-width: 100%;
     height: auto;
     position: absolute;
@@ -704,7 +704,7 @@ div.stretchy-wrapper {
     /* 16:9 */
     position: relative;
     background: black;
-    /* overflow: hidden; */
+    overflow: hidden;
     height: 450px;
 }
 
@@ -1093,6 +1093,9 @@ article.file #auto-play {
 @media (max-width: 810px) {
     .node-teaser {
         width: 48%;
+    }
+    div.stretchy-wrapper {
+        height: calc(100vw * 0.7);
     }
     #block-ads-jp-m-top {
         display: none;

@@ -43,6 +43,8 @@
 
         $('#fdp-photo').append($(btns));
 
+        $('body').css('overflow', 'hidden');
+
         let num = 1;
         let total = 1;
         let domObj = $(this);
@@ -162,6 +164,7 @@
             e.preventDefault();
             pauseItv();
             $('#fdp-photo').remove();
+            $('body').css('overflow', 'auto');
             // window.location.href=theURL;
         });
 

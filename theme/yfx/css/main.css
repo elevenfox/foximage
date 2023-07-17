@@ -808,7 +808,7 @@ article.file .file-detail {
 }
 
 article.file img {
-    width: 100%;
+    /* width: 100%; */
     position: relative;
 }
 
@@ -837,7 +837,7 @@ article.file #auto-play {
 #fdp-photo {
     text-align: center;
     position: fixed;
-    overflow: hidden;
+    overflow: auto;
     top: 0;
     bottom: 0;
     left: 0;
@@ -1108,6 +1108,7 @@ article.file .fdp-click-area-right:hover {
 @media (max-width: 1200px) {
     .node-teaser {
         width: 32%;
+        max-width: 333px;
     }
     .file-detail img {
         width: 100%;
@@ -1145,6 +1146,7 @@ article.file .fdp-click-area-right:hover {
 @media (max-width: 810px) {
     .node-teaser {
         width: 48%;
+        max-width: 333px;
     }
     div.stretchy-wrapper {
         height: calc(100vw * 0.7);
@@ -1332,6 +1334,7 @@ article.file .fdp-click-area-right:hover {
     }
     .node-teaser {
         width: 49%;
+        max-width: 333px;
     }
     div.stretchy-wrapper {
         height: calc(100vw * 0.7);

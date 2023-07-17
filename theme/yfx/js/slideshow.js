@@ -1,7 +1,7 @@
 (function($) {
     let theURL = window.location.href;
+    
     if(theURL.includes('ppt=1')) {
-        console.log('----- url has ppt=1');
         $(document).ready(function(){
             $("#auto-play").trigger("click");
         });
@@ -12,8 +12,9 @@
     $('#auto-play').on('click', function() {
         if( !theURL.includes('ppt=1')) {
             if(theURL.includes('?')) {
+                let queryString = theURL.slice(theURL.indexOf('?') + 1);
                 //theURL = theURL + '&ppt=1';
-                param = '&ppt=1';
+                param = '?' + queryString + '&ppt=1';
             }
             else {
                 //theURL = theURL + '?ppt=1';
@@ -45,7 +46,6 @@
         let num = 1;
         let total = 1;
         let domObj = $(this);
-        let originURL = window.location.href;
         
         let data = domObj.attr('data');
         let tmpArr = data.split("----");
@@ -162,6 +162,7 @@
             e.preventDefault();
             pauseItv();
             $('#fdp-photo').remove();
+            // window.location.href=theURL;
         });
 
     });

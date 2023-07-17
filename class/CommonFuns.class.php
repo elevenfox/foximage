@@ -828,14 +828,15 @@ function my_mb_ucfirst($str) {
 }
 
 function mapModelNames($l_folder_name) {
-    $l_folder_name = str_ireplace('cris_卓娅祺', '卓娅祺', $l_folder_name);
-    $l_folder_name = str_ireplace('egg_尤妮丝', '尤妮丝', $l_folder_name);
+    $l_folder_name = str_ireplace('_', '-', $l_folder_name);
+
+    $l_folder_name = str_ireplace('cris-卓娅祺', '卓娅祺', $l_folder_name);
     $l_folder_name = str_ireplace('egg-尤妮丝', '尤妮丝', $l_folder_name);
     $l_folder_name = str_ireplace('emily顾奈奈', '顾奈奈', $l_folder_name);
     $l_folder_name = str_ireplace('lucky沈欢欣', '沈欢欣', $l_folder_name);
     $l_folder_name = str_ireplace('yumi-尤美', 'Yumi尤美', $l_folder_name);
     $l_folder_name = str_ireplace('柴婉艺averie', '柴婉艺', $l_folder_name);
-    $l_folder_name = str_ireplace('妲己_toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_ireplace('妲己-toxic', '妲己', $l_folder_name);
     $l_folder_name = str_ireplace('葛征model', '葛征', $l_folder_name);
     $l_folder_name = str_ireplace('果儿victoria', '果儿', $l_folder_name);
     $l_folder_name = str_ireplace('萌汉药baby', '萌汉药', $l_folder_name);
@@ -845,7 +846,7 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('土肥圆矮挫穷', '土肥圆', $l_folder_name);
     $l_folder_name = str_ireplace('土肥圆矮挫', '土肥圆', $l_folder_name);
     $l_folder_name = str_ireplace('女神yumi-尤美', 'Yumi尤美', $l_folder_name);
-    $l_folder_name = str_ireplace('女神妲己_toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_ireplace('女神妲己-toxic', '妲己', $l_folder_name);
     $l_folder_name = str_ireplace('潘琳琳ber', '潘琳琳', $l_folder_name);
     $l_folder_name = str_ireplace('孙梦瑶v', '孙梦瑶', $l_folder_name);
     $l_folder_name = str_ireplace('唐婉儿lucky', '唐婉儿', $l_folder_name);
@@ -864,7 +865,6 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('甜美妹子-不柠bling', '不柠Bling', $l_folder_name);
     $l_folder_name = str_ireplace('宋-kiki', '宋Kiki', $l_folder_name);
     $l_folder_name = str_ireplace('solo-尹菲', '尹菲', $l_folder_name);
-    $l_folder_name = str_ireplace('solo_尹菲', '尹菲', $l_folder_name);
     $l_folder_name = str_ireplace('奶茶-emily', '奶茶', $l_folder_name);
     $l_folder_name = str_ireplace('龚叶轩paris', '龚叶轩', $l_folder_name);
     $l_folder_name = str_ireplace('chen美妍', '美妍', $l_folder_name);

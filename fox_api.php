@@ -291,8 +291,9 @@ switch($action) {
             $images = explode(',',$file['filename']);
             $num = rand(1, count($images));
             $src = processPhotoSrc($file, $num, 1);
+            $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'];
         }
-        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title']]);
+        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title'], 'url'=>$url ]);
         break;
     
     case 'get_random_photo_by_search':
@@ -305,8 +306,9 @@ switch($action) {
             $images = explode(',',$file['filename']);
             $num = rand(1, count($images));
             $src = processPhotoSrc($file, $num, 1);
+            $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'];
         }
-        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title'] ]);
+        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title'], 'url'=>$url ]);
         break;  
     case 'get_album_images':
         $src = '';
@@ -318,8 +320,9 @@ switch($action) {
             $images = explode(',',$file['filename']);
             $num = rand(1, count($images));
             $src = processPhotoSrc($file, $num, 1);
+            $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'];
         }
-        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title']]);
+        apiReturnJson(['status'=>1, 'src'=>$src, 'title'=>$file['title'], 'url'=>$url]);
         break;       
 
     case 'save_tags':

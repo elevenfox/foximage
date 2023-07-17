@@ -473,8 +473,8 @@ foreach($scan as $folder_name) {
         $l_folder_name = strtolower($folder_name);
         $l_folder_name = str_replace('vol.', 'no.', $l_folder_name);
         // $v_arr = explode(' ',$l_folder_name);
-        $v_arr = find_between($l_folder_name, 'jkl.', ' ');
-        $vol = 'jkl.'.$v_arr[0];
+        $v_arr = find_between($l_folder_name, 'tml.', '-');
+        $vol = 'tml.'.$v_arr[0];
 
         // $vol = str_replace('no.', '', $vol);
         // Go to origin path to get folder name with the same vol num
@@ -517,7 +517,7 @@ foreach($scan as $folder_name) {
             // if(! in_array( $origin['model'], $tags ) ) {
             //     $tags[] = $origin['model'];
             // }
-            if(! in_array( 'Cosplay', $tags ) ) {
+            if(! in_array( 'Cosplay', $tags ) && ! in_array( 'cosplay', $tags )) {
                 $tags[] = 'Cosplay';
             }
             $new_tags_str = implode(',', $tags);
@@ -568,7 +568,7 @@ foreach($scan as $folder_name) {
                 // $last = $x[1];
                 
                 //$new_folder_name = $org_name_en.$org_name.'-'. ucfirst($vol) . '-'.$origin['model'] . '-' . $origin['main'] . '-'.$last;
-                $new_folder_name = $org_name_en.$org_name.'-'. ucfirst($vol) . '-' . $origin['main'];
+                $new_folder_name = $org_name_en.$org_name.'-'. strtoupper($vol) . '-' . $origin['main'];
                 echo "rename $the_full_path to $folder_full_path/$new_folder_name\n\n";
                 if(!$dryrun) rename($the_full_path, $folder_full_path . '/'.$new_folder_name);
 

@@ -1,6 +1,26 @@
 (function($) {
+    let theURL = window.location.href;
+    if(theURL.includes('ppt=1')) {
+        console.log('----- url has ppt=1');
+        $(document).ready(function(){
+            $("#auto-play").trigger("click");
+        });
+    }
+
+
     let x =1;
     $('#auto-play').on('click', function() {
+        if( !theURL.includes('ppt=1')) {
+            if(theURL.includes('?')) {
+                //theURL = theURL + '&ppt=1';
+                param = '&ppt=1';
+            }
+            else {
+                //theURL = theURL + '?ppt=1';
+                param = '?ppt=1';
+            }
+            window.history.replaceState(null, null, param);
+        }
         
         // Show the canvas
         $('body').append($('<div/>', {id: 'fdp-photo' }));
@@ -16,11 +36,11 @@
                 <a href="#" class="fdp-random-next" title="Next">
                     <svg style="height: 14px" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20.465 20.465" xml:space="preserve"><g id="c91_rewind"><path d="M9.112,1.372c0.139-0.069,0.303-0.049,0.424,0.045l10.776,8.501c0.094,0.076,0.153,0.191,0.153,0.312s-0.06,0.24-0.153,0.314L9.536,19.047c-0.071,0.056-0.163,0.088-0.248,0.088l-0.176-0.042c-0.138-0.064-0.226-0.204-0.226-0.359V1.732C8.887,1.58,8.975,1.437,9.112,1.372z"/><path d="M0.225,1.372C0.364,1.303,0.529,1.323,0.65,1.417l10.776,8.501c0.093,0.076,0.152,0.191,0.152,0.312s-0.06,0.24-0.152,0.314L0.649,19.047c-0.073,0.056-0.163,0.088-0.249,0.088l-0.176-0.042C0.088,19.028,0,18.889,0,18.733V1.732C0,1.58,0.088,1.437,0.225,1.372z"/></g></svg>
                 </a>
+                <span id="fdp-title"><a></a></span>
             </div>
         `;
 
         $('#fdp-photo').append($(btns));
-
 
         let num = 1;
         let total = 1;
@@ -62,21 +82,21 @@
             // Call API to get image src
             $.get(endpoint, function(resp) {
                 if(resp.src) {
-                    history.push(resp.src);
-                    renderPhoto(resp.src, resp.title);
+                    history.push(resp);
+                    renderPhoto(resp.src, resp.title, resp.url);
                 }
             });
             
         };
 
-        let renderPhoto = (src, title) => {
+        let renderPhoto = (src, title, url) => {
             $('#the-photo').remove();
             $('#fdp-photo').append($('<img/>', {id: 'the-photo'}));
             $('#the-photo').attr('src',src);
             $('#the-photo').attr('title',title);
-            if(window.devMode) {
-                window.history.pushState(null, title, title);
-            }
+            $('#fdp-title a').text(title);
+            $('#fdp-title a').attr('href', url);
+            
             $('#the-photo').on('load', function(){orientation()});
             seconds = showingSeconds;
         };
@@ -122,11 +142,11 @@
             }
             else {
                 let currentSrc = $('#the-photo').attr('src');
-                let src = history.pop();
-                if(src == currentSrc) {
-                    src = history.pop();
+                let resp = history.pop();
+                if(resp.src == currentSrc) {
+                    resp = history.pop();
                 }
-                renderPhoto(src);
+                renderPhoto(resp.src, resp.title, resp.url);
             }
             startItv();
         });
@@ -142,9 +162,6 @@
             e.preventDefault();
             pauseItv();
             $('#fdp-photo').remove();
-            if(window.devMode) {
-                window.history.pushState(null, null, originURL);
-            }
         });
 
     });

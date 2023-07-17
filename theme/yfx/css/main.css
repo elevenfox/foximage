@@ -891,6 +891,20 @@ article.file #auto-play {
     line-height: 12px;
 }
 
+#fdp-title {
+    display: inline-block;
+    text-align: center;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 5px 0 0 20px;
+    line-height: 12px;
+    font-size: 14px;
+}
+#fdp-title a {
+    width: 100%;
+}
+
 
 /* article.file #fdp-photo>a {
     min-height: 500px;

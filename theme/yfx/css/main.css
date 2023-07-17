@@ -837,11 +837,12 @@ article.file #auto-play {
 #fdp-photo {
     text-align: center;
     position: fixed;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     top: 0;
     bottom: 0;
     left: 0;
-    right: 0;
+    right: -17px;
     background-color: rgba(011, 011, 011, 0.9);
     z-index: 888888;
 }

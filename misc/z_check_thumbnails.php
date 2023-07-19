@@ -1,5 +1,5 @@
 <?php
-require('bootstrap.inc.php');
+require('../bootstrap.inc.php');
 
 $folder_full_path = isset($argv[1]) ? $argv[1] : null;
 

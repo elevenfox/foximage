@@ -26,12 +26,12 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="mtcos"]');
+    const ishow = await page.waitForSelector('a[title="xiaoyu"]');
     await ishow.click();
     await delay(2000);
 
     // Go to second level dir
-    const sub = await page.waitForSelector('a[title="others"]');
+    const sub = await page.waitForSelector('a[title="400"]');
     await sub.click();
     await delay(2000);
 
@@ -104,7 +104,7 @@ async function processItems(page, rows) {
             await delay(100);
             const share = await page.waitForSelector('div.private-share-btn');
             await share.click();
-            await delay(2000);
+            await delay(3000);
             await page.$x("//p[contains(., 'The link has been copied')]");
             let shareLink = await page.evaluate(() => navigator.clipboard.readText());
             console.log('---- share link: ' + shareLink);

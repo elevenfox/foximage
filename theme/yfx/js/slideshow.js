@@ -42,6 +42,7 @@
         `;
 
         $('#fdp-photo').append($(btns));
+        $('#fdp-photo').append($('<div/>', {id: 'loading'}));
 
         $('body').css('overflow', 'hidden');
 
@@ -61,10 +62,9 @@
         let history = [];
         
         
-        // Show loading?
-
         // Handle setInterval and setTimeout
         let timeoutCallback = function() {
+            $('#loading').show();
             let endpoint = '';
             switch(type) {
                 case 'album':
@@ -99,7 +99,10 @@
             $('#fdp-title a').text(title);
             $('#fdp-title a').attr('href', url);
             
-            $('#the-photo').on('load', function(){orientation()});
+            $('#the-photo').on('load', function(){
+                $('#loading').hide();
+                orientation();
+            });
             seconds = showingSeconds;
         };
         

@@ -10,6 +10,8 @@
 
     let x =1;
     $('#auto-play').on('click', function() {
+        gtag('event','click',{'event_category':'slideshow','event_label':'auto_play','value':null});
+          
         if( !theURL.includes('ppt=1')) {
             if(theURL.includes('?')) {
                 let queryString = theURL.slice(theURL.indexOf('?') + 1);
@@ -124,23 +126,27 @@
             $('.fdp-random-pause').addClass('glyphicon-play');
         };
         let startItv = () => {
+            window.clearInterval(itv);
             $('.fdp-random-pause').removeClass('glyphicon-play');
             $('.fdp-random-pause').addClass('glyphicon-pause');
             itv = setInterval(intervalCallback, 1000);
         };
         $('.fdp-random-pause').on('click', function(e) {
             e.preventDefault();
-
+            
             if($('.fdp-random-pause').hasClass('glyphicon-pause')) {
+                gtag('event','click',{'event_category':'slideshow','event_label':'pause','value':null});
                 pauseItv();
             }
             else {
+                gtag('event','click',{'event_category':'slideshow','event_label':'start','value':null});
                 startItv();
             }
         });
 
         $('.fdp-random-previous').on('click', function(e){
             e.preventDefault();
+            gtag('event','click',{'event_category':'slideshow','event_label':'previous','value':null});
             pauseItv();
             if(history.length <= 0) {
                 alert("No previous photo.");
@@ -158,6 +164,7 @@
 
         $('.fdp-random-next').on('click', function(e){
             e.preventDefault();
+            gtag('event','click',{'event_category':'slideshow','event_label':'next','value':null});
             pauseItv();
             timeoutCallback();
             startItv();
@@ -165,6 +172,7 @@
 
         $('#close_ppt').on('click', function(e) {
             e.preventDefault();
+            gtag('event','click',{'event_category':'slideshow','event_label':'close','value':null});
             pauseItv();
             $('#fdp-photo').remove();
             $('body').css('overflow', 'auto');

@@ -898,7 +898,11 @@ article.file #fdp-photo {
     position: relative;
     overflow: hidden;
 }
-article.file #fdp-photo #action-hint {
+
+article.file #fdp-photo-old {
+    position: relative;
+}
+article.file #fdp-photo-old #action-hint {
     position: absolute;
     z-index: 777;
     bottom: -20px;
@@ -927,7 +931,7 @@ article.file #fdp-photo>a::before {
 
 article.file .fdp-click-area {
     position: absolute;
-    top: 47px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;

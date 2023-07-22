@@ -42,7 +42,17 @@ for ($i = $start; $i<=$end; $i++) {
             $res = find_between($html, '__i18n:{langs:{}}}}(' , ',');
             echo $res[0] . "\n";
             if(!empty($res[0])) {
-                $new_folder_name = $folder_name . '-' . cleanStringForFilename($res[0]);
+                $append = cleanStringForFilename($res[0]);
+                $append = str_ireplace('半脱', '', $append);
+                $append = str_ireplace('脱', '', $append);
+                $append = str_ireplace('露', '', $append);
+                $append = str_ireplace('吊袜', '吊带袜', $append);
+                $append = str_ireplace('吊裙', '吊带裙', $append);
+                $append = str_ireplace('私房', '', $append);
+                $append = str_ireplace('配', '', $append);
+                $append = str_ireplace('无内', '', $append);
+                $append = str_ireplace('开档', '', $append);
+                $new_folder_name = $folder_name . '-' . $append;
                 echo "rename $folder_full_path/$folder_name to $folder_full_path/$new_folder_name\n\n";
                 rename($folder_full_path.'/'.$folder_name, $folder_full_path . '/'.$new_folder_name);
             }

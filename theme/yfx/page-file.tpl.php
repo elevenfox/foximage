@@ -93,7 +93,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
             <div class="file-detail">
               <div>
                   <?php foreach($src_arr as $src) { ?>
-                      <img src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy" ></img>
+                      <img src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy"></img>
                   <?php } ?>
               </div>
             </div>

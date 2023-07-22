@@ -116,26 +116,12 @@ var juicy_tags = ['a', 'img'];
 
 
     <header class="header" role="banner">
-
         <div id="h-left">
-            <div style="position: absolute; left: 15px; top: 15px; ">
-            <span id="quick-nav">
-                <img src="/theme/jw/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation">
-            </span>
-                <span id="mobile-back">
-                <a href="javascript:history.go(-1)" class="ui-link"><img src="/theme/jw/images/back100bsa.png" title="Go Back" alt="Go Back"></a>
-            </span>
-            </div>
             <a href="/" title="Home" rel="home" class="header__logo">
                 <img src="/theme/jw/logo.png" width="45" height="45"alt="Tuzac home" class="header__logo-image">
                 <span>图宅<span class="not-in-mobile">- 高清美女图集</span></span>
             </a>
-            <div id="search-button-div">
-                <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search"></a>
-                <a id="user-actions" href="/user/<?=empty($_SESSION['user'])?'login':''?>"><span class="glyphicon glyphicon-user"></span></a>
-            </div>
         </div>
-
 
         <div id="h-right">
             <?php if(!empty($_SESSION['user'])):?>
@@ -145,7 +131,6 @@ var juicy_tags = ['a', 'img'];
                 <span><a href="/user/login">登录</a></span><span><a href="/user/register">注册</a></span>
             <?php endif;?>
         </div>
-
 
         <div id="h-middle">
             <div class="header__region region region-header">
@@ -166,13 +151,65 @@ var juicy_tags = ['a', 'img'];
         </div>
     </header>
 
-    <div class="main-menu" role="navigation">
+    <header class="mobile_header">
+        <div id="h-left-m">
+            <div style="position: absolute; left: 15px; top: 15px; ">
+                <span id="quick-nav">
+                    <img src="/theme/jw/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation">
+                </span>
+                    <span id="mobile-back">
+                    <a href="javascript:history.go(-1)" class="ui-link"><img src="/theme/jw/images/back100bsa.png" title="Go Back" alt="Go Back"></a>
+                </span>
+            </div>
+            <a href="/" title="Home" rel="home" class="header__logo">
+                <img src="/theme/jw/logo.png" width="45" height="45"alt="Tuzac home" class="header__logo-image">
+                <span>图宅<span class="not-in-mobile">- 高清美女图集</span></span>
+            </a>
+            <div id="search-button-div">
+                <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search"></a>
+                <a id="user-actions" href="/user/<?=empty($_SESSION['user'])?'login':''?>"><span class="glyphicon glyphicon-user"></span></a>
+            </div>
+        </div>
+        <div id="h-middle-m">
+            <div class="header__region region region-header">
+                <form action="/search" method="get" id="search-block-form" accept-charset="UTF-8">
+                    <div>
+                        <div class="container-inline">
+                            <div class="form-item form-type-textfield form-item-search-block-form">
+                                <input title="Enter the terms you wish to search for." placeholder="搜索... 逗号分隔关键字" type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="1024" class="form-text">
+                            </div>
+                            <div class="form-actions form-wrapper" id="edit-actions">
+                                <input type="submit" id="edit-submit" name="op" value="" class="form-submit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <?= $theme->render(null, 'ads_templates/ad-m-top');?>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-menu mobile_hide" role="navigation">
         <ul class="navbar clearfix">
             <?php foreach($data['blocks']['blockHeader']['data']['menuLinks'] as $menuLink) :?>
                 <li class="<?= substr($data['blocks']['blockHeader']['data']['currentUrl'], 0, strlen($menuLink['url'])) === $menuLink['url'] ? 'active' : '' ?>">
                     <a href="<?= $menuLink['url']?>" title=""><?= $menuLink['name']?></a>
                 </li>
             <?php endforeach; ?>
+            
+            <?php if(!empty($_SESSION['user'])):?>
+                <li class="logout mobile-only">
+                    <span>Hello <a href="/user"><?=$_SESSION['user']['name']?></a></span>|
+                    <span><a href="/user/logout">退出</a></span>
+                </li>    
+            <?php else:?>
+                <li class="login mobile-only">
+                    <span><a href="/user/login">登录</a></span>
+                </li>  
+                <li class="signup mobile-only">
+                    <span><a href="/user/register">注册</a></span>
+                </li>    
+            <?php endif;?>
             <!--li class="outer-link"><a href="https://www.javcook.com" title="" target="_blank">JAVCOOK.com</a></li>
             <li class="outer-link last"><a href="https://www.youfreex.com" title="" target="_blank">YouFreeX.com</a></li-->
         </ul>

@@ -86,9 +86,6 @@ $folder_name = basename($folder_full_path);
 // elseif(substr( strtolower($folder_name), 0, 7 ) === "huayang") {
 //     [$org_name_en, $org_name, $model_name] = ['HuaYang', '花漾', $terms[2]];
 // }
-// elseif(substr( strtolower($folder_name), 0, 5 ) === "youwu") {
-//     [$org_name_en, $org_name, $model_name] = ['YouWu', '尤物馆', $terms[2]];
-// }
 // elseif(substr( strtolower($folder_name), 0, 6 ) === "mfstar") {
 //     [$org_name_en, $org_name, $model_name] = ['MFStar', '模范学院', $terms[2]];
 // }
@@ -104,14 +101,11 @@ $folder_name = basename($folder_full_path);
 // elseif(substr( strtolower($folder_name), 0, 6 ) === "feilin") {
 //     [$org_name_en, $org_name, $model_name] = ['FeiLin', '嗲囡囡', $terms[2]];
 // }
-// elseif(substr( strtolower($folder_name), 0, 7 ) === "missleg") {
-//     [$org_name_en, $org_name, $model_name] = ['MissLeg', '蜜丝', $terms[2]];
-// }
 // elseif(substr( strtolower($folder_name), 0, 6 ) === "mygirl") {
 //     [$org_name_en, $org_name, $model_name] = ['MyGirl', '美媛馆', $terms[2]];
 // }
-// elseif(substr( strtolower($folder_name), 0, 5 ) === "mtcos") {
-//     [$org_name_en, $org_name, $model_name] = ['MTCos', '喵糖映画', 'Cosplay'];
+// elseif(substr( strtolower($folder_name), 0, 6 ) === "xiaoyu") {
+//     [$org_name_en, $org_name, $model_name] = ['XiaoYu', '语画界', $terms[2]];
 // }
 // else {
 //     [$org_name_en, $org_name, $model_name] = ['', '', $terms[0]];

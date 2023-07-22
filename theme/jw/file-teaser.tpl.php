@@ -15,7 +15,8 @@ $thumbnail = processThumbnail($data);
                               alt="<?=$data['title']?>"
                               src="<?=$thumbnail?>"
                               title="<?=$data['title']?>"
-                        >
+                              loading="lazy"
+                        />
                     </div>
                 </a>
             </div>

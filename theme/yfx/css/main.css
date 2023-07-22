@@ -193,6 +193,9 @@ form input[type="button"] {
 .header {
     padding: 0 12px;
 }
+header.mobile_header {
+    display: none;
+}
 
 .header div {
     display: inherit;
@@ -825,12 +828,13 @@ article.file img {
     display: inline-flex;
     margin: 0 20px;
     border-radius: 5px;
+    line-height: 1.4;
+    border: 1px solid #FF87B7;
 }
 article.file #auto-play {
     margin-bottom: 20px;
     background: none;
     color: #ccc;
-    border: 1px solid #FF87B7;
     float: right;
 }
 
@@ -1208,6 +1212,82 @@ article.file .fdp-click-area-right:hover {
     }
 }
 
+@media only screen and (max-width: 777px) {
+    .mobile-only {
+        display: block !important;
+    }
+    .mobile_hide {
+        display: none;
+    }
+    header.header {
+        display: none;
+    }
+    header.mobile_header {
+        display: block;
+    }
+    .header {
+        padding: 0;
+    }
+    .header__logo-image {
+        padding: 15px 0;
+        width: auto;
+        height: 30px;
+    }
+    .header__logo span {
+        line-height: 60px;
+    }
+    .layout-center #h-left-m {
+        width: 100%;
+        text-align: center;
+        background-color: #333;
+        float: none;
+    }
+    .layout-center #h-left-m .header__logo {
+        float: inherit;
+    }
+    .layout-center #h-left-m #quick-nav,
+    .layout-center #h-left-m #mobile-back,
+    .layout-center #h-left-m #search-button-div {
+        display: inline-block;
+    }
+    .layout-center .region-header {
+        width: 100%;
+    }
+    .layout-center #h-middle-m {
+        display: none;
+    }
+    .layout-center #h-middle-m {
+        width: 100%;
+        margin: 0;
+    }
+    .layout-center #h-middle-m .container-inline {
+        text-align: center;
+    }
+    .layout-center #h-middle-m .container-inline .form-item-search-block-form {
+        width: 100%;
+        padding: 20px 5px 0px 0;
+        box-sizing: border-box;
+    }
+    .layout-center #h-middle-m .container-inline .form-item-search-block-form input[name='term'] {
+        padding: 5px;
+        width: 100%;
+        box-sizing: border-box;
+        height: 35px;
+        margin: 5px auto;
+    }
+    .layout-center #h-middle-m .container-inline .form-actions {
+        display: block;
+        padding: 3px;
+    }
+    .layout-center #h-middle-m .container-inline .form-actions input[name='op'] {
+        background: none;
+        background-color: #f27bab;
+        position: static;
+        width: 100%;
+        height: 35px;
+    }
+}
+
 @media only screen and (max-width: 565px) {
     body>img {
         display: none;
@@ -1223,67 +1303,7 @@ article.file .fdp-click-area-right:hover {
         padding-right: 0;
         margin: 0 auto;
     }
-    .header {
-        padding: 0;
-    }
-    .header__logo-image {
-        padding: 15px 0;
-        width: 30px;
-        height: 30px;
-    }
-    .header__logo span {
-        line-height: 60px;
-    }
-    .layout-center #h-left {
-        width: 100%;
-        text-align: center;
-        background-color: #333;
-        float: none;
-    }
-    .layout-center #h-left .header__logo {
-        float: inherit;
-    }
-    .layout-center #h-left #quick-nav,
-    .layout-center #h-left #mobile-back,
-    .layout-center #h-left #search-button-div {
-        display: inline-block;
-    }
-    .layout-center .region-header {
-        width: 100%;
-    }
-    .layout-center #h-middle,
-    .layout-center #h-right {
-        display: none;
-    }
-    .layout-center #h-middle {
-        width: 100%;
-        margin: 0;
-    }
-    .layout-center #h-middle .container-inline {
-        text-align: center;
-    }
-    .layout-center #h-middle .container-inline .form-item-search-block-form {
-        width: 100%;
-        padding: 20px 5px;
-        box-sizing: border-box;
-    }
-    .layout-center #h-middle .container-inline .form-item-search-block-form input[name='term'] {
-        padding: 5px;
-        width: 100%;
-        box-sizing: border-box;
-        height: 35px;
-    }
-    .layout-center #h-middle .container-inline .form-actions {
-        display: block;
-        padding: 3px;
-    }
-    .layout-center #h-middle .container-inline .form-actions input[name='op'] {
-        background: none;
-        background-color: #d51c23;
-        position: static;
-        width: 100%;
-        height: 35px;
-    }
+    
     .layout-center .layout-3col {
         margin-left: 0;
         margin-right: 0;
@@ -1311,7 +1331,6 @@ article.file .fdp-click-area-right:hover {
         padding: 0;
     }
     .layout-center .main-menu {
-        display: none;
         position: fixed;
         z-index: 999;
         top: 65px;

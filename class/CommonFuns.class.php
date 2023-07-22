@@ -66,7 +66,7 @@ function l($link, $text) {
 
 function t($text) {
     $to_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang');
-    if(empty($to_lang)) return $text;
+    if($to_lang == 'zh-CN') return $text;
 
     if( !array_key_exists($text, TRANSLATION) || empty(TRANSLATION[$text]) ) return $text;
     else return TRANSLATION[$text];

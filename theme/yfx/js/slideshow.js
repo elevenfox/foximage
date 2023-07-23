@@ -86,10 +86,10 @@
                     if(num == total) num = 1;
                     break;
                 case 'tag':
-                    endpoint = '/api/?ac=get_random_photo_by_tag&tag=' + value;
+                    endpoint = '/api/?ac=get_random_photo_by_tag&tag=' + value + '&rand=' + new Date().getTime();
                     break;
                 case 'search':
-                    endpoint = '/api/?ac=get_random_photo_by_search&keywords=' + value;
+                    endpoint = '/api/?ac=get_random_photo_by_search&keywords=' + value + '&rand=' + new Date().getTime();
                     break;    
                 default:
                     break;

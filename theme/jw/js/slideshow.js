@@ -28,6 +28,7 @@
         // Show the canvas
         $('body').append($('<div/>', {id: 'fdp-photo' }));
 
+        // The slideshow control buttons
         let btns = `
             <div class="fdp-random-btns">
                 <a href="#" id="close_ppt" class="glyphicon glyphicon-remove" title="Quit">&times;</a>
@@ -42,9 +43,19 @@
                 <span id="fdp-title"><a></a></span>
             </div>
         `;
-
         $('#fdp-photo').append($(btns));
+
+        // Loading
         $('#fdp-photo').append($('<div/>', {id: 'loading'}));
+
+        // Click area
+        let clickArea = `
+        <div class="fdp-click-area">
+            <span class="fdp-click-area-left"  title="previous"></span>
+            <span class="fdp-click-area-right" title="next"></span>
+        </div>
+        `;
+        $('#fdp-photo').append($(clickArea));
 
         $('body').css('overflow', 'hidden');
 
@@ -144,7 +155,8 @@
             }
         });
 
-        $('.fdp-random-previous').on('click', function(e){
+
+        const previous = (e) => {
             e.preventDefault();
             if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'previous','value':null});
             pauseItv();
@@ -160,15 +172,19 @@
                 renderPhoto(resp.src, resp.title, resp.url);
             }
             startItv();
-        });
+        }
+        $('.fdp-random-previous').on('click', (e)=>previous(e));
+        $('#fdp-photo .fdp-click-area-left').on('click', (e)=>previous(e));
 
-        $('.fdp-random-next').on('click', function(e){
+        const next = (e) => {
             e.preventDefault();
             if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'next','value':null});
             pauseItv();
             timeoutCallback();
             startItv();
-        });
+        };
+        $('.fdp-random-next').on('click', (e)=>next(e));
+        $('#fdp-photo .fdp-click-area-right').on('click', (e)=>next(e));
 
         $('#close_ppt').on('click', function(e) {
             e.preventDefault();

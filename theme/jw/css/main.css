@@ -828,7 +828,7 @@ article.file #auto-play {
     left: 0;
     right: -17px;
     background-color: rgba(011, 011, 011, 0.9);
-    z-index: 888888;
+    z-index: 888666;
 }
 #fdp-photo #the-photo {
     width: 100%;
@@ -929,32 +929,33 @@ article.file #fdp-photo>a::before {
     transform: translate(-50%, -50%);
 }
 
-article.file .fdp-click-area {
+.fdp-click-area {
     position: absolute;
-    top: 0;
+    top: 40px;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
+    z-index: 888777;
 }
 
-article.file .fdp-click-area-left {
+.fdp-click-area-left {
     flex: 1;
     cursor: url("/theme/jw/images/cursor-arrow-left.png") 16 16, pointer;
 }
 
-article.file .fdp-click-area-left:hover {
+.fdp-click-area-left:hover {
     background: url("/theme/jw/images/arrow-left.svg") no-repeat;
     background-position: left;
     background-size: 80px 60px;
 }
 
-article.file .fdp-click-area-right {
+.fdp-click-area-right {
     flex: 1;
     cursor: url("/theme/jw/images/cursor-arrow-right.png") 16 16, pointer;
 }
 
-article.file .fdp-click-area-right:hover {
+.fdp-click-area-right:hover {
     background: url("/theme/jw/images/arrow-right.svg") no-repeat;
     background-position: right;
     background-size: 80px 60px;

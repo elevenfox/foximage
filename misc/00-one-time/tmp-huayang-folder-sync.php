@@ -626,7 +626,7 @@ function getOriginFolderByVol($vol_num) {
     global $org_name;
     
     $vol_num = strtolower($vol_num);
-    $vol_num = str_replace('u', 'e', $vol_num);
+    // $vol_num = str_replace('u', 'e', $vol_num);
     // echo "vol_num = $vol_num \n"; 
     // exit;
     
@@ -659,7 +659,7 @@ function getOriginFolderByVol($vol_num) {
                 $l_folder_name = str_replace($org_name.'-',$org_name.'_', $l_folder_name);
                 
                 $tt = find_between($l_folder_name, $org_name.'_', '-');
-                if(str_starts_with($tt[0], 'e')) {
+                if(str_starts_with($tt[0], 'u')) {
                     $ss = find_between($l_folder_name, '-', '-');
                     $folder_info['model'] = my_mb_ucfirst(sanatizeCN($ss[0]));
                 }

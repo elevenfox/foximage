@@ -270,8 +270,25 @@ $folder_name = basename($folder_full_path);
 // file_put_contents($folder_full_path.'/tags.txt', $tags_str);
 
 // Create dl.txt file for download_url
-$tbox_file = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTyEtPWDpsqvn4qIEvwmk4__1fTjBTiREPcleN-crVfz4U0PDxBirWx9Vr4gqHlJE9mK5JEyugpbw6S/pub?output=csv';
-$tbox_c = file_get_contents($tbox_file);
+$tbox_c = '';
+$tbox_local_cache = '/tmp/tbox_cache.txt';
+$use_local = false;
+if(file_exists($tbox_local_cache) ) {
+    $f_time = strtotime(trim(shell_exec("date -r $tbox_local_cache")));
+    if( $f_time > (time() - 120) ) {
+        echo "--use local cache file... \n";
+        $use_local = true;
+    }
+}
+if($use_local) {
+    $tbox_c = file_get_contents($tbox_local_cache);
+}
+else {
+    echo "--download from google drive... \n";
+    $tbox_file = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTyEtPWDpsqvn4qIEvwmk4__1fTjBTiREPcleN-crVfz4U0PDxBirWx9Vr4gqHlJE9mK5JEyugpbw6S/pub?output=csv';
+    $tbox_c = file_get_contents($tbox_file);
+    file_put_contents($tbox_local_cache, $tbox_c);
+}
 $tbox_list = [];
 $lines = explode("\n", $tbox_c);
 foreach($lines as $l) {

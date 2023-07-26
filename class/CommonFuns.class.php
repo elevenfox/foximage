@@ -827,6 +827,11 @@ function my_mb_ucfirst($str) {
     return $new_str;
 }
 
+function isImagePortrait($full_path) {
+    list($width, $height, $type) = getimagesize($full_path);
+    return $width < $height;
+}
+
 function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('_', '-', $l_folder_name);
 

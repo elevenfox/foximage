@@ -1,0 +1,40 @@
+#!/bin/bash
+
+folder_path=$1
+
+defaultFolder="/home/eric/work/002-processing/"
+if [ -z "$folder_path" ]; then
+  read -p "Use '${defaultFolder}'? (y/n)" CHOICE
+  CHOICE=${CHOICE:-y}
+  if [ ${CHOICE} == "y" ]; then
+    folder_path=${defaultFolder}
+  else
+    echo "Must set a full path folder!!!"
+    echo ""
+    exit 1
+  fi 
+fi  
+
+
+echo "Target parent folder is: ${folder_path}"
+
+cd "${folder_path}"
+
+# # look up sub folders
+# for d in */; do
+#   if [ $d != "*/" ]; then
+#     # rar-tuzac each sub folder
+#     rar-tuzac "${d}"
+#   fi  
+# done
+
+# look up .7z files in the folder
+for filename in *.7z; do
+    echo ${filename}
+    b_name=`basename ${filename} .7z`
+    echo ${b_name}
+    7za e -pwww.5280bt.net ${filename}
+    unar -p www.5280bt.net ${b_name}.zip 
+    rm -f ${filename}
+    rm -f ${b_name}.zip 
+done

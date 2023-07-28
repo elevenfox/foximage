@@ -31,7 +31,7 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const sub = await page.waitForSelector('a[title="300"]');
+    const sub = await page.waitForSelector('a[title="400"]');
     await sub.click();
     await delay(2000);
 

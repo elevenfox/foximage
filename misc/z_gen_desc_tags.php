@@ -135,6 +135,9 @@ $folder_name = basename($folder_full_path);
 // if( str_contains($folder_name, '丁字裤') && !in_array('丁字裤', $tags)) {
 //     $tags[] = '丁字裤';
 // }
+// if( str_contains($folder_name, '丁字裤') && !in_array('美臀', $tags)) {
+//     $tags[] = '美臀';
+// }
 // if( str_contains($folder_name, '情趣') && !in_array('情趣内衣', $tags)) {
 //     $tags[] = '情趣内衣';
 // }
@@ -185,6 +188,15 @@ $folder_name = basename($folder_full_path);
 // }
 // if( str_contains($folder_name, '旗袍') && !in_array('古风', $tags)) {
 //     $tags[] = '古风';
+// }
+// if( str_contains($folder_name, '古装') && !in_array('古风', $tags)) {
+//     $tags[] = '古风';
+// }
+// if( str_contains($folder_name, '肚兜') && !in_array('古风', $tags)) {
+//     $tags[] = '古风';
+// }
+// if( str_contains($folder_name, '肚兜') && !in_array('肚兜', $tags)) {
+//     $tags[] = '肚兜';
 // }
 // if( str_contains($folder_name, '透视') && !in_array('透视装', $tags)) {
 //     $tags[] = '透视装';

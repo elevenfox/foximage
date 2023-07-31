@@ -843,6 +843,7 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('yumi-尤美', 'Yumi尤美', $l_folder_name);
     $l_folder_name = str_ireplace('柴婉艺averie', '柴婉艺', $l_folder_name);
     $l_folder_name = str_ireplace('妲己-toxic', '妲己', $l_folder_name);
+    $l_folder_name = str_ireplace('女神妲己-toxic', '妲己', $l_folder_name);
     $l_folder_name = str_ireplace('葛征model', '葛征', $l_folder_name);
     $l_folder_name = str_ireplace('果儿victoria', '果儿', $l_folder_name);
     $l_folder_name = str_ireplace('萌汉药baby', '萌汉药', $l_folder_name);
@@ -852,7 +853,6 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('土肥圆矮挫穷', '土肥圆', $l_folder_name);
     $l_folder_name = str_ireplace('土肥圆矮挫', '土肥圆', $l_folder_name);
     $l_folder_name = str_ireplace('女神yumi-尤美', 'Yumi尤美', $l_folder_name);
-    $l_folder_name = str_ireplace('女神妲己-toxic', '妲己', $l_folder_name);
     $l_folder_name = str_ireplace('潘琳琳ber', '潘琳琳', $l_folder_name);
     $l_folder_name = str_ireplace('孙梦瑶v', '孙梦瑶', $l_folder_name);
     $l_folder_name = str_ireplace('唐婉儿lucky', '唐婉儿', $l_folder_name);
@@ -865,6 +865,7 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('周琰琳lin', '周琰琳', $l_folder_name);
     $l_folder_name = str_ireplace('周于希sandy', '周于希', $l_folder_name);
     $l_folder_name = str_ireplace('朱可儿flower', '朱可儿', $l_folder_name);
+    $l_folder_name = str_ireplace('朱可儿Flora', '朱可儿', $l_folder_name);
     $l_folder_name = str_ireplace('俏丽少女-思淇sukiiii', '思淇sukiiii', $l_folder_name);
     $l_folder_name = str_ireplace('童颜巨乳妹子-思淇sukiiii', '思淇sukiiii', $l_folder_name);
     $l_folder_name = str_ireplace('quella-瑰娜', '瑰娜', $l_folder_name);
@@ -910,6 +911,7 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('谢芷馨sindy', '谢芷馨', $l_folder_name);
     $l_folder_name = str_ireplace('兜豆靓youlina', '兜豆靓', $l_folder_name);
     $l_folder_name = str_ireplace('绯月樱-cherry', '绯月樱', $l_folder_name);
+    $l_folder_name = str_ireplace('cherry绯月樱', '绯月樱', $l_folder_name);
     $l_folder_name = str_ireplace('芝芝booty', '芝芝', $l_folder_name);
     $l_folder_name = str_ireplace('徐莉芝booty', '徐莉芝', $l_folder_name);
     $l_folder_name = str_ireplace('angela小热巴', '小热巴', $l_folder_name);
@@ -949,6 +951,17 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('夏沫沫tifa', '夏沫沫', $l_folder_name);
     $l_folder_name = str_ireplace('安然anran', '安然', $l_folder_name);    
     $l_folder_name = str_ireplace('arude薇薇', '薇薇', $l_folder_name);
+    $l_folder_name = str_ireplace('乔漫妮mina', '乔漫妮', $l_folder_name);
+    $l_folder_name = str_ireplace('郑颖姗bev', '郑颖姗', $l_folder_name);
+    $l_folder_name = str_ireplace('cherry樱桃酱', '樱桃酱', $l_folder_name);
+    $l_folder_name = str_ireplace('小海臀Rena', '小海臀', $l_folder_name);
+    $l_folder_name = str_ireplace('Carol周妍希', '周妍希', $l_folder_name);
+    $l_folder_name = str_ireplace('laura阿姣', '阿姣', $l_folder_name);
+    $l_folder_name = str_ireplace('严利娅Yuliya', '严利娅', $l_folder_name);
+    
+    
+
+
 
     return $l_folder_name;
 }

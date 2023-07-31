@@ -814,6 +814,9 @@ article.file img {
     /* width: 100%; */
     position: relative;
 }
+article.file .file-detail img {
+    width: 100%;
+}
 
 
 #auto-play {

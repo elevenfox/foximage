@@ -1,0 +1,30 @@
+#!/bin/bash
+
+folder_path=$1
+
+defaultFolder="/home/eric/work/002-processing/"
+if [ -z "$folder_path" ]; then
+  read -p "Use '${defaultFolder}'? (y/n)" CHOICE
+  CHOICE=${CHOICE:-y}
+  if [ ${CHOICE} == "y" ]; then
+    folder_path=${defaultFolder}
+  else
+    echo "Must set a full path folder!!!"
+    echo ""
+    exit 1
+  fi 
+fi   
+
+full_script_path=$(pwd)
+
+echo "Target parent folder is: ${folder_path}"
+
+cd "${folder_path}"
+
+# look up sub folders
+for d in */; do
+  if [ $d != "*/" ]; then
+    # gen desc and tags in each sub folder
+    php "${full_script_path}/z_terabox.php" "${d}" 
+  fi  
+done

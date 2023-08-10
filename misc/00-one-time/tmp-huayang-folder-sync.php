@@ -646,7 +646,7 @@ $dirs = <<<EOF
 尤果圈爱尤物_如歌《另有深情》-No.1531-写真集-35P-
 尤果圈爱尤物_如歌《温暖的你》-No.1677-写真集-35P-
 尤果圈爱尤物_妥妥《花臀警花》-No.662-写真集-40P-
-尤果圈爱尤物_妮可《最美遇见妮》-No.1252写真集-35P-
+尤果圈爱尤物_妮可《最美遇见妮》-No.1252-写真集-35P-
 尤果圈爱尤物_妮小妖《NIGH妹》-No.232-写真集-35P-
 尤果圈爱尤物_妮小妖《困住的爱》-No.561-写真集-39P-
 尤果圈爱尤物_妮小妖《小妖快跑》-No.458-写真集-40P-
@@ -2004,6 +2004,18 @@ foreach($scan as $folder_name) {
         $l_folder_name = str_replace('vol.', 'no.', $l_folder_name);
         $v_arr = find_between($l_folder_name, 'no.', ' ');
         $vol = trim($v_arr[0]);
+        $origin_vol = $vol;
+        if((int)$origin_vol >=1729 && (int)$origin_vol <=1888) $vol = $vol+1;
+        if((int)$origin_vol == 1889) $vol = 1896;
+        if((int)$origin_vol >=1896 && (int)$origin_vol <=1934) $vol = $vol+1;
+        if((int)$origin_vol == 1935) continue;
+        if((int)$origin_vol == 1971) $vol = 1972;
+        if((int)$origin_vol == 1972) $vol = 1974;
+        if((int)$origin_vol == 1973) $vol = 1973;
+        if((int)$origin_vol >= 1974 && (int)$vol <=1979) $vol = $vol+1;
+        if((int)$origin_vol == 1981) continue;
+        if((int)$origin_vol >= 1982) $vol = $vol-1;
+
         $vol = 'no.'.$vol;
         // Go to origin path to get folder name with the same vol num
         $origin = getOriginFolderByVol($vol);
@@ -2071,24 +2083,26 @@ foreach($scan as $folder_name) {
                 if(strpos($file, '永久地址') !== false) {
                     unlink($origin_file_full);
                 }
-                if($file == 'cover.jpg') {
-                    rename($origin_full_path . '/cover.jpg' , $origin_full_path . '/thumbnail.jpg');
+                if($file == 'cover.jpg' || $file == 'cover.JPG') {
+                    rename($origin_file_full, $origin_full_path . '/thumbnail.jpg');
                     $file = 'thumbnail.jpg';
                 }
                 if($file == 'thumbnail.JPG') {
-                    rename($origin_full_path . '/thumbnail.JPG' , $origin_full_path . '/thumbnail.jpg');
+                    rename($origin_file_full, $origin_full_path . '/thumbnail.jpg');
                     $file = 'thumbnail.jpg';
                 }
                 if($file == 'thumbnail.jpg') $already_has_thumbnail = true;
-                if ( is_file($origin_file_full) && @is_array(getimagesize($origin_file_full)) ) {
-                    $images[] = $file;
+                if(!$already_has_thumbnail) {
+                    if ( is_file($origin_file_full) && @is_array(getimagesize($origin_file_full)) ) {
+                        $images[] = $file;
+                    }
                 }
             }
-            natsort($images);
             if($already_has_thumbnail) {
                 echo "---- Already has a thumbnail.jpg \n\n";
             }
             else {
+                natsort($images);
                 // Get first portrait image
                 $thumb = $images[0];
                 foreach ($images as $im) {
@@ -2115,7 +2129,7 @@ foreach($scan as $folder_name) {
                 $last = empty($last) ? '' : '-'.$last;
 
                 $vol = str_replace('no.', '', $vol);
-                $new_folder_name = $org_name_en.$org_name.'-'. strtoupper($vol) . '-' . $origin['model'] . '-' . $origin['main'] . $last;
+                $new_folder_name = $org_name_en.$org_name.'-'. strtoupper($origin_vol) . '-' . $origin['model'] . '-' . $origin['main'] . $last;
                 // $new_folder_name = $org_name_en.$org_name.'-'. strtoupper($vol) . '-' . $origin['main'];
                 echo "rename $origin_full_path to $folder_full_path/$new_folder_name\n\n";
                 if(!$dryrun) rename($origin_full_path, $folder_full_path . '/'.$new_folder_name);

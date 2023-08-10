@@ -16,20 +16,12 @@ foreach($scan as $folder_name) {
     if (is_dir($origin_full_path) && $folder_name!='.' && $folder_name!='..') {
         //echo '-- Processing folder: ' . $folder_name . "\n";
 
-        // If no thumbnail.jpg, rename last image to thumbnail.jpg
         $scan2 = scandir($origin_full_path);
         $small_images = [];
         foreach($scan2 as $file) {
             $origin_file_full = $origin_full_path . '/' . $file;
             $ext = pathinfo($origin_file_full, PATHINFO_EXTENSION);
-            if($file == 'thumbnail.JPG') {
-                rename($origin_full_path . '/thumbnail.JPG' , $origin_full_path . '/thumbnail.jpg');
-                $file = 'thumbnail.jpg';
-            }
-            if($file == 'cover.jpg') {
-                rename($origin_full_path . '/cover.JPG' , $origin_full_path . '/thumbnail.jpg');
-                $file = 'thumbnail.jpg';
-            }
+            
             if($file != 'thumbnail.jpg' && $ext == 'jpg') {
                 $size = filesize($origin_file_full);
                 if($size < 100000) {

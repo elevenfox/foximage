@@ -912,6 +912,7 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('兜豆靓youlina', '兜豆靓', $l_folder_name);
     $l_folder_name = str_ireplace('绯月樱-cherry', '绯月樱', $l_folder_name);
     $l_folder_name = str_ireplace('cherry绯月樱', '绯月樱', $l_folder_name);
+    $l_folder_name = str_ireplace('绯月樱cherry', '绯月樱', $l_folder_name);
     $l_folder_name = str_ireplace('芝芝booty', '芝芝', $l_folder_name);
     $l_folder_name = str_ireplace('徐莉芝booty', '徐莉芝', $l_folder_name);
     $l_folder_name = str_ireplace('angela小热巴', '小热巴', $l_folder_name);

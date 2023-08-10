@@ -5,14 +5,14 @@ require('../../bootstrap.inc.php');
 $new_folder = empty($_REQUEST['new_folder']) ? '' : $_REQUEST['new_folder'];
 $ori_folder = empty($_REQUEST['ori_folder']) ? '' : $_REQUEST['ori_folder'];
 
-$new_path = '/home/eric/work/000/tgod/2016/';
-$origin_path = '/home/eric/work/000/推女神/';
+$new_path = '/home/eric/work/000/kelagirls/';
+$origin_path = '/home/eric/work/000/克拉女神/';
 
 echo '<div><a href="http://local.tuzac.com/misc/00-one-time/tmp_ui.php">刷新</a></div>';
 
 if(!empty($new_folder) && !empty($ori_folder)) {
-    $org_name = '推女神';
-    $org_name_en = 'TGOD';
+    $org_name = '克拉女神';
+    $org_name_en = 'KelaGirls';
 
     $z_arr = explode('-', $new_folder);
     $date = $z_arr[1];
@@ -28,10 +28,9 @@ if(!empty($new_folder) && !empty($ori_folder)) {
     $l_ori_folder = str_replace('---','-',$l_ori_folder);
     $l_ori_folder = str_replace('--','-',$l_ori_folder);
     $folder_info['name'] = $l_ori_folder;
-
-    $l_ori_folder = mapModelNames($l_ori_folder);
     
-    $xx = find_between($l_ori_folder, $org_name.'_', '-');
+    $l_ori_folder = mapModelNames($l_ori_folder);
+    $xx = find_between($l_ori_folder, $org_name.'-', '-');
     $folder_info['model'] = my_mb_ucfirst(sanatizeCN($xx[0]));       
     $folder_info['model'] = str_replace('YUmi尤美', 'Yumi尤美', $folder_info['model']);
 
@@ -68,6 +67,7 @@ if(!empty($new_folder) && !empty($ori_folder)) {
         }
     }
     echo "Processing " . $n_full_path . "/desc.txt \n";
+    echo "---- Desc:\n";
     echo $desc_str . "\n";
     file_put_contents($n_full_path.'/desc.txt', $desc_str);
 
@@ -111,7 +111,7 @@ echo '<div id="new" style="width:45%; display: inline-block; vertical-align: top
 foreach($scan_s as $o_folder_name) {
     $o_full_path = $new_path . '/'. $o_folder_name;
     if (is_dir($o_full_path) && $o_folder_name!='.' && $o_folder_name!='..') {
-        echo '<div><input type="radio" name="new_folder" value="'.$o_folder_name.'"><span>'.$o_folder_name.'</span></div>';
+        echo '<div><label><input type="radio" name="new_folder" value="'.$o_folder_name.'"><span>'.$o_folder_name.'</span></label></div>';
     }
 }
 echo '</div>';
@@ -135,36 +135,3 @@ function syncFolder(oriFolder) {
 </script>
 EOF;
 
-
-
-function sanatizeCN($string) {
-    $string = str_replace('《','-',$string);
-    $string = str_replace('》','-',$string);
-    $string = str_replace('(','-',$string);
-    $string = str_replace(')','-',$string);
-    $string = str_replace('，','-',$string);
-    $string = str_replace('、','-',$string);
-    $string = str_replace('&','-',$string);
-
-    return $string;
-}
-function my_mb_ucfirst($str) {
-    $new_str = '';
-    $do_it = true;
-    for ($i = 0; $i < strlen($str); $i++) {
-        if(ord($str[$i]) >=97 && ord($str[$i]) <=122) {
-            if($do_it) {
-                $new_str[$i] = strtoupper($str[$i]);
-                $do_it = false;
-            }
-            else {
-                $new_str[$i] = $str[$i];
-            }
-        }
-        else {
-            $new_str[$i] = $str[$i];
-        }
-
-    }
-    return $new_str;
-}

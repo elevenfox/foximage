@@ -5,17 +5,24 @@ require('../../bootstrap.inc.php');
 $new_folder = empty($_REQUEST['new_folder']) ? '' : $_REQUEST['new_folder'];
 $ori_folder = empty($_REQUEST['ori_folder']) ? '' : $_REQUEST['ori_folder'];
 
-$new_path = '/home/eric/work/000/kelagirls/';
-$origin_path = '/home/eric/work/000/克拉女神/';
+$new_path = '/home/eric/ssd/toutiao/';
+$origin_path = '/home/eric/work/000/头条女神/';
 
 echo '<div><a href="http://local.tuzac.com/misc/00-one-time/tmp_ui.php">刷新</a></div>';
 
 if(!empty($new_folder) && !empty($ori_folder)) {
-    $org_name = '克拉女神';
-    $org_name_en = 'KelaGirls';
+    $org_name = '头条女神';
+    $org_name_en = 'TouTiao';
 
-    $z_arr = explode('-', $new_folder);
+    $new_folder_tmp = str_replace(' ', '-', $new_folder);
+    $new_folder_tmp = str_replace('[TouTiao头条女神]', 'TouTiao头条女神-', $new_folder_tmp);
+    
+    $z_arr = explode('-', $new_folder_tmp);
     $date = $z_arr[1];
+
+    rename($new_path . '/' . $new_folder, $new_path . '/'.$new_folder_tmp);
+    $new_folder = $new_folder_tmp;
+    $n_full_path = $new_path . '/' . $new_folder;
 
     echo '<pre>';
     echo "New Folder: $new_folder\n";
@@ -32,7 +39,6 @@ if(!empty($new_folder) && !empty($ori_folder)) {
     $l_ori_folder = mapModelNames($l_ori_folder);
     $xx = find_between($l_ori_folder, $org_name.'-', '-');
     $folder_info['model'] = my_mb_ucfirst(sanatizeCN($xx[0]));       
-    $folder_info['model'] = str_replace('YUmi尤美', 'Yumi尤美', $folder_info['model']);
 
 
     if(strpos($ori_folder, '《') !== false) {
@@ -47,7 +53,7 @@ if(!empty($new_folder) && !empty($ori_folder)) {
     $folder_info['main'] = $main;
 
     //------------------------
-    $n_full_path = $new_path . '/' . $new_folder;
+    
     // copy desc.txt and tags.txt from origin folder
     $desc_str = file_get_contents($folder_info['full_path'] . "/desc.txt");
     $desc_str = str_replace(' 生日','生日', $desc_str);
@@ -94,6 +100,60 @@ if(!empty($new_folder) && !empty($ori_folder)) {
     //echo "file_put_contents($n_full_path/dl.txt, '') \n";
     file_put_contents($n_full_path.'/dl.txt', '');
 
+
+    // Handle thumbnail.jpg
+    $scan2 = scandir($n_full_path);
+    $images = [];
+    $already_has_thumbnail = false;
+    foreach($scan2 as $file) {
+        $origin_file_full = $n_full_path . '/' . $file;
+        if(strpos($file, '本套图来自') !== false) {
+            unlink($origin_file_full);
+        }
+        if(strpos($file, '更多百度搜索') !== false) {
+            unlink($origin_file_full);
+        }
+        if(strpos($file, '永久地址') !== false) {
+            unlink($origin_file_full);
+        }
+        if($file == 'cover.jpg' || $file == 'cover.JPG') {
+            rename($origin_file_full, $n_full_path . '/thumbnail.jpg');
+            $file = 'thumbnail.jpg';
+        }
+        if($file == 'thumbnail.JPG') {
+            rename($origin_file_full, $n_full_path . '/thumbnail.jpg');
+            $file = 'thumbnail.jpg';
+        }
+        if($file == 'thumbnail.jpg') $already_has_thumbnail = true;
+        if(!$already_has_thumbnail) {
+            if ( is_file($origin_file_full) && @is_array(getimagesize($origin_file_full)) ) {
+                $images[] = $file;
+            }
+        }
+    }
+    if($already_has_thumbnail) {
+        echo "---- Already has a thumbnail.jpg \n\n";
+    }
+    else {
+        natsort($images);
+        // Get first portrait image
+        $thumb = $images[0];
+        foreach ($images as $im) {
+            if(isImagePortrait($n_full_path.'/'.$im)) {
+                $thumb = $im;
+                break;
+            }
+        }
+        
+        // //$thumb = $images[count($images) - 1];
+
+        // echo 'rename('. $origin_full_path . '/' . $thumb . ', ' . $origin_full_path . '/thumbnail.jpg' .  "\n\n";
+        // rename($origin_full_path . '/' . $thumb , $origin_full_path . '/thumbnail.jpg');    
+
+        echo 'copy('. $n_full_path . '/' . $thumb . ', ' . $n_full_path . '/thumbnail.jpg' .  "\n\n";
+        copy($n_full_path . '/' . $thumb , $n_full_path . '/thumbnail.jpg');    
+    }
+
     // rename current folder to the origin folder name
     if(!empty($folder_info['main'] )) {
         $new_folder_name = $org_name_en.$org_name.'-'. $date . '-'.$folder_info['model'] . '-' . $folder_info['main'];
@@ -102,6 +162,10 @@ if(!empty($new_folder) && !empty($ori_folder)) {
         echo "delete ori-folder: rm -rf '".$folder_info['full_path']."' \n";
         system("rm -rf '".$folder_info['full_path']."'");
     }
+
+
+    
+
     echo '</pre>';
 }
 
@@ -130,7 +194,7 @@ echo <<<EOF
 function syncFolder(oriFolder) {
     var newFolder = document.querySelector('input[name="new_folder"]:checked').value;
     var path = window.location.href.split('?')[0]
-    window.location.href = path + '?new_folder=' + newFolder + '&ori_folder=' + oriFolder;
+    window.location.href = path + '?new_folder=' + encodeURIComponent(newFolder) + '&ori_folder=' + encodeURIComponent(oriFolder);
 }
 </script>
 EOF;

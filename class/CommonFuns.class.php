@@ -588,7 +588,7 @@ function processPhotoSrc($file, $at = 0, $photos_per_page = 1) {
     $src = [];
     for($i = ($num-1)*$photos_per_page; $i<$num*$photos_per_page; $i++) {
         // Step-1, use photo url from source       
-        $cur_image_url = $images[$i];
+        $cur_image_url = empty($images[$i]) ? null : $images[$i];
         
         if(!empty($cur_image_url)) {
             // Get filename based on photo-url

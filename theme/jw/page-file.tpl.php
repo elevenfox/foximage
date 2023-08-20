@@ -98,18 +98,19 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
             <div class="file-detail">
               <div>
                   <?php foreach($src_arr as $src) { ?>
-                    <div id="fdp-photo-old">
-                      <?php if(empty($_COOKIE['closeHint'])):?>
-                      <div id="action-hint">小提示：<span>点击图片左右可前后翻页</span>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="#">关闭提示</a>]</div>
-                      <?php endif; ?>
-                      <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">
-                        <img id="the-photo-old" src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
-                      </a>
-                      <div class="fdp-click-area">
-                        <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>
-                        <a class="fdp-click-area-right"  title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>"></a>
-                      </div>
-                    </div>
+                    <?php if(count($src_arr)>1):?>
+                      <img src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy"></img>
+                    <?php else:?>
+                      <div id="fdp-photo-old">
+                        <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">
+                          <img id="the-photo-old" src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy" onload="javascript: orientation()"></img>
+                        </a>
+                        <div class="fdp-click-area">
+                          <a class="fdp-click-area-left"  title="previous" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num-1).'#fdp-photo'?>"></a>
+                          <a class="fdp-click-area-right"  title="next" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>"></a>
+                        </div>
+                      </div>  
+                    <?php endif?>
                   <?php } ?>
               </div>
             </div>

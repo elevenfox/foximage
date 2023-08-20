@@ -26,12 +26,12 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="kelagirls"]');
+    const ishow = await page.waitForSelector('a[title="toutiao"]');
     await ishow.click();
     await delay(2000);
 
     // Go to second level dir
-    const sub = await page.waitForSelector('a[title="500"]');
+    const sub = await page.waitForSelector('a[title="600"]');
     await sub.click();
     await delay(2000);
 

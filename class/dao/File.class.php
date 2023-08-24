@@ -103,8 +103,10 @@ Class File {
 
         $fileId = DB::sanitizeInput($fileId);
 
+        // Delete tag_file first
         $res = Tag::deleteFileTagsByFileId($fileId);
         if($res) {
+            // Delete row from files table
             $sql = "delete from " . self::$table_files . " where id = '" . $fileId . "'";
             return DB::$dbInstance->query($sql);
         }

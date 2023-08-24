@@ -169,6 +169,9 @@ elseif(substr( strtolower($folder_name), 0, 9 ) === "ugirlsapp") {
 elseif(substr( strtolower($folder_name), 0, 7 ) === "toutiao") {
     [$org_name_en, $org_name, $model_name] = ['TouTiao', '头条女神', $terms[2]];
 }
+elseif(substr( strtolower($folder_name), 0, 9 ) === "kelagirls") {
+    [$org_name_en, $org_name, $model_name] = ['KelaGirls', '克拉女神', $terms[2]];
+}
 else {
     [$org_name_en, $org_name, $model_name] = ['', '', $terms[0]];
 }

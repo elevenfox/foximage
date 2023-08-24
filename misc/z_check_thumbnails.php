@@ -20,6 +20,9 @@ foreach($scan as $folder_name) {
         $scan2 = scandir($origin_full_path);
         $images = [];
         $already_has_thumbnail = false;
+        $already_has_desc = false;
+        $already_has_tags = false;
+        $already_has_dl = false;
         foreach($scan2 as $file) {
             $origin_file_full = $origin_full_path . '/' . $file;
             if($file == 'thumbnail.JPG') {
@@ -32,14 +35,30 @@ foreach($scan as $folder_name) {
             }
             if($file == 'thumbnail.jpg') {
                 $already_has_thumbnail = true;
-                break;
+            }
+            if($file == 'desc.txt') {
+                $already_has_desc = true;
+            }
+            if($file == 'tags.txt') {
+                $already_has_tags = true;
+            }
+            if($file == 'dl.txt') {
+                $already_has_dl = true;
             }
         }
  
         if(!$already_has_thumbnail) {
             echo "No thumbnail in this folder: $folder_name \n";
         }
-
+        if(!$already_has_desc) {
+            echo "No desc in this folder: $folder_name \n";
+        }
+        if(!$already_has_tags) {
+            echo "No tags in this folder: $folder_name \n";
+        }
+        if(!$already_has_dl) {
+            echo "No dl in this folder: $folder_name \n";
+        }
     }
     
 }

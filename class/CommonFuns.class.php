@@ -959,9 +959,10 @@ function mapModelNames($l_folder_name) {
     $l_folder_name = str_ireplace('Carol周妍希', '周妍希', $l_folder_name);
     $l_folder_name = str_ireplace('laura阿姣', '阿姣', $l_folder_name);
     $l_folder_name = str_ireplace('严利娅Yuliya', '严利娅', $l_folder_name);
+    $l_folder_name = str_ireplace('陈思琪Art', '陈思琪', $l_folder_name);
     
     
-
+    
 
 
     return $l_folder_name;

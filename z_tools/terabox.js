@@ -13,7 +13,7 @@ const puppeteer = require('puppeteer');
     // Login
     await page.waitForSelector('input[class="input email-input"]'),
     await delay(2000);
-    await page.type('input[class="input email-input"]', 'elevenfox22@gmail.com');
+    await page.type('input[class="input email-input"]', 'elevenfox33@gmail.com');
     await page.type('input[class="input pwd-input"]', 'tbox1102*');
     await delay(2000);
     const login = await page.waitForSelector('div[class="login-submit-btn btn-abled"]');
@@ -21,19 +21,19 @@ const puppeteer = require('puppeteer');
 	await delay(2000);
 
     // Go to first level dir
-    const tuzac = await page.waitForSelector('a[title="tuzac-5"]');
+    const tuzac = await page.waitForSelector('a[title="tuzac-6"]');
     await tuzac.click();
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="toutiao"]');
+    const ishow = await page.waitForSelector('a[title="xiuren-750"]');
     await ishow.click();
     await delay(2000);
 
     // Go to second level dir
-    const sub = await page.waitForSelector('a[title="600"]');
-    await sub.click();
-    await delay(2000);
+    // const sub = await page.waitForSelector('a[title="800"]');
+    // await sub.click();
+    // await delay(2000);
 
     // Order by file name
     const [orderBy] = await page.$x("//span[contains(., 'File name')]");

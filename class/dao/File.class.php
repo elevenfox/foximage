@@ -201,13 +201,36 @@ Class File {
 
         $term = str_replace('，', ',', $term);
         $allKeywords = explode(',', $term);
+        $allKeywords = array_map('trim', $allKeywords);
+        $allKeywords = array_unique($allKeywords);
         $cond = [];
         foreach($allKeywords as $key) {
-            $cond[] = " title like '%" . trim($key) . "%' ";
-            $cond[] = " tags like '%" . trim($key) . "%' ";
-            $cond[] = " description like '%" . trim($key) . "%' ";
+            $t_key = str_replace(' ', '+', $key);
+            $mks = explode('+', $t_key);
+            
+            $title_and = [];
+            foreach($mks as $k) {
+                $title_and[] = " title like '%" . $k . "%' ";
+            }
+            $title_and_str = implode(' AND ', $title_and);
+
+            $tag_and = [];
+            foreach($mks as $k) {
+                $tag_and[] = " tags like '%" . $k . "%' ";
+            }
+            $tag_and_str = implode(' AND ', $tag_and);
+
+            $desc_and = [];
+            foreach($mks as $k) {
+                $desc_and[] = " description like '%" . $k . "%' ";
+            }
+            $desc_and_str = implode(' AND ', $desc_and);
+
+            $cond[] = '(' . $title_and_str . ')';
+            $cond[] = '(' . $tag_and_str . ')';
+            $cond[] = '(' . $desc_and_str . ')';
         }
-        $where = implode(' or ', $cond);
+        $where = implode(' OR ', $cond);
 
         $term = DB::sanitizeInput($term);
         $limit = ($page - 1) * $limit . ',' . $limit;

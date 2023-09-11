@@ -1,6 +1,4 @@
 <?php
-define('KEY_1', 'CrDApZofaqOyPdcQWiSGkKBMRehFjgVlvmHbEsIwUxXuT');
-define('KEY_2', 'pwbXvDtoeWuSfhVBnsIYakOxGArNMzTcdmqiKQEJRFZgC');
 /**
  * NeverBlock
  *
@@ -8,15 +6,16 @@ define('KEY_2', 'pwbXvDtoeWuSfhVBnsIYakOxGArNMzTcdmqiKQEJRFZgC');
  * making detectable browser requests to external javascript files or other resources.
  *
  *
+ * Version 3.7
  * Copyright (C) 2016 EXADS
  */
 
-define('SCRIPT_VERSION', 'php_3.10');
+define('SCRIPT_VERSION', 'php_3.7');
 if (!defined('CONNECT_TIMEOUT_MS')) {
-    define('CONNECT_TIMEOUT_MS', 3000);
+    define('CONNECT_TIMEOUT_MS', 300);
 }
 if (!defined('REQUEST_TIMEOUT_MS')) {
-    define('REQUEST_TIMEOUT_MS', 3600);
+    define('REQUEST_TIMEOUT_MS', 600);
 }
 if (!defined('LOGFILE')) {
     define('LOGFILE', 'logfile');
@@ -40,7 +39,7 @@ if (!defined('MULTI_ADS_RESOURCE_URL')) {
     define('MULTI_ADS_RESOURCE_URL', "http://syndication-adblock.exoclick.com/ads-multi.php?v=1");
 }
 if (!defined('ADS_COOKIE_NAME')) {
-    define('ADS_COOKIE_NAME', 'exo_zones');
+    define('ADS_COOKIE_NAME', 'yuo1');
 }
 if (!defined('BANNER_BASE_URL')) {
     define('BANNER_BASE_URL', "http://static.exoclick.com/library/");
@@ -80,7 +79,7 @@ global $userEnvironment;
 global $logger;
 
 $userEnvironment = new UserEnvironment(
-    isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'],
+    isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null,
     isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : null,
     isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null,
     isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null,
@@ -1145,7 +1144,7 @@ function resolveAndCacheImages(LoggerInterface $logger, RequestGetterInterface $
 
     $imageResponses = $getter->resolveMulti($image_urls, VERIFY_PEER);
 
-    $imageTypes = array('image/gif', 'image/png', 'image/jpeg', 'image/webp', 'video/mp4');
+    $imageTypes = array('image/gif', 'image/png', 'image/jpeg');
     $cache_ctr = 0;
     foreach ($image_urls as $key => $url) {
         if (!isset($imageResponses[$key])) {
@@ -1439,8 +1438,6 @@ function formatLinkUrl($url) {
 }
 
 function formatAdResponse($adType, $zoneResponse, UniqueMap $imagesMap) {
-    $zoneResponse = extendResponse($zoneResponse);
-
     switch ($adType) {
         case "native_ad":
             if (!isset($zoneResponse["data"]["data"]) || !is_array($zoneResponse["data"]["data"])) {
@@ -1467,14 +1464,6 @@ function formatAdResponse($adType, $zoneResponse, UniqueMap $imagesMap) {
                 $bannerSpotNew = $bannerSpot;
                 $imageUrl = formatImageUrl($bannerSpot["image"]);
                 $bannerSpotNew["image"] = $imagesMap->appendAndGetId($imageUrl);
-
-                if (
-                    isset($bannerSpot["optimum_image"]) &&
-                    !is_null($bannerSpot["optimum_image"])
-                ) {
-                    $bannerSpotNew["optimum_image"] = $imagesMap->appendAndGetId(formatImageUrl($bannerSpot["optimum_image"]));
-                }
-
                 $bannerSpotNew["url"] = formatLinkUrl($bannerSpot["url"]);
                 $newResponse["data"][] = $bannerSpotNew;
             }
@@ -1492,43 +1481,9 @@ function formatAdResponse($adType, $zoneResponse, UniqueMap $imagesMap) {
             }
             $newResponse = $zoneResponse["data"];
             $newResponse["image"] = $imagesMap->appendAndGetId(formatImageUrl($zoneResponse["data"]["image"]));
-            if (
-                isset($zoneResponse["data"]["optimum_image"]) &&
-                !is_null($zoneResponse["data"]["optimum_image"])
-            ) {
-                $newResponse["optimum_image"] = $imagesMap->appendAndGetId(formatImageUrl($zoneResponse["data"]["optimum_image"]));
-            }
             $newResponse["url"] = formatLinkUrl($zoneResponse["data"]["url"]);
             return $newResponse;
     }
-}
-
-/**
- * Extends the response with extension-fields. This enable us to add new fields for future
- * versions of NB without breaking backward compability.
- * 
- * @param array $zoneResponse
- * @return array
- */
-function extendResponse(array $zoneResponse)
-{
-    if (
-        !isset($zoneResponse['ext'])
-        || !is_array($zoneResponse['ext'])
-    ) {
-        return $zoneResponse;
-    }
-
-    // Pre-processing ext field "optimum_image".
-    if (
-        isset($zoneResponse["ext"]["optimum_image"]) &&
-        !is_null($zoneResponse["ext"]["optimum_image"])
-    ) {
-        $zoneResponse["data"]["is_video"] = pathinfo($zoneResponse["ext"]["optimum_image"], PATHINFO_EXTENSION) !== 'webp';
-        $zoneResponse["data"]["optimum_image"] = $zoneResponse["ext"]["optimum_image"];
-    }
-
-    return $zoneResponse;
 }
 
 /**

@@ -1,13 +1,14 @@
 /**
  * NeverBlock
  *
+ * Version 3.7
  * Copyright (C) 2016 EXADS
  */
 
 // noinspection JSUnusedGlobalSymbols
 var ExoLoader;
 (function () {
-    var version = '3.10';
+    var version = '3.7';
 
     var detection_started = false;
     var detection_complete = false;
@@ -16,7 +17,7 @@ var ExoLoader;
 
     var detector = {
         domain_base: "exoclick.com",
-        detectCensorship: function (onComplete, timeout) {
+        detectCensorship: function (onComplete) {
             detector_func_queue.push(onComplete);
             detection_started = true;
             var block = false;
@@ -81,37 +82,7 @@ var ExoLoader;
 
             document.body.appendChild(testDomEl);
             document.head.appendChild(testScript);
-            var isTimeoutSet = false;
-            var timeUp = false;
-            var timeoutExceeded = function (thistimer) {
-                timeUp =  true;
-                clearTimeout(thistimer);
-            };
 
-
-            var loadedCheck = function (timeoutCycle) {
-                setTimeout(function () {
-                    timeoutCycle--;
-                    if (typeof exoDocumentProtocol !== 'undefined' ) {
-                        //File loaded successfully
-                        clearTimeout(timeupTimer);
-                    } else if (timeoutCycle > 0 && document.readyState !== "complete" && !timeUp) {
-                        loadedCheck(timeoutCycle);
-                    } else {
-                        domDetect();
-                        done();
-                        clearTimeout(timeupTimer);
-                    }
-                }, 0);
-            };
-
-            if(timeout) {
-                var timeupTimer = setTimeout(function () {
-                    timeoutExceeded(timeupTimer);
-                }, timeout);
-                isTimeoutSet = true;
-                loadedCheck(timeout);
-            }
             var domDetect = function () {
                 try {
                     var someAd = document.getElementById(id);
@@ -141,11 +112,7 @@ var ExoLoader;
 
             var maxReadyCheckAttempts = 45;
             var readyCheckInterval = setInterval(function () {
-                if(isTimeoutSet) {
-                    clearInterval(readyCheckInterval);
-                    return;
-                }
-                if (document.readyState === "complete" || maxReadyCheckAttempts === 0 || block === true) {
+                if (document.readyState === "complete" || maxReadyCheckAttempts == "0") {
                     domDetect();
                     done();
                     clearInterval(readyCheckInterval);
@@ -245,14 +212,8 @@ var ExoLoader;
     var loader = {
         bl_domain: null,
         bl_cookie_domain: null,
-        timeout_check: null,
         no_cookie: false,
-        cookie_name: "exo_zones",
-        setTimeout: function(timeout) {
-            if(timeout) {
-                loader.timeout_check = timeout;
-            }
-        },
+        cookie_name: "yuo1",
         addZone: function(params) {
 
             if (typeof params !== 'object'
@@ -282,7 +243,7 @@ var ExoLoader;
                             }
                             before_detect_queue = [];
                         }
-                    }, loader.timeout_check);
+                    });
                 }
 
                 return false;
@@ -698,7 +659,4 @@ var ExoLoader;
         e.detail.el = loader;
     }, false);
 
-    try {
-        ExoLoader = loader;
-    } catch (err) {}
 })();

@@ -13,7 +13,9 @@ $title = $data['pageTitle'] == 'Newest' ? '最新美女写真图片推荐' : $da
 
     <div class="content-container newest-File-list-page search-result-list-pages <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
 
-        <h1><?php print $title; ?></h1>
+        <h1><?php print $title; ?>
+            <a id="auto-play" data="search----<?=empty($data['keywords'])?'':$data['keywords']?>" href="#"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</a>
+        </h1>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
 
@@ -52,3 +54,5 @@ $title = $data['pageTitle'] == 'Newest' ? '最新美女写真图片推荐' : $da
 
 
 <?php include 'footer.tpl.php';?>
+
+<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js"></script>

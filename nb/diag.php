@@ -5,7 +5,6 @@ define('BACKEND_LOADER_PHP', 'QlzeiSIAgK.php');
  *
  * Integration diagnostic script.
  * 
- * Version 3.7
  * Copyright (C) 2016 EXADS
  */
 

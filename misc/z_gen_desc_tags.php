@@ -39,9 +39,16 @@ $folder_name = basename($folder_full_path);
 // If no desc.txt, generate desc from title
 $desc = file_get_contents($folder_full_path.'/desc.txt');
 if(empty($desc)) {
-    $desc = str_replace('-', ' ', $folder_name);
+    $desc = $folder_name;
     // 特殊处理 xiuren
-    if(strpos($desc, 'XiuRen秀人网') === false) $desc = str_replace('XiuRen', 'XiuRen秀人网', $desc);
+    if(strpos($desc, 'XiuRen秀人网') === false) {
+        $desc = str_replace('XiuRen', 'XiuRen秀人网', $desc);
+    }
+    $desc = str_replace('XiuRen秀人网-', 'XiuRen秀人网-No.', $desc);
+    $desc = str_replace('MFStar模范学院-', 'MFStar模范学院-Vol.', $desc);
+    $desc = str_replace('YouMi尤蜜荟-', 'YouMi尤蜜荟-Vol.', $desc);
+    
+    $desc = str_replace('-', ' ', $desc);
 
     $desc .= '。欢迎下载高清无水印套图。';
 }
@@ -166,6 +173,9 @@ elseif(substr( strtolower($folder_name), 0, 6 ) === "xiaoyu") {
 elseif(substr( strtolower($folder_name), 0, 9 ) === "ugirlsapp") {
     [$org_name_en, $org_name, $model_name] = ['UGirlsApp', '尤果圈爱尤物', $terms[2]];
 }
+elseif(substr( strtolower($folder_name), 0, 6 ) === "ugirls") {
+    [$org_name_en, $org_name, $model_name] = ['UGirls', '尤果网', $terms[2]];
+}
 elseif(substr( strtolower($folder_name), 0, 7 ) === "toutiao") {
     [$org_name_en, $org_name, $model_name] = ['TouTiao', '头条女神', $terms[2]];
 }
@@ -182,6 +192,7 @@ if(! in_array($org_name_en, $tags) && ! in_array(strtolower($org_name_en), $tags
 if(! in_array( $org_name, $tags ) ) {
     if(!empty($org_name)) $tags[] = $org_name;
 }
+$model_name = mapModelNames($model_name);
 if(! in_array( $model_name, $tags ) ) {
     $tags[] = $model_name;
 }
@@ -233,7 +244,7 @@ if( str_contains($folder_name, '教师') && !in_array('女教师', $tags)) {
 if( str_contains($folder_name, '警') && !in_array('女警', $tags)) {
     $tags[] = '女警';
 }
-if( str_contains($folder_name, '警') && !in_array('女警', $tags)) {
+if( str_contains($folder_name, '警') && !in_array('制服', $tags)) {
     $tags[] = '制服';
 }
 if( str_contains($folder_name, 'SM') && !in_array('捆绑', $tags)) {
@@ -242,10 +253,19 @@ if( str_contains($folder_name, 'SM') && !in_array('捆绑', $tags)) {
 if( str_contains($folder_name, '绑缚') && !in_array('捆绑', $tags)) {
     $tags[] = '捆绑';
 }
+if( str_contains($folder_name, '束缚') && !in_array('捆绑', $tags)) {
+    $tags[] = '捆绑';
+}
+if( str_contains($folder_name, '捆绑') && !in_array('捆绑', $tags)) {
+    $tags[] = '捆绑';
+}
 if( str_contains($folder_name, '空姐') && !in_array('空姐', $tags)) {
     $tags[] = '空姐';
 }
 if( str_contains($folder_name, '空姐') && !in_array('制服', $tags)) {
+    $tags[] = '制服';
+}
+if( str_contains($folder_name, '制服') && !in_array('制服', $tags)) {
     $tags[] = '制服';
 }
 if( str_contains($folder_name, '旗袍') && !in_array('旗袍', $tags)) {
@@ -257,6 +277,9 @@ if( str_contains($folder_name, '旗袍') && !in_array('古风', $tags)) {
 if( str_contains($folder_name, '古装') && !in_array('古风', $tags)) {
     $tags[] = '古风';
 }
+if( str_contains($folder_name, '古风') && !in_array('古风', $tags)) {
+    $tags[] = '古风';
+}
 if( str_contains($folder_name, '肚兜') && !in_array('古风', $tags)) {
     $tags[] = '古风';
 }
@@ -264,6 +287,12 @@ if( str_contains($folder_name, '肚兜') && !in_array('肚兜', $tags)) {
     $tags[] = '肚兜';
 }
 if( str_contains($folder_name, '透视') && !in_array('透视装', $tags)) {
+    $tags[] = '透视装';
+}
+if( str_contains($folder_name, '轻透') && !in_array('透视装', $tags)) {
+    $tags[] = '透视装';
+}
+if( str_contains($folder_name, '薄透') && !in_array('透视装', $tags)) {
     $tags[] = '透视装';
 }
 if( str_contains($folder_name, '白衬') && !in_array('白衬衫', $tags)) {
@@ -275,11 +304,23 @@ if( str_contains($folder_name, '泳池') && !in_array('泳池', $tags)) {
 if( str_contains($folder_name, 'OL') && !in_array('职业装', $tags)) {
     $tags[] = '职业装';
 }
+if( str_contains($folder_name, '西装') && !in_array('职业装', $tags)) {
+    $tags[] = '职业装';
+}
+if( str_contains($folder_name, '职') && !in_array('职业装', $tags)) {
+    $tags[] = '职业装';
+}
 if( str_contains($folder_name, '湿身') && !in_array('湿身', $tags)) {
     $tags[] = '湿身';
 }
 if( str_contains($folder_name, '豹纹') && !in_array('豹纹', $tags)) {
     $tags[] = '豹纹';
+}
+if( str_contains($folder_name, '健身') && !in_array('运动装', $tags)) {
+    $tags[] = '运动装';
+}
+if( str_contains($folder_name, '体操服') && !in_array('运动装', $tags)) {
+    $tags[] = '运动装';
 }
 if( (str_contains($folder_name, '朱可儿')  
     || str_contains($folder_name, '美七')  

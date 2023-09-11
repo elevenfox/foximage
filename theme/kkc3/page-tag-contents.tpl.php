@@ -12,7 +12,7 @@ include 'header.tpl.php';
 
     <div class="content-container tag-file-list-page <?=empty($data['dev_mode']) ? '' : 'dev-mode'?>">
         <h1><?php print $data['page_title']; ?>
-        <a id="random-play" href="#"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</a>
+        <a id="auto-play" data="tag----<?=$data['tagName']?>" href="#"><span class="glyphicon-circle"><span class="glyphicon glyphicon-play"></span></span>随机播放</a>
         </h1>
 
         <?= $theme->render(null, 'ads_templates/ad-m-middle');?>
@@ -62,17 +62,4 @@ include 'header.tpl.php';
 
 <?php include 'footer.tpl.php';?>
 
-<script type="text/javascript">
-$(function () {
-    $('#random-play').on('click', function (e) {
-        e.preventDefault();
-        
-        let api_endpoint = '/api/?ac=get_random_file_by_tag&tag=<?=$data['tagName']?>';
-        $.get(api_endpoint, function(data) {
-            if(data.url) {
-                window.location.href = data.url;
-            }
-        });
-    })
-});
-</script>
+<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js"></script>

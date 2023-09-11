@@ -37,12 +37,14 @@ for ($i = $start; $i<=$end; $i++) {
         if(strpos($folder_name, $term) !== false && strpos($folder_name, $num) !== false) {
             $tmp_term = $term == '语画界' ? '画语界' : $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
+
             $url = $base_url . $tmp_term . '%20' . $num;
             echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, '__i18n:{langs:{}}}}(' , ',');
             echo $res[0] . "\n";
             if(!empty($res[0])) {
+                // [Xiuren秀人网] No.2989 嫩模郑颖姗Bev三亚旅拍韵味旗袍配无内肉丝裤袜撩人姿势诱惑写真41P
                 $append = cleanStringForFilename($res[0]);
                 $append = str_ireplace('半脱', '', $append);
                 $append = str_ireplace('脱', '', $append);
@@ -56,8 +58,29 @@ for ($i = $start; $i<=$end; $i++) {
 
                 $dup = find_between($append, $tmp_term, $num);
                 $append = str_replace($tmp_term.$dup[0].$num, '', $append);
+                $append = str_ireplace('[Xiuren', '', $append);
+                $append = str_ireplace('Xiuren', '', $append);
 
-                $new_folder_name = $folder_name . '-' . $append;
+                if(strpos($append, "秀") !== false) $append = substr($append, 0, strpos($append, "秀"));
+                if(strpos($append, "撩人") !== false) $append = substr($append, 0, strpos($append, "撩人"));
+                if(strpos($append, "诱惑") !== false) $append = substr($append, 0, strpos($append, "诱惑"));
+                if(strpos($append, "完美") !== false) $append = substr($append, 0, strpos($append, "完美"));
+                if(strpos($append, "极致") !== false) $append = substr($append, 0, strpos($append, "极致"));
+                if(strpos($append, "写真") !== false) $append = substr($append, 0, strpos($append, "写真"));
+
+                $new_folder_name = $folder_name;
+                $a = explode('-', $folder_name);
+                $model = $a[2];
+                if(strpos($append, $model) !== false) {
+                    $b = explode($model, $append);
+                    $append = $b[1];   
+                }
+
+                $date = array_pop($a);
+                $new_folder_name = implode('-', $a);
+                if(!empty($date)) $new_folder_name = $new_folder_name . '-' . $append . '-' . $date;
+                else $new_folder_name = $new_folder_name . '-' . $append;
+                $new_folder_name = str_ireplace('--', '-', $new_folder_name);
                 echo "rename $folder_full_path/$folder_name to $folder_full_path/$new_folder_name\n\n";
                 rename($folder_full_path.'/'.$folder_name, $folder_full_path . '/'.$new_folder_name);
             }

@@ -69,6 +69,7 @@ for ($i = $start; $i<=$end; $i++) {
                 if(strpos($append, "写真") !== false) $append = substr($append, 0, strpos($append, "写真"));
 
                 $new_folder_name = $folder_name;
+                $new_folder_name = str_ireplace(' ', '-', $new_folder_name);
                 $a = explode('-', $folder_name);
                 $model = $a[2];
                 if(strpos($append, $model) !== false) {
@@ -76,8 +77,8 @@ for ($i = $start; $i<=$end; $i++) {
                     $append = $b[1];   
                 }
 
-                $date = array_pop($a);
-                $new_folder_name = implode('-', $a);
+                // $date = array_pop($a);
+                // $new_folder_name = implode('-', $a);
                 if(!empty($date)) $new_folder_name = $new_folder_name . '-' . $append . '-' . $date;
                 else $new_folder_name = $new_folder_name . '-' . $append;
                 $new_folder_name = str_ireplace('--', '-', $new_folder_name);

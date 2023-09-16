@@ -80,6 +80,7 @@ foreach($scan as $folder_name) {
 
 
 $current_groups = folderStatus($groups);
+// print_r($current_groups); exit;
 
 # Pick up 20 folders from source and mix them
 $albums = [];
@@ -87,6 +88,10 @@ while(count($albums) < $total && !empty($groups)) {
     foreach($current_groups as $key => $val) {
         $alb = array_shift($groups[$key]);
         if(!empty($alb)) $albums[] = $alb;
+        if($val > 50) {
+            $alb = array_shift($groups[$key]);
+            if(!empty($alb)) $albums[] = $alb;
+        }
         if(count($albums) >= $total) break;
     }
     $current_groups = folderStatus($groups);

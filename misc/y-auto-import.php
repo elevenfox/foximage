@@ -62,7 +62,7 @@ echo  "#################################################\n";
 
 $dst_base = '/mnt/extreme_ssd/jw-photos/';
 
-$total = 10;
+$total = 20;
 
 $path = $folder_full_path;
 $scan = scandir($path);
@@ -83,7 +83,7 @@ $current_groups = folderStatus($groups);
 
 # Pick up 20 folders from source and mix them
 $albums = [];
-while(count($albums) <= $total && !empty($groups)) {
+while(count($albums) < $total && !empty($groups)) {
     foreach($current_groups as $key => $val) {
         $alb = array_shift($groups[$key]);
         if(!empty($alb)) $albums[] = $alb;
@@ -106,18 +106,18 @@ foreach($albums as $f) {
 
     // Move album to dest folder
     echo date('Y-m-d H:i:s') . ' ------ ' . 'mv ' . $origin_full_path . ' ' . $dest_full ."\n";
-    // $output = shell_exec('mv ' . $origin_full_path . ' ' . $dest_full);
-    // echo "<pre>$output</pre>";
+    $output = shell_exec('mv ' . $origin_full_path . ' ' . $dest_full);
+    echo "<pre>$output</pre>";
 
     // Start importing
     echo date('Y-m-d H:i:s') . ' ------ php z_import_physical.php ' . $dest_full . $f . "\n";
-    // $output = shell_exec('php z_import_physical.php ' . $dest_full . $f);
-    // echo "<pre>$output</pre>";
+    $output = shell_exec('php z_import_physical.php ' . $dest_full . $f);
+    echo "<pre>$output</pre>";
 
     // Sync to prod
     echo date('Y-m-d H:i:s') . ' ------ php z_sync_to_prod.php' . "\n";
-    // $output = shell_exec('php z_sync_to_prod.php');
-    // echo "<pre>$output</pre>";
+    $output = shell_exec('php z_sync_to_prod.php');
+    echo "<pre>$output</pre>";
 }
 
 echo "\n";

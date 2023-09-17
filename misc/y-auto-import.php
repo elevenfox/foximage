@@ -66,6 +66,7 @@ $mailMsg .= $m;
 $dst_base = '/mnt/extreme_ssd/jw-photos/';
 
 $total = 20;
+$dryrun = 0;
 
 $path = $folder_full_path;
 $scan = scandir($path);
@@ -120,21 +121,27 @@ foreach($albums as $f) {
     $m  = date('Y-m-d H:i:s') . ' ------ ' . 'mv ' . $origin_full_path . ' ' . $dest_full ."\n";
     echo $m;
     $mailMsg .= $m;
-    $output = shell_exec('mv ' . $origin_full_path . ' ' . $dest_full);
-    echo "$output \n";
+    if($dryrun !== 1) {
+        $output = shell_exec('mv ' . $origin_full_path . ' ' . $dest_full);
+        echo "$output \n";
+    }
 
     // Start importing
     $m  = date('Y-m-d H:i:s') . ' ------ php z_import_physical.php ' . $dest_full . $f . "\n";
     echo $m;
     $mailMsg .= $m;
-    $output = shell_exec('php z_import_physical.php ' . $dest_full . $f);
-    echo "$output \n";
+    if($dryrun !== 1) {
+        $output = shell_exec('php z_import_physical.php ' . $dest_full . $f);
+        echo "$output \n";
+    }
 }
 
 // Sync to prod
 $m  = date('Y-m-d H:i:s') . ' ------ php z_sync_to_prod.php' . "\n";
-$output = shell_exec('php z_sync_to_prod.php');
-$m .= $output . "\n";
+if($dryrun !== 1) {
+    $output = shell_exec('php z_sync_to_prod.php');
+    $m .= $output . "\n";
+}
 echo $m;
 $mailMsg .= $m;
 

@@ -56,9 +56,12 @@ function getDestFolder($album) {
     return $dest;
 }
 
-echo  "#################################################\n";
-echo  date('Y-m-d H:i:s') . ' - ' . "Start auto importing albums .... \n";
-echo  "#################################################\n";
+$mailMsg = '';
+$m  = "#################################################\n";
+$m .=  date('Y-m-d H:i:s') . ' - ' . "Start auto importing albums .... \n";
+$m .=  "#################################################\n";
+echo $m;
+$mailMsg .= $m;
 
 $dst_base = '/mnt/extreme_ssd/jw-photos/';
 
@@ -97,12 +100,16 @@ while(count($albums) < $total && !empty($groups)) {
     $current_groups = folderStatus($groups);
 }
 
-echo date('Y-m-d H:i:s') . " -- Albums are going to be imported: \n";
-print_r($albums);
+$m  = date('Y-m-d H:i:s') . " -- Albums are going to be imported: \n";
+$m .= print_r($albums, 1);
+echo $m;
+$mailMsg .= $m;
 
 # Loop through the albums 
 foreach($albums as $f) {
-    echo date('Y-m-d H:i:s') . " ---- Start importing $f ... \n";
+    $m  = date('Y-m-d H:i:s') . " ---- Start importing $f ... \n";
+    echo $m;
+    $mailMsg .= $m;
     $origin_full_path = $path . '/'. $f;
 
     // Find the dest folder based on album name
@@ -110,20 +117,28 @@ foreach($albums as $f) {
     $dest_full = $dst_base . $dest . '/'; 
 
     // Move album to dest folder
-    echo date('Y-m-d H:i:s') . ' ------ ' . 'mv ' . $origin_full_path . ' ' . $dest_full ."\n";
+    $m  = date('Y-m-d H:i:s') . ' ------ ' . 'mv ' . $origin_full_path . ' ' . $dest_full ."\n";
+    echo $m;
+    $mailMsg .= $m;
     $output = shell_exec('mv ' . $origin_full_path . ' ' . $dest_full);
     echo "$output \n";
 
     // Start importing
-    echo date('Y-m-d H:i:s') . ' ------ php z_import_physical.php ' . $dest_full . $f . "\n";
+    $m  = date('Y-m-d H:i:s') . ' ------ php z_import_physical.php ' . $dest_full . $f . "\n";
+    echo $m;
+    $mailMsg .= $m;
     $output = shell_exec('php z_import_physical.php ' . $dest_full . $f);
     echo "$output \n";
-
-    // Sync to prod
-    echo date('Y-m-d H:i:s') . ' ------ php z_sync_to_prod.php' . "\n";
-    $output = shell_exec('php z_sync_to_prod.php');
-    echo "$output\n";
 }
+
+// Sync to prod
+$m  = date('Y-m-d H:i:s') . ' ------ php z_sync_to_prod.php' . "\n";
+$output = shell_exec('php z_sync_to_prod.php');
+$m .= $output . "\n";
+echo $m;
+$mailMsg .= $m;
+
+mail("elevenfox11@gmail.com","Tuzac import albums", $mailMsg);
 
 echo "\n";
 echo "\n";

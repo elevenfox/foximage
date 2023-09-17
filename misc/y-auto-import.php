@@ -112,17 +112,17 @@ foreach($albums as $f) {
     // Move album to dest folder
     echo date('Y-m-d H:i:s') . ' ------ ' . 'mv ' . $origin_full_path . ' ' . $dest_full ."\n";
     $output = shell_exec('mv ' . $origin_full_path . ' ' . $dest_full);
-    echo "<pre>$output</pre>";
+    echo "$output \n";
 
     // Start importing
     echo date('Y-m-d H:i:s') . ' ------ php z_import_physical.php ' . $dest_full . $f . "\n";
     $output = shell_exec('php z_import_physical.php ' . $dest_full . $f);
-    echo "<pre>$output</pre>";
+    echo "$output \n";
 
     // Sync to prod
     echo date('Y-m-d H:i:s') . ' ------ php z_sync_to_prod.php' . "\n";
     $output = shell_exec('php z_sync_to_prod.php');
-    echo "<pre>$output</pre>";
+    echo "$output\n";
 }
 
 echo "\n";

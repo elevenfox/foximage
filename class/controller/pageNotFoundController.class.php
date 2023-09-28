@@ -14,7 +14,7 @@ Class pageNotFoundController extends ControllerCore {
   public function start() {
     $this->request->setMenuItem([
         'controller' => 'pageNotFoundController',
-        'url' => $this->request->getSysRequest()['q'],
+        'url' => $this->request->getServer()['REQUEST_URI'],
         'template' => 'page-404',
         'title' => 'Page Not Found',
     ]);

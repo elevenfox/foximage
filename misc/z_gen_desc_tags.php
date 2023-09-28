@@ -47,6 +47,7 @@ if(empty($desc)) {
     $desc = str_replace('XiuRen秀人网-', 'XiuRen秀人网-No.', $desc);
     $desc = str_replace('MFStar模范学院-', 'MFStar模范学院-Vol.', $desc);
     $desc = str_replace('YouMi尤蜜荟-', 'YouMi尤蜜荟-Vol.', $desc);
+    $desc = str_replace('MyGirl美媛馆-', 'MyGirl美媛馆-Vol.', $desc);
     
     $desc = str_replace('-', ' ', $desc);
 

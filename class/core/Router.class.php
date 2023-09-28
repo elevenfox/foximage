@@ -16,15 +16,15 @@ Class Router
 
   /*
    * The router contrunct function is to init request, and get controller 
-   * via url (it's actually request['q']). We must enabled apache rewrite, 
+   * via url (it's actually server['REQUEST_URI']). We must enabled apache rewrite, 
    * then there's a .htaccess file in docRoot will rewrite all question to
    * index.php?q=xxxx format.
    */
   public function __construct() {
     $this->request = new Request();
-    $requestSys = $this->request->getSysRequest();
-
-    if(!isset($requestSys['q'])) {
+    $server = $this->request->getServer();
+    
+    if(!isset($server['REQUEST_URI'])) {
       $this->originalUrl = '';
       $controllerName = 'homePageController';
       $menuItem = array(
@@ -35,7 +35,7 @@ Class Router
       $this->request->setMenuItem($menuItem);
     }
     else {
-      $this->originalUrl = $requestSys['q'];
+      $this->originalUrl = $server['REQUEST_URI'];
       $controllerName = $this->getControllerNameByUrl($this->originalUrl);
     }
     

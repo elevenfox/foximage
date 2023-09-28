@@ -22,9 +22,8 @@ Class Router
    */
   public function __construct() {
     $this->request = new Request();
-    $server = $this->request->getServer();
-    
-    if(!isset($server['REQUEST_URI'])) {
+    $path = $this->request->path;
+    if(empty($path)) {
       $this->originalUrl = '';
       $controllerName = 'homePageController';
       $menuItem = array(
@@ -35,7 +34,7 @@ Class Router
       $this->request->setMenuItem($menuItem);
     }
     else {
-      $this->originalUrl = $server['REQUEST_URI'];
+      $this->originalUrl = $path;
       $controllerName = $this->getControllerNameByUrl($this->originalUrl);
     }
     
@@ -50,10 +49,10 @@ Class Router
   public function getControllerNameByUrl($url) {
     
     if('/' == substr($url, -1)) $url = rtrim($url, '/');
+    if('/' == substr($url, 0, 1)) $url = ltrim($url, '/');
     $urlArr = explode('/', $url);
     
     $controller ='';
-    
     if(count($urlArr) > 0) {
       foreach (Menu::$menus as $menuUrl=>$menuItem) {
         if ($this->matchedMenu($url, $menuUrl)) {

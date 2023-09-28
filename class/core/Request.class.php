@@ -12,6 +12,8 @@ Class Request {
   private $env;
   private $file;
   private $menuItem;
+
+  public $path;
   
   public $data = array();
 
@@ -24,6 +26,9 @@ Class Request {
     $this->cookie = $_COOKIE;
     $this->env = $_ENV;
     $this->file = $_FILES;
+
+    $uri_parts = parse_url($this->server['REQUEST_URI']);
+    $this->path = urldecode(ltrim($uri_parts['path'], '/'));
   }
   
   public function getSysRequest() {

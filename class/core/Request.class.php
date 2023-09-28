@@ -13,7 +13,7 @@ Class Request {
   private $file;
   private $menuItem;
 
-  public $path;
+  public $path = '';
   
   public $data = array();
 
@@ -27,8 +27,10 @@ Class Request {
     $this->env = $_ENV;
     $this->file = $_FILES;
 
-    $uri_parts = parse_url($this->server['REQUEST_URI']);
-    $this->path = urldecode(ltrim($uri_parts['path'], '/'));
+    if(!empty($this->server['REQUEST_URI'])) {
+      $uri_parts = parse_url($this->server['REQUEST_URI']);
+      $this->path = urldecode(ltrim($uri_parts['path'], '/'));
+    }
   }
   
   public function getSysRequest() {

@@ -39,7 +39,7 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
     <meta name="keywords" content="<?=$data['meta_keywords']?>" />    
     <meta name="MobileOptimized" content="width">
     <meta name="HandheldFriendly" content="true">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:url" content="<?=$domainUrl . $data['REQUEST_URI']?>" />

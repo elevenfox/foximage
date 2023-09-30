@@ -6,7 +6,7 @@
 
     <div class="clearfix"></div>
 
-   <footer class="footer">
+   <footer class="footer" style="overflow:hidden">
     <?= $theme->render($data, 'ads_templates/ad-footer-banner');?>
     <?= $theme->render($data, 'ads_templates/ad-m-bottom');?>
    </footer>

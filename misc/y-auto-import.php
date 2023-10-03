@@ -65,6 +65,13 @@ $mailMsg .= $m;
 
 $dst_base = '/mnt/extreme_ssd/jw-photos/';
 
+$shuffle_alb = [
+    'AI美女',
+    'Cosplay',
+    '韩国美女',
+    '日本美女',
+];
+
 $total = 20;
 $dryrun = 0;
 
@@ -90,9 +97,16 @@ $current_groups = folderStatus($groups);
 $albums = [];
 while(count($albums) < $total && !empty($groups)) {
     foreach($current_groups as $key => $val) {
-        $alb = array_shift($groups[$key]);
+        if(in_array($key, $shuffle_alb)) {
+            $random_key = array_rand($groups[$key], 1);
+            $alb = $groups[$key][$random_key];
+            unset($groups[$key][$random_key]);
+        }
+        else {
+            $alb = array_shift($groups[$key]);
+        }
         if(!empty($alb)) $albums[] = $alb;
-        if($val > 50) {
+        if($val > 50 && !in_array($key, $shuffle_alb)) {
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
         }
@@ -111,12 +125,20 @@ foreach($albums as $f) {
     $m  = date('Y-m-d H:i:s') . " ---- Start importing $f ... \n";
     echo $m;
     $mailMsg .= $m;
-    $origin_full_path = $path . '/'. $f;
 
     // Find the dest folder based on album name
     $dest = getDestFolder($f);
     $dest_full = $dst_base . $dest . '/'; 
 
+    // Specially handle some album
+    if(str_starts_with($f, 'Cosplay-')) {
+        $new_folder_name = str_ireplace('Cosplay-', '', $f);
+        rename($path . '/'. $f, $path . '/' . $new_folder_name);  
+        $f = $new_folder_name;
+    }
+    $origin_full_path = $path . '/'. $f;
+
+   
     // Move album to dest folder
     $m  = date('Y-m-d H:i:s') . ' ------ ' . 'mv ' . $origin_full_path . ' ' . $dest_full ."\n";
     echo $m;

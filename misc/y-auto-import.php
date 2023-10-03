@@ -7,6 +7,12 @@ if(empty($folder_full_path)) {
     exit;
 }
 
+if (!function_exists('str_starts_with')) {
+    function str_starts_with($haystack, $needle) {
+        return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
+    }
+}
+
 function folderStatus($groups) {
     $status = [];
     foreach($groups as $k=>$v) {

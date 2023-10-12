@@ -33,6 +33,7 @@ function getDestFolder($album) {
         'huayang' => 'HuaYang花漾-',
         'imiss' => 'IMiss爱蜜社-',
         'japan' => '日本美女-',
+        'jvid' => 'JVID-',
         'kelagirls' => 'KelaGirls克拉女神-',
         'korea' => '韩国美女-',
         'mfstar' => 'MFStar模范学院-',

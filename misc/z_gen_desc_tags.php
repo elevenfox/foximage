@@ -24,6 +24,7 @@ if(empty($folder_full_path)) {
 }
 
 $common_tags = isset($argv[2]) ? $argv[2] : null;
+if(!empty($common_tags)) $common_tags = str_replace('，',',',$common_tags);
 
 
 ###################### End of define variables ################
@@ -186,6 +187,8 @@ elseif(substr( strtolower($folder_name), 0, 9 ) === "kelagirls") {
 else {
     [$org_name_en, $org_name, $model_name] = ['', '', $terms[0]];
 }
+
+$tags_str = str_replace('，',',',$tags_str);
 $tags = explode(',', $tags_str);
 if(! in_array($org_name_en, $tags) && ! in_array(strtolower($org_name_en), $tags)) {
     if(!empty($org_name_en)) $tags[] = $org_name_en;

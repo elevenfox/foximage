@@ -184,6 +184,9 @@ elseif(substr( strtolower($folder_name), 0, 7 ) === "toutiao") {
 elseif(substr( strtolower($folder_name), 0, 9 ) === "kelagirls") {
     [$org_name_en, $org_name, $model_name] = ['KelaGirls', '克拉女神', $terms[2]];
 }
+elseif(substr( strtolower($folder_name), 0, 4 ) === "jvid") {
+    [$org_name_en, $org_name, $model_name] = ['JVID', '台湾JVID', $terms[1]];
+}
 else {
     [$org_name_en, $org_name, $model_name] = ['', '', $terms[0]];
 }

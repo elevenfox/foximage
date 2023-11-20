@@ -77,6 +77,7 @@ $shuffle_alb = [
     'Cosplay',
     '韩国美女',
     '日本美女',
+    'JVID',
 ];
 
 $total = 20;

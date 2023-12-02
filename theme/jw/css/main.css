@@ -1011,6 +1011,9 @@ article.file #fdp-photo>a::before {
 
 
 /********** Ads **********/
+.ad-container {
+    padding: 2px;
+}
 
 .ad-side-right {
     width: 335px;
@@ -1415,8 +1418,7 @@ article.file #fdp-photo>a::before {
     #block-ads-right-sidebar-ad-v-2,
     #block-ads-right-sidebar-ad-1,
     #block-ads-right-sidebar-ad-2,
-    #block-ads-right-sidebar-ad-3,
-    #block-ads-jp-footer-banner-ad {
+    #block-ads-right-sidebar-ad-3 {
         display: none;
     }
     #block-ads-jp-m-middle,

@@ -115,9 +115,62 @@ AddType application/octet-stream .csv
   # uncomment the following line:
   # RewriteBase /
 
+  # Block access to images based on user_agent
+  # <FilesMatch "\.(jpg|jpeg|png|gif)$">
+  #   SetEnvIfNoCase User-Agent "^$" block_empty_ua
+  #   Order Deny,Allow
+  #   Deny from env=block_empty_ua
+  # </FilesMatch>
 
-  # Rewrite http to https
+  
   RewriteEngine On
+
+  # Block requests without user_agent
+  #RewriteCond %{HTTP_USER_AGENT} ^-?$
+  #RewriteRule ^ - [F]
+  # Block specific user_agent
+  #RewriteCond %{HTTP_USER_AGENT} ^.*(SCspider|Textbot|s2bot).*$ [NC]
+  #RewriteRule .* - [F,L]
+
+
+  #Allow my domain
+  #RewriteCond %{HTTP_REFERER} !^http(s)?://(www.)?tuzac.com [NC]
+  #Allow another domain
+  #RewriteCond %{HTTP_REFERER} !^http(s)?://(www.)?kkc3.com [NC]
+  #Allow blank referrers or delete this line to block them
+  #Deleting this line also blocks access to images by filepaths
+  #RewriteCond %{HTTP_REFERER} !^$
+  #Allow users to follow images from search engines
+  RewriteCond %{HTTP_REFERER} !google. [NC]
+  RewriteCond %{HTTP_REFERER} !search?q=cache [NC]
+  RewriteCond %{HTTP_REFERER} !msn. [NC]
+  RewriteCond %{HTTP_REFERER} !yahoo. [NC]
+  #Ensure search engines aren't blocked from indexing images (slurp is yahoo)
+  RewriteCond %{HTTP_USER_AGENT} !googlebot [NC]
+  RewriteCond %{HTTP_USER_AGENT} !msnbot [NC]
+  RewriteCond %{HTTP_USER_AGENT} !slurp [NC]
+  RewriteCond %{HTTP_USER_AGENT} !bingbot [NC]
+  RewriteCond %{HTTP_USER_AGENT} !yisouSpider [NC]
+  RewriteCond %{HTTP_USER_AGENT} !baidu [NC]
+  RewriteCond %{HTTP_USER_AGENT} !bingPreview [NC]
+  RewriteCond %{HTTP_USER_AGENT} !cfnetwork [NC]
+  RewriteCond %{HTTP_USER_AGENT} !netEstate [NC]
+  RewriteCond %{HTTP_USER_AGENT} !yandexBot [NC]
+  RewriteCond %{HTTP_USER_AGENT} !facebookexternalhit [NC]
+  RewriteCond %{HTTP_USER_AGENT} !baiduspider [NC]
+  RewriteCond %{HTTP_USER_AGENT} !applebot [NC]
+  RewriteCond %{HTTP_USER_AGENT} !pinterestbot [NC]
+  RewriteCond %{HTTP_USER_AGENT} !mozilla [NC]
+  #File types to be blocked
+  RewriteRule \.(jpg|jpeg)$ - [NC,F,L]
+  #OR
+  #First allow an image to be hotlinked to avoid looping
+  #RewriteCond %{REQUEST_URI} !^mydomain.com/image/hotlinker.gif$
+  #Then display a custom image
+  #RewriteRule \.(jpg|jpeg|png|gif)$ mydomain.com/image/hotlinker.gif [NC,R,L]
+
+  
+  # Rewrite http to https
   RewriteCond %{HTTP_HOST} ^tuzac.com [NC]
   RewriteRule "(^|/)\." - [F]
   # RewriteRule ^(.*)$ https://www.tuzac.com/$1 [L,R=301]

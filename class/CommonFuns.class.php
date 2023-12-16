@@ -637,8 +637,8 @@ function processPhotoSrc($file, $at = 0, $photos_per_page = 1) {
                     // }
 
                     // Use home's dev server (RPI4) to serve photos for now
-                    
-                    $src[] = 'https://image.tuzac.com/jw-photos/' . $relative_fullname;
+                    $cdn_photo_domain = Config::get('cdn_photo_domain');
+                    $src[] = 'https://'.$cdn_photo_domain.'/jw-photos/' . $relative_fullname;
                     
                 // }
             }

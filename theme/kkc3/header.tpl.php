@@ -78,6 +78,10 @@ $domainUrl = getDomainUrl();
         gtag('js', new Date());
 
         gtag('config', 'G-7L3B249YPQ');
+
+        function trackGA(event_name) {
+            if(typeof gtag !== 'undefined') gtag('event', event_name, {});
+        }
     </script>
     <?php endif; ?>
 

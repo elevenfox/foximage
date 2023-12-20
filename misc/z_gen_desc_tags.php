@@ -49,6 +49,7 @@ if(empty($desc)) {
     $desc = str_replace('MFStar模范学院-', 'MFStar模范学院-Vol.', $desc);
     $desc = str_replace('YouMi尤蜜荟-', 'YouMi尤蜜荟-Vol.', $desc);
     $desc = str_replace('MyGirl美媛馆-', 'MyGirl美媛馆-Vol.', $desc);
+    $desc = str_replace('XingYan星颜社-', 'XingYan星颜社-Vol.', $desc);
     
     $desc = str_replace('-', ' ', $desc);
 
@@ -75,59 +76,6 @@ else {
 echo date('Y-m-d H:i:s') . ' - ' . "-- desc: $desc \n";
 file_put_contents($folder_full_path . '/desc.txt', $desc);
 
-
-
-// Cleanup junk files and Handle thumbnail.jpg
-$scan2 = scandir($folder_full_path);
-$images = [];
-$already_has_thumbnail = false;
-foreach($scan2 as $file) {
-    $origin_file_full = $folder_full_path . '/' . $file;
-    if(strpos($file, '本套图来自') !== false) {
-        unlink($origin_file_full);
-    }
-    if(strpos($file, '更多百度搜索') !== false) {
-        unlink($origin_file_full);
-    }
-    if(strpos($file, '永久地址') !== false) {
-        unlink($origin_file_full);
-    }
-    if($file == 'cover.jpg' || $file == 'cover.JPG') {
-        rename($origin_file_full, $folder_full_path . '/thumbnail.jpg');
-        $file = 'thumbnail.jpg';
-    }
-    if($file == 'thumbnail.JPG') {
-        rename($origin_file_full, $folder_full_path . '/thumbnail.jpg');
-        $file = 'thumbnail.jpg';
-    }
-    if($file == 'thumbnail.jpg') $already_has_thumbnail = true;
-    if(!$already_has_thumbnail) {
-        if ( is_file($origin_file_full) && @is_array(getimagesize($origin_file_full)) ) {
-            $images[] = $file;
-        }
-    }
-}
-if($already_has_thumbnail) {
-    echo "---- Already has a thumbnail.jpg \n\n";
-}
-else {
-    natsort($images);
-    // Get first portrait image
-    $thumb = $images[0];
-    foreach ($images as $im) {
-        if(isImagePortrait($folder_full_path.'/'.$im)) {
-            $thumb = $im;
-            break;
-        }
-    }
-    
-    echo 'copy('. $folder_full_path . '/' . $thumb . ', ' . $folder_full_path . '/thumbnail.jpg' .  "\n\n";
-    copy($folder_full_path . '/' . $thumb , $folder_full_path . '/thumbnail.jpg');    
-}
-
-// create a new empty dl.txt in current folder
-echo "file_put_contents($folder_full_path/dl.txt, '') \n";
-file_put_contents($folder_full_path.'/dl.txt', '');
 
 
 // If no tags.txt, generate tags based on path and folder name

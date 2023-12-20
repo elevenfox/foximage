@@ -25,7 +25,7 @@ if(empty($end)) {
 }
 
 
-$base_url = 'https://nshens.com/search/';
+$base_url = 'https://www.madouplus.com/?post_type=post&';
 
 // $term = '秀人';
 // $start = 6052;
@@ -38,10 +38,10 @@ for ($i = $start; $i<=$end; $i++) {
             $tmp_term = $term == '语画界' ? '画语界' : $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
 
-            $url = $base_url . $tmp_term . '%20' . $num;
+            $url = $base_url . 's=' . $tmp_term . '+vol.' . $num;
             echo $url."\n";
             $html = curl_call($url);
-            $res = find_between($html, ',title:"' , '",');
+            $res = find_between($html, ' title="' , '"');
             foreach($res as $title) {
                 if(!empty($title) && stripos($title, $tmp_term) !== false && strpos($title, $num) !== false ) {
                     echo $title . "\n";
@@ -90,9 +90,10 @@ for ($i = $start; $i<=$end; $i++) {
                     break;
                 }
             }
-            
+            //exit;
             break;
         }
+        
     }
     
 }

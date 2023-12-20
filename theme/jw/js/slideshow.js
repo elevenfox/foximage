@@ -10,7 +10,7 @@
 
     let x =1;
     $('#auto-play').on('click', function() {
-        if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'auto_play','value':null});
+        if(typeof gtag !== 'undefined') gtag('event','click_auto_play',{'event_category':'slideshow','event_label':'auto_play','value':null});
           
         if( !theURL.includes('ppt=1')) {
             if(theURL.includes('?')) {
@@ -146,11 +146,11 @@
             e.preventDefault();
             
             if($('.fdp-random-pause').hasClass('glyphicon-pause')) {
-                if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'pause','value':null});
+                if(typeof gtag !== 'undefined') gtag('event','click_auto_play_pause',{});
                 pauseItv();
             }
             else {
-                if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'start','value':null});
+                if(typeof gtag !== 'undefined') gtag('event','click_auto_play_start',{});
                 startItv();
             }
         });
@@ -158,7 +158,8 @@
 
         const previous = (e) => {
             e.preventDefault();
-            if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'previous','value':null});
+            if(typeof gtag !== 'undefined') gtag('event','click_auto_play_previous',{});
+            
             pauseItv();
             if(history.length <= 0) {
                 alert("No previous photo.");
@@ -178,7 +179,8 @@
 
         const next = (e) => {
             e.preventDefault();
-            if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'next','value':null});
+            if(typeof gtag !== 'undefined') gtag('event','click_auto_play_next',{});
+            
             pauseItv();
             timeoutCallback();
             startItv();
@@ -188,7 +190,8 @@
 
         $('#close_ppt').on('click', function(e) {
             e.preventDefault();
-            if(typeof gtag !== 'undefined') gtag('event','click',{'event_category':'slideshow','event_label':'close','value':null});
+            if(typeof gtag !== 'undefined') gtag('event','click_auto_play_close',{});
+            
             pauseItv();
             $('#fdp-photo').remove();
             $('body').css('overflow', 'auto');

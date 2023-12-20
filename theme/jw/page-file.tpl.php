@@ -58,7 +58,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
                   }
                 }
 
-                echo '<div class="file-album-download">下载高清无水印图集: <a href="' . $file['short_url'] . '" target="_blank">TerraBox网盘</a></div>';
+                echo '<div class="file-album-download">下载高清无水印图集: <a href="' . $file['short_url'] . '" target="_blank" onclick="trackGA(\'download_album\')">TerraBox网盘</a></div>';
                 echo '<div>解压密码: tuzac</div><br>';
               }
             ?>
@@ -212,7 +212,6 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
           }
       });
   });
-
 })(jQuery);
 </script>
 <?php endif;?>

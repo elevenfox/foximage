@@ -313,12 +313,13 @@ switch($action) {
     case 'get_album_images':
         $src = '';
         $fileId = empty($_REQUEST['id'])? '' : $_REQUEST['id'];
+        $num = empty($_REQUEST['num'])? 1 : $_REQUEST['num'];
 
         $res = File::getFileByID($fileId);
         if(count($res)) {
             $file = $res;
             $images = explode(',',$file['filename']);
-            $num = rand(1, count($images));
+            // $num = rand(1, count($images));
             $src = processPhotoSrc($file, $num, 1);
             $url = '/file/'.cleanStringForUrl($file['title']).'/'.$file['id'];
         }

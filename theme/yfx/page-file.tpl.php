@@ -56,7 +56,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
                   }
                 }
 
-                echo '<div class="file-album-download">Download HD no-watermark pictures: <a href="' . $file['short_url'] . '" target="_blank">TerraBox</a></div>';
+                echo '<div class="file-album-download">Download HD no-watermark pictures: <a href="' . $file['short_url'] . '" target="_blank" onclick="trackGA(\'download_album\')">TerraBox</a></div>';
                 echo '<div>Unzip Password: tuzac</div><br>';
               }
             ?>

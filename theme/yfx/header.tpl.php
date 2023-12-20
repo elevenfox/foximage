@@ -75,6 +75,10 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
         gtag('js', new Date());
 
         gtag('config', 'G-82GCRWGNJ1');
+
+        function trackGA(event_name) {
+            if(typeof gtag !== 'undefined') gtag('event', event_name, {});
+        }
     </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

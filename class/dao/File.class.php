@@ -199,6 +199,58 @@ Class File {
     public static function searchFile($term, $page=1, $limit=24, $random=false) {
         self::setTables();
 
+        if($random) {
+            $total = self::searchFileCount($term);
+            $limit = rand(1, $total) . ','.$limit;
+            $orderBy = '';
+        }
+        else {
+            $limit = ($page - 1) * $limit . ',' . $limit;
+            $orderBy = 'order by id desc';
+        }
+        //$orderBy = empty($random) ? 'order by id desc' : 'ORDER BY RAND()';
+
+        $where = self::buildWhereFromTerm($term);
+        $query = "select * from ".self::$table_files." where " . $where . " $orderBy limit " . $limit;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            return $res;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static function searchFileCount($term, $cache=true) {
+        self::setTables();
+
+        $cacheKey = THEME . '_search_file_count_' . $term;
+        if(APCU && !isAdmin() && $cache===true) {
+            $res = apcu_fetch($cacheKey);
+            if(!empty($res)) {
+                return $res;
+            }
+        }
+
+        $where = self::buildWhereFromTerm($term);
+
+        $query = "select count(*) as total from ".self::$table_files." where " . $where;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            if(APCU && !isAdmin()) {
+                apcu_store($cacheKey, $res[0]['total'], 600);
+            }
+
+            return $res[0]['total'];
+        }
+        else {
+            return null;
+        }
+    }
+
+    private static function buildWhereFromTerm($term) {
+        $term = DB::sanitizeInput($term);
+
         $term = str_replace('，', ',', $term);
         $allKeywords = explode(',', $term);
         $allKeywords = array_map('trim', $allKeywords);
@@ -232,41 +284,7 @@ Class File {
         }
         $where = implode(' OR ', $cond);
 
-        $term = DB::sanitizeInput($term);
-        $limit = ($page - 1) * $limit . ',' . $limit;
-        $orderBy = empty($random) ? 'order by id desc' : 'ORDER BY RAND()';
-        $query = "select * from ".self::$table_files." where " . $where . " $orderBy limit " . $limit;
-        $res = DB::$dbInstance->getRows($query);
-        if(count($res) >0) {
-            return $res;
-        }
-        else {
-            return null;
-        }
-    }
-
-    public static function searchFileCount($term) {
-        self::setTables();
-
-        $term = str_replace('，', ',', $term);
-        $allKeywords = explode(',', $term);
-        $cond = [];
-        foreach($allKeywords as $key) {
-            $cond[] = " title like '%" . trim($key) . "%' ";
-            $cond[] = " tags like '%" . trim($key) . "%' ";
-            $cond[] = " description like '%" . trim($key) . "%' ";
-        }
-        $where = implode(' or ', $cond);
-
-        $term = DB::sanitizeInput($term);
-        $query = "select count(*) as total from ".self::$table_files." where " . $where;
-        $res = DB::$dbInstance->getRows($query);
-        if(count($res) >0) {
-            return $res[0]['total'];
-        }
-        else {
-            return null;
-        }
+        return $where;
     }
 
 

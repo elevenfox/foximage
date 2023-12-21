@@ -33,7 +33,10 @@ $domainUrl = getDomainUrl();
     
 
     <meta name="referrer" content="no-referrer" />
+
+    <?php if( empty($data['dev_mode']) ) { ?>
     <meta name="robots" content="<?=empty($data['meta_robots']) ? 'follow, index': $data['meta_robots']?>" />
+    <?php }?>
 
     <meta http-equiv="cache-control" content="max-age=864000" />
 

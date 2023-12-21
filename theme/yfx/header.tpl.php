@@ -33,7 +33,9 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
     <link rel="shortlink" href="<?=$domainUrl . $data['REQUEST_URI']?>" />
 
     <meta name="referrer" content="no-referrer" />
+    <?php if( empty($data['dev_mode']) ) { ?>
     <meta name="robots" content="<?=empty($data['meta_robots']) ? 'follow, index': $data['meta_robots']?>" />
+    <?php }?>
     <meta http-equiv="cache-control" content="max-age=864000" />
     <meta name="description" content="<?=$data['meta_desc']?>" />
     <meta name="keywords" content="<?=$data['meta_keywords']?>" />    

@@ -1,14 +1,6 @@
 jQuery(function () {
   'use strict';
 
-  $(document).ready(function() {
-    $(".file-detail").find("img").on('load', function() {
-      this.style.opacity = 1;
-    });
-    $(".file-detail").find("img").lazyload();
-  });
-
-
   function moveAds(flag) {
     if ($(".all-tags-page")[0]){
       // if it's all-tag-page, don't move ads around

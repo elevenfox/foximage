@@ -829,7 +829,7 @@ article.file .image-loading-box {
     min-height: 200px;
     background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='120px'><text x='0' y='15' fill='gray' font-size='14'>Loading...</text></svg>") no-repeat center;
     width: 100%;
-    background-color: #f2f2f2;
+    background-color: #222;
     margin-bottom: 1px;
 }
 article.file .image-loading-box::after {

@@ -114,7 +114,7 @@ while(count($albums) < $total && !empty($groups)) {
             $alb = array_shift($groups[$key]);
         }
         if(!empty($alb)) $albums[] = $alb;
-        if($val > 50 && !in_array($key, $shuffle_alb)) {
+        if($val > 100 && !in_array($key, $shuffle_alb)) {
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
         }

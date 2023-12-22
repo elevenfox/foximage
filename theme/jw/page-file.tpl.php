@@ -99,7 +99,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
               <div>
                   <?php foreach($src_arr as $src) { ?>
                     <?php if(count($src_arr)>1):?>
-                      <div class="image-loading-box"><img data-src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy"></img></div>
+                      <div class="image-loading-box"><img src="<?=$src?>" data-src="<?=$src?>" alt="<?=$file['title']?>" loading="lazy"></img></div>
                     <?php else:?>
                       <div id="fdp-photo-old">
                         <a id="the-photo-link" href="<?='/file/'.cleanStringForUrl($file['title']).'/'.$file['id'].'/?at='.($num+1).'#fdp-photo'?>" data-bg-text="正在载入高清图片...">

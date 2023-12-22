@@ -22,6 +22,4 @@ jQuery(function() {
         jQuery('.main-menu').addClass('mobile_hide');
     });
 
-    jQuery('.lazy').lazy();
-
 });

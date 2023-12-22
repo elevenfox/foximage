@@ -2,13 +2,6 @@ jQuery(function() {
     var winWidth = jQuery(window).width();
     var mobileWidth = 760;
 
-
-    function getAdWidth() {
-        var winWidth = jQuery(window).width();
-        var adWidth = winWidth >= 999 ? 370 : 185;
-        adWidth = winWidth <= 600 ? 0 : adWidth;
-        return adWidth;
-    }
     //jQuery('.layout-3col__left-content').width(jQuery(window).width() - getAdWidth());
 
     jQuery('#buttonSearch').click(function() {
@@ -36,7 +29,6 @@ jQuery(function() {
 
     jQuery('.main-menu a[href*="http://www.javcook.com"]').attr('target', '_blank');
 
-    jQuery('.lazy').lazy();
 
     jQuery(window).resize(function () {
         var winW = (window.innerWidth > 0) ? window.innerWidth : screen.width;

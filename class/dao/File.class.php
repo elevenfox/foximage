@@ -231,6 +231,12 @@ Class File {
                 return $res;
             }
         }
+        else if (!isAdmin()) {
+            // If no memory cache available, at least use sesson to cache for current user
+            if(!empty($_SESSION[$cacheKey])) {
+                return $_SESSION[$cacheKey];
+            }
+        }
 
         $where = self::buildWhereFromTerm($term);
 
@@ -239,6 +245,9 @@ Class File {
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
                 apcu_store($cacheKey, $res[0]['total'], 3600*24);
+            }
+            else if (!isAdmin()) {
+                $_SESSION[$cacheKey] = $res[0]['total'];
             }
 
             return $res[0]['total'];

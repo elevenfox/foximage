@@ -238,7 +238,7 @@ Class File {
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
             if(APCU && !isAdmin()) {
-                apcu_store($cacheKey, $res[0]['total'], 600);
+                apcu_store($cacheKey, $res[0]['total'], 3600*24);
             }
 
             return $res[0]['total'];

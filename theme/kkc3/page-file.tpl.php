@@ -168,8 +168,8 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
 
 <?=$theme->render($data, 'ads_templates/ad-side-right')?>
 
-<script type="text/javascript" src="/theme/jw/js/file_page.js"></script>
-<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js"></script>
+<script type="text/javascript" src="/theme/<?=THEME?>/js/file_page.js?<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/theme/'.THEME.'/js/file_page.js')?>"></script>
+<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js?<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/theme/'.THEME.'/js/slideshow.js')?>"></script>
 
 <?php if(empty($data['not-found'])) : ?>
 <script>

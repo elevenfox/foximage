@@ -115,19 +115,19 @@ Class ViewCore {
     
     $this->data['styles'] = '';
     foreach ($this->theme->cssArr as $css) {      
-      $this->data['styles'] .= '<link type="text/css" rel="stylesheet" media="all" href="' . $css . "\" />\n";
+      $this->data['styles'] .= '<link type="text/css" rel="stylesheet" media="all" href="' . $css . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$css) . "\" />\n";
     }
     if(!empty($this->theme->cssIEArr)) {
       $this->data['styles'] .= "<!--[if IE]>\n";
       foreach ($this->theme->cssIEArr as $cssIE) {
-        $this->data['styles'] .= '<link type="text/css" rel="stylesheet" media="all" href="' . $cssIE . "\" />\n";
+        $this->data['styles'] .= '<link type="text/css" rel="stylesheet" media="all" href="' . $cssIE . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$cssIE) . "\" />\n";
       }
       $this->data['styles'] .= "<![enif]-->\n";
     }
     
     $this->data['scripts_header'] = '';
     foreach ($this->theme->headerJSArr as $jsHeader) {
-      $this->data['scripts_header'] .= '<script type="text/javascript" src="' . $jsHeader . "\"></script>\n";
+      $this->data['scripts_header'] .= '<script type="text/javascript" src="' . $jsHeader . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$jsHeader) . "\"></script>\n";
     }
   }
   
@@ -138,7 +138,7 @@ Class ViewCore {
   private function formatFooter() {
     $this->data['scripts_footer'] = '';
     foreach ($this->theme->footerJSArr as $jsFooter) {
-      $this->data['scripts_footer'] .= '<script type="text/javascript" src="' . $jsFooter . "\"></script>\n";
+      $this->data['scripts_footer'] .= '<script type="text/javascript" src="' . $jsFooter . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$jsFooter) . "\"></script>\n";
     }
   }
   

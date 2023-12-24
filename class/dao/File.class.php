@@ -199,18 +199,19 @@ Class File {
     public static function searchFile($term, $page=1, $limit=24, $random=false) {
         self::setTables();
 
-        if($random) {
-            $total = self::searchFileCount($term);
-            $limit = rand(1, $total) . ','.$limit;
-            $orderBy = '';
+        if($random && $limit==1) {
+            $allIds = explode(',', self::searchFileIds($term));
+            $randKey = array_rand($allIds);
+            $id = $allIds[$randKey];
+            $where = ' id=' . $id;
         }
         else {
             $limit = ($page - 1) * $limit . ',' . $limit;
             $orderBy = 'order by id desc';
+            //$orderBy = empty($random) ? 'order by id desc' : 'ORDER BY RAND()';
+            $where = self::buildWhereFromTerm($term);
         }
-        //$orderBy = empty($random) ? 'order by id desc' : 'ORDER BY RAND()';
 
-        $where = self::buildWhereFromTerm($term);
         $query = "select * from ".self::$table_files." where " . $where . " $orderBy limit " . $limit;
         $res = DB::$dbInstance->getRows($query);
         if(count($res) >0) {
@@ -257,10 +258,48 @@ Class File {
         }
     }
 
+    public static function searchFileIds($term, $cache=true) {
+        self::setTables();
+
+        $cacheKey = THEME . '_search_file_ids_' . $term;
+        if(APCU && !isAdmin() && $cache===true) {
+            $res = apcu_fetch($cacheKey);
+            if(!empty($res)) {
+                return $res;
+            }
+        }
+        else if (!isAdmin()) {
+            // If no memory cache available, at least use sesson to cache for current user
+            if(!empty($_SESSION[$cacheKey])) {
+                return $_SESSION[$cacheKey];
+            }
+        }
+
+        $where = self::buildWhereFromTerm($term);
+
+        $query = "select GROUP_CONCAT(id) as all_ids from ".self::$table_files." where " . $where;
+        $res = DB::$dbInstance->getRows($query);
+        if(count($res) >0) {
+            if(APCU && !isAdmin()) {
+                apcu_store($cacheKey, $res[0]['all_ids'], 3600*24);
+            }
+            else if (!isAdmin()) {
+                $_SESSION[$cacheKey] = $res[0]['all_ids'];
+            }
+
+            return $res[0]['all_ids'];
+        }
+        else {
+            return null;
+        }
+    }
+
     private static function buildWhereFromTerm($term) {
-        $term = DB::sanitizeInput($term);
+        //$term = DB::sanitizeInput($term);
 
         $term = str_replace('，', ',', $term);
+        $term = str_replace('， ', ',', $term);
+        $term = str_replace(', ', ',', $term);
         $allKeywords = explode(',', $term);
         $allKeywords = array_map('trim', $allKeywords);
         $allKeywords = array_unique($allKeywords);

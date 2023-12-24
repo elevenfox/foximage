@@ -212,6 +212,12 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
           }
       });
   });
+  $(document).ready(function() {
+        $(".file-detail").find("img").on('load', function() {
+          this.style.opacity = 1;
+        });
+        $(".file-detail").find("img").lazyload();
+    });
 })(jQuery);
 </script>
 <?php endif;?>

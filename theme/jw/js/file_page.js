@@ -35,10 +35,3 @@
     
         //document.getElementById('the-photo').scrollIntoView();
     }
-
-    $(document).ready(function() {
-        $(".file-detail").find("img").on('load', function() {
-          this.style.opacity = 1;
-        });
-        $(".file-detail").find("img").lazyload();
-    });

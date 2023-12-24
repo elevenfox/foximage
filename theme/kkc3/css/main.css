@@ -1307,6 +1307,9 @@ article.file #fdp-photo>a::before {
         margin-right: 0;
         padding: 0;
     }
+    .content-container .related-files {
+        display: block;
+    }
     .layout-center .main-menu {
         display: none;
         position: fixed;

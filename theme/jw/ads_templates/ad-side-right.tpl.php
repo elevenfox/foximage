@@ -10,19 +10,19 @@
     <?php include ('ad-native-2.tpl.php')?>
 
     <?php include ('ad-native-3.tpl.php')?>
-
-    <script async type="application/javascript" src="https://a.exdynsrv.com/ad-provider.js"></script> 
+ 
+    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
     <div id="block-ads-right-sidebar-ad-v">
         <div>
             <div class="ad-container">
-              <ins class="adsbyexoclick" data-zoneid="4779888"></ins> 
+              <ins class="eas6a97888e2" data-zoneid="4779888"></ins> 
             </div>
         </div>
     </div>
     <div id="block-ads-right-sidebar-ad-v-2">
         <div>
-            <div class="ad-container">
-              <ins class="adsbyexoclick" data-zoneid="4779890"></ins> 
+            <div class="ad-container"> 
+              <ins class="eas6a97888e2" data-zoneid="4779890"></ins>
             </div>
         </div>
     </div>

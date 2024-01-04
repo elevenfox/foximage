@@ -148,7 +148,7 @@ var juicy_tags = ['a', 'img'];
                                 <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="1024" class="form-text">
                             </div>
                             <div class="form-actions form-wrapper" id="edit-actions">
-                                <input type="submit" id="edit-submit" name="op" value="" class="form-submit">
+                                <input type="submit" id="edit-submit" name="op" value="go" class="form-submit">
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ var juicy_tags = ['a', 'img'];
                                 <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="1024" class="form-text">
                             </div>
                             <div class="form-actions form-wrapper" id="edit-actions">
-                                <input type="submit" id="edit-submit" name="op" value="" class="form-submit">
+                                <input type="submit" id="edit-submit" name="op" value="Search" class="form-submit">
                             </div>
                         </div>
                     </div>

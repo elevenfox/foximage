@@ -424,6 +424,8 @@ header.mobile_header {
     width: 20px;
     height: 15px;
     cursor: pointer;
+    text-indent: -9999px;
+    overflow: hidden;
 }
 
 #search-block-form input[name='term'] {

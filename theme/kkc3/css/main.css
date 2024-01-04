@@ -1286,6 +1286,7 @@ article.file #fdp-photo>a::before {
         position: static;
         width: 100%;
         height: 35px;
+        text-indent: 0;
     }
     .layout-center .layout-3col {
         margin-left: 0;

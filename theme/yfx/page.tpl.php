@@ -45,4 +45,4 @@ include 'header.tpl.php';
 
 <?php include 'footer.tpl.php';?>
 
-<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js"></script>
+<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js" async></script>

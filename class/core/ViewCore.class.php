@@ -127,7 +127,7 @@ Class ViewCore {
     
     $this->data['scripts_header'] = '';
     foreach ($this->theme->headerJSArr as $jsHeader) {
-      $this->data['scripts_header'] .= '<script type="text/javascript" src="' . $jsHeader . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$jsHeader) . "\"></script>\n";
+      $this->data['scripts_header'] .= '<script type="text/javascript" src="' . $jsHeader . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$jsHeader) . "\" async></script>\n";
     }
   }
   
@@ -138,7 +138,7 @@ Class ViewCore {
   private function formatFooter() {
     $this->data['scripts_footer'] = '';
     foreach ($this->theme->footerJSArr as $jsFooter) {
-      $this->data['scripts_footer'] .= '<script type="text/javascript" src="' . $jsFooter . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$jsFooter) . "\"></script>\n";
+      $this->data['scripts_footer'] .= '<script type="text/javascript" src="' . $jsFooter . "?" . filemtime($_SERVER['DOCUMENT_ROOT'].$jsFooter) . "\" async></script>\n";
     }
   }
   

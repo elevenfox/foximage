@@ -54,4 +54,4 @@ $title = $data['pageTitle'] == 'Newest' ? '最新美女写真图片推荐' : $da
 <?php include 'footer.tpl.php';?>
 
 
-<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js"></script>
+<script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js" async></script>

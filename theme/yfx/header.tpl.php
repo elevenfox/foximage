@@ -59,18 +59,9 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
     <title><?=t($data['page_title']) . ' | ' . SITE_NAME ?></title>
 
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript" async></script>
 
     <?php if(empty($data['dev_mode'])) : ?>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146802304-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-178022644-1');
-    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-82GCRWGNJ1"></script>
     <script>
@@ -182,14 +173,14 @@ var juicy_tags = ['a', 'img'];
 
         <div id="h-middle-m">
             <div class="header__region region region-header">
-                <form action="/search" method="get" id="search-block-form" accept-charset="UTF-8">
+                <form action="/search" method="get" id="search-block-form-mobile" accept-charset="UTF-8">
                     <div>
                         <div class="container-inline">
                             <div class="form-item form-type-textfield form-item-search-block-form">
-                                <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="1024" class="form-text">
+                                <input title="Enter the terms you wish to search for." placeholder="Search..." type="text" id="edit-search-block-form-mobile" name="term" value="" size="15" maxlength="1024" class="form-text">
                             </div>
-                            <div class="form-actions form-wrapper" id="edit-actions">
-                                <input type="submit" id="edit-submit" name="op" value="Search" class="form-submit">
+                            <div class="form-actions form-wrapper" id="edit-actions-mobile">
+                                <input type="submit" id="edit-submit-mobile" name="op" value="Search" class="form-submit">
                             </div>
                         </div>
                     </div>

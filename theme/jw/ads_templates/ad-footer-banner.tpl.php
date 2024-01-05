@@ -3,7 +3,7 @@ if( empty($data['dev_mode']) ) {
 ?>
 
 <div id="block-ads-jp-footer-banner-ad">
-    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>     
+    <!--script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script-->
     <div class="ad-container">
       <ins class="eas6a97888e38" data-zoneid="5145500"></ins> 
     </div>

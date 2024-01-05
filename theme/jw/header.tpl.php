@@ -70,30 +70,21 @@ $domainUrl = getDomainUrl();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript" async></script>
 
     <?php if(empty($data['dev_mode'])) : ?>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-197042779-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-197042779-1');
-    </script>    
     <!-- GA universal -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-55PR14SFEJ"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'G-55PR14SFEJ');
+        gtag('config', 'G-55PR14SFEJ');
 
-    function trackGA(event_name) {
-        if(typeof gtag !== 'undefined') gtag('event', event_name, {});
-    }
+        function trackGA(event_name) {
+            if(typeof gtag !== 'undefined') gtag('event', event_name, {});
+        }
     </script>
 
     <?php endif; ?>
@@ -110,7 +101,7 @@ if( empty($data['dev_mode']) ) {
 ?>
 <!-- JuicyAds v3.2P Start -->
 <script type="text/javascript">
-var juicy_tags = ['a', 'img'];
+    var juicy_tags = ['a', 'img'];
 </script>
 <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34b42303x224u4q2v284x2d444&u=http%3A%2F%2Fwww.juicyads.rocks"></script>
 <!-- JuicyAds v3.2P End -->
@@ -181,14 +172,14 @@ var juicy_tags = ['a', 'img'];
         </div>
         <div id="h-middle-m">
             <div class="header__region region region-header">
-                <form action="/search" method="get" id="search-block-form" accept-charset="UTF-8">
+                <form action="/search" method="get" id="search-block-form-mobile" accept-charset="UTF-8">
                     <div>
                         <div class="container-inline">
                             <div class="form-item form-type-textfield form-item-search-block-form">
-                                <input title="Enter the terms you wish to search for." placeholder="搜索... 逗号分隔关键字" type="text" id="edit-search-block-form--2" name="term" value="" size="15" maxlength="1024" class="form-text">
+                                <input title="Enter the terms you wish to search for." placeholder="搜索... 逗号分隔关键字" type="text" id="edit-search-block-form-mobile" name="term" value="" size="15" maxlength="1024" class="form-text">
                             </div>
-                            <div class="form-actions form-wrapper" id="edit-actions">
-                                <input type="submit" id="edit-submit" name="op" value="search" class="form-submit">
+                            <div class="form-actions form-wrapper" id="edit-actions-mobile">
+                                <input type="submit" id="edit-submit-mobile" name="op" value="search" class="form-submit">
                             </div>
                         </div>
                     </div>

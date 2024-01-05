@@ -2,9 +2,7 @@
 if( empty($data['dev_mode']) ) {
 ?>
 <div id="<?=empty($apply_mobile_native_ads) ? 'block-ads-right-sidebar-ad-1' : 'block-ads-right-sidebar-ad-1-mobile'?>" class="<?=empty($apply_mobile_native_ads) ? '':'mobile-only'?> ad-container">
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
   <ins class="eas6a97888e20" data-zoneid="4779880"></ins> 
-  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
   
   <script type="text/javascript">
     (function () {

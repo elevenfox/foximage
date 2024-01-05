@@ -12,21 +12,23 @@ $site_lang = empty(Config::get('site_lang')) ? 'zh-CN' : Config::get('site_lang'
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
-    <link rel="dns-prefetch" href="//img.tuzac.com">
-    <link rel="preconnect" href="//img.tuzac.com">
+    <link rel="dns-prefetch" href="https://img.tuzac.com">
+    <link rel="preconnect" href="https://img.tuzac.com">
+    <link rel="dns-prefetch" href="https://image.tuzac.com">
+    <link rel="preconnect" href="https://image.tuzac.com">
     
-    <link rel="dns-prefetch" href="//ajax.googleapis.com">
-    <link rel="preconnect" href="//ajax.googleapis.com">
-    <link rel="dns-prefetch" href="//www.googletagmanager.com">
-    <link rel="preconnect" href="//www.googletagmanager.com">
-    <link rel="dns-prefetch" href="//js.juicyads.com">
-    <link rel="preconnect" href="//js.juicyads.com">
-    <link rel="dns-prefetch" href="//poweredby.jads.co">
-    <link rel="preconnect" href="//poweredby.jads.co">
-    <link rel="dns-prefetch" href="//syndication.exdynsrv.com">
-    <link rel="preconnect" href="//syndication.exdynsrv.com">
-    <link rel="dns-prefetch" href="//a.exdynsrv.com">
-    <link rel="preconnect" href="//a.exdynsrv.com">
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="preconnect" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://js.juicyads.com">
+    <link rel="preconnect" href="https://js.juicyads.com">
+    <link rel="dns-prefetch" href="https://poweredby.jads.co">
+    <link rel="preconnect" href="/https:/poweredby.jads.co">
+    <link rel="dns-prefetch" href="https://syndication.exdynsrv.com">
+    <link rel="preconnect" href="https://syndication.exdynsrv.com">
+    <link rel="dns-prefetch" href="https://a.magsrv.com">
+    <link rel="preconnect" href="https://a.magsrv.com">
     
     <link rel="shortcut icon" href="/theme/yfx/favicon.ico" type="image/vnd.microsoft.icon" />
     <link rel="canonical" href="<?=$domainUrl . $data['REQUEST_URI']?>" />
@@ -163,17 +165,17 @@ var juicy_tags = ['a', 'img'];
         <div id="h-left-m">
             <div style="position: absolute; left: 15px; top: 15px; ">
                 <span id="quick-nav">
-                    <img src="/theme/jw/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation">
+                    <img src="/theme/jw/images/menu100bsa.png" alt="Quick Navigation" title="Quick Navigation" width="20" height="20">
                 </span>
                     <span id="mobile-back">
-                    <a href="javascript:history.go(-1)" class="ui-link"><img src="/theme/jw/images/back100bsa.png" title="Go Back" alt="Go Back"></a>
+                    <a href="javascript:history.go(-1)" class="ui-link"><img src="/theme/jw/images/back100bsa.png" title="Go Back" alt="Go Back" width="20" height="20"></a>
                 </span>
             </div>
             <a href="/" title="Home" rel="home" class="header__logo">
                 <img src="<?=Config::get('site_logo')?>" alt="YouFreeX home" class="header__logo-image">
             </a>
             <div id="search-button-div">
-                <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search"></a>
+                <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search" width="20" height="20"></a>
                 <a id="user-actions" href="/user/<?=empty($_SESSION['user'])?'login':''?>"><span class="glyphicon glyphicon-user"></span></a>
             </div>
         </div>

@@ -6,9 +6,9 @@ $thumbnail = processThumbnail($data);
 ?>
 <article class="clearfix node-teaser" itemscope itemtype="http://schema.org/FileObject">
     <div class="task" id="task" style="position: relative">
+      <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url">
         <div class="thumbnail-container" title="<?=$data['title']?>">
             <div class="teaser-thumbnail" itemprop="thumbnail">
-                <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url">
                     <div class="stretchy-wrapper" data-bg-text="Loading...">
                         <img class="lazy"
                               data-src="<?=$thumbnail?>"
@@ -18,12 +18,11 @@ $thumbnail = processThumbnail($data);
                               loading="lazy"
                         />
                     </div>
-                </a>
             </div>
         </div>
         <div class="teaser-file-detail">
             <div class="teaser-file-title" itemprop="name" title="<?=$data['title']?>">
-                <a href="/file/<?=cleanStringForUrl($data['title'])?>/<?=$data['source_url_md5']?>" itemprop="url"><?=$data['title']?></a>
+                <?=$data['title']?>
             </div>
             <div class="teaser-file-info">
               <span><img src="/theme/yfx/images/upload-icon.svg" width="12" height="12" alt="upload" loading="lazy"></span>  
@@ -33,6 +32,7 @@ $thumbnail = processThumbnail($data);
                 <span><img src="/theme/yfx/images/eye-open.svg" width="15" height="15" alt="views" loading="lazy"></span> <?=$data['view_count'] ? number_format($data['view_count']) : rand(1, 500) ?>
             </div>
         </div>
+      </a>  
 
         <?php if(isAdmin()) :?>
             <div class="node-admin" style="position: absolute; top:0; right:0; background-color: white; padding: 3px; opacity: 0.8">

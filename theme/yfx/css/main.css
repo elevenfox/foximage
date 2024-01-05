@@ -16,7 +16,7 @@ body {
 body {
     margin: 0;
     padding: 0;
-    color: #fff;
+    color: #f1f1f1;
     background-color: #000000;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 15px;
@@ -645,6 +645,7 @@ footer .hot-searches a {
     width: 100%;
     text-align: left;
     box-sizing: border-box;
+    color: #f1f1f1;
 }
 
 .node-teaser .teaser-file-title a,
@@ -656,7 +657,7 @@ footer .hot-searches a {
 .node-teaser .teaser-file-info {
     font-size: 12px;
     padding: 5px 5px 20px;
-    color: #888;
+    color: #dddddd;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1479,5 +1480,9 @@ article.file #fdp-photo>a::before {
 
     #the-photo.rotate {
         position: absolute;
+    }
+
+    footer .hot-searches a {
+        padding: 5px 10px;
     }
 }

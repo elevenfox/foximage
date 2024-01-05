@@ -15,7 +15,7 @@ body {
 body {
     margin: 0;
     padding: 0;
-    color: #666666;
+    color: #333333;
     font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Arial,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
     font-size: 15px;
     border: 0 none;
@@ -42,13 +42,13 @@ body > img {
 }
 
 a {
-    color: #337ab7;
+    color: #1967d2;
     -webkit-text-decoration-skip: objects;
     text-decoration: none;
 }
 
 :visited {
-    color: #337ab7;
+    color: #1967d2;
 }
 
 a:hover,
@@ -632,6 +632,7 @@ footer .hot-searches a {
     width: 100%;
     text-align: left;
     box-sizing: border-box;
+    color: #333333;
 }
 
 .node-teaser .teaser-file-title a,
@@ -643,7 +644,7 @@ footer .hot-searches a {
 .node-teaser .teaser-file-info {
     font-size: 12px;
     padding: 5px 5px 20px;
-    color: #888;
+    color: #666666;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -660,24 +661,6 @@ footer .hot-searches a {
 
 .node-teaser .teaser-file-info img {
     vertical-align: text-top;
-}
-
-.node-teaser .duration {
-    position: relative;
-    top: -30px;
-    right: 0;
-    background-color: black;
-    color: white;
-    display: inline-block;
-    padding: 3px 8px;
-    font-size: 12px;
-    opacity: .8;
-    float: right;
-    margin-bottom: -20px;
-}
-
-.node-teaser .duration strong {
-    padding: 0 5px 0 0;
 }
 
 .node-teaser .teaser-thumbnail {
@@ -1432,5 +1415,9 @@ article.file #fdp-photo>a::before {
 
     article.file .file-detail #the-photo.rotate {
         position: absolute;
+    }
+
+    footer .hot-searches a {
+        padding: 5px 10px;
     }
 }

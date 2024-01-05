@@ -176,7 +176,7 @@ var juicy_tags = ['a', 'img'];
             </a>
             <div id="search-button-div">
                 <a href="#" id="buttonSearch" class="ui-link"><img src="/theme/jw/images/search100bsa.png" title="Search" alt="Search" width="20" height="20"></a>
-                <a id="user-actions" href="/user/<?=empty($_SESSION['user'])?'login':''?>"><span class="glyphicon glyphicon-user"></span></a>
+                <a id="user-actions" href="/user/<?=empty($_SESSION['user'])?'login':''?>" aria-label="Login"><span class="glyphicon glyphicon-user"></span></a>
             </div>
         </div>
 

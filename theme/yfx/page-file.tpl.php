@@ -153,6 +153,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
 <?=$theme->render($data, 'ads_templates/ad-side-right')?>
 
 <script type="text/javascript" src="/theme/<?=THEME?>/js/slideshow.js?<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/theme/'.THEME.'/js/slideshow.js')?>" async></script>
+<script type="text/javascript" src="/theme/<?=THEME?>/js/lazyload.min.js?<?=filemtime($_SERVER['DOCUMENT_ROOT'].'/theme/'.THEME.'/js/lazyload.min.js')?>"></script>
 
 <?php if(empty($data['not-found'])) : ?>
 <script>

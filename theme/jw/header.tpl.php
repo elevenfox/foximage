@@ -70,7 +70,7 @@ $domainUrl = getDomainUrl();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript" async></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
 
     <?php if(empty($data['dev_mode'])) : ?>
     <!-- GA universal -->

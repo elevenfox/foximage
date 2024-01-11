@@ -106,18 +106,28 @@ $albums = [];
 while(count($albums) < $total && !empty($groups)) {
     foreach($current_groups as $key => $val) {
         if(in_array($key, $shuffle_alb)) {
+            // Randomly pick one album
             $random_key = array_rand($groups[$key], 1);
             $alb = $groups[$key][$random_key];
             unset($groups[$key][$random_key]);
         }
         else {
+            // Pick the first album for this source
             $alb = array_shift($groups[$key]);
         }
         if(!empty($alb)) $albums[] = $alb;
+
+        // If a source has more than 100 albums, choose a 2nd one
         if($val > 100 && !in_array($key, $shuffle_alb)) {
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
         }
+        // If it's xiuren, choose a 3rd one
+        if($key == 'XiuRen秀人网' && !in_array($key, $shuffle_alb)) {
+            $alb = array_shift($groups[$key]);
+            if(!empty($alb)) $albums[] = $alb;
+        }
+        
         if(count($albums) >= $total) break;
     }
     $current_groups = folderStatus($groups);

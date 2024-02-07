@@ -87,6 +87,9 @@ $terms = explode('-', $folder_name);
 if(substr( strtolower($folder_name), 0, 6 ) === "xiuren") {
     [$org_name_en, $org_name, $model_name] = ['XiuRen', '秀人网', $terms[2]];
 }
+elseif(substr( strtolower($folder_name), 0, 12 ) === "youmi尤蜜-") {
+    [$org_name_en, $org_name, $model_name] = ['YouMi', '尤蜜', $terms[2]];
+}
 elseif(substr( strtolower($folder_name), 0, 5 ) === "youmi") {
     [$org_name_en, $org_name, $model_name] = ['YouMi', '尤蜜荟', $terms[2]];
 }

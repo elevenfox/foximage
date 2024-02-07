@@ -50,6 +50,7 @@ function getDestFolder($album) {
         'xingyan' => 'XingYan星颜社-',
         'xiuren6000' => 'XiuRen秀人网-6',
         'youmi' => 'YouMi尤蜜荟-',
+        'youmi尤蜜' => 'YouMi尤蜜-',
         //'zac' => '',
     ];
 

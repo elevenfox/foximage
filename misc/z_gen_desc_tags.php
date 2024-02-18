@@ -7,15 +7,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 
-if (!function_exists('str_contains')) {
-    function str_contains($haystack, $needle) {
-        if(strpos($haystack, $needle) === false) return false;
-        else return true;
-    }
-}
-
-###################### Define variables ################
-
+###################### Define variables and functions ################
 
 $folder_full_path = isset($argv[1]) ? $argv[1] : null;
 if(empty($folder_full_path)) {
@@ -26,6 +18,61 @@ if(empty($folder_full_path)) {
 $common_tags = isset($argv[2]) ? $argv[2] : null;
 if(!empty($common_tags)) $common_tags = str_replace('，',',',$common_tags);
 
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle) {
+        if(strpos($haystack, $needle) === false) return false;
+        else return true;
+    }
+}
+
+function getPhotoVideoInfo ($folderPath ) {
+    if (is_dir($folderPath)) {
+        $files = scandir($folderPath);
+        $picFileCount = 0;
+        $picFileSize = 0;
+        $videoFileCount = 0;
+        $vodeoFileSize = 0;
+        foreach ($files as $file) {
+            $filePath = $folderPath . '/' . $file;
+            if ( is_file($filePath) && isImageFile($file) && $file != 'thumbnail.jpg' )  {
+                $picFileCount++;
+                $picFileSize += filesize($filePath);
+            }
+            // Check if the file is a regular file and has a video extension
+            if (is_file($filePath) && isVideoFile($file)) {
+                $videoFileCount++;
+                $vodeoFileSize += filesize($filePath);
+            }
+        }
+        return [$picFileCount, $videoFileCount, formatBytes($picFileSize), formatBytes($vodeoFileSize)];
+    } else {
+        return false;
+    }
+}
+// Function to check if a file has a video extension
+function isVideoFile($fileName) {
+    $videoExtensions = array('mp4', 'avi', 'mkv', 'mov'); // Add more extensions if needed
+    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+    return in_array(strtolower($fileExtension), $videoExtensions);
+}
+function isImageFile($fileName) {
+    $acceptExtensions = array('jpg', 'JPG');
+    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+    return in_array(strtolower($fileExtension), $acceptExtensions);
+}
+
+function formatBytes($bytes, $precision = 2) {
+    $units = array('B', 'KB', 'MB', 'GB', 'TB');
+
+    $bytes = max($bytes, 0);
+    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+    $pow = min($pow, count($units) - 1);
+
+    // Calculate the size in the chosen unit
+    $bytes /= (1 << (10 * $pow));
+
+    return round($bytes, $precision) . ' ' . $units[$pow];
+}
 
 ###################### End of define variables ################
 
@@ -52,8 +99,15 @@ if(empty($desc)) {
     $desc = str_replace('XingYan星颜社-', 'XingYan星颜社-Vol.', $desc);
     
     $desc = str_replace('-', ' ', $desc);
+    
+    list($picFileCount, $videoFileCount, $picFileSize, $vodeoFileSize) = getPhotoVideoInfo($folder_full_path);
+    $videoInfo = "以及{$videoFileCount}部视频";
+    $desc .= "。欢迎下载高清无水印套图{$picFileCount}张{$videoInfo}。";
 
-    $desc .= '。欢迎下载高清无水印套图。';
+    $desc .= "\n图片：".str_pad($picFileCount, 3, ' ', STR_PAD_LEFT)." ({$picFileSize})";
+    if($videoFileCount > 0) {
+        $desc .= "\n视频：".str_pad($videoFileCount, 3, ' ', STR_PAD_LEFT)." ({$vodeoFileSize})";
+    }
 }
 else {
     $desc = str_replace(' 生日','生日', $desc);

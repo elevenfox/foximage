@@ -49,6 +49,7 @@ function getDestFolder($album) {
         'xiaoyu' => 'XiaoYu语画界-',
         'xingyan' => 'XingYan星颜社-',
         'xiuren6000' => 'XiuRen秀人网-6',
+        'xiuren7000' => 'XiuRen秀人网-7',
         'youmi' => 'YouMi尤蜜荟-',
         'youmi尤蜜' => 'YouMi尤蜜-',
         //'zac' => '',

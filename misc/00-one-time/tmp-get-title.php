@@ -20,12 +20,13 @@ if(empty($start)) {
     exit;
 }
 if(empty($end)) {
-    echo "---- Must have a en number! \n";
+    echo "---- Must have a end number! \n";
     exit;
 }
 
 
-$base_url = 'https://www.madouplus.com/?post_type=post&';
+$base_url = 'https://www.youwushow.com/?s=';
+//https://www.youwushow.com/?s=秀人+No.7002
 
 // $term = '秀人';
 // $start = 6052;
@@ -38,7 +39,7 @@ for ($i = $start; $i<=$end; $i++) {
             $tmp_term = $term == '语画界' ? '画语界' : $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
 
-            $url = $base_url . 's=' . $tmp_term . '+vol.' . $num;
+            $url = $base_url . $tmp_term . '+No.' . $num;
             echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, ' title="' , '"');
@@ -63,7 +64,7 @@ for ($i = $start; $i<=$end; $i++) {
                     }
                     $append = str_ireplace('[IMiss', '', $append);
                     $append = str_ireplace('IMiss', '', $append);
-    
+                    
                     if(strpos($append, "秀") !== false) $append = substr($append, 0, strpos($append, "秀"));
                     if(strpos($append, "撩人") !== false) $append = substr($append, 0, strpos($append, "撩人"));
                     if(strpos($append, "诱惑") !== false) $append = substr($append, 0, strpos($append, "诱惑"));
@@ -79,8 +80,8 @@ for ($i = $start; $i<=$end; $i++) {
                         $b = explode($model, $append);
                         $append = $b[1];   
                     }
-    
-                    $date = array_pop($a);
+
+                    // $date = array_pop($a);
                     $new_folder_name = implode('-', $a);
                     if(!empty($date)) $new_folder_name = $new_folder_name . '-' . $append . '-' . $date;
                     else $new_folder_name = $new_folder_name . '-' . $append;

@@ -101,13 +101,13 @@ if(empty($desc)) {
     $desc = str_replace('-', ' ', $desc);
     
     list($picFileCount, $videoFileCount, $picFileSize, $vodeoFileSize) = getPhotoVideoInfo($folder_full_path);
-    $videoInfo = "以及{$videoFileCount}部视频";
+    $videoInfo = $videoFileCount > 0 ? "以及{$videoFileCount}部视频" : '';
     $desc .= "。欢迎下载高清无水印套图{$picFileCount}张{$videoInfo}。";
-
-    $desc .= "\n图片：".str_pad($picFileCount, 3, ' ', STR_PAD_LEFT)." ({$picFileSize})";
+    $desc .= "( {$picFileCount}P - ". number_format($picFileSize) . " MB";
     if($videoFileCount > 0) {
-        $desc .= "\n视频：".str_pad($videoFileCount, 3, ' ', STR_PAD_LEFT)." ({$vodeoFileSize})";
+        $desc .= ", {$videoFileCount}V - " . number_format($vodeoFileSize) . " MB";
     }
+    $desc .= " )";
 }
 else {
     $desc = str_replace(' 生日','生日', $desc);

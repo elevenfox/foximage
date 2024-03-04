@@ -62,16 +62,17 @@ function isImageFile($fileName) {
 }
 
 function formatBytes($bytes, $precision = 2) {
-    $units = array('B', 'KB', 'MB', 'GB', 'TB');
+    // $units = array('B', 'KB', 'MB', 'GB', 'TB');
 
-    $bytes = max($bytes, 0);
-    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-    $pow = min($pow, count($units) - 1);
+    // $bytes = max($bytes, 0);
+    // $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+    // $pow = min($pow, count($units) - 1);
 
-    // Calculate the size in the chosen unit
-    $bytes /= (1 << (10 * $pow));
+    // // Calculate the size in the chosen unit
+    // $bytes /= (1 << (10 * $pow));
 
-    return round($bytes, $precision) . ' ' . $units[$pow];
+    // return round($bytes, $precision) . ' ' . $units[$pow];
+    return round($bytes/1024/1024, $precision);
 }
 
 ###################### End of define variables ################

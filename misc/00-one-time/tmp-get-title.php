@@ -50,7 +50,7 @@ for ($i = $start; $i<=$end; $i++) {
                     $append = cleanStringForFilename($title);
                     $append = str_ireplace('半脱', '', $append);
                     $append = str_ireplace('脱', '', $append);
-                    $append = str_ireplace('露', '', $append);
+                    // $append = str_ireplace('露', '', $append);
                     $append = str_ireplace('吊袜', '吊带袜', $append);
                     $append = str_ireplace('吊裙', '吊带裙', $append);
                     $append = str_ireplace('私房', '', $append);
@@ -66,8 +66,8 @@ for ($i = $start; $i<=$end; $i++) {
                     $append = str_ireplace('IMiss', '', $append);
                     
                     if(strpos($append, "秀") !== false) $append = substr($append, 0, strpos($append, "秀"));
-                    if(strpos($append, "撩人") !== false) $append = substr($append, 0, strpos($append, "撩人"));
-                    if(strpos($append, "诱惑") !== false) $append = substr($append, 0, strpos($append, "诱惑"));
+                    // if(strpos($append, "撩人") !== false) $append = substr($append, 0, strpos($append, "撩人"));
+                    // if(strpos($append, "诱惑") !== false) $append = substr($append, 0, strpos($append, "诱惑"));
                     if(strpos($append, "完美") !== false) $append = substr($append, 0, strpos($append, "完美"));
                     if(strpos($append, "极致") !== false) $append = substr($append, 0, strpos($append, "极致"));
                     if(strpos($append, "写真") !== false) $append = substr($append, 0, strpos($append, "写真"));

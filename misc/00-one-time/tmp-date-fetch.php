@@ -29,7 +29,7 @@ function startsWithNumber($string) {
 }
 
 
-$base_url = 'https://www.aitlh.com/?s=';
+$base_url = 'https://www.nicesss.com/?s=';
 // https://xzm2048.com/?s=huayang+489
 // https://www.aitlh.com/?s=youmi+583
 
@@ -44,14 +44,14 @@ for ($i = $start; $i<=$end; $i++) {
             $tmp_term = $term == '语画界' ? '画语界' : $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
 
-            $url = $base_url . $tmp_term . '+vol.' . $num;
+            $url = $base_url . $tmp_term . '+No.' . $num;
             echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, '<h2' , '</h2>');
             foreach($res as $h2) {
                 //echo $h2 ."\n"; exit;
                 if(!empty($h2) && stripos($h2, $term) !== false && strpos($h2, $num) !== false) {
-                    $res2 = find_between($h2, '">' , '</a>');
+                    $res2 = find_between($h2, 'title="' , '"');
                     if(!empty($res2[0])) {
                         echo $res2[0] . "\n";
                         // [XiuRen秀人网] 2023.06.21 NO.6961 幼幼 [82+1P811M]

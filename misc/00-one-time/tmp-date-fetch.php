@@ -44,7 +44,7 @@ for ($i = $start; $i<=$end; $i++) {
             $tmp_term = $term == '语画界' ? '画语界' : $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
 
-            $url = $base_url . $tmp_term . '+No.' . $num;
+            $url = $base_url . $tmp_term . '+Vol.' . $num;
             echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, '<h2' , '</h2>');
@@ -69,7 +69,7 @@ for ($i = $start; $i<=$end; $i++) {
                                 $new_folder_name = str_ireplace('--', '-', $new_folder_name);
                             
                                 echo "rename $folder_full_path/$folder_name to $folder_full_path/$new_folder_name\n\n";
-                                rename($folder_full_path.'/'.$folder_name, $folder_full_path . '/'.$new_folder_name);
+                                //rename($folder_full_path.'/'.$folder_name, $folder_full_path . '/'.$new_folder_name);
                             }
                             else {
                                 echo "------ Already have date string! \n";

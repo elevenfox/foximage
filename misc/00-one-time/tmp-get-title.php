@@ -39,7 +39,7 @@ for ($i = $start; $i<=$end; $i++) {
             $tmp_term = $term == '语画界' ? '画语界' : $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
 
-            $url = $base_url . $tmp_term . '+No.' . $num;
+            $url = $base_url . $tmp_term . '+Vol.' . $num;
             echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, ' title="' , '"');

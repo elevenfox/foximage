@@ -6,7 +6,7 @@ action=$2
 prefix=$3
 
 # defaultFolder="/mnt/wd8t/jw-hd-no-watermark/02-processing/"
-defaultFolder="/home/eric/work/002-processing/"
+defaultFolder="/home/eric/ssd/f002-process/"
 if [ -z "$cur_folder" ]; then
   read -p "Use '${defaultFolder}'? (y/n)" CHOICE
   CHOICE=${CHOICE:-y}

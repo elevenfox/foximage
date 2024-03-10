@@ -2,7 +2,7 @@
 
 folder_path=$1
 
-defaultFolder="/home/eric/work/002-processing/"
+defaultFolder="/home/eric/ssd/f002-process/"
 if [ -z "$folder_path" ]; then
   read -p "Use '${defaultFolder}'? (y/n)" CHOICE
   CHOICE=${CHOICE:-y}

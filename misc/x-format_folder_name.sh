@@ -34,7 +34,7 @@ cur_folder=$1
 full_script_path=$(pwd)
 
 # defaultFolder="/mnt/wd8t/jw-hd-no-watermark/02-processing/"
-defaultFolder="/home/eric/work/002-processing/"
+defaultFolder="/home/eric/ssd/f002-process/"
 if [ -z "$cur_folder" ]; then
   read -p "Use '${defaultFolder}'? (y/n)" CHOICE
   CHOICE=${CHOICE:-y}
@@ -56,7 +56,11 @@ echo "######### - Current folder is: ${cur_folder}"
 format_folder_name () {
   old_name=$1
   
-  new_name=${old_name//XIUREN/XiuRen}
+  new_name=${old_name//NO./No.}
+  new_name=${new_name//N0./No.}
+  new_name=${new_name//VOL./Vol.}
+
+  new_name=${new_name//XIUREN/XiuRen}
   new_name=${new_name//xiuren/XiuRen}
   new_name=${new_name//Xiuren/XiuRen}
   new_name=${new_name//XiuRen秀人网-No./XiuRen秀人网-}
@@ -71,8 +75,11 @@ format_folder_name () {
   new_name=${new_name//HuaYan Vol./HuaYan花の颜-}
   new_name=${new_name//MFStar Vol./MFStar模范学院-}
   new_name=${new_name//IMiss Vol./IMiss爱蜜社-}
-  new_name=${new_name//NO./No.}
-  new_name=${new_name//N0./No.}
+  new_name=${new_name//IMiss爱蜜社 Vol./IMiss爱蜜社-}
+  new_name=${new_name//MFStar-Vol./MFStar模范学院-}
+  new_name=${new_name//Ugirls-App尤果圈-No./UGirlsApp尤果圈爱尤物-}
+  new_name=${new_name//YouMi尤蜜荟-Vol./YouMi尤蜜荟-}
+
   new_name=${new_name//\'/-}
   new_name=${new_name//\"/-}
   new_name=${new_name// - /-}
@@ -90,9 +97,7 @@ format_folder_name () {
   new_name=${new_name//\[/-}
   new_name=${new_name//\]/-}
   new_name=${new_name//--/-}
-  new_name=${new_name//MFStar-Vol./MFStar模范学院-}
-  new_name=${new_name//Ugirls-App尤果圈-No./UGirlsApp尤果圈爱尤物-}
-  new_name=${new_name//YouMi尤蜜荟-Vol./YouMi尤蜜荟-}
+  
   
   
   # new_name=${new_name//安然anran/安然}

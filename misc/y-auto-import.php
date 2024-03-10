@@ -40,7 +40,7 @@ function getDestFolder($album) {
         'miitao' => 'MiiTao蜜桃社-',
         'mistar' => 'MiStar魅妍社-',
         'mtcos' => 'MTCos喵糖映画-',
-        'mygirl' => 'MyGirl美媛馆-',
+        'mygirl' => 'MyGirl美媛馆-', 
         //'qingdouke' => '',
         'tgod' => 'TGOD推女神-',
         'toutiao' => 'TouTiao头条女神-',
@@ -50,7 +50,8 @@ function getDestFolder($album) {
         'xingyan' => 'XingYan星颜社-',
         'xiuren6000' => 'XiuRen秀人网-6',
         'xiuren7000' => 'XiuRen秀人网-7',
-        'youmi' => 'YouMi尤蜜荟-',
+        //'youmi' => 'YouMi尤蜜荟-',
+        'youmi1000' => 'YouMi尤蜜荟-1',
         'youmi尤蜜' => 'YouMi尤蜜-',
         //'zac' => '',
     ];

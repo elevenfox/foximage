@@ -26,7 +26,7 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="YouMi尤蜜-part2"]');
+    const ishow = await page.waitForSelector('a[title="ugirls"]');
     await ishow.click();
     await delay(2000);
 

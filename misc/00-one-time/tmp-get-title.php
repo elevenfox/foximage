@@ -25,21 +25,29 @@ if(empty($end)) {
 }
 
 
-$base_url = 'https://www.youwushow.com/?s=';
+$base_url = 'https://www.retuge03.com/?s=';
 //https://www.youwushow.com/?s=秀人+No.7002
+//https://www.retuge03.com/?s=语画界+Vol.1100
 
 // $term = '秀人';
 // $start = 6052;
 // $end = 6099;
+
+$num_pre_mapping = [
+    '秀人网' => 'No.',
+    '语画界' => 'Vol.',
+    '尤蜜荟' => 'Vol.',
+];
+
 $all_sub_folders = scandir($folder_full_path);
 for ($i = $start; $i<=$end; $i++) {
     $num = $i<100 ? sprintf('%03d', $i) : (string)$i;
     foreach($all_sub_folders as $folder_name) {
         if(strpos($folder_name, $term) !== false && strpos($folder_name, $num) !== false) {
-            $tmp_term = $term == '语画界' ? '画语界' : $term;
+            $tmp_term = $term;
             // echo 'Found match folder:  ' . $folder_name . "\n";
 
-            $url = $base_url . $tmp_term . '+Vol.' . $num;
+            $url = $base_url . $tmp_term . '+' . $num_pre_mapping[$tmp_term] . $num;
             echo $url."\n";
             $html = curl_call($url);
             $res = find_between($html, ' title="' , '"');
@@ -58,9 +66,11 @@ for ($i = $start; $i<=$end; $i++) {
                     $append = str_ireplace('无内', '', $append);
                     $append = str_ireplace('开档', '', $append);
     
-                    $dup = find_between($append, $tmp_term, $num);
-                    if(!empty($dup[0])) {
-                        $append = str_replace($tmp_term.$dup[0].$num, '', $append);
+                    //$dup = find_between($append, $tmp_term, $num);
+                    $dup = explode($num, $append);
+                    if(!empty($dup[1])) {
+                        //$append = str_replace($tmp_term.$dup[0].$num, '', $append);
+                        $append = $dup[1];
                     }
                     $append = str_ireplace('[IMiss', '', $append);
                     $append = str_ireplace('IMiss', '', $append);
@@ -80,6 +90,9 @@ for ($i = $start; $i<=$end; $i++) {
                         $b = explode($model, $append);
                         $append = $b[1];   
                     }
+                    $append = str_starts_with($append, '-') ? substr($append, 1) : $append;
+                    $append = str_ireplace('--', '-', $append);
+                    // $append = '《' . $append . '》';
 
                     // $date = array_pop($a);
                     $new_folder_name = implode('-', $a);

@@ -79,6 +79,8 @@ format_folder_name () {
   new_name=${new_name//MFStar-Vol./MFStar模范学院-}
   new_name=${new_name//Ugirls-App尤果圈-No./UGirlsApp尤果圈爱尤物-}
   new_name=${new_name//YouMi尤蜜荟-Vol./YouMi尤蜜荟-}
+  new_name=${new_name//XiaoYu语画界-Vol./XiaoYu语画界-}
+  
 
   new_name=${new_name//\'/-}
   new_name=${new_name//\"/-}

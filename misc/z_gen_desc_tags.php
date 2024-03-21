@@ -75,6 +75,8 @@ function formatBytes($bytes, $precision = 2) {
     return round($bytes/1024/1024, $precision);
 }
 
+
+
 ###################### End of define variables ################
 
 
@@ -334,6 +336,9 @@ if( str_contains($folder_name, '健身') && !in_array('运动装', $tags)) {
 }
 if( str_contains($folder_name, '体操服') && !in_array('运动装', $tags)) {
     $tags[] = '运动装';
+}
+if( str_contains($folder_name, '无圣光') && !in_array('无圣光', $tags)) {
+    $tags[] = '无圣光';
 }
 if( (str_contains($folder_name, '朱可儿')  
     || str_contains($folder_name, '美七')  

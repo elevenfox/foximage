@@ -9,6 +9,8 @@ const puppeteer = require('puppeteer');
     //await page.setViewport({ width: 1366, height: 768});
 
 	await page.goto('https://www.terabox.com/');
+    const loginBtn = await page.waitForSelector('div[class="lgoin-btn"]');
+    loginBtn.click();
 
     // Login
     await page.waitForSelector('input[class="input email-input"]'),
@@ -26,7 +28,7 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="ugirls"]');
+    const ishow = await page.waitForSelector('a[title="xiuren72xx"]');
     await ishow.click();
     await delay(2000);
 
@@ -36,9 +38,13 @@ const puppeteer = require('puppeteer');
     // await delay(2000);
 
     // Order by file name
-    const [orderBy] = await page.$x("//span[contains(., 'File name')]");
+    let [orderBy] = await page.$x("//span[contains(., 'File name')]");
     if (orderBy) {
         await orderBy.click();
+    }
+    else {
+        [orderBy] = await page.$x("//span[contains(., '文件名')]");
+        if(orderBy) await orderBy.click();
     }
     await delay(2000);
     

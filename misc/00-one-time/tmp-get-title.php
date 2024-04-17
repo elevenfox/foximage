@@ -94,7 +94,7 @@ for ($i = $start; $i<=$end; $i++) {
                     $append = str_ireplace('--', '-', $append);
                     // $append = '《' . $append . '》';
 
-                    // $date = array_pop($a);
+                    $date = array_pop($a);
                     $new_folder_name = implode('-', $a);
                     if(!empty($date)) $new_folder_name = $new_folder_name . '-' . $append . '-' . $date;
                     else $new_folder_name = $new_folder_name . '-' . $append;

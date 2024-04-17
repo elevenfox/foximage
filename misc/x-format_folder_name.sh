@@ -10,6 +10,7 @@ Usage: $PROGNAME [-k] target_full_path
     -k: Skip removing exif info step
 EOF
   exit 1
+  
 }
 # dir=default_dir file=default_file verbose_level=0
 while getopts dhk name; do

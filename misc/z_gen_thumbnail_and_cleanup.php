@@ -13,6 +13,10 @@ if (!function_exists('str_contains')) {
         else return true;
     }
 }
+function is_txt_file($file) {
+    $extension = pathinfo($file, PATHINFO_EXTENSION);
+    return $extension === 'txt';
+}
 
 ###################### Define variables ################
 
@@ -48,6 +52,9 @@ foreach($scan2 as $file) {
         unlink($origin_file_full);
     }
     if(strpos($file, 'BestGirlSexy') !== false) {
+        unlink($origin_file_full);
+    }
+    if(is_txt_file($origin_file_full) && ($file!='desc.txt' || $file!='tags.txt' || $file!='dl.txt') ) {
         unlink($origin_file_full);
     }
     if($file == 'cover.jpg' || $file == 'cover.JPG') {

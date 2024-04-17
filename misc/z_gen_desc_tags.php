@@ -95,11 +95,12 @@ if(empty($desc)) {
     if(strpos($desc, 'XiuRen秀人网') === false) {
         $desc = str_replace('XiuRen', 'XiuRen秀人网', $desc);
     }
-    $desc = str_replace('XiuRen秀人网-', 'XiuRen秀人网-No.', $desc);
-    $desc = str_replace('MFStar模范学院-', 'MFStar模范学院-Vol.', $desc);
-    $desc = str_replace('YouMi尤蜜荟-', 'YouMi尤蜜荟-Vol.', $desc);
-    $desc = str_replace('MyGirl美媛馆-', 'MyGirl美媛馆-Vol.', $desc);
-    $desc = str_replace('XingYan星颜社-', 'XingYan星颜社-Vol.', $desc);
+    $desc = str_ireplace('XiuRen秀人网-', 'XiuRen秀人网-No.', $desc);
+    $desc = str_ireplace('MFStar模范学院-', 'MFStar模范学院-Vol.', $desc);
+    $desc = str_ireplace('YouMi尤蜜荟-', 'YouMi尤蜜荟-Vol.', $desc);
+    $desc = str_ireplace('MyGirl美媛馆-', 'MyGirl美媛馆-Vol.', $desc);
+    $desc = str_ireplace('XingYan星颜社-', 'XingYan星颜社-Vol.', $desc);
+    $desc = str_ireplace('XiaoYu语画界-', 'XiaoYu语画界-Vol.', $desc);
     
     $desc = str_replace('-', ' ', $desc);
     
@@ -339,6 +340,12 @@ if( str_contains($folder_name, '体操服') && !in_array('运动装', $tags)) {
 }
 if( str_contains($folder_name, '无圣光') && !in_array('无圣光', $tags)) {
     $tags[] = '无圣光';
+}
+if( str_contains($folder_name, '18禁') && !in_array('18禁', $tags)) {
+    $tags[] = '18禁';
+}
+if( str_contains($folder_name, '爆乳') && !in_array('爆乳', $tags)) {
+    $tags[] = '爆乳';
 }
 if( (str_contains($folder_name, '朱可儿')  
     || str_contains($folder_name, '美七')  

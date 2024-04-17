@@ -46,7 +46,7 @@ function getDestFolder($album) {
         'toutiao' => 'TouTiao头条女神-',
         //'ugirls' => 'UGirls尤果网-',  
         'ugirls_app-2000' => 'UGirlsApp尤果圈爱尤物-2',  
-        'xiaoyu' => 'XiaoYu语画界-',
+        //'xiaoyu' => 'XiaoYu语画界-',
         'xiaoyu1000' => 'XiaoYu语画界-1',
         'xingyan' => 'XingYan星颜社-',
         // 'xiuren6000' => 'XiuRen秀人网-6',

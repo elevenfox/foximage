@@ -84,7 +84,7 @@ $shuffle_alb = [
     'JVID',
 ];
 
-$total = 20;
+$total = 12;
 $dryrun = 0;
 
 $path = $folder_full_path;

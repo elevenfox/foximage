@@ -65,6 +65,7 @@ for ($i = $start; $i<=$end; $i++) {
                     $append = str_ireplace('配', '', $append);
                     $append = str_ireplace('无内', '', $append);
                     $append = str_ireplace('开档', '', $append);
+                    $append = str_ireplace('性感', '', $append);
     
                     //$dup = find_between($append, $tmp_term, $num);
                     $dup = explode($num, $append);

@@ -37,6 +37,8 @@ $num_pre_mapping = [
     '秀人网' => 'No.',
     '语画界' => 'Vol.',
     '尤蜜荟' => 'Vol.',
+    '花漾' => 'Vol.',
+    '星颜社' => 'Vol.',
 ];
 
 $all_sub_folders = scandir($folder_full_path);

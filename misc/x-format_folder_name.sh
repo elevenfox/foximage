@@ -100,6 +100,8 @@ format_folder_name () {
   new_name=${new_name//\[/-}
   new_name=${new_name//\]/-}
   new_name=${new_name//--/-}
+  new_name=${new_name//,/-}
+  new_name=${new_name//\~/-}
   
   
   
@@ -121,7 +123,6 @@ format_folder_name () {
   # new_name=${new_name//果儿Victoria/果儿}
   # new_name=${new_name//小蛮妖Yummy/小蛮妖}
   # new_name=${new_name//文芮jeninfer/文芮}
-  
   
 
   firstchar=${new_name:0:1}

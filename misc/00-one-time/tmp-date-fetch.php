@@ -32,6 +32,7 @@ $num_pre_mapping = [
     '秀人网' => 'No.',
     '语画界' => 'Vol.',
     '尤蜜荟' => 'Vol.',
+    '爱尤物' => 'No.',
 ];
 
 $base_url = 'https://www.vvavm.com/?s='; 

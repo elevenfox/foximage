@@ -51,6 +51,7 @@ function getDestFolder($album) {
         'xingyan' => 'XingYan星颜社-',
         // 'xiuren6000' => 'XiuRen秀人网-6',
         'xiuren7000' => 'XiuRen秀人网-7',
+        'xiuren8000' => 'XiuRen秀人网-8',
         //'youmi' => 'YouMi尤蜜荟-',
         'youmi1000' => 'YouMi尤蜜荟-1',
         'youmi尤蜜' => 'YouMi尤蜜-',

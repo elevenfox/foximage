@@ -347,6 +347,9 @@ if( str_contains($folder_name, '18禁') && !in_array('18禁', $tags)) {
 if( str_contains($folder_name, '爆乳') && !in_array('爆乳', $tags)) {
     $tags[] = '爆乳';
 }
+if( str_contains($folder_name, '爆乳') && !in_array('大尺度', $tags)) {
+    $tags[] = '大尺度';
+}
 if( (str_contains($folder_name, '朱可儿')  
     || str_contains($folder_name, '美七')  
     || str_contains($folder_name, '糯美子') 

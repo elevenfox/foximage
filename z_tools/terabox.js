@@ -8,27 +8,32 @@ const puppeteer = require('puppeteer');
     page. setDefaultNavigationTimeout(0); 
     //await page.setViewport({ width: 1366, height: 768});
 
-	await page.goto('https://www.terabox.com/');
+	await page.goto('https://www.terabox.com');
     const loginBtn = await page.waitForSelector('div[class="lgoin-btn"]');
     loginBtn.click();
 
     // Login
-    await page.waitForSelector('input[class="input email-input"]'),
+    const login_via_emai = await page.waitForSelector('.other-login-way .other-item > div:nth-child(2)');
     await delay(2000);
-    await page.type('input[class="input email-input"]', 'elevenfox11@gmail.com');
-    await page.type('input[class="input pwd-input"]', 'tbox1102*');
+    await login_via_emai.click();
     await delay(2000);
-    const login = await page.waitForSelector('div[class="login-submit-btn btn-abled"]');
+
+    await page.waitForSelector('input[id="email-input"]'),
+    await delay(2000);
+    await page.type('input[id="email-input"]', 'elevenfox77@gmail.com');
+    await page.type('input[id="pwd-input"]', 'tbox1102*');
+    await delay(2000);
+    const login = await page.waitForSelector('.email-able-input');
     await login.click();
 	await delay(2000);
 
     // Go to first level dir
-    const tuzac = await page.waitForSelector('a[title="tuzac-9"]');
+    const tuzac = await page.waitForSelector('a[title="tuzac-10"]');
     await tuzac.click();
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="xiuren72xx"]');
+    const ishow = await page.waitForSelector('a[title="xiuren80xx"]');
     await ishow.click();
     await delay(2000);
 

@@ -1029,6 +1029,11 @@ article.file #fdp-photo>a::before {
     top: 90px;
 }
 
+.backlink-ads {
+    text-align: right;
+    padding: 8px 15px 10px 0;
+}
+
 #block-ads-jp-m-middle,
 #block-ads-jp-m-bottom {
     display: none;

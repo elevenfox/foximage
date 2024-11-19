@@ -350,6 +350,9 @@ if( str_contains($folder_name, '爆乳') && !in_array('爆乳', $tags)) {
 if( str_contains($folder_name, '爆乳') && !in_array('大尺度', $tags)) {
     $tags[] = '大尺度';
 }
+if( str_contains($folder_name, '潘思沁') && !in_array('潘娇娇', $tags)) {
+    $tags[] = '潘娇娇';
+}
 if( (str_contains($folder_name, '朱可儿')  
     || str_contains($folder_name, '美七')  
     || str_contains($folder_name, '糯美子') 
@@ -365,6 +368,7 @@ if( (str_contains($folder_name, '朱可儿')
     || str_contains($folder_name, '尤奈') 
     || str_contains($folder_name, '尤妮丝') 
     || str_contains($folder_name, '潘娇娇')  
+    || str_contains($folder_name, '潘思沁')  
     || str_contains($folder_name, '允爾')  
     || str_contains($folder_name, '田冰冰') 
     || str_contains($folder_name, '果儿') 

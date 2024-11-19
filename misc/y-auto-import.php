@@ -85,7 +85,7 @@ $shuffle_alb = [
     'JVID',
 ];
 
-$total = 12;
+$total = 8;
 $dryrun = 0;
 
 $path = $folder_full_path;
@@ -127,8 +127,14 @@ while(count($albums) < $total && !empty($groups)) {
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
         }
-        // If it's xiuren, choose a 3rd one
+        // If it's xiuren, choose other 3
         if($key == 'XiuRen秀人网' && !in_array($key, $shuffle_alb)) {
+            $alb = array_shift($groups[$key]);
+            if(!empty($alb)) $albums[] = $alb;
+
+            $alb = array_shift($groups[$key]);
+            if(!empty($alb)) $albums[] = $alb;
+
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
         }

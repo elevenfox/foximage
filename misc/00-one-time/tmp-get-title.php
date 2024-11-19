@@ -25,7 +25,7 @@ if(empty($end)) {
 }
 
 
-$base_url = 'https://www.retuge03.com/?s=';
+$base_url = 'https://www.retuge04.cc/?s=';
 //https://www.youwushow.com/?s=秀人+No.7002
 //https://www.retuge03.com/?s=语画界+Vol.1100
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+IFS=$'\n' 
+
 PROGNAME=$0
 
 usage() {

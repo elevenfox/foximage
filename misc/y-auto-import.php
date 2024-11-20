@@ -121,25 +121,29 @@ while(count($albums) < $total && !empty($groups)) {
             $alb = array_shift($groups[$key]);
         }
         if(!empty($alb)) $albums[] = $alb;
+        if(count($albums) >= $total) break;
 
         // If a source has more than 100 albums, choose a 2nd one
         if($val > 100 && !in_array($key, $shuffle_alb)) {
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
         }
+        if(count($albums) >= $total) break;
+
         // If it's xiuren, choose other 3
         if($key == 'XiuRen秀人网' && !in_array($key, $shuffle_alb)) {
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
+            if(count($albums) >= $total) break;
 
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
+            if(count($albums) >= $total) break;
 
             $alb = array_shift($groups[$key]);
             if(!empty($alb)) $albums[] = $alb;
+            if(count($albums) >= $total) break;
         }
-        
-        if(count($albums) >= $total) break;
     }
     $current_groups = folderStatus($groups);
 }

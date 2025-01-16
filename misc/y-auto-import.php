@@ -27,7 +27,7 @@ function getDestFolder($album) {
         'ai-generated' => 'AI美女-',
         'aiss' => 'AISS爱丝-',
         'candy' => 'Candy网红馆-',
-        'cosplay' => 'Cosplay-',
+        'cosplay-2' => 'Cosplay-',
         'feilin' => 'FeiLin嗲囡囡-',
         //'girlt' => '',
         'huayang' => 'HuaYang花漾-',

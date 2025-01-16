@@ -25,7 +25,7 @@ if(empty($end)) {
 }
 
 
-$base_url = 'https://www.retuge04.cc/?s=';
+$base_url = 'https://sscoc.cc/?s=';
 //https://www.youwushow.com/?s=秀人+No.7002
 //https://www.retuge03.com/?s=语画界+Vol.1100
 
@@ -34,7 +34,7 @@ $base_url = 'https://www.retuge04.cc/?s=';
 // $end = 6099;
 
 $num_pre_mapping = [
-    '秀人网' => 'No.',
+    '秀人' => 'No.',
     '语画界' => 'Vol.',
     '尤蜜荟' => 'Vol.',
     '花漾' => 'Vol.',

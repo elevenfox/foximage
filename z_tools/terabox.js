@@ -33,7 +33,7 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="xiuren82xx"]');
+    const ishow = await page.waitForSelector('a[title="ai-2"]');
     await ishow.click();
     await delay(2000);
 

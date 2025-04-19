@@ -350,6 +350,9 @@ if( str_contains($folder_name, '爆乳') && !in_array('爆乳', $tags)) {
 if( str_contains($folder_name, '爆乳') && !in_array('大尺度', $tags)) {
     $tags[] = '大尺度';
 }
+if( str_contains($folder_name, '大尺度') && !in_array('大尺度', $tags)) {
+    $tags[] = '大尺度';
+}
 if( str_contains($folder_name, '潘思沁') && !in_array('潘娇娇', $tags)) {
     $tags[] = '潘娇娇';
 }

@@ -23,7 +23,9 @@ foreach($scan as $folder_name) {
 
         $new_folder_name = str_ireplace('[YouMi尤蜜荟]', 'YouMi尤蜜荟-', $new_folder_name);
         $new_folder_name = str_ireplace('[XiuRen秀人网]', 'XiuRen秀人网-', $new_folder_name);
+        $new_folder_name = str_ireplace('XiuRen秀人网 No.', 'XiuRen秀人网-', $new_folder_name);
         $new_folder_name = str_ireplace('[爱尤物]2023 NO.', 'UGirlsApp尤果圈爱尤物-', $new_folder_name);
+        $new_folder_name = str_ireplace('Ugirls App尤果圈 NO.', 'UGirlsApp尤果圈爱尤物-', $new_folder_name);
         $new_folder_name = str_ireplace('[Feilin嗲囡囡]', 'FeiLin嗲囡囡-', $new_folder_name);
         $new_folder_name = str_ireplace('[HuaYang花漾show]', 'HuaYang花漾-', $new_folder_name);
         $new_folder_name = str_ireplace('[IMiss爱蜜社]', 'IMiss爱蜜社-', $new_folder_name);
@@ -57,9 +59,11 @@ foreach($scan as $folder_name) {
         $a = explode('-', $new_folder_name);
         // if(!empty($a[2]) && !str_starts_with($a[2], '《') ) $a_tmp = '《'.$a[2].'》';
         $date = $a[1];
-        unset($a[1]);
-        $new_folder_name = implode('-', $a);
-        $new_folder_name = $new_folder_name.'-'.$date;
+        if (isValidDate($date)) {
+            unset($a[1]);
+            $new_folder_name = implode('-', $a);
+            $new_folder_name = $new_folder_name.'-'.$date;
+        }
 
         // $b = explode('-', $new_folder_name);
         // $title = $b[2];
@@ -73,6 +77,10 @@ foreach($scan as $folder_name) {
         echo 'rename('. $origin_full_path . ', ' . $path . '/' . $new_folder_name .  "\n\n";
         rename($origin_full_path, $path . '/' . $new_folder_name);    
     }
+}
+
+function isValidDate($date) {
+    return preg_match('/^\d{4}\.\d{2}\.\d{2}$/', $date);
 }
 
 exit;

@@ -2,7 +2,7 @@
 if( empty($data['dev_mode']) ) {
 ?>
 <div id="<?=empty($apply_mobile_native_ads) ? 'block-ads-right-sidebar-ad-1' : 'block-ads-right-sidebar-ad-1-mobile'?>" class="<?=empty($apply_mobile_native_ads) ? '':'mobile-only'?> ad-container">
-<iframe src="https://cbxyz.com/in/?tour=dTm0&campaign=jwMl4&track=embed&disable_sound=1&mobileRedirect=auto&embed_video_only=1" height="162px" width="300px" frameborder="0" class="code" scrolling="no"></iframe>
+  <iframe src="https://cbxyz.com/in/?tour=dTm0&campaign=jwMl4&track=tuzac_embed&disable_sound=1&mobileRedirect=auto&embed_video_only=1" height="162px" width="300px" frameborder="0" class="code" scrolling="no"></iframe>
   <?php /*
   <!-- <ins class="eas6a97888e20" data-zoneid="4779880"></ins> 
   

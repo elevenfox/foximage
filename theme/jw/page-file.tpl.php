@@ -95,7 +95,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
 
           <div class="task" id="task">
             <div id="auto-play" data="album----<?=$file['id']?>" num="<?=$num?>" total="<?=$total_photos?>">Slideshow</div>
-            <div class="cpa-chaturbate" style="width: 100%; text-align:center">👀 想看她们**动起来**？进入<a href="https://chaturbate.com/in/?tour=grq0&campaign=jwMl4&track=tuzac_album_1" target="_blank">真人直播 👉 </a></div>
+            <div class="cpa-chaturbate" style="width: 100%; text-align:center">👀 想看她们**动起来**？进入<a href="https://chaturbate.com/in/?tour=grq0&campaign=jwMl4&track=tuzac_album_1" target="_blank" rel="noopener noreferrer">真人直播 👉 </a></div>
             <div class="file-detail">
               <div>
                   <?php foreach($src_arr as $src) { ?>
@@ -114,7 +114,7 @@ $src_arr = (array)processPhotoSrc($file, $num, $photos_per_page);
                     <?php endif?>
                   <?php } ?>
               </div>
-              <div class="cpa-chaturbate" style="width: 100%; text-align:center"><a href="https://chaturbate.com/in/?tour=grq0&campaign=jwMl4&track=tuzac_album_2" target="_blank">🔥 她们正在直播中，点击观看实时互动！</a></div>
+              <div class="cpa-chaturbate" style="width: 100%; text-align:center"><a href="https://chaturbate.com/in/?tour=grq0&campaign=jwMl4&track=tuzac_album_2" target="_blank" rel="noopener noreferrer">🔥 她们正在直播中，点击观看实时互动！</a></div>
             </div>
           </div>
           <?php

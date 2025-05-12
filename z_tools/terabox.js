@@ -9,7 +9,7 @@ const puppeteer = require('puppeteer');
     //await page.setViewport({ width: 1366, height: 768});
 
 	await page.goto('https://www.terabox.com');
-    const loginBtn = await page.waitForSelector('div[class="lgoin-btn"]');
+    const loginBtn = await page.waitForSelector('div[class="login-btn"]');
     loginBtn.click();
 
     // Login
@@ -33,7 +33,7 @@ const puppeteer = require('puppeteer');
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="xiuren90xx"]');
+    const ishow = await page.waitForSelector('a[title="xiuren91xx"]');
     await ishow.click();
     await delay(2000);
 

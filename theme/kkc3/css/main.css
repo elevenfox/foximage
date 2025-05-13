@@ -1392,6 +1392,7 @@ article.file #fdp-photo>a::before {
     #block-ads-right-sidebar-ad-2,
     #block-ads-right-sidebar-ad-3 {
         display: none;
+        text-align: center;
     }
     #block-ads-jp-m-middle,
     #block-ads-jp-m-bottom {

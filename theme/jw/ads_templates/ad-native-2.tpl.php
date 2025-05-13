@@ -10,5 +10,13 @@ if( empty($data['dev_mode']) ) {
       ExoLoader.addZone({"idzone":"4779882"}); // native-2
     })();
   </script>
+
+  <div>
+    <a href="https://chaturbate.com/in/?tour=grq0&campaign=jwMl4&track=tuzac_native_2_cta" target="_blank" rel="noopener noreferrer"  style="font-size: 12px; color:#333333">
+      <div><img src="https://web.static.mmcdn.com/affiliates/banners/Animated-300.gif" alt="cb-animated-300" /></div>
+      <div style="margin-bottom: 30px;">🔥 她们正在直播中，点击观看实时互动！</div>
+    </a>  
+  </div>
+
 </div>
 <?php } ?>

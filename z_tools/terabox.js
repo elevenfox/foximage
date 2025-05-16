@@ -20,7 +20,7 @@ const puppeteer = require('puppeteer');
 
     await page.waitForSelector('input[id="email-input"]'),
     await delay(2000);
-    await page.type('input[id="email-input"]', 'elevenfox88@gmail.com');
+    await page.type('input[id="email-input"]', 'elevenfox99@gmail.com');
     await page.type('input[id="pwd-input"]', 'tbox1102*');
     await delay(2000);
     const login = await page.waitForSelector('.email-able-input');
@@ -28,12 +28,12 @@ const puppeteer = require('puppeteer');
 	await delay(2000);
 
     // Go to first level dir
-    const tuzac = await page.waitForSelector('a[title="tuzac-11"]');
+    const tuzac = await page.waitForSelector('a[title="tuzac-12"]');
     await tuzac.click();
     await delay(2000);
 
     // Go to second level dir
-    const ishow = await page.waitForSelector('a[title="xiuren91xx"]');
+    const ishow = await page.waitForSelector('a[title="cosplay-12-1"]');
     await ishow.click();
     await delay(2000);
 

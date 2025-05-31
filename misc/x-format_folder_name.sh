@@ -98,13 +98,14 @@ format_folder_name () {
   new_name=${new_name//!/-}
   new_name=${new_name//\;/-}
   new_name=${new_name//\#/-}
+  new_name=${new_name//\@/-}
   new_name=${new_name//+/-}
   new_name=${new_name//\[/-}
   new_name=${new_name//\]/-}
-  new_name=${new_name//--/-}
   new_name=${new_name//,/-}
   new_name=${new_name//\~/-}
-  
+
+  new_name=${new_name//--/-}
   
   
   # new_name=${new_name//安然anran/安然}

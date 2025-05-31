@@ -42,6 +42,7 @@ $num_pre_mapping = [
     '花漾' => 'Vol.',
     '星颜社' => 'Vol.',
     '爱尤物' => 'No.',
+    '嗲囡囡' => 'Vol.',
 ];
 
 $en_cn_mapping = [
@@ -50,7 +51,8 @@ $en_cn_mapping = [
     '尤蜜荟' => 'youmi',
     '花漾' => 'huayang',
     '星颜社' => 'xingyan',
-    '爱尤物' => '尤果圈'
+    '爱尤物' => '尤果圈',
+    '嗲囡囡' => 'FeiLin',
 ];
 
 $all_sub_folders = scandir($folder_full_path);

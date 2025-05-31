@@ -51,6 +51,7 @@ function getDestFolder($album) {
         'xingyan' => 'XingYan星颜社-',
         'xiuren8000' => 'XiuRen秀人网-8',
         'xiuren9000' => 'XiuRen秀人网-9',
+        'xr-uncensored' => 'XR-Uncensored-',
         //'youmi' => 'YouMi尤蜜荟-',
         'youmi1000' => 'YouMi尤蜜荟-1',
         'youmi尤蜜' => 'YouMi尤蜜-',
@@ -59,7 +60,7 @@ function getDestFolder($album) {
 
     $dest = '';
     foreach($mapping as $k=>$v) {
-        if(strpos($album, $v) !== false) {
+        if(str_starts_with($album, $v)) {
             $dest = $k;
             break;
         }

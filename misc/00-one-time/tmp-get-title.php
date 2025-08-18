@@ -68,12 +68,14 @@ for ($i = $start; $i<=$end; $i++) {
             $url = $base_url . $tmp_term . '+' . $num_pre_mapping[$tmp_term] . $num;
             echo $url."\n";
             $html = curl_call($url);
+            // echo $html."\n";
             // 修改这里以匹配<a>标签中的文本
-            $res = find_between($html, '<h2><a', '</a>');
+            $res = find_between($html, 'class="thumb" alt="', '"></a>');
             foreach($res as $title) {
                 // 修正：使用正确的结束标记
-                $title_parts = explode('">', $title);
-                $title = !empty($title_parts[1]) ? trim($title_parts[1]) : '';
+                // echo $title. "\n";
+                // $title_parts = explode('">', $title);
+                // $title = !empty($title_parts[1]) ? trim($title_parts[1]) : '';
                 if(!empty($title) && stripos($title, $tmp_term) !== false && strpos($title, $num) !== false ) {
                     echo $title . "\n";
                     // [Xiuren秀人网] No.2989 嫩模郑颖姗Bev三亚旅拍韵味旗袍配无内肉丝裤袜撩人姿势诱惑写真41P
@@ -165,7 +167,7 @@ for ($i = $start; $i<=$end; $i++) {
 
             echo "rename $folder_full_path/$folder_name to $folder_full_path/$new_folder_name\n\n"; 
             rename($folder_full_path.'/'.$folder_name, $folder_full_path . '/'.$new_folder_name);
-            //exit;
+            // exit;
             break;
         }
     }

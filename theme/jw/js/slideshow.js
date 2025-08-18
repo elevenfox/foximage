@@ -9,6 +9,7 @@
 
 
     let x =1;
+    let autoRotateEnabled = true;
     $('#auto-play').on('click', function() {
         if(typeof gtag !== 'undefined') gtag('event','click_auto_play',{'event_category':'slideshow','event_label':'auto_play','value':null});
           
@@ -40,6 +41,9 @@
                 <a href="#" class="fdp-random-next" title="Next">
                     <svg style="height: 14px" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20.465 20.465" xml:space="preserve"><g id="c91_rewind"><path d="M9.112,1.372c0.139-0.069,0.303-0.049,0.424,0.045l10.776,8.501c0.094,0.076,0.153,0.191,0.153,0.312s-0.06,0.24-0.153,0.314L9.536,19.047c-0.071,0.056-0.163,0.088-0.248,0.088l-0.176-0.042c-0.138-0.064-0.226-0.204-0.226-0.359V1.732C8.887,1.58,8.975,1.437,9.112,1.372z"/><path d="M0.225,1.372C0.364,1.303,0.529,1.323,0.65,1.417l10.776,8.501c0.093,0.076,0.152,0.191,0.152,0.312s-0.06,0.24-0.152,0.314L0.649,19.047c-0.073,0.056-0.163,0.088-0.249,0.088l-0.176-0.042C0.088,19.028,0,18.889,0,18.733V1.732C0,1.58,0.088,1.437,0.225,1.372z"/></g></svg>
                 </a>
+                <a href="#" class="fdp-auto-rotate" title="Auto Rotate">
+                    <img src="/theme/jw/images/auto-rotate-enable.png" style="height: 20px; position: absolute; top: 7px;" alt="Auto Rotate" />
+                </a>
                 <span id="fdp-title"><a></a></span>
             </div>
         `;
@@ -47,6 +51,16 @@
 
         // Loading
         $('#fdp-photo').append($('<div/>', {id: 'loading'}));
+        
+        // Add CSS for auto-rotate toggle
+        $('head').append(`
+            <style>
+                .fdp-auto-rotate img.disabled {
+                    filter: grayscale(100%);
+                    opacity: 0.6;
+                }
+            </style>
+        `);
 
         // Click area
         let clickArea = `
@@ -73,7 +87,6 @@
         const showingSeconds = 20;
         let seconds = 20;
         let history = [];
-        
         
         // Handle setInterval and setTimeout
         let timeoutCallback = function() {
@@ -187,6 +200,22 @@
         };
         $('.fdp-random-next').on('click', (e)=>next(e));
         $('#fdp-photo .fdp-click-area-right').on('click', (e)=>next(e));
+        
+        // Auto-rotate toggle functionality
+        $('.fdp-auto-rotate').on('click', function(e) {
+            e.preventDefault();
+            if(typeof gtag !== 'undefined') gtag('event','click_auto_rotate_toggle',{});
+            
+            autoRotateEnabled = !autoRotateEnabled;
+            if(autoRotateEnabled) {
+                $('.fdp-auto-rotate img').removeClass('disabled');
+            } else {
+                $('.fdp-auto-rotate img').addClass('disabled');
+            }
+            
+            // Re-apply orientation to current image
+            orientation();
+        });
 
         $('#close_ppt').on('click', function(e) {
             e.preventDefault();
@@ -204,9 +233,25 @@
         let currentOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
         
         //let autoRotate = window.innerWidth < 1000;
-        let autoRotate = true;
+        // Use the global autoRotateEnabled variable
         
-        if(autoRotate) {
+        if(!autoRotateEnabled) {
+          // When auto-rotate is off, display the image full in the screen
+          $('#the-photo').css({
+            'width': 'auto',
+            'height': '100%'
+          });
+          return;
+        }
+        
+        // Auto-rotate is enabled
+        if ( autoRotateEnabled) {
+          // Remove any existing rotation classes first
+          $('#the-photo').removeClass('rotate');
+          $('#the-photo').css('top', '');
+          $('#the-photo').css('left', '');
+          $('#the-photo').width('');
+          
           let image = $('#the-photo'); 
           
           let originImageWidth = image.width();

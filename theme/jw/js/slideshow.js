@@ -232,15 +232,31 @@
     function orientation() {
         let currentOrientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
         
+        let image = $('#the-photo'); 
+          
+        let originImageWidth = image.width();
+        let originImageHeight = image.height();
+        let aspectRatio = originImageWidth/originImageHeight;
+        image.data("aspect-ratio", aspectRatio);
+        
         //let autoRotate = window.innerWidth < 1000;
         // Use the global autoRotateEnabled variable
         
         if(!autoRotateEnabled) {
           // When auto-rotate is off, display the image full in the screen
-          $('#the-photo').css({
-            'width': 'auto',
-            'height': '100%'
-          });
+          if (aspectRatio > 1) {
+
+            $('#the-photo').css({
+              'width': '100%',
+              'height': 'auto'
+            });
+          }
+          else {
+            $('#the-photo').css({
+              'width': 'auto',
+              'height': '100%'
+            });
+          }
           return;
         }
         
@@ -250,14 +266,7 @@
           $('#the-photo').removeClass('rotate');
           $('#the-photo').css('top', '');
           $('#the-photo').css('left', '');
-          $('#the-photo').width('');
-          
-          let image = $('#the-photo'); 
-          
-          let originImageWidth = image.width();
-          let originImageHeight = image.height();
-          let aspectRatio = originImageWidth/originImageHeight;
-          image.data("aspect-ratio", aspectRatio);
+          $('#the-photo').width('');  
     
           if( aspectRatio > 1 && currentOrientation === 'portrait' ) {
               // Image is landscape, so rotate it

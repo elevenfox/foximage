@@ -234,7 +234,6 @@ header.mobile_header {
 
 .header .ad-free-member-entry {
     width: 270px;
-    display: inline-block;
     background: #333;
     padding: 5px;
     float: left;
@@ -242,7 +241,6 @@ header.mobile_header {
 }
 
 .header .ad-free-member-entry .hand-icon {
-    display: inline-block;
     width: 60px;
     float: left;
 }
@@ -648,12 +646,6 @@ footer .hot-searches a {
     color: #f1f1f1;
 }
 
-.node-teaser .teaser-file-title a,
-.node-teaser .teaser-file-title a:hover,
-.node-teaser .teaser-file-title a:visited {
-    /* color: initial; */
-}
-
 .node-teaser .teaser-file-info {
     font-size: 12px;
     padding: 5px 5px 20px;
@@ -686,7 +678,6 @@ footer .hot-searches a {
     right: 0;
     background-color: black;
     color: white;
-    display: inline-block;
     padding: 3px 8px;
     font-size: 12px;
     opacity: .8;
@@ -874,6 +865,9 @@ article.file #auto-play {
     right: -17px;
     background-color: rgba(011, 011, 011, 0.9);
     z-index: 888666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #fdp-photo #the-photo {
     width: 100%;
@@ -998,7 +992,6 @@ article.file #fdp-photo>a::before {
 
 .dashboard-section .ds-title {
     min-width: 130px;
-    display: inline-block;
     float: left;
     margin: 6px 15px;
 }

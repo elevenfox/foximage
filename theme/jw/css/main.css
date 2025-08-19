@@ -832,9 +832,6 @@ article.file #auto-play {
     right: -17px;
     background-color: rgba(011, 011, 011, 0.9);
     z-index: 888666;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 #fdp-photo #the-photo {
     width: 100%;

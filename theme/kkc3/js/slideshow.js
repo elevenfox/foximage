@@ -237,6 +237,7 @@
         let originImageWidth = image.width();
         let originImageHeight = image.height();
         let aspectRatio = originImageWidth/originImageHeight;
+        
         image.data("aspect-ratio", aspectRatio);
         
         //let autoRotate = window.innerWidth < 1000;
@@ -245,10 +246,14 @@
         if(!autoRotateEnabled) {
           // When auto-rotate is off, display the image full in the screen
           if (aspectRatio > 1) {
-
+            let top = 0;
+            if(window.innerHeight > originImageHeight) {
+                top = (window.innerHeight - originImageHeight)/2;
+            }
             $('#the-photo').css({
               'width': '100%',
-              'height': 'auto'
+              'height': 'auto',
+              'top': top
             });
           }
           else {
